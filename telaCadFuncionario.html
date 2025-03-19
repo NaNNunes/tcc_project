@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- é um teste ahn -->
+    <label for="cpf">CPF </label><input type="text" name="cpftxt" id="cpftxt"><br>
+    <label>Senha <input type="password" name="" id="senhatxt"></label><br>
+    <label>Permissão: 
+        <select name="" id="">
+            <option value="">Selecione</option>
+            <option value="">Técnico</option>
+            <option value="">Administrador</option>
+        </select>
+    </label><br>
+    <button type="submit" onclick="cad()">Cadastrar</button>
+
+    <script>
+        // simulação de autenticação
+        let user = {
+            cpf:"12345678910",
+            senha:"12345678910"
+        }
+
+
+        let cad = () => {
+            let cpftxt = document.querySelector("input#cpftxt");
+            let senhatxt = document.querySelector("input#senhatxt")
+            let permissa = document.querySelector("")
+        }
+    </script>
+
+</body>
+</html>
