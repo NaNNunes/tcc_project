@@ -1,0 +1,41 @@
+.boxcontent{
+    background-color: #034C8C;
+    padding: 1rem;
+    border-radius: 1.5rem;
+    height: 500px;
+}
+
+.logo h1{
+    color: white;
+}
+
+.credentials{
+    display: flex;
+    flex-direction: column;
+}
+
+.inputlogin{
+    margin: .5rem;
+    width: 75%;
+    height: 30px;
+
+    background-color: white;
+    border: none;
+    border-radius: .3rem;
+}
+
+.frgtpass{
+    padding: 0 2rem .3rem;
+    display: flex;
+    justify-content: right;
+}
+.frgt{
+    color: #FCE63D;
+}
+
+.btn{
+    width: 90%;
+    background-color: transparent;
+    
+    border: .2rem #FCE63D solid;
+}
