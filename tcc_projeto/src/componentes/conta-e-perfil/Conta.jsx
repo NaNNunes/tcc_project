@@ -1,10 +1,12 @@
-import Perfil from "./Perfil"
+import MinhasInfos from "./MinhasInfos"
 import Endereco from "./Endereco"
+import Seguranca from "./Seguranca"
 
 const Conta = () => {
   return (
     <>
-        <Perfil/>
+        <MinhasInfos/>
+        <Seguranca/>
         <Endereco/>
     </>
   )
