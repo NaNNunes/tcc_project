@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 //import pages
 import App from "./App.jsx"
 import Login from "./componentes/Login.jsx";
-import ContaePerfil from "./componentes/ContaePerfil.jsx";
+import Conta from "./componentes/conta-e-perfil/Conta.jsx";
 
 const router = createBrowserRouter([
     {
@@ -15,8 +15,8 @@ const router = createBrowserRouter([
                 element: <Login/>
             },
             {
-                path: "/ContaePerfil",
-                element: <ContaePerfil/>
+                path: "/Conta",
+                element: <Conta/>
             }
         ]
     }
