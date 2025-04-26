@@ -3,7 +3,7 @@ import {Form, FloatingLabel, Button, Row, Col} from "react-bootstrap";
 const Seguranca = () => {
   return (
     <>
-        <Form className="border rounded-3">
+        <Form className="border rounded-3 shadow mb-3">
             <Row className="mb-1 mt-2">
                 <Col xs={6}>
                     <h3>Dados de Segurança</h3>
@@ -11,8 +11,8 @@ const Seguranca = () => {
             </Row>
             <Row className="m-1">
                 <Row>
-                    <Col xs={4}>
-                        <h5>alterar senha</h5>
+                    <Col sm={4}>
+                        <h5 style={{color:"gray"}}>Alterar senha</h5>
                     </Col>
                 </Row>
                 <Col>
@@ -56,13 +56,12 @@ const Seguranca = () => {
                 </Col>
             </Row>
             <Row className="mb-3">
-                <Col>
+                <Col sm={3}>
                     <Button
                         as="input"
                         value="Salvar"
                         type="submit"
                         size="lg"
-                        className="mt-1"
                     />
                 </Col>
             </Row>

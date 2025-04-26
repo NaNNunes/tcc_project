@@ -3,7 +3,7 @@ import {Form, FloatingLabel, Button, Row, Col} from "react-bootstrap";
 const MinhasInfos = () => {
   return (
     <>
-        <Form className="border rounded-3 mb-3">
+        <Form className="border rounded-3 mb-3 shadow">
             <Row className="my-2">
                 {/* Titulo */}
                 <Col xs={6}>

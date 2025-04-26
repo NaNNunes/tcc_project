@@ -1,6 +1,7 @@
 import MinhasInfos from "./MinhasInfos"
 import Endereco from "./Endereco"
 import Seguranca from "./Seguranca"
+import Encerrar from "./Encerrar"
 
 const Conta = () => {
   return (
@@ -8,6 +9,7 @@ const Conta = () => {
         <MinhasInfos/>
         <Seguranca/>
         <Endereco/>
+        <Encerrar/>
     </>
   )
 }
