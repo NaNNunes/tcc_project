@@ -6,7 +6,7 @@ const MinhasInfos = () => {
         <Form className="border rounded-3 mb-3 shadow">
             <Row className="my-2">
                 {/* Titulo */}
-                <Col xs={6}>
+                <Col xs={5}>
                     <h3>Minhas informações</h3>
                 </Col>
             </Row>

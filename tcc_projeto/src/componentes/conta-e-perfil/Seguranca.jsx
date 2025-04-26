@@ -11,7 +11,7 @@ const Seguranca = () => {
             </Row>
             <Row className="m-1">
                 <Row>
-                    <Col sm={4}>
+                    <Col xs={4}>
                         <h5 style={{color:"gray"}}>Alterar senha</h5>
                     </Col>
                 </Row>
@@ -56,7 +56,7 @@ const Seguranca = () => {
                 </Col>
             </Row>
             <Row className="mb-3">
-                <Col sm={3}>
+                <Col xs={3}>
                     <Button
                         as="input"
                         value="Salvar"
