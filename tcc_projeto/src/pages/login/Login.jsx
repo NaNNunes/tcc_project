@@ -1,16 +1,17 @@
 import {Row, Col, Button, Form, Container } from 'react-bootstrap';
-
+import Image from 'react-bootstrap/Image';
+import styles from "./login.module.css"
 const Login = () => {
   return (
     <Container className="justify-content-center">
       
       <Col>
         <Form className='mt-5 rounded-3 bg-primary shadow'>
-          <img src="#" alt="" className="m-5"/>
+        <Image className={styles.Image} src="../../public/connectfix_logo.svg" fluid/>
           <Form.Floating className="mb-3 mx-5">
             <Form.Control
               id="floatingInputCustom"
-              type="email"
+              type="email"  
               placeholder="name@example.com"
             />
             <label htmlFor="floatingInputCustom">Email address</label>
