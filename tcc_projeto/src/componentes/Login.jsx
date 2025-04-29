@@ -11,7 +11,7 @@ const Login = () => {
         <Row className="justify-content-center">
           <Col xs={6}>
             <Form className='mt-5 rounded-3 bg-primary shadow'>
-              <img src="#" alt="" className="m-5"/>
+              <img src="../public/connectfix_logo.svg" alt="" className="mx-4" />
               <Form.Floating className="mb-3 mx-5">
                 <Form.Control
                   id="floatingInputCustom"
