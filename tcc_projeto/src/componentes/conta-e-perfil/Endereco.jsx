@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { getEnd_API, getEnd_local_API } from "../../hooks/useApi"; 
 
 const Endereco = () => {
+  // pega enderecos na api local
+  const enderecos = getEnd_local_API();
 
   // useForm para gerenciamento do form
   // register para registrar campus do form
@@ -19,8 +21,9 @@ const Endereco = () => {
 
   // form enviado com sucesso
   const onSubmit = (data) =>{
-    console.log(data.cep);
     getEnd_API(data.cep);
+    console.log("---- mostrar dados ----")
+    mostraDadosEndereco(data.cep)
   }
 
   // form sem exito no envio
@@ -28,14 +31,18 @@ const Endereco = () => {
     console.log("erro:",error);
   }
 
-  // não consigo pegar os valores de endereco e joga-los 
-  // nos fields com exportacao de funcao para coleta de dados
-  // resultado de valor retornado = undefined
-  // const mostraDadosEndereco = (endereco) =>{
-  //   console.log("-------------------------------------------")
-  //   console.log("Mostra dados")
-  //   console.log(endereco);
-  // }
+  const mostraDadosEndereco = (cepInput) =>{
+    let endereco_encontrado = {};
+    
+    enderecos.map((endereco)=>{
+      console.log("endereco encontrado: ",endereco)
+      console.log("cep inputado: ", cepInput);
+    })
+    console.log("---------------------------")
+
+    // encontrar endereco na lista de enderecos na api local pelo cep inserido
+    // para isso necessario pegar o vetor e localizar a instancia do obj no array
+  }
 
   const [bairro, setBairro] = useState("");
   const [uf, setUf] = useState("");
