@@ -24,8 +24,3 @@ dist-ssr
 *.sw?
 
 .env
-
-../db_tcc_dump.sql
-../modelo_fisico.mwb
-../modelo_fisico.mwb.bak
-../scrtip_banco.sql
