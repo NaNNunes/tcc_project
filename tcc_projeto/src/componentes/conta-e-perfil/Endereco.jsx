@@ -8,7 +8,6 @@ import { getEnd_API, getEnd_local_API } from "../../hooks/useApi";
 const Endereco = () => {
   // pega enderecos na api local
   const enderecos = getEnd_local_API();
-  console.log("Enderecos encontrados na API local:", enderecos);
 
   // useForm para gerenciamento do form
   // register para registrar campus do form
@@ -23,6 +22,7 @@ const Endereco = () => {
   // form enviado com sucesso
   const onSubmit = (data) =>{
     getEnd_API(data.cep);
+    console.log("---- mostrar dados ----")
     mostraDadosEndereco(data.cep)
   }
 
@@ -34,11 +34,14 @@ const Endereco = () => {
   const mostraDadosEndereco = (cepInput) =>{
     let endereco_encontrado = {};
     
+    enderecos.map((endereco)=>{
+      console.log("endereco encontrado: ",endereco)
+      console.log("cep inputado: ", cepInput);
+    })
+    console.log("---------------------------")
+
     // encontrar endereco na lista de enderecos na api local pelo cep inserido
     // para isso necessario pegar o vetor e localizar a instancia do obj no array
-
-
-
   }
 
   const [bairro, setBairro] = useState("");
