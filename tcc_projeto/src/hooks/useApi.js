@@ -41,7 +41,7 @@ function addEndereco(endereco){
 
 //localiza cep na api local
 export function getEnd_local_API(){
-    const [enderecos, setEndereco] = useState([]);
+    const [enderecos, setEndereco] = useState([])
     const url = import.meta.env.VITE_API_URL;
     useEffect(() => {
         async function fetchData() {
