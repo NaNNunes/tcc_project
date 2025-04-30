@@ -1,39 +1,73 @@
-import {Row, Col, Button, Form, Container } from 'react-bootstrap';
-import Image from 'react-bootstrap/Image';
-import styles from "./login.module.css"
+import { Row, Col, Button, Form, Container } from "react-bootstrap";
+import Image from "react-bootstrap/Image";
+import styles from "./login.module.css";
 const Login = () => {
   return (
-    <Container className="justify-content-center">
-      
+    
+    <Container className={styles.container}>
       <Col>
-        <Form className='mt-5 rounded-3 bg-primary shadow'>
-        <Image className={styles.Image} src="../../public/connectfix_logo.svg" fluid/>
+        <Form className={styles.loginForm}>
+          <Image
+            className={styles.Image}
+            src="/logos/connectfix_logo.svg"
+            fluid
+          />
+
+          <h6 className="text-white">Confiança que gera conexões</h6>
+          <hr className="mb-4 mx-5 text-white border-2" />
+
           <Form.Floating className="mb-3 mx-5">
             <Form.Control
               id="floatingInputCustom"
-              type="email"  
-              placeholder="name@example.com"
+              type="text"
+              placeholder="000.000.000-00"
             />
-            <label htmlFor="floatingInputCustom">Email address</label>
+            <label htmlFor="floatingInputCustom">CPF</label>
           </Form.Floating>
+
           <Form.Floating className="mb-3 mx-5">
             <Form.Control
               id="floatingPasswordCustom"
               type="password"
               placeholder="Password"
             />
-            <label htmlFor="floatingPasswordCustom">Password</label>
+            <label htmlFor="floatingPasswordCustom">Senha</label>
           </Form.Floating>
+
+          <div className={styles.ancor}>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.link}
+            >
+              Esqueceu a senha?
+            </a>
+          </div>
+
           <div className="d-grid gap-2">
             <Button
-              as='input' value="Login" type='button' size='lg'
-              className='mb-3 mx-5 border-light border-5 rounded-4 fw-bold fs-4'
+              as="input"
+              value="Login"
+              type="button"
+              size="lg"
+              className={styles.Button}
             />
+            <hr className="mb-1 mx-5 text-white border-2" />
+            <h6 className="text-white">Ainda não se registrou? <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.link}
+            >
+              Clique aqui.
+            </a></h6>
+            
           </div>
         </Form>
       </Col>
     </Container>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
