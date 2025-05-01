@@ -1,13 +1,21 @@
-/* body {
+/* Reset básico */
+html, body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  background-image: url('../public/backgrounds/image.png');
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* Background exclusivo para a página de login */
+body.login-background {
+  background-image: url('/backgrounds/image.png');
   background-size: cover;
   background-position: center;
-} */
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100vw;
+}
+
 
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
