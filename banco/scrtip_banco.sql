@@ -6,37 +6,51 @@ DROP DATABASE tcc_db;
 -- gestor solicitou suspender a criacao de operador por enquanto
 -- focar em demanda
 
+CREATE TABLE ENDERECO(
+	id_endereco INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    cep_end VARCHAR(8) UNIQUE,
+    uf_end VARCHAR(2),
+    cidade_end VARCHAR(45),
+    bairro_end VARCHAR(20),
+    lagradouro VARCHAR(100)
+);
+
 CREATE TABLE SOLICITANTE(
 	id_solicitante INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    id_endereco_solicitante INT,
+    tipo_user_solicitante INT(1) DEFAULT 1,
     cpf_solicitante VARCHAR(11) NOT NULL UNIQUE,
     name_solicitante VARCHAR(30) NOT NULL,
     surname_solicitante VARCHAR(30) NOT NULL,
     email_solicitante VARCHAR(320) NOT NULL UNIQUE,
-	tel_solicitante VARCHAR(11) UNIQUE,
+	tel_solicitante VARCHAR(11),
     senha_solicitante VARCHAR(20) NOT NULL,
     dt_cadastro_solicitante DATE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    is_active_solicitante TINYINT(1) DEFAULT 1 -- 1 ATIVO 0 INATIVO
+    is_active_solicitante INT(1) DEFAULT 1, -- 1 ATIVO 0 INATIVO
+    CONSTRAINT FK_Endereco_Solicitante FOREIGN KEY (id_endereco_solicitante) REFERENCES endereco(id_endereco)
 );
+DROP TABLE solicitante;
 
 CREATE TABLE DISPOSITIVO(
-	id_disp INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_solicitante_disp INT,
-    id_hw_disp VARCHAR(23) UNIQUE,
-    categ_disp ENUM('MOVEL', 'NOTEBOOK', 'CONSOLE', 'DESKTOP', 'OUTRO'),
-    fab_disp VARCHAR(45),
-    marca_disp VARCHAR(45),
-    modelo_disp VARCHAR(30),
-    cor_disp VARCHAR(20),
-    voltagem_disp VARCHAR(3),
-    dt_cad_disp DATETIME DEFAULT CURRENT_TIMESTAMP,
-	CONSTRAINT FK_Disp_Solic FOREIGN KEY (id_solicitante_disp) REFERENCES solicitante(id_solicitante)
-);
+	id_dispositivo INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_solicitante_dispositivo INT,
+    identificador_dispositivo VARCHAR(23) UNIQUE,
+    categ_disp ENUM('CELULAR', 'TABLET', 'NOTEBOOK', 'CONSOLE', 'DESKTOP', 'OUTRO'),
+    fab_dispositivo VARCHAR(45),
+    marca_dispositivo VARCHAR(45),
+    modelo_dispositivo VARCHAR(30),
+    cor_dispositivo VARCHAR(20),
+    amperagem_dispositivo VARCHAR(5),
+    voltagem_dispositivo VARCHAR(5),
+    dt_cad_dispositivo DATETIME DEFAULT CURRENT_TIMESTAMP, -- analisando utilidade
+	CONSTRAINT FK_Dispositivo_Solicitante FOREIGN KEY (id_solicitante_dispositivo) REFERENCES solicitante(id_solicitante)
+); 
 DROP TABLE dispositivo;
 
 CREATE TABLE ADM(
 	id_adm INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+    tipo_user_adm INT(1) DEFAULT 2, -- permissao de user
     cpf_adm VARCHAR(11) NOT NULL UNIQUE,
-    cargo_adm ENUM("adm","tec"),
     name_adm VARCHAR(30),
     surname_adm VARCHAR(30),
     email_adm VARCHAR(320) NOT NULL UNIQUE,
@@ -44,33 +58,37 @@ CREATE TABLE ADM(
     tel_adm VARCHAR(11) NOT NULL UNIQUE,
     dt_pag_mensal_adm DATE DEFAULT CURRENT_TIMESTAMP,
     dt_cadastro_adm DATETIME DEFAULT CURRENT_TIMESTAMP,
-    mens_paga_adm TINYINT(1) DEFAULT 0,
-    is_active_adm TINYINT(1) DEFAULT 1
+    mens_paga_adm INT(1) DEFAULT 0,
+    is_active_adm INT(1) DEFAULT 1
 );
 DROP TABLE ADM;
 
 CREATE TABLE ASSISTENCIA_T(
 	id_at INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     id_adm_at INT,
+    id_endereco_assist INT,
 	cnpj_at VARCHAR(14) UNIQUE,
-	nome_fatasia_at VARCHAR(50),
+	nome_fatasia_at VARCHAR(50) UNIQUE,
 	razao_social_at VARCHAR(100) UNIQUE,
 	email_at VARCHAR(320) UNIQUE,
 	telefone_at VARCHAR(11) UNIQUE,
 	dt_cadastro_at TINYINT(1) DEFAULT 0,
 	is_active_at TINYINT(1) DEFAULT 1,
-    CONSTRAINT FK_Assit_Adm FOREIGN KEY (id_adm_at) REFERENCES adm(id_adm)
+    CONSTRAINT FK_Assist_Administrador FOREIGN KEY (id_adm_at) REFERENCES adm(id_adm),
+    CONSTRAINT FK_Assist_Endereco FOREIGN KEY (id_endereco_assist) REFERENCES endereco(id_endereco)
 );
+DROP TABLE ASSISTENCIA_T;
 
 CREATE TABLE TECNICO(
 	id_tec INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
     id_adm_tec INT,
     id_at_tec INT,
+    tipo_user_tec INT(1) DEFAULT 3,
+    cpf_tec VARCHAR(11) UNIQUE,
     name_tec VARCHAR(30),
     surname_tec VARCHAR(45),
     email_tec VARCHAR(320) UNIQUE,
     senha_tec VARCHAR(20) NOT NULL,
-    cargo_tec ENUM("adm","operador"),
     dt_cadastro_tec DATETIME DEFAULT CURRENT_TIMESTAMP,
     is_active_tec TINYINT(1) DEFAULT 1,
     CONSTRAINT FK_Adm_tec FOREIGN KEY (id_adm_tec) REFERENCES adm(id_adm),
@@ -79,47 +97,44 @@ CREATE TABLE TECNICO(
 
 CREATE TABLE ORDEM_SERVICO(
 	id_os INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_sol_os INT,
-	id_tec_os INT,
-    id_disp_os INT,
-    dt_solicitacao_os DATETIME DEFAULT CURRENT_TIMESTAMP,
+    id_solicitante_os INT,
+	id_adm_os INT,
+    id_dispositivo_os INT,
+    id_assistencia_os INT,
+    id_responsavel_os INT,
+    dt_solicitacao_os DATETIME DEFAULT CURRENT_TIMESTAMP, -- data em que demanda foi emitida
     dt_atualizacao_os DATETIME DEFAULT CURRENT_TIMESTAMP,
-    dt_entrega_os DATETIME,
-    val_orcamento_os DECIMAL(9,2),
+    dt_prazo_os DATETIME, -- prazo definido para entrega
+    val_orcamento_os DECIMAL(9,2), 
     assunto_os VARCHAR(500),
     obs_os VARCHAR(200),
     staus_os ENUM("resolvido","aberto","pendente"),
-    CONSTRAINT FK_Sol_OrdemServ FOREIGN KEY (id_sol_os) REFERENCES solicitante(id_solicitante),
-    CONSTRAINT FK_Tec_OrdemServ FOREIGN KEY (id_tec_os) REFERENCES tecnico(id_tec),
-    CONSTRAINT FK_Disp_OrdemServ FOREIGN KEY (id_disp_os) REFERENCES dispositivo(id_disp)
+    CONSTRAINT FK_Solicitante_OrdemServ FOREIGN KEY (id_solicitante_os) REFERENCES SOLICITANTE(id_solicitante),
+    CONSTRAINT FK_Adm_OrdemServ FOREIGN KEY (id_adm_os) REFERENCES ADM(id_adm),
+    CONSTRAINT FK_Dispositivo_OrdemServ FOREIGN KEY (id_dispositivo_os) REFERENCES DISPOSITIVO(id_dispositivo),
+    CONSTRAINT FK_Assistencia_OrdemServ FOREIGN KEY (id_assistencia_os) REFERENCES ASSISTENCIA_T(id_at)
 );
 
-CREATE TABLE ENDERECO(
-	id_end INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    cep_end VARCHAR(8) UNIQUE,
-    uf_end VARCHAR(2),
-    cidade_end VARCHAR(45),
-    bairro_end VARCHAR(20),
-    lagradouro VARCHAR(100)
+CREATE TABLE ACESSO_TEC_OS(
+	id_acesso INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_tec_acesso_tec_os INT,
+    id_os_acesso_tec_os INT,
+    dt_ultimo_acesso DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FK_Tecnico_acesso_tec_os FOREIGN KEY (id_tec_acesso_tec_os) REFERENCES tecnico(id_tec),
+    CONSTRAINT FK_OrdemServ_acesso_tec_os FOREIGN KEY (id_os_acesso_tec_os) REFERENCES ORDEM_SERVICO(id_os)
 );
+DROP TABLE ACESSO_TEC_OS;
 
-CREATE TABLE END_SOLICITANTE(
-	id_end_sol INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    id_end_end_sol INT,
-    id_sol_end_sol INT,
-    CONSTRAINT FK_End_EndSol FOREIGN KEY (id_end_end_sol) REFERENCES endereco(id_end),
-    CONSTRAINT FK_Sol_EndSol FOREIGN KEY (id_sol_end_sol) REFERENCES solicitante(id_solicitante)
+CREATE TABLE AVALIACAO_SOLIC_ASSIST(
+	id_avaliacao_solic_assist INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_solicitante_avaliacao INT,
+    id_assistencia_avaliacao INT,
+    feedback_avaliacao_solic_assist VARCHAR(100),
+    nota_satisfacao_avaliacao_solic_assistencia ENUM("1","2","3","4","5"), -- talvez aumentar para 10
+    CONSTRAINT FK_Solicitante_avaliacao FOREIGN KEY (id_solicitante_avaliacao) REFERENCES solicitante(id_solicitante),
+    CONSTRAINT FK_Assistencia_avaliacao FOREIGN KEY (id_assistencia_avaliacao) REFERENCES assistencia_t(id_at)
 );
-
-CREATE TABLE END_AT(
-	id_end_at INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-    id_end_end_at INT,
-    id_at_end_at INT,
-    complemento_end_at VARCHAR(45),
-    numero_end_at VARCHAR(4),
-    CONSTRAINT FK_End_EndAt FOREIGN KEY (id_end_end_at) REFERENCES endereco(id_end),
-    CONSTRAINT FK_At_EndAt FOREIGN KEY (id_at_end_at) REFERENCES assistencia_t(id_at)
-);
+DROP TABLE AVALIACAO_SOLIC_ASSIST;
 
 INSERT INTO 
 	solicitante
