@@ -105,7 +105,7 @@ CREATE TABLE ORDEM_SERVICO(
     dt_solicitacao_os DATETIME DEFAULT CURRENT_TIMESTAMP, -- data em que demanda foi emitida
     dt_atualizacao_os DATETIME DEFAULT CURRENT_TIMESTAMP,
     dt_prazo_os DATETIME, -- prazo definido para entrega
-    val_orcamento_os DECIMAL(9,2), 
+    val_orcamento_os INT, -- definido como int para maior precisao do registro do valor, partindo da base em que o valor será armazenado em centavo, deixando assim a conversao do valor de forma externa
     assunto_os VARCHAR(500),
     obs_os VARCHAR(200),
     staus_os ENUM("resolvido","aberto","pendente"),
@@ -114,6 +114,9 @@ CREATE TABLE ORDEM_SERVICO(
     CONSTRAINT FK_Dispositivo_OrdemServ FOREIGN KEY (id_dispositivo_os) REFERENCES DISPOSITIVO(id_dispositivo),
     CONSTRAINT FK_Assistencia_OrdemServ FOREIGN KEY (id_assistencia_os) REFERENCES ASSISTENCIA_T(id_at)
 );
+
+ALTER TABLE ORDEM_SERVICO
+	MODIFY COLUMN val_orcamento_os INT; 
 
 CREATE TABLE ACESSO_TEC_OS(
 	id_acesso INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
