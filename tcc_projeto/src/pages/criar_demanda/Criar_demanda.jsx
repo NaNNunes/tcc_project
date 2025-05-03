@@ -1,4 +1,4 @@
-import CategoriaDispositivo from '../../componentes/cadastro-demanda/CategoriaDispositivo.jsx';
+import CategoriaDispositivo from '../../componentes/cadastro-demanda/CategoriaDispositivo/CategoriaDispositivo.jsx';
 
 const Criar_demanda = () => {
   return (
