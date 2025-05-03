@@ -22,14 +22,12 @@ const router = createBrowserRouter([
         element: <Login />
       },
       {
-
-        path: "/Criar-Demanda",
-        element: <CriarDemanda />,
-      },
-      {
         path: "/cadastro",
         element: <Cadastro />,
-
+      },
+      {
+        path: "/criar-Demanda",
+        element: <CriarDemanda />,
       },
       {
         path: "/conta",
