@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import Login from "./pages/login/Login.jsx";
 import Conta from "./pages/conta_perfil/Conta.jsx";
 import Assistencia_info from "./pages/assistencia_info/Assistencia_info.jsx";
+import Cadastro from "./pages/cadastro/cadastro.jsx";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,12 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       { path: "/login",
-        element: <Login /> },
+        element: <Login />
+      },
+      {
+        path: "/cadastro",
+        element: <Cadastro />,
+      },
       {
         path: "/conta",
         element: <Conta />,
@@ -24,7 +30,7 @@ const router = createBrowserRouter([
       {
         path: "/assistencia-info",
         element: <Assistencia_info/>
-      }
+      },
     ],
   },
 ]);

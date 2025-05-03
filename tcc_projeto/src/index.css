@@ -1,21 +1,22 @@
 /* Reset básico */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
 }
 
-/* Background exclusivo para a página de login */
+/* Background exclusivo para páginas sem login ativo */
 body.login-background {
-  background-image: url('/backgrounds/image.png');
+  background-image: url("/backgrounds/image.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   min-height: 100vh;
   width: 100vw;
 }
-
 
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
