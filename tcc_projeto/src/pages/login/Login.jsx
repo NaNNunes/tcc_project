@@ -55,7 +55,7 @@ const Login = () => {
             />
             <hr className="mb-1 mx-5 text-white border-2" />
             <h6 className="text-white">Ainda não se registrou? <a
-              href="#"
+              href="/cadastro"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.link}
