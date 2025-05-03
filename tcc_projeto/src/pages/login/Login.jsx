@@ -1,6 +1,9 @@
-import { Row, Col, Button, Form, Container } from "react-bootstrap";
-import Image from "react-bootstrap/Image";
+import { Row, Col, Button, Form, Container, Image } from "react-bootstrap";
+import { Link } from "react-router-dom";
+
 import styles from "./login.module.css";
+
+
 const Login = () => {
   return (
     
@@ -54,14 +57,15 @@ const Login = () => {
               className={styles.Button}
             />
             <hr className="mb-1 mx-5 text-white border-2" />
-            <h6 className="text-white">Ainda não se registrou? <a
-              href="/cadastro"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.link}
-            >
-              Clique aqui.
-            </a></h6>
+
+            <h6 className="text-white">Ainda não se registrou?
+              <Link
+                to="/cadastro"
+                className={styles.link}
+              >
+                Siga por aqui.
+              </Link>
+            </h6>
             
           </div>
         </Form>
