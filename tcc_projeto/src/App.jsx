@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Container from "react-bootstrap/Container";
@@ -8,10 +8,11 @@ function App() {
   const location = useLocation();
   const isLoginPage =
     location.pathname === "/" || location.pathname === "/login";
+  const isRegisterPage = location.pathname === "/cadastro";
 
   // UseEffect para adicionar e remover a classe no body
   React.useEffect(() => {
-    if (isLoginPage) {
+    if (isLoginPage || isRegisterPage) {
       document.body.classList.add("login-background");
     } else {
       document.body.classList.remove("login-background");
