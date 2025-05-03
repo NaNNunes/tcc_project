@@ -3,7 +3,7 @@ import {Form, FloatingLabel, Row, Col, Button} from "react-bootstrap";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { getEnd_API, getEnd_local_API} from "../../hooks/useApi"; 
+import { getEnd_API, getEnd_local_API} from "../hooks/useApi"; 
 
 const Endereco = () => {
   // pega enderecos na api local
@@ -144,8 +144,21 @@ const Endereco = () => {
               </FloatingLabel>
             </Col>
           </Row>
-          <Row className="mb-3">
-            <Col xs={3}>
+          <Row className="m-1 mb-3">
+            <Col>
+              <FloatingLabel
+                controlId="numResidUserInput"
+                label="Complemento"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="text"
+                  placeholder=""
+                  value={""}
+                />
+              </FloatingLabel>
+            </Col>
+            <Col sm={3} className="my-1">
               <Button
                 as="input"
                 value="Salvar"

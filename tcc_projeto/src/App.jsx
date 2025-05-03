@@ -22,6 +22,7 @@ function App() {
       document.body.classList.remove("login-background");
     };
   }, [isLoginPage]);
+  
   return (
     <div className={isLoginPage ? "login-background" : ""}>
       <Container>
