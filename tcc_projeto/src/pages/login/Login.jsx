@@ -87,7 +87,9 @@ const Login = () => {
             </Col>
         </Row>
         <Row>
-          <hr className="mb-1 mx-5 text-white border-2" />
+          <Col>
+            <hr className="mb-1 mx-5 text-white border-2" />
+          </Col>
 
           <h6 className="text-white">Ainda não se registrou?
             <Link

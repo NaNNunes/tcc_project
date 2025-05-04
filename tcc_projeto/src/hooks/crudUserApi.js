@@ -9,15 +9,9 @@ export function addAdm(administrador){
                 body: JSON.stringify(administrador)
             })
 
-            if (response.status != 201){
-                return false;
-            }
-
             const data = await response.json();
             console.log("adm cadastrado: ", data);
-
-            return true;
-
+            
         } catch (error) {
             console.log("Erro ao cadastrar administrador: ", error)
         }

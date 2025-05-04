@@ -1,25 +1,7 @@
 {
   "adms": [
-    {
-      "id": "d412",
-      "email": "use@gmail.com",
-      "cpf": "13312793726",
-      "telefone": "40028922",
-      "nome": "Alan",
-      "sobrenome": "Zoka",
-      "senha": "123",
-      "confirmarSenha": "123"
-    },
-    {
-      "id": "51ad",
-      "email": "use@gmail.com",
-      "cpf": "13312793726",
-      "telefone": "40028922",
-      "nome": "Alan",
-      "sobrenome": "Zoka",
-      "senha": "123",
-      "confirmarSenha": "123"
-    }
+
   ],
-  "solicitante": []
+  "solicitante": [],
+  "enderecos": []
 }

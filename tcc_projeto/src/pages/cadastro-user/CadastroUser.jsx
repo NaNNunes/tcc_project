@@ -1,6 +1,6 @@
 import {Form, FloatingLabel, Button, Row, Col, Container, Image} from "react-bootstrap";
 
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import styles from "../../componentes/cadastro-user/informacoes.module.css";
@@ -25,8 +25,7 @@ const CadastroUser = () => {
       }
   
       console.log("dados: ", data);
-      addAdm(data)
-      navigate("/pergunta-seguranca")
+      navigate("/pergunta-seguranca", data)
     }
   
     const onError = (errors) => {
