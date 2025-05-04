@@ -1,17 +1,16 @@
 import {Form, FloatingLabel, Button, Row, Col, Container, Image} from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 
-const PerguntaSeguranca = (props) => {
+const PerguntaSeguranca = () => {
+    const location = useLocation();
+    const dadosUser = location.state;
 
     const {register, handleSubmit, formState:{errors}} = useForm();
-    console.log("--------------------------------------")
-    console.log(props);
+    
     return (
         <Container>
-            {/* <Form onSubmit={handleSubmit(onSubmit, onError)}>
-                
-            </Form> */}
-            
+
         </Container>
     )
 }

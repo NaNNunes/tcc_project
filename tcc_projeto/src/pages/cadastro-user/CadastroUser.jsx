@@ -20,12 +20,10 @@ const CadastroUser = () => {
     const onSubmit = (data) => {
   
       if(!verificadorCpf(data.cpf)){
-        console.log("cpf inválido")
         return false;
       }
   
-      console.log("dados: ", data);
-      navigate("/pergunta-seguranca", data)
+      navigate("/pergunta-seguranca", {state: data})
     }
   
     const onError = (errors) => {
