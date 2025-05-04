@@ -1,13 +1,25 @@
 {
-  "users": [
+  "adms": [
     {
-      "id": "4053",
-      "cep": "29102906",
-      "state": "ES",
-      "city": "Vila Velha",
-      "neighborhood": "Coqueiral de Itaparica",
-      "street": "Avenida Santa Leopoldina",
-      "service": "open-cep"
+      "id": "d412",
+      "email": "use@gmail.com",
+      "cpf": "13312793726",
+      "telefone": "40028922",
+      "nome": "Alan",
+      "sobrenome": "Zoka",
+      "senha": "123",
+      "confirmarSenha": "123"
+    },
+    {
+      "id": "51ad",
+      "email": "use@gmail.com",
+      "cpf": "13312793726",
+      "telefone": "40028922",
+      "nome": "Alan",
+      "sobrenome": "Zoka",
+      "senha": "123",
+      "confirmarSenha": "123"
     }
-  ]
+  ],
+  "solicitante": []
 }

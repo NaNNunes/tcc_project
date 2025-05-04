@@ -1,11 +1,17 @@
 import {Form, FloatingLabel, Button, Row, Col, Container, Image} from "react-bootstrap";
 
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import styles from "./informacoes.module.css";
 
+import { addAdm } from "../../hooks/crudUserApi";
+import { verificadorCpf } from "../../functions/verificador_cpf";
+
 const Informacoes = () => {
+
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -13,7 +19,15 @@ const Informacoes = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+
+    if(!verificadorCpf(data.cpf)){
+      console.log("cpf inválido")
+      return false;
+    }
+
     console.log("dados: ", data);
+    addAdm(data)
+    navigate("/pergunta-seguranca")
   }
 
   const onError = (errors) => {
@@ -21,7 +35,6 @@ const Informacoes = () => {
   }
 
   // to do renan : chamar funcao para registro na api local
-
 
   return (
     <Container className={styles.container}>
@@ -60,6 +73,9 @@ const Informacoes = () => {
               <Form.Control
                 type="email"
                 placeholder=""
+                {
+                  ...register("email")
+                }
               />
             </FloatingLabel>
           </Col>
@@ -146,7 +162,8 @@ const Informacoes = () => {
               <Form.Control
                 type="password"
                 placeholder="Password"
-                {...register("senha", {
+                {...register("senha", 
+                  /*{
                   required: "A senha é obrigatória",
                   minLength: {
                       value: 8,
@@ -162,7 +179,7 @@ const Informacoes = () => {
                       message:
                           "A senha deve conter pelo menos uma letra maiúscula uma letra minúscula, um número e um caractere especial",
                   },
-                  })
+                  }*/)
                 }
               />
             </FloatingLabel>
@@ -202,13 +219,15 @@ const Informacoes = () => {
 
           <Row>
             <Col>
-              <Button
-                as="input"
-                value="Avançar"
-                type="submit"
-                size="lg"
-                className={`${styles.Button}`}
-              />
+              
+                <Button
+                  as="input"
+                  value="Avançar"
+                  type="submit"
+                  size="lg"
+                  className={`${styles.Button}`}
+                />
+            
             </Col>
           </Row>
 
