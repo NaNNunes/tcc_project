@@ -3,9 +3,8 @@ import {Form, FloatingLabel, Button, Row, Col, Container, Image} from "react-boo
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import styles from "../../componentes/cadastro-user/informacoes.module.css";
+import styles from "./cadastro.module.css";
 
-import { addAdm } from "../../hooks/crudUserApi";
 import { verificadorCpf } from "../../functions/verificador_cpf";
 
 const CadastroUser = () => {

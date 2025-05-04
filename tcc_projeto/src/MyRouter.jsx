@@ -7,9 +7,6 @@ import CriarDemanda from "./pages/criar_demanda/Criar_demanda.jsx"
 import Conta from "./pages/conta_perfil/Conta.jsx";
 import Assistencia_info from "./pages/assistencia_info/Assistencia_info.jsx";
 import CadastroUser from "./pages/cadastro-user/CadastroUser.jsx";
-// import Pergunta from "./pages/cadastro-user/Pergunta.jsx";
-import PerguntaSeguranca from "./componentes/cadastro-user/PerguntaSeguranca.jsx";
-
 
 const router = createBrowserRouter([
   {
@@ -26,10 +23,6 @@ const router = createBrowserRouter([
       {
         path: "/cadastro",
         element: <CadastroUser/>,
-      },
-      {
-        path: "/pergunta-seguranca",
-        element: <PerguntaSeguranca/>
       },
       {
         path: "/criar-demanda",
