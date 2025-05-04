@@ -1,75 +1,105 @@
-import { Row, Col, Button, Form, Container, Image } from "react-bootstrap";
+import { Row, Col, Button, Form, Container, Image, FloatingLabel } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 import styles from "./login.module.css";
 
-
 const Login = () => {
+
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log("dados: ", data);
+  }
+
+  const onError = (errors) => {
+    console.log("Error: ", errors);
+  }
+
   return (
-    
     <Container className={styles.container}>
-      <Col>
-        <Form className={styles.loginForm}>
-          <Image
-            className={styles.Image}
-            src="/logos/connectfix_logo.svg"
-            fluid
+      <Form 
+        className={styles.loginForm}
+        onSubmit={handleSubmit( onSubmit, onError )}
+      >
+        <Image
+          className={styles.Image}
+          src="/logos/connectfix_logo.svg"
+          fluid
+        />
+
+        <h6 className="text-white">Confiança que gera conexões</h6>
+        <hr className="mb-4 mx-5 text-white border-2" />
+
+        <FloatingLabel 
+          id="fuserCpfInput"
+          className="mb-3 mx-5"
+          label="CPF"
+        >
+          <Form.Control
+            type="text"
+            placeholder="000.000.000-00"
+            {
+              ...register("cpf")
+            }
           />
 
-          <h6 className="text-white">Confiança que gera conexões</h6>
-          <hr className="mb-4 mx-5 text-white border-2" />
+        </FloatingLabel>
 
-          <Form.Floating className="mb-3 mx-5">
-            <Form.Control
-              id="floatingInputCustom"
-              type="text"
-              placeholder="000.000.000-00"
-            />
-            <label htmlFor="floatingInputCustom">CPF</label>
-          </Form.Floating>
+        <FloatingLabel
+          id="userSenhaInput"
+          className="mb-3 mx-5"
+          label="Senha"
+        >
+          <Form.Control   
+            type="password"
+            placeholder=""
+            {
+              ...register("senha")
+            }
+          />
+        </FloatingLabel>
 
-          <Form.Floating className="mb-3 mx-5">
-            <Form.Control
-              id="floatingPasswordCustom"
-              type="password"
-              placeholder="Password"
-            />
-            <label htmlFor="floatingPasswordCustom">Senha</label>
-          </Form.Floating>
+        <div className={styles.ancor}>
+          <Link
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.link}
+          >
+            Esqueceu a senha?
+          </Link>
+        </div>
 
-          <div className={styles.ancor}>
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
+        <Row className="d-grid gap-2">
+            <Col>
+              <Button
+                as="input"
+                value="Login"
+                type="submit"
+                size="lg"
+                className={styles.Button}
+              />
+            </Col>
+        </Row>
+        <Row>
+          <hr className="mb-1 mx-5 text-white border-2" />
+
+          <h6 className="text-white">Ainda não se registrou?
+            <Link
+              to="/cadastro"
               className={styles.link}
             >
-              Esqueceu a senha?
-            </a>
-          </div>
-
-          <div className="d-grid gap-2">
-            <Button
-              as="input"
-              value="Login"
-              type="button"
-              size="lg"
-              className={styles.Button}
-            />
-            <hr className="mb-1 mx-5 text-white border-2" />
-
-            <h6 className="text-white">Ainda não se registrou?
-              <Link
-                to="/cadastro"
-                className={styles.link}
-              >
-                Siga por aqui.
-              </Link>
-            </h6>
-            
-          </div>
-        </Form>
-      </Col>
+              Siga por aqui.
+            </Link>
+          </h6>
+          
+        </Row>
+      </Form>
     </Container>
   );
 };

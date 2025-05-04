@@ -1,5 +1,13 @@
 {
   "users": [
-
+    {
+      "id": "4053",
+      "cep": "29102906",
+      "state": "ES",
+      "city": "Vila Velha",
+      "neighborhood": "Coqueiral de Itaparica",
+      "street": "Avenida Santa Leopoldina",
+      "service": "open-cep"
+    }
   ]
 }

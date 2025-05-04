@@ -1,11 +1,28 @@
-import {Form, FloatingLabel, Button, Row, Col,Container} from "react-bootstrap";
+import {Form, FloatingLabel, Button, Row, Col, Container, Image} from "react-bootstrap";
 
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
-import Image from "react-bootstrap/Image";
 import styles from "./informacoes.module.css";
 
 const Informacoes = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log("dados: ", data);
+  }
+
+  const onError = (errors) => {
+    console.log("Error: ", errors);
+  }
+
+  // to do renan : chamar funcao para registro na api local
+
+
   return (
     <Container className={styles.container}>
       {/* Parte de cima */}
@@ -28,7 +45,10 @@ const Informacoes = () => {
           </Col>
         </Row>
       </Row>
-      <Form className='px-4'>
+      <Form 
+        className='px-4'
+        onSubmit={handleSubmit(onSubmit, onError)}
+      >
         <Row>
           {/* E-mail */}
           <Col>
@@ -56,6 +76,9 @@ const Informacoes = () => {
               <Form.Control
                 type="text"
                 placeholder="000.000.000-00"
+                {
+                  ...register("cpf")
+                }
               />
             </FloatingLabel>
           </Col>
@@ -69,6 +92,9 @@ const Informacoes = () => {
               <Form.Control
                 type="text"
                 placeholder="(00) 00000-0000"
+                {
+                  ...register("telefone")
+                }
               />
             </FloatingLabel>
           </Col>
@@ -84,7 +110,10 @@ const Informacoes = () => {
             >
               <Form.Control
                 type="text"
-                placeholder="Seu nome"
+                placeholder="Nome"
+                {
+                  ...register("nome")
+                }
               />
             </FloatingLabel>
           </Col>
@@ -98,6 +127,9 @@ const Informacoes = () => {
               <Form.Control
                 type="text"
                 placeholder="Sobrenome"
+                {
+                  ...register("sobrenome")
+                }
               />
             </FloatingLabel>
           </Col>
@@ -114,6 +146,24 @@ const Informacoes = () => {
               <Form.Control
                 type="password"
                 placeholder="Password"
+                {...register("senha", {
+                  required: "A senha é obrigatória",
+                  minLength: {
+                      value: 8,
+                      message: "A senha deve ter pelo menos 8 caracteres",
+                  },
+                  maxLength: {
+                      value: 20,
+                      message: "A senha deve ter menos de 20 caracteres",
+                  },
+                  pattern: {
+                      value:
+                          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                      message:
+                          "A senha deve conter pelo menos uma letra maiúscula uma letra minúscula, um número e um caractere especial",
+                  },
+                  })
+                }
               />
             </FloatingLabel>
           </Col>
@@ -124,9 +174,14 @@ const Informacoes = () => {
               label="Confirmar Senha"
             >
               <Form.Control
-                id="floatingPasswordCustom"
                 type="password"
-                placeholder="Password"
+                placeholder=""
+                {...register("confirmarSenha", {
+                  required: "A confirmação de senha é obrigatória",
+                  // Missão para @nata
+                  // validate: (value) =>
+                  //     value === watch("senha") || "As senhas não coincidem",
+              })}
               />
             
             </FloatingLabel>
@@ -150,7 +205,7 @@ const Informacoes = () => {
               <Button
                 as="input"
                 value="Avançar"
-                type="button"
+                type="submit"
                 size="lg"
                 className={`${styles.Button}`}
               />

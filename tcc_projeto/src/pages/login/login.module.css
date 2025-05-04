@@ -27,9 +27,7 @@
 }
 
 .Button {
-  margin-bottom: 0;
-  margin-left: 3rem;
-  margin-right: 3rem;
+  width: 300px;
   border: 5px solid #f8f9fa;
   border-radius: 0.75rem;
   background-color: transparent;

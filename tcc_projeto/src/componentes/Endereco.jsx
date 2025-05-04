@@ -85,7 +85,7 @@ const Endereco = () => {
                 <Form.Control
                   type="text"
                   placeholder=""
-                  value={""}
+                  
                 />
               </FloatingLabel>
             </Col>
@@ -98,7 +98,7 @@ const Endereco = () => {
                 <Form.Control
                   type="text"
                   placeholder=""
-                  value={""}
+                  
                 />
               </FloatingLabel>
             </Col>
@@ -113,7 +113,7 @@ const Endereco = () => {
                 <Form.Control
                   type="text"
                   placeholder=""
-                  value={""}
+                  
                 />
               </FloatingLabel>
             </Col>
@@ -126,7 +126,7 @@ const Endereco = () => {
                 <Form.Control
                   type="text"
                   placeholder=""
-                  value={""}
+                  
                 />
               </FloatingLabel>
             </Col>
@@ -139,7 +139,7 @@ const Endereco = () => {
                 <Form.Control
                   type="text"
                   placeholder=""
-                  value={""}
+                  
                 />
               </FloatingLabel>
             </Col>
@@ -154,7 +154,7 @@ const Endereco = () => {
                 <Form.Control
                   type="text"
                   placeholder=""
-                  value={""}
+                  
                 />
               </FloatingLabel>
             </Col>
