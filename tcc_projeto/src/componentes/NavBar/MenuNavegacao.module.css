@@ -1,0 +1,78 @@
+/* Definição de style do "Navbar" */
+.navbar {
+    background: linear-gradient(180deg, #034C8C, #001A32 75%);
+    padding: 0px 0px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 7rem;
+    height: 100%;
+    transition: width 0.3s ease; /* Transição de tamanho */
+}
+
+.navbar:hover {
+    width: 16rem;
+    transition: width 0.3s ease; /* Transição de tamanho */
+}
+
+
+/* Definição de style do "Container" da Brand */
+.containerMarca {
+    display: flex;
+    flex-direction: column !important;
+    flex-wrap: wrap !important;
+    padding: 10px;
+    align-items: center !important;
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+/* Definição de style do "Container" da navbar.collapse */
+.containerNav {
+    display: flex;
+    flex-direction: column !important;
+    flex-wrap: wrap !important;
+    padding: 0px;
+    align-items: center !important;
+}
+
+
+/* Definição de style de "Navbar.Collapse" e "Nav" */
+.navegacao {
+    /* background-color: red; */
+    display: block;
+    width: 100%;
+    padding: 0px;
+}
+
+
+/* Definição de style de "Nav.Link" */
+.meuLink {
+    color: white;
+    background-color: transparent;
+    padding: 0px 0px !important;
+    margin-right: 5px;
+    margin-left: 5px;
+    align-items: left;
+    border-radius: 8px;
+    height: 40px;
+    align-content: center !important;
+}
+
+.meuLink:hover {
+    background-color: #005DB1;
+    color: white;
+}
+
+.meuLink:active, .meuLink:focus {
+    color: white;
+    border: 2px solid #FFDB8C;
+    background-color: #005DB1;
+    color: white;
+}

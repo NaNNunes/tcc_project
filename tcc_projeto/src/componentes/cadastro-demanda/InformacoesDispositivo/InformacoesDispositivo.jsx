@@ -1,9 +1,12 @@
-import {Form, Row, Col, FloatingLabel, Container} from 'react-bootstrap';
+import {Form, Row, Col, FloatingLabel, Container, Nav} from 'react-bootstrap';
 import styles from '../../estilo-form/estiloForm.module.css'
+import NavBar from '../../NavBar/MenuNavegacao.jsx';
 
 const InformacoesDispositivo = () => {
   return (
     <div>
+        <NavBar />
+
         <Container>
             <Form className={styles.formulario}>
                 <Row>
