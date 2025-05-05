@@ -89,17 +89,17 @@ const Login = () => {
         <Row>
           <Col>
             <hr className="mb-1 mx-5 text-white border-2" />
-          </Col>
+          
 
-          <h6 className="text-white">Ainda não se registrou?
+          <h6 className="mt-3 text-white">Ainda não se registrou?    
             <Link
               to="/cadastro"
               className={styles.link}
             >
-              Siga por aqui.
+                Siga por aqui.
             </Link>
           </h6>
-          
+          </Col>
         </Row>
       </Form>
     </Container>

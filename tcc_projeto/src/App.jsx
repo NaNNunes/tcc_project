@@ -9,10 +9,13 @@ function App() {
   const isLoginPage =
     location.pathname === "/" || location.pathname === "/login";
   const isRegisterPage = location.pathname === "/cadastro";
+  const isSecureQuest = location.pathname === "/pergunta-seguranca";
+  const isCadastroAT = location.pathname === "/cadastro-assistencia"
+  const isCadastroEndereco = location.pathname === "/cadastro-endereco"
 
   // UseEffect para adicionar e remover a classe no body
   React.useEffect(() => {
-    if (isLoginPage || isRegisterPage) {
+    if (isLoginPage || isRegisterPage || isSecureQuest || isCadastroAT || isCadastroEndereco) {
       document.body.classList.add("login-background");
     } else {
       document.body.classList.remove("login-background");
@@ -23,7 +26,7 @@ function App() {
       document.body.classList.remove("login-background");
     };
   }, [isLoginPage]);
-  
+
   return (
     <div className={isLoginPage ? "login-background" : ""}>
       <Container>

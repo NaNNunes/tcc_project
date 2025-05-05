@@ -19,7 +19,7 @@ export function verificadorCpf(cpfStr = "000.000.000-00"){
     let resto_somaProd = 0;
     // passando digitos
     for (let i = 0; i <= len; i++) {
-        (cpfStr[i] != "." && cpfStr[i] != "-") ? cpfDigitos.push(Number(cpfStr[i])) : 0
+        (isNaN(cpfStr[i])) ? 0 : cpfDigitos.push(Number(cpfStr[i]))
     }
     // verificador
     for (let i = 0; i < 2; i++) {
