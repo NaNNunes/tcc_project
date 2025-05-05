@@ -9,20 +9,18 @@ export function verificadorCpf(cpfStr = "000.000.000-00"){
         console.log("cpf não válido: ", cpfStr);
         return false;
     }
+    let len = cpfStr.length - 1;
 
     let cpfDigitos = [];
     let verificador = [];
-
     // aux
     let multiplicador = 0;
     let somaProdutos = 0;
     let resto_somaProd = 0;
-
     // passando digitos
-    for (let i = 0; i < cpfStr.length; i++) {
-        (cpfStr[i] != "." && cpfStr[i] != "-") ? cpfDigitos.push(cpfStr[i]) : 0
+    for (let i = 0; i <= len; i++) {
+        (cpfStr[i] != "." && cpfStr[i] != "-") ? cpfDigitos.push(Number(cpfStr[i])) : 0
     }
-
     // verificador
     for (let i = 0; i < 2; i++) {
         somaProdutos = 0;
@@ -35,6 +33,5 @@ export function verificadorCpf(cpfStr = "000.000.000-00"){
         resto_somaProd = somaProdutos % 11;
         verificador[i] = ((resto_somaProd == 0) || (resto_somaProd == 1) ? 0 : (11 - resto_somaProd));
     }
-
     return ((verificador[0] == cpfStr[9]) && (verificador[1] == cpfStr[10]));
 }

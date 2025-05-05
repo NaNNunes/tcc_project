@@ -22,7 +22,7 @@ const CadastroUser = () => {
         return false;
       }
   
-      navigate("/pergunta-seguranca", {state: data})
+      // navigate("/pergunta-seguranca", {state: data})
     }
   
     const onError = (errors) => {
