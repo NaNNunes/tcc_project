@@ -108,7 +108,7 @@ const PerguntaSeguranca = () => {
 
       <hr className="mt-4 mx-5 text-white border-2" />
 
-      <Row className="mt-3">
+      <Row className="mt-4">
         <Col>
           <h6 className="text-white">
             Já possui conta?{" "}

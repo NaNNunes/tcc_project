@@ -2,16 +2,39 @@
   margin: auto;
   padding: 1rem;
   width: 570px;
-  height: 750px;
+  height: 700px;
+  box-sizing: border-box;
   background: linear-gradient(to bottom, #034c8c, #001b32);
   border-radius: 20px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 }
+
 .containerPergunta {
   margin: auto;
   padding: 1rem;
   width: 570px;
-  height: 484px;
+  height: 490px;
+  background: linear-gradient(to bottom, #034c8c, #001b32);
+  border-radius: 20px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.containerAssistencia {
+  margin: auto;
+  padding: 1rem;
+  width: 570px;
+  height: 678px;
+  background: linear-gradient(to bottom, #034c8c, #001b32);
+  border-radius: 20px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.containerEndereco {
+  margin: auto;
+  padding: 1rem;
+  width: 570px;
+  height: 570px;
   background: linear-gradient(to bottom, #034c8c, #001b32);
   border-radius: 20px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
@@ -43,8 +66,8 @@
 }
 
 .Button {
-  width: 70%;
-  border: 5px solid #f8f9fa;
+  width: 80%;
+  border: 3px solid #f8f9fa;
   border-radius: 0.6rem;
   background-color: transparent;
   font: bold 1.5rem arial;

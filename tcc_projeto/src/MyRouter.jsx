@@ -8,6 +8,8 @@ import Conta from "./pages/conta_perfil/Conta.jsx";
 import Assistencia_info from "./pages/assistencia_info/Assistencia_info.jsx";
 import CadastroUser from "./pages/cadastro-user/CadastroUser.jsx";
 import PerguntaSeguranca from "./pages/cadastro-user/PerguntaSeguranca.jsx";
+import CadastroAssistencia from "./pages/cadastro-user/CadastroAssistencia.jsx";
+import CadastroEndereco from "./pages/cadastro-user/CadastroEndereco.jsx";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,14 @@ const router = createBrowserRouter([
       {
         path: "/pergunta-seguranca",
         element: <PerguntaSeguranca />,
+      },
+      {
+        path: "/cadastro-assistencia",
+        element: <CadastroAssistencia />,
+      },
+      {
+        path: "/cadastro-endereco",
+        element: <CadastroEndereco />,
       },
     ],
   },
