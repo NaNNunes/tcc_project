@@ -7,6 +7,24 @@
   border-radius: 20px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
 }
+.containerPergunta {
+  margin: auto;
+  padding: 1rem;
+  width: 570px;
+  height: 484px;
+  background: linear-gradient(to bottom, #034c8c, #001b32);
+  border-radius: 20px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown {
+  text: left;
+  width: 500px !important;
+  height: 60px;
+  margin: auto;
+  color: black;
+  background-color: white;
+}
 
 .text {
   color: white;
@@ -19,7 +37,7 @@
 }
 
 .checkbox {
-  margin-left: .5rem;
+  margin-left: 0.5rem;
   font-size: 14px;
   color: white;
 }
@@ -27,13 +45,13 @@
 .Button {
   width: 70%;
   border: 5px solid #f8f9fa;
-  border-radius: .6rem;
+  border-radius: 0.6rem;
   background-color: transparent;
   font: bold 1.5rem arial;
 }
 
 .link {
-  color: #FFDB8C;
+  color: #ffdb8c;
   text-decoration: none;
   font: bold 1.1rem arial;
 }
@@ -42,5 +60,3 @@
   color: #ddd;
   text-decoration: none;
 }
-
-
