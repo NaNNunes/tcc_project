@@ -5,7 +5,6 @@ import NavBar from '../../NavBar/MenuNavegacao.jsx';
 const InformacoesDispositivo = () => {
   return (
     <div>
-        <NavBar />
 
         <Container>
             <Form className={styles.formulario}>

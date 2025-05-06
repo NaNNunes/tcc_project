@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Container from "react-bootstrap/Container";
 import { Outlet, useLocation } from "react-router-dom";
+import Navbar from "./componentes/NavBar/MenuNavegacao.jsx"
 
 function App() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function App() {
 
   return (
     <div className={isLoginPage ? "login-background" : ""}>
+      <Navbar />
       <Container>
         <Outlet />
       </Container>
