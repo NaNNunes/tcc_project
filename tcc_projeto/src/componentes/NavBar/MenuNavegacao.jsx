@@ -26,7 +26,7 @@ const MenuNavegacao = () => {
             <Container className={styles.containerNav}>
                 <Navbar.Collapse className={styles.navegacao} id="responsive-navbar-nav">
                     <Nav className={styles.navegacao}>
-                        <Nav.Link className={styles.meuLink} href='/criar-Demanda'>Cadastro pedido</Nav.Link>
+                        <Image src='../../../public/icons/Icon_pedido.svg' /> <Nav.Link className={styles.meuLink} href='/criar-Demanda'>Cadastro pedido</Nav.Link>
                         <Nav.Link className={styles.meuLink} href='/criar-Demanda'>Consultar pedidos</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
