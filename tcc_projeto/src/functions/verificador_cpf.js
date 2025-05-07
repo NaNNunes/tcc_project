@@ -9,7 +9,6 @@ export function verificadorCpf(cpfStr = "000.000.000-00"){
         console.log("cpf não válido: ", cpfStr);
         return false;
     }
-    let len = cpfStr.length - 1;
 
     let cpfDigitos = [];
     let verificador = [];
@@ -18,9 +17,10 @@ export function verificadorCpf(cpfStr = "000.000.000-00"){
     let somaProdutos = 0;
     let resto_somaProd = 0;
     // passando digitos
-    for (let i = 0; i <= len; i++) {
-        (isNaN(cpfStr[i])) ? 0 : cpfDigitos.push(Number(cpfStr[i]))
+    for (let i = 0; i < cpfStr.length; i++) {
+        (!(isNaN(cpfStr[i]))) && cpfDigitos.push(cpfStr[i]);
     }
+
     // verificador
     for (let i = 0; i < 2; i++) {
         somaProdutos = 0;
@@ -29,9 +29,12 @@ export function verificadorCpf(cpfStr = "000.000.000-00"){
         for(let c = 0; c < 9+i ; c++){
             somaProdutos += (cpfDigitos[c] * multiplicador--);
         }
-
         resto_somaProd = somaProdutos % 11;
         verificador[i] = ((resto_somaProd == 0) || (resto_somaProd == 1) ? 0 : (11 - resto_somaProd));
     }
-    return ((verificador[0] == cpfStr[9]) && (verificador[1] == cpfStr[10]));
+    console.log((verificador[0] == cpfDigitos[cpfDigitos.length-2]) && (verificador[1] == cpfDigitos[cpfDigitos.length-1]));
+    return ((verificador[0] == cpfStr[cpfStr.length - 3]) && (verificador[1] == cpfStr[cpfStr.length - 1]));
 }
+
+let cpfStr = "012.345.678-90";
+verificadorCpf(cpfStr);
