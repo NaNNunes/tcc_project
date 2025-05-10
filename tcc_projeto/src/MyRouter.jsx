@@ -10,6 +10,7 @@ import CadastroUser from "./pages/cadastro-user/CadastroUser.jsx";
 import PerguntaSeguranca from "./pages/cadastro-user/PerguntaSeguranca.jsx";
 import CadastroAssistencia from "./pages/cadastro-user/CadastroAssistencia.jsx";
 import CadastroEndereco from "./pages/cadastro-user/CadastroEndereco.jsx";
+import CadastroPagamento from "./pages/cadastro-user/CadastroPagamento.jsx";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "/cadastro-endereco",
         element: <CadastroEndereco />,
+      },
+      {
+        path: "/cadastro-pagamento",
+        element: <CadastroPagamento />,
       },
     ],
   },

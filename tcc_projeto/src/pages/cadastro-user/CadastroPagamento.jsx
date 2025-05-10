@@ -26,7 +26,6 @@ const CadastroUser = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     if (!verificadorCpf(data.cpf)) {
       return false;
     }
@@ -56,51 +55,69 @@ const CadastroUser = () => {
         </Row>
         <Row>
           <Col>
-            <h6 className="text-white">
-              Primeiro, queremos saber mais sobre você
-            </h6>
+            <h6 className="text-white">Cadastre seu cartão de crédito</h6>
             <hr className="mb-3 mx-5 text-white border-2" />
           </Col>
         </Row>
       </Row>
       <Form className="px-4" onSubmit={handleSubmit(onSubmit, onError)}>
+        {/* Cartão */}
         <Row>
-          {/* E-mail */}
           <Col>
-            <FloatingLabel id="userEmailInput" className="mb-3" label="Email">
-              <Form.Control
-                type="email"
-                placeholder=""
-                {...register("email")}
-              />
+            <FloatingLabel
+              id="userCartaoInput"
+              className="mb-3"
+              label="Cartão de crédito"
+            >
+              <Form.Control type="text" placeholder="" {...register("text")} />
             </FloatingLabel>
           </Col>
         </Row>
-        
-        {/* CPF e Telefone */}
+
         <Row className="">
+          {/* Validade e Código de Segurança */}
           <Col>
-            <FloatingLabel id="userCpfInput" className="mb-3" label="CPF">
+            <FloatingLabel
+              id="userValidadeCartaoInput"
+              className="mb-3"
+              label="Validade"
+            >
               <Form.Control
                 type="text"
-                placeholder="000.000.000-00"
-                {...register("cpf")}
+                placeholder=""
+                {...register("validadeCartao")}
               />
             </FloatingLabel>
           </Col>
 
           <Col>
-            <FloatingLabel id="userTelInput" className="mb-3" label="Telefone">
+            <FloatingLabel
+              id="userCodigoSegInput"
+              className="mb-3"
+              label="Código de Segurança"
+            >
               <Form.Control
                 type="text"
-                placeholder="(00) 00000-0000"
-                {...register("telefone")}
+                placeholder=""
+                {...register("codigoSeguranca")}
               />
             </FloatingLabel>
           </Col>
         </Row>
 
         {/* Nome e Sobrenome */}
+        <Row>
+          <Col>
+            <FloatingLabel id="userNomeCartaoInput" className="mb-3" label="Nome Completo">
+              <Form.Control
+                type="text"
+                placeholder=""
+                {...register("nomeCartao")}
+              />
+            </FloatingLabel>
+          </Col>
+        </Row>
+
         <Row className="">
           <Col className="">
             <FloatingLabel id="userNomeInput" className="mb-3" label="Nome">
@@ -128,63 +145,10 @@ const CadastroUser = () => {
         </Row>
 
         <Row>
-          {/* Senha */}
-          <Col>
-            <FloatingLabel id="userSenhaInput" className="mb-3" label="Senha">
-              <Form.Control
-                type="password"
-                placeholder="Senha"
-                isInvalid={!!errors.senha}
-                {...register("senha", {
-                  required: "A senha é obrigatória",
-                  minLength: {
-                    value: 8,
-                    message: "A senha deve ter pelo menos 8 caracteres",
-                  },
-                })}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.senha?.message}
-              </Form.Control.Feedback>
-            </FloatingLabel>
-          </Col>
-          <Col>
-            <FloatingLabel
-              id="userConfirmaSenhaInput"
-              className="mb-3"
-              label="Confirmar Senha"
-            >
-              <Form.Control
-                type="password"
-                placeholder="Confirmar Senha"
-                isInvalid={!!errors.confirmarSenha}
-                {...register("confirmarSenha", {
-                  required: "A confirmação de senha é obrigatória",
-                  validate: (value) =>
-                    value === senha || "As senhas não coincidem",
-                })}
-              />
-            </FloatingLabel>
-          </Col>
-        </Row>
-
-        <Row className="my-3">
-          {/* Checkbox de termos de uso */}
-          <Col sm={6}>
-            <Form.Check
-              className={styles.checkbox}
-              type="checkbox"
-              id="termsCheck"
-              label="Li e aceito os termos de uso"
-            />
-          </Col>
-        </Row>
-
-        <Row>
           <Col>
             <Button
               as="input"
-              value="Avançar"
+              value="Confirmar"
               type="submit"
               size="lg"
               className={`${styles.Button}`}
