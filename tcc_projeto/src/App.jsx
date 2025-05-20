@@ -39,6 +39,7 @@ function App() {
   return (
     <div className={isLoginPage ? "login-background" : ""}>
       <Navbar />
+      {/* AQUI */}
       <Container>
         <Outlet />
       </Container>

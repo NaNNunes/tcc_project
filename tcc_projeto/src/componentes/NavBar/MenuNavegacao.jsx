@@ -15,7 +15,7 @@ const MenuNavegacao = () => {
         >
             {/* Container com o icone ou logo da marca baseado no hover no Navbar. */}
             <Container className={styles.container}>
-                <Navbar.Brand href="/Login" className={styles.brand}>
+                <Navbar.Brand href="/login" className={styles.brand}>
                     {/* Quando tiver o hover muda de icone para logo. */}
                     {hovered 
                         ? <Image style={{minWidth: "276px", paddingRight: "15px", paddingLeft: "15px"}} src="/logos/connectfix_logo.svg" fluid />
