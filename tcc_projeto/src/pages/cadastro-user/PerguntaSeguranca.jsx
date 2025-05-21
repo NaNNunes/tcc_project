@@ -1,5 +1,4 @@
 import {
-  Form,
   FloatingLabel,
   Button,
   Row,
@@ -8,15 +7,20 @@ import {
   Image,
   Dropdown,
   ButtonGroup,
+  Card
 } from "react-bootstrap";
 
-import { Link, useNavigate } from "react-router-dom";
+import Form from "react-bootstrap/Form"
+
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import styles from "./cadastro.module.css";
 
 const PerguntaSeguranca = () => {
+
   const navigate = useNavigate();
+  const dataState = useLocation().state;
 
   const {
     register,
@@ -24,98 +28,123 @@ const PerguntaSeguranca = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    if (!verificadorCpf(data.cpf)) {
-      return false;
+  const onSubmit = (dataState) => {
+    
+    if (dataState.id == "1" ){
+      navigate("/cadastro-assistencia", { state: data })
+    }
+    else if (dataState.id == "2"){
+      navigate("/login", { state: data }) // cadastrar  solicitante no banco
     }
 
-    navigate("/pergunta-seguranca", { state: data });
+    console.log(dataState);
+
   };
 
   const onError = (errors) => {
     console.log("Error: ", errors);
   };
   return (
-    <Container className={styles.containerPergunta}>
-      {/* Parte de cima */}
-      <Row>
-        <Row className="mb-3">
-          <Col>
-            <Image
-              className={styles.Image}
-              src="/logos/connectfix_logo.svg"
-              fluid
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <h6 className="text-white">
-              Aumente sua segurança escolhendo uma pergunta de segurança
-            </h6>
-            <hr className="mb-3 mx-5 text-white border-2" />
-          </Col>
-        </Row>
-      </Row>
-      <Row>
-        <Col>
-          <Dropdown>
-            <Dropdown.Toggle className={styles.dropdown} id="dropdown-basic">
-              Escolha sua Pergunta de Segurança
-            </Dropdown.Toggle>
+    <Container>
+      <Card  className={styles.containerPergunta}>
+        <Card.Header>
+          {/* Parte de cima */}
+          
+            <Card.Title>
+              <Row className="mb-3">
+                <Col>
+                  <Image
+                    className={styles.Image}
+                    src="/logos/connectfix_logo.svg"
+                    fluid
+                  />
+                </Col>
+              </Row>
+            </Card.Title>
+            <Card.Subtitle className="text-white">
+              <Row>
+                <Col>
+                  
+                    Aumente sua segurança escolhendo uma pergunta de segurança
+                  
+                  {/* retirado o divisor, se possivel retirar o shadow do header para inserir o o divisor */}
+                </Col>
+              </Row>
+            </Card.Subtitle>
+          
+        </Card.Header>
+        <Card.Body>
 
-            <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">
-                Qual é o nome do seu primeiro animal de estimação?
-              </Dropdown.Item>
-              <Dropdown.Item href="#/action-2">
-                Qual é o nome da escola onde você estudou na infância?
-              </Dropdown.Item>
-              <Dropdown.Item href="#/action-3">
-                Qual é o nome da cidade onde seus pais se conheceram?
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </Col>
-      </Row>
-      <Row>
-        <Form>
-          {/* Resposta Segurança */}
-          <Col>
-            <FloatingLabel className="m-3" label="Resposta">
-              <Form.Control
-                type="email"
-                placeholder=""
-                {...register("email")}
-              />
-            </FloatingLabel>
-          </Col>
-        </Form>
-      </Row>
-      <Row>
-        <Col>
-          <Button
-            as="input"
-            value="Avançar"
-            type="submit"
-            size="lg"
-            className={`${styles.Button}`}
-          />
-        </Col>
-      </Row>
+            <Form onSubmit={handleSubmit(onSubmit, onError)}>
+               <Form.Select aria-label size="lg" {...register("pergunta")}>
+                <option className={styles.dropdown} id="dropdown-basic">
+                  Escolha sua Pergunta de Segurança
+                </option>
+                <option value="1">
+                  Qual é o nome do seu primeiro animal de estimação?
+                </option>
+                <option value="2">
+                  Qual é o nome da escola onde você estudou na infância?
+                </option>
+                <option value="3">
+                  Qual é o nome da cidade onde seus pais se conheceram?
+                </option>
+              </Form.Select>
 
-      <hr className="mt-4 mx-5 text-white border-2" />
+              {/* Resposta Segurança */}
+              
+                <FloatingLabel className="m-3" label="Resposta">
+                  <Form.Control
+                    type="text"
+                    placeholder=""
+                    isInvalid={!!errors.resposta}
+                    {
+                      ...register("resposta",{
+                        required: "Campo necessário para recuperação de senha"
+                      })
+                    }
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.resposta?.message}
+                  </Form.Control.Feedback>
+                </FloatingLabel>
+              
+              <Row>
+                <Col>
+                  <Button
+                    as="input"
+                    value="Avançar"
+                    type="submit"
+                    size="lg"
+                    className={`${styles.Button}`}
+                  />
+                </Col>
+                <Col>
+                    <Button
+                      as="input"
+                      value="Finalizar"
+                      type="submit"
+                      size="lg"
+                      className={`${styles.Button}`}
+                    />
+                  </Col>
+              </Row>
+            </Form>
 
-      <Row className="mt-4">
-        <Col>
-          <h6 className="text-white">
-            Já possui conta?{" "}
-            <Link to="/login" className={styles.link}>
-              Login
-            </Link>
-          </h6>
-        </Col>
-      </Row>
+          <hr className="mt-4 mx-5 text-white border-2" />
+
+          <Row className="mt-4">
+            <Col>
+              <h6 className="text-white">
+                Já possui conta?{" "}
+                <Link to="/login" className={styles.link}>
+                  Login
+                </Link>
+              </h6>
+            </Col>
+          </Row>
+        </Card.Body>
+      </Card>
     </Container>
   );
 };
