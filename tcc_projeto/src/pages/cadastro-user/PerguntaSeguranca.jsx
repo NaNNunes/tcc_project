@@ -15,8 +15,6 @@ import { useForm } from "react-hook-form";
 
 import styles from "./cadastro.module.css";
 
-import { verificadorCpf } from "../../functions/verificador_cpf";
-
 const PerguntaSeguranca = () => {
   const navigate = useNavigate();
 
