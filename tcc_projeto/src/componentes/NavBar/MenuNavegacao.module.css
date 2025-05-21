@@ -1,25 +1,10 @@
 /* Definição de style do "Navbar" */
 .navbar {
     background: linear-gradient(180deg, #034C8C, #001A32 75%);
-    padding: 0px 0px;
     color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
     z-index: 3;
-    width: 7em;
-    height: 100%;
     transition: width 0.3s ease; /* Transição de tamanho */
 }
-
-.navbar:hover {
-    width: 17em;
-    transition: width 0.3s ease; /* Transição de tamanho */
-}
-
 
 /* Definição de style do "Container" */
 .container {
@@ -31,34 +16,20 @@
     width: 100%;
 }
 
+.dropdown {
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.dropdown-toggle::after{
+display: none;
+}
+
 .brand {
-    width: 100%;
-    height: 86px;
-    margin: 15px 0px !important;
-    padding: 0px !important;
-    align-content: center;
+/* Colocar css */
 }
-
-
-/* Definição de style de "Navbar.Collapse" e "Nav" */
-.navegacao {
-    display: block;
-    width: 100%;
-    padding: 0px;
-}
-
-
-/* Definição de style do hr */
-.separar {
-    width: 90%;
-    margin: 0px !important;
-    border: none;
-    border-top: 2px solid white;
-    background-color: #ffffff;
-    justify-self: center;
-    margin-bottom: 10px !important;
-}
-
 
 /* Definição de style de "Nav.Link" */
 .meuLink {
