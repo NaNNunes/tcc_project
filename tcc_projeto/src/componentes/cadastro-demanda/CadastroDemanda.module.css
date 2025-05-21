@@ -1,0 +1,31 @@
+.formulario {
+    width: 70%;
+}
+
+/* Lista de categoria do dispositivo */
+.lista { 
+    background-color: red;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    padding: 2%;
+    gap: 1.5%;
+}
+
+/* Cada botão dentro da lista de categoria do dispositivo */
+.listaBotao {
+    display: flex;
+    flex-wrap: wrap; /* TESTE */
+    align-items: center;
+    background-color: wheat;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border-radius: 10px !important;
+    font-size: 1rem;
+}
+
+.listaBotao:hover {
+    background-color: azure;
+    cursor: pointer;
+}

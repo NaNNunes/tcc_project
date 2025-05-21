@@ -33,8 +33,5 @@ export function verificadorCpf(cpfStr = "000.000.000-00"){
         verificador[i] = ((resto_somaProd == 0) || (resto_somaProd == 1) ? 0 : (11 - resto_somaProd));
     }
     console.log((verificador[0] == cpfDigitos[cpfDigitos.length-2]) && (verificador[1] == cpfDigitos[cpfDigitos.length-1]));
-    return ((verificador[0] == cpfStr[cpfStr.length - 3]) && (verificador[1] == cpfStr[cpfStr.length - 1]));
+    return ((verificador[0] == cpfStr[cpfStr.length - 2]) && (verificador[1] == cpfStr[cpfStr.length - 1]));
 }
-
-let cpfStr = "012.345.678-90";
-verificadorCpf(cpfStr);
