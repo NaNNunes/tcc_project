@@ -1,11 +1,14 @@
+.formulario {
+    width: 70%;
+}
+
 /* Lista de categoria do dispositivo */
 .lista { 
     background-color: red;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    padding: 1.5%;
+    padding: 2%;
     gap: 1.5%;
-    height: 120%;
 }
 
 /* Cada botão dentro da lista de categoria do dispositivo */

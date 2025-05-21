@@ -40,7 +40,7 @@ function App() {
     <div className={isLoginPage ? "login-background" : ""}>
       <Navbar />
       {/* AQUI */}
-      <Container>
+      <Container style={{maxWidth: '100%', margin: '0', padding: '0'}}>
         <Outlet />
       </Container>
     </div>
