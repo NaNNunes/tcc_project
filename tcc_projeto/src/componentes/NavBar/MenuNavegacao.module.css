@@ -1,9 +1,9 @@
 /* Definição de style do "Navbar" */
 .navbar {
-    background: linear-gradient(180deg, #034C8C, #001A32 75%);
+    background: #034C8C;
     color: white;
-    z-index: 3;
     transition: width 0.3s ease; /* Transição de tamanho */
+    box-shadow: 10px 7px 10px 0px rgb(204, 204, 204);
 }
 
 /* Definição de style do "Container" */
@@ -16,15 +16,30 @@
     width: 100%;
 }
 
+/* Todo o dropdown */
 .dropdown {
+    background-color: transparent;
+}
+
+.dropdown:focus:focus-visible {
+    background-color: #005DB1;
+}
+
+/* Titulo do dropdown */
+.dropdownTitle {
     color: white;
     font-weight: bold;
     font-size: 1.2rem;
     text-decoration: none;
 }
 
-.dropdown-toggle::after{
-display: none;
+.dropdownItem {
+    background-color: red;
+}
+
+/* Tirando o icone do dropdown 🙏 */
+:global(.dropdown-toggle::after) {
+  display: none !important;
 }
 
 .brand {
