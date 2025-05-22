@@ -52,12 +52,12 @@ const CadastroEndereco = () => {
           </Col>
         </Row>
         <Row>
-          <Col>
-            <h6 className="text-center text-white">
-              Estamos quase lá! Pra finalizar, coloque o endereço do seu
-              negócio.
-            </h6>
-            <hr className="mb-3 mx-5 text-white border-2" />
+          <Col className="d-flex flex-column align-items-center">
+            <h5 className="text-center text-white">
+              Estamos quase lá!
+              <br /> Pra finalizar, coloque o endereço de seu negócio.
+            </h5>
+            <hr className="mb-3 text-white border-2 w-75" />
           </Col>
         </Row>
       </Row>
@@ -113,33 +113,22 @@ const CadastroEndereco = () => {
         <Row>
           <Col>
             <FloatingLabel id="userUFInput" className="mb-3" label="UF">
-              <Form.Control
-                type="text"
-                placeholder="UF"
-                {...register(
-                  "uf"
-                )}
-              />
+              <Form.Control type="text" placeholder="UF" {...register("uf")} />
             </FloatingLabel>
           </Col>
           <Col>
-            <FloatingLabel
-              id="userNumInput"
-              className="mb-3"
-              label="Nº"
-            >
+            <FloatingLabel id="userNumInput" className="mb-3" label="Nº">
               <Form.Control
                 type="text"
                 placeholder=""
-                {...register("numero", {
-                })}
+                {...register("numero", {})}
               />
             </FloatingLabel>
           </Col>
         </Row>
 
         <Row>
-          <Col>
+          <Col className="d-flex flex-column align-items-center mt-2">
             <Button
               as="input"
               value="Cadastrar-se"
@@ -147,13 +136,12 @@ const CadastroEndereco = () => {
               size="lg"
               className={`${styles.Button}`}
             />
+            <hr className="mb-3 text-white border-2 w-100" />
           </Col>
         </Row>
 
-        <hr className="mt-4 mx-5 text-white border-2" />
-
-        <Row className="mt-4">
-          <Col>
+        <Row>
+          <Col className="d-flex flex-column align-items-center mt-2">
             <h6 className="text-white">
               Já possui conta?{" "}
               <Link to="/login" className={styles.link}>

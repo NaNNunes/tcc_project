@@ -1,67 +1,58 @@
-import { Row, Col, Button, Form, Container, Image, FloatingLabel } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Button,
+  Form,
+  Container,
+  Image,
+  FloatingLabel,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import styles from "./login.module.css";
 
 const Login = () => {
-
   const {
     register,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
     console.log("dados: ", data);
-  }
+  };
 
   const onError = (errors) => {
     console.log("Error: ", errors);
-  }
+  };
 
   return (
     <Container className={styles.container}>
-      <Form 
+      <Form
         className={styles.loginForm}
-        onSubmit={handleSubmit( onSubmit, onError )}
+        onSubmit={handleSubmit(onSubmit, onError)}
       >
         <Image
           className={styles.Image}
           src="/logos/connectfix_logo.svg"
           fluid
         />
-
-        <h6 className="text-white">Confiança que gera conexões</h6>
+        <div className="d-flex align-items-center justify-content-center">
+          <h6 className="text-white">Confiança que gera conexões</h6>
+        </div>
         <hr className="mb-4 mx-5 text-white border-2" />
 
-        <FloatingLabel 
-          id="fuserCpfInput"
-          className="mb-3 mx-5"
-          label="CPF"
-        >
+        <FloatingLabel id="fuserCpfInput" className="mb-3 mx-5" label="CPF">
           <Form.Control
             type="text"
             placeholder="000.000.000-00"
-            {
-              ...register("cpf")
-            }
+            {...register("cpf")}
           />
-
         </FloatingLabel>
 
-        <FloatingLabel
-          id="userSenhaInput"
-          className="mb-3 mx-5"
-          label="Senha"
-        >
-          <Form.Control   
-            type="password"
-            placeholder=""
-            {
-              ...register("senha")
-            }
-          />
+        <FloatingLabel id="userSenhaInput" className="mb-3 mx-5" label="Senha">
+          <Form.Control type="password" placeholder="" {...register("senha")} />
         </FloatingLabel>
 
         <div className={styles.ancor}>
@@ -75,30 +66,27 @@ const Login = () => {
           </Link>
         </div>
 
-        <Row className="d-grid gap-2">
-            <Col>
-              <Button
-                as="input"
-                value="Login"
-                type="submit"
-                size="lg"
-                className={styles.Button}
-              />
-            </Col>
+        <Row className="d-flex justify-content-center">
+          <Col xs="auto">
+            <Button
+              as="input"
+              value="Login"
+              type="submit"
+              size="lg"
+              className={styles.Button}
+            />
+          </Col>
         </Row>
-        <Row>
-          <Col>
-            <hr className="mb-1 mx-5 text-white border-2" />
-          
+        <hr className="mb-1 mx-5 text-white border-2" />
 
-          <h6 className="mt-3 text-white">Ainda não se registrou?    
-            <Link
-              to="/cadastro"
-              className={styles.link}
-            >
+        <Row className="d-flex justify-content-center">
+          <Col xs="auto">
+            <div className="d-flex align-items-center gap-2 mt-3">
+              <h6 className="text-white mb-0">Ainda não se registrou?</h6>
+              <Link to="/cadastro" className={styles.link}>
                 Siga por aqui.
-            </Link>
-          </h6>
+              </Link>
+            </div>
           </Col>
         </Row>
       </Form>

@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react'
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Nav from 'react-bootstrap/Nav'
+import Container from 'react-bootstrap/Container';
+import Navbar from 'react-bootstrap/Navbar'
+import Image from 'react-bootstrap/Image'
 import Button from "react-bootstrap/Button"
-import {Container, Nav, Navbar, Image} from "react-bootstrap";
 import styles from "./MenuNavegacao.module.css"
 import { useState } from 'react';
 
@@ -40,16 +43,25 @@ const MenuNavegacao = () => {
             </Container>
         </Navbar> */}
 
-        <Navbar className={styles.navbar}>
-            <Container>
+        {/* data-bs-theme='dark' */}
+        <Navbar className={styles.navbar} expand='lg'>
+            <Container >
                 <Navbar.Brand href='/login'>
                     <Image src="/logos/connectfix_logo.svg"></Image>
                 </Navbar.Brand>
 
                 <Navbar.Collapse>
                     <Nav>
-                        <NavDropdown title={<span className={styles.dropdown}>Demandas <TiArrowSortedDown color='white'/></span> } id="dropdown">
-                            <NavDropdown.Item href='/criar-Demanda'>Cadastro pedido</NavDropdown.Item>
+                        <NavDropdown 
+                            title={
+                                <span className={styles.dropdownTitle}>
+                                    Demandas <TiArrowSortedDown />
+                                </span>
+                            }
+                            className={styles.dropdown} 
+                            id="collasible-nav-dropdown" 
+                            >
+                            <NavDropdown.Item href='/criar-Demanda' className={styles.dropdownItem}><Image className={styles.icone} src='/icons/Icon_pedido.svg' />Cadastro pedido</NavDropdown.Item>
                             <NavDropdown.Item>Consultar pedidos</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>

@@ -1,8 +1,20 @@
 .container {
-  margin: auto;
+  margin: 20px auto;
   padding: 1rem;
   width: 570px;
-  height: 700px;
+  height: 730px;
+  box-sizing: border-box;
+  background: linear-gradient(to bottom, #034c8c, #001b32);
+  border-radius: 20px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.containerPagamento {
+  margin: 20px auto;
+  padding: 1rem;
+  width: 570px;
+  height: 650px;
   box-sizing: border-box;
   background: linear-gradient(to bottom, #034c8c, #001b32);
   border-radius: 20px;
@@ -31,10 +43,10 @@
 }
 
 .containerEndereco {
-  margin: auto;
+  margin: 30px auto;
   padding: 1rem;
   width: 570px;
-  height: 570px;
+  height: 600px;
   background: linear-gradient(to bottom, #034c8c, #001b32);
   border-radius: 20px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
@@ -55,8 +67,8 @@
 
 .Image {
   width: 339px;
-  margin: 20px;
-  margin-bottom: 10px;
+  margin: 20px auto 10px auto;
+  display: block;
 }
 
 .checkbox {
