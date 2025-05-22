@@ -20,20 +20,55 @@ import styles from './CadastroDemanda.module.css'
 
 import { useState } from 'react';
 
+// Importação do useForm para mexer com o formulário.
+import { useForm } from "react-hook-form";
+
 import ToggleButton from 'react-bootstrap/ToggleButton';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 
 const categoriaDispositivo = () => {
-    const [value, setValue] = useState(["Celular", "Periferico"]);
-    const handleChange = (val) => setValue(val);
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        watch,
+        formState: {errors},
+    } = useForm();
+
+    const categoriaSelecionada = watch("categoria");
+
+    // Lista com as categorias do dispositivo
+    const categorias = [
+        {label: "Celular", value: "Celular", icon: <MdOutlineSmartphone className="me-2" />},
+        {label: "Tablet", value: "Tablet", icon: <FaTabletAlt className="me-2" />},
+        {label: "Notebook", value: "Notebook", icon: <FaLaptop className="me-2" />},
+        {label: "Desktop", value: "Desktop", icon: <FaDesktop className="me-2" />},
+        {label: "Periférico", value: "Periférico", icon: <FaHeadphones className="me-2" />},
+        {label: "Outros", value: "Outros", icon: null},   
+    ];
+
+    const onSubmit = async (dados) => {
+        console.log("Dados: ", dados)
+    }
+
+    const onError = (errors) => {
+        console.log("Erros: ", errors)
+    }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         {/* Div para controlar o tamanho do Form. */}
         <div className={styles.formulario}>
-            <Form>
+            <Form onSubmit={handleSubmit(onSubmit, onError)}>
                 {/* Categoria do dispositivo */}
                 <Container fluid className={stylesForm.parteFormulario}>
+                    {/* Campo oculto para fazer o registro da categoria e caso tenha algum erro mostrar na tela. */}
+                    <input 
+                        type="hidden" 
+                        {...register("categoria", {
+                            required: "A categoria é obrigatória"
+                        })}
+                    />
                     {/* Título do container */}
                     <Row> 
                         <Col>
@@ -43,14 +78,30 @@ const categoriaDispositivo = () => {
                     {/* Seleção de categoria */}
                     <Row>
                         <Col style={{maxHeight: 'fit-content'}}>
-                            <ListGroup horizontal className={styles.lista}>
-                                <ListGroup.Item value="Celular" className={styles.listaBotao}><MdOutlineSmartphone className='me-2'/>Celular</ListGroup.Item>
-                                <ListGroup.Item value="Tablet" className={styles.listaBotao}><FaTabletAlt className='me-2' /> Tablet</ListGroup.Item>
-                                <ListGroup.Item value="Notebook" className={styles.listaBotao}><FaLaptop className='me-2' /> Notebook</ListGroup.Item>
-                                <ListGroup.Item value="Desktop" className={styles.listaBotao}><FaDesktop className='me-2' /> Desktop</ListGroup.Item>
-                                <ListGroup.Item value="Periférico" className={styles.listaBotao}><FaHeadphones className='me-2' /> Periférico</ListGroup.Item>
-                                <ListGroup.Item value="Outros" className={styles.listaBotao}>Outros</ListGroup.Item>
+                            <ListGroup 
+                                horizontal 
+                                className={styles.lista}
+                            >
+                                {/* Map para carregar as categorias da 'const categorias' */}
+                                {categorias.map((cat) => (
+                                    <ListGroup.Item
+                                        key={cat.value}
+                                        value={cat.value}
+                                        className={
+                                            `${styles.listaBotao} ${categoriaSelecionada === cat.value 
+                                            ? styles.listaBotaoSelecionado 
+                                            : ""}`
+                                        }
+                                        active={categoriaSelecionada === cat.value}
+                                        onClick={() => setValue("categoria", cat.value, { shouldValidate: true })} 
+                                        // shouldValidate serve para caso o erro já estiver presente na tela do usuário, quando for selecionado um campo o erro some imediatamente.
+                                    >
+                                        {cat.icon}
+                                        {cat.label}
+                                    </ListGroup.Item>
+                                ))}
                             </ListGroup>
+                            {errors.categoria && (<span className='error'>{errors.categoria.message}</span>)}
                         </Col>
                     </Row>
                 </Container>
