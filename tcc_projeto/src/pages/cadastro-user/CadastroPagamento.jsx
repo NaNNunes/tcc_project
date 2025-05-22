@@ -41,7 +41,7 @@ const CadastroUser = () => {
   // to do renan : chamar funcao para registro na api local
 
   return (
-    <Container className={styles.container}>
+    <Container className={styles.containerPagamento}>
       {/* Parte de cima */}
       <Row>
         <Row className="mb-3">
@@ -54,9 +54,9 @@ const CadastroUser = () => {
           </Col>
         </Row>
         <Row>
-          <Col>
-            <h6 className="text-white">Cadastre seu cartão de crédito</h6>
-            <hr className="mb-3 mx-5 text-white border-2" />
+          <Col className="d-flex flex-column align-items-center">
+            <h5 className="text-white">Cadastre seu cartão de crédito</h5>
+            <hr className="mb-3 text-white border-2 w-75" />
           </Col>
         </Row>
       </Row>
@@ -108,7 +108,11 @@ const CadastroUser = () => {
         {/* Nome e Sobrenome */}
         <Row>
           <Col>
-            <FloatingLabel id="userNomeCartaoInput" className="mb-3" label="Nome Completo">
+            <FloatingLabel
+              id="userNomeCartaoInput"
+              className="mb-3"
+              label="Nome Completo"
+            >
               <Form.Control
                 type="text"
                 placeholder=""
@@ -145,7 +149,7 @@ const CadastroUser = () => {
         </Row>
 
         <Row>
-          <Col>
+          <Col className="d-flex flex-column align-items-center mt-2">
             <Button
               as="input"
               value="Confirmar"
@@ -153,13 +157,12 @@ const CadastroUser = () => {
               size="lg"
               className={`${styles.Button}`}
             />
+            <hr className="mb-3 text-white border-2 w-100" />
           </Col>
         </Row>
 
-        <hr className="mt-4 mx-5 text-white border-2" />
-
-        <Row className="mt-4">
-          <Col>
+        <Row>
+          <Col className="d-flex flex-column align-items-center mt-2">
             <h6 className="text-white">
               Já possui conta?{" "}
               <Link to="/login" className={styles.link}>

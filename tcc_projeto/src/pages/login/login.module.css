@@ -11,11 +11,12 @@
 /* LOGIN */
 .loginForm {
   width: 400px;
-  height: 522px;
+  height: 530px;
   background: linear-gradient(to bottom, #034c8c, #001b32);
   border-radius: 10px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
-  margin: 0 auto; 
+  margin: 0 auto;
+  margin-top: 3rem;
   /* justify-content: center; Centraliza o conteúdo interno */
   align-items: center;
   box-sizing: border-box;

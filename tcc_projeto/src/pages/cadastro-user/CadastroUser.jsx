@@ -1,5 +1,4 @@
-
-import {Card} from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
@@ -57,12 +56,13 @@ const CadastroUser = () => {
             </Col>
           </Row>
           <Row>
-            <Col>
+            <Col className="d-flex align-items-center justify-content-center">
               <h6 className="text-white">
                 Primeiro, queremos saber mais sobre você
               </h6>
-              <hr className="mb-3 mx-5 text-white border-2" />
+              
             </Col>
+            <hr className="mb-3 mx-5 text-white border-2" />
           </Row>
         </Row>
         <Form className="px-4" onSubmit={handleSubmit(onSubmit, onError)}>
@@ -78,7 +78,7 @@ const CadastroUser = () => {
               </FloatingLabel>
             </Col>
           </Row>
-        
+
           {/* CPF e Telefone */}
           <Row className="">
             <Col>
@@ -91,7 +91,11 @@ const CadastroUser = () => {
               </FloatingLabel>
             </Col>
             <Col>
-              <FloatingLabel id="userTelInput" className="mb-3" label="Telefone">
+              <FloatingLabel
+                id="userTelInput"
+                className="mb-3"
+                label="Telefone"
+              >
                 <Form.Control
                   type="text"
                   placeholder="(00) 00000-0000"
@@ -165,25 +169,30 @@ const CadastroUser = () => {
               </FloatingLabel>
             </Col>
           </Row>
-          <Row className="my-3">
-            {/* Checkbox de termos de uso */}
-            <Col sm={6}>
-              <Form.Check
-                className={styles.checkbox}
-                type="checkbox"
-                id="termsCheck"
-                label="Li e aceito os termos de uso"
-                value={true}
-                {
-                  ...register("termos",{
-                    required:"Termos necessários"
-                  })
-                }
-              />
-            </Col>
-          </Row>
+          <Form.Check
+            className={styles.checkbox}
+            type="checkbox"
+            id="termsCheck"
+            value={true}
+            {...register("termos", {
+              required: "Termos necessários",
+            })}
+            label={
+              <>
+                Li e aceito os{" "}
+                <Link
+                  to="/termos-de-uso"
+                  className={styles.link}
+                  style={{ fontSize: "13px" }}
+                >
+                  termos de uso
+                </Link>
+              </>
+            }
+          />
+
           <Row>
-            <Col>
+            <Col className="d-flex align-items-center justify-content-center mt-3">
               <Button
                 as="input"
                 value="Avançar"
@@ -193,12 +202,17 @@ const CadastroUser = () => {
               />
             </Col>
           </Row>
-          <hr className="mt-4 mx-5 text-white border-2" />
-          <Row className="mt-4">
-            <Col>
+          <hr className="mt-3 mx-5 text-white border-2" />
+          
+          <Row className="mt-3">
+            <Col className="d-flex align-items-center justify-content-center mb-2">
               <h6 className="text-white">
                 Já possui conta?{" "}
-                <Link to="/login" className={styles.link}>
+                <Link
+                  to="/login"
+                  className={styles.link}
+                  style={{ fontSize: "16px" }}
+                >
                   Login
                 </Link>
               </h6>
@@ -206,7 +220,7 @@ const CadastroUser = () => {
           </Row>
           <Form.Group>
             <Form.Select as="select" aria-label {...register("categoriaUser")}>
-              <option >Escolha seu nivel de user</option>
+              <option>Escolha seu nivel de user</option>
               <option value="1">Solicitante</option>
               <option value="2">ADM</option>
             </Form.Select>
