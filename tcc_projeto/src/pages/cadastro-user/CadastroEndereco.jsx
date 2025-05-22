@@ -7,31 +7,105 @@ import {
   Container,
   Image,
 } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
 
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import styles from "./cadastro.module.css";
 
-const CadastroEndereco = () => {
-  const navigate = useNavigate();
+import { useCadastraUser } from "../../hooks/useApi";
 
+const CadastroEndereco = () => {
+  
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
+  
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-   
+  const {cadastrarUser} = useCadastraUser();
+
+  const userCategoria = localStorage.getItem("userCategoria");
+
+  //to do - passar para hooks
+  // busca o cep informado na api e define valores da instancia do objeto nos campos
+  const handleZipCodeBlur = async (e) =>{
+    const zipCode = e.target.value; //cep informado
+    // console.log("cep:", zipCode);
     
+    // consulta
+    const response = await fetch(`https://brasilapi.com.br/api/cep/v2/${zipCode}`);
+    
+    // consulta sem sucesso
+    if(!(response.ok)){
+      // alerta de erro
+      alert("Endereço não encontrado");
+      //limpa campos
+      setValue("city","");
+      setValue("neighborhood","");
+      setValue("street","");
+      setValue("state","");
+      return false;
+    }
+
+    // caso sucesso
+    const data = await response.json();
+    // console.log("Endereço localizado: ", data);
+    
+    //define valores da instancia em seus determinados campos
+    setValue("city",data.city);
+    setValue("neighborhood",data.neighborhood);
+    setValue("street",data.street);
+    setValue("state",data.state);
+  }
+
+  const onSubmit = (endereco) => {
+
+    // caso user seja solicitante
+    if(userCategoria == 1){
+      const dados = {
+        nome: localStorage.getItem("userNome"),
+        sobrenome: localStorage.getItem("userSobrenome"),
+        cpf: localStorage.getItem("userCpf"),
+        email: localStorage.getItem("userEmail"),
+        telefone: localStorage.getItem("userTelefone"),
+        senha: localStorage.getItem("userSenha"),
+        termos: localStorage.getItem("userTermos"), // sem muita necessidade por hora
+        pergunta: localStorage.getItem("userPergunta"),
+        resposta: localStorage.getItem("userResposta"),
+        cep: endereco.zipcode,
+        logradouro: endereco.street,
+        cidade: endereco.city,
+        bairro: endereco.neighborhood,
+        estado: endereco.state,
+        numeroEndereco: endereco.number
+      };
+
+      // console.log("dados de solicitante: ",dados)
+      cadastrarUser(dados);
+      navigate("/login")
+    }
+
+    // caso user seja administrador
+    //salvando localmente
+    localStorage.setItem("userCep",endereco.zipcode);
+    localStorage.setItem("userStreet",endereco.street);
+    localStorage.setItem("userCity",endereco.city);
+    localStorage.setItem("userNeighborhood",endereco.neighborhood);
+    localStorage.setItem("userState",endereco.state);
+    localStorage.setItem("userEndNum", endereco.number);
+
+    navigate("/cadastro-assistencia")
   };
 
   const onError = (errors) => {
     console.log("Error: ", errors);
   };
-
-
 
   return (
     <Container className={styles.containerEndereco}>
@@ -46,17 +120,26 @@ const CadastroEndereco = () => {
             />
           </Col>
         </Row>
+
         <Row>
           <Col className="d-flex flex-column align-items-center">
             {/* Lembrar de modificar texto de acordo como o  tipo de user */}
-            <h5 className="text-center text-white">
+
+            <Card.Subtitle className="text-center text-white">
               Estamos quase lá!
-              <br /> Pra finalizar, coloque o endereço de seu negócio. 
-            </h5>
+              <br />
+              { userCategoria == 2 && 
+                <> Pra finalizar, coloque o endereço de seu negócio.</>
+              } 
+            </Card.Subtitle>
+
             <hr className="mb-3 text-white border-2 w-75" />
           </Col>
         </Row>
       </Row>
+
+      
+
       <Form className="px-4" onSubmit={handleSubmit(onSubmit, onError)}>
         <Row className="">
           <Col>
@@ -64,7 +147,23 @@ const CadastroEndereco = () => {
               <Form.Control
                 type="text"
                 placeholder="00000000"
-                {...register("cep")}
+                {
+                  ...register("zipcode", {
+                      maxLength:{
+                          value:8,
+                          message: "Necessário 8 números"
+                      },
+                      minLength:{
+                          value:8,
+                          message:"Necessário 8 números"
+                      },
+                      pattern:{
+                          value: /^[0-9]+$/,
+                          message: "Apenas números"
+                      },
+                      onBlur: handleZipCodeBlur
+                  })
+              }
               />
             </FloatingLabel>
           </Col>
@@ -72,9 +171,11 @@ const CadastroEndereco = () => {
           <Col>
             <FloatingLabel id="userCityInput" className="mb-3" label="Cidade">
               <Form.Control
+                disabled
                 type="text"
                 placeholder=" "
-                {...register("cidade")}
+                
+                {...register("city")}
               />
             </FloatingLabel>
           </Col>
@@ -84,9 +185,11 @@ const CadastroEndereco = () => {
           <Col className="">
             <FloatingLabel id="userBairroInput" className="mb-3" label="Bairro">
               <Form.Control
+                disabled
                 type="text"
                 placeholder="Bairro"
-                {...register("bairro")}
+                
+                {...register("neighborhood")}
               />
             </FloatingLabel>
           </Col>
@@ -98,9 +201,11 @@ const CadastroEndereco = () => {
               label="Logradouro"
             >
               <Form.Control
+                disabled
                 type="text"
                 placeholder="Logradouro"
-                {...register("logradouro")}
+                
+                {...register("street")}
               />
             </FloatingLabel>
           </Col>
@@ -109,15 +214,31 @@ const CadastroEndereco = () => {
         <Row>
           <Col>
             <FloatingLabel id="userUFInput" className="mb-3" label="UF">
-              <Form.Control type="text" placeholder="UF" {...register("uf")} />
+              <Form.Control 
+                disabled
+                type="text"
+                placeholder="UF"
+                
+                {...register("state")} />
             </FloatingLabel>
           </Col>
           <Col>
             <FloatingLabel id="userNumInput" className="mb-3" label="Nº">
               <Form.Control
+                
                 type="text"
                 placeholder=""
-                {...register("numero", {})}
+                {...register("number", {
+                  required:"Necessário número de residência",
+                  minLength:{
+                    value: 2,
+                    message: "Número necessário" //melhorar essa msg
+                  },
+                  pattern:{
+                    value:/^[0-9]+$/,
+                    message: "Somente números"
+                  }
+                })}
               />
             </FloatingLabel>
           </Col>
@@ -127,7 +248,7 @@ const CadastroEndereco = () => {
           <Col className="d-flex flex-column align-items-center mt-2">
             <Button
               as="input"
-              value="Cadastrar-se"
+              value={(userCategoria == 1) ? "Finalizar" : "Seguir"}
               type="submit"
               size="lg"
               className={`${styles.Button}`}

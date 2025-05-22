@@ -24,11 +24,20 @@ const CadastroAssistencia = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    if (!verificadorCpf(data.cpf)) {
-      return false;
+
+    // verifica cnpj
+    if(""){
+
     }
 
-    navigate("/pergunta-seguranca", { state: data });
+    // socando mais coisas no localStorage
+    localStorage.setItem("assistenciaEmail",data.assistenciaEmail);
+    localStorage.setItem("assistenciaNomeFantasia",data.nomeFantasia);
+    localStorage.setItem("assistenciaRazaoSocial",data.razaoSocial);
+    localStorage.setItem("assistenciaCnpj",data.cnpj);
+    localStorage.setItem("assistenciaTelefone",data.assistenciaTelefone);
+
+    console.log(data);
   };
 
   const onError = (errors) => {
@@ -60,11 +69,11 @@ const CadastroAssistencia = () => {
         <Row>
           {/* E-mail */}
           <Col>
-            <FloatingLabel id="userEmailInput" className="mb-3" label="Email">
+            <FloatingLabel id="assistenciaEmailInput" className="mb-3" label="Email">
               <Form.Control
                 type="email"
                 placeholder=""
-                {...register("email")}
+                {...register("assistenciaEmail")}
               />
             </FloatingLabel>
           </Col>
@@ -73,14 +82,14 @@ const CadastroAssistencia = () => {
           {/* Nome fantasia */}
           <Col>
             <FloatingLabel
-              id="userNomeInput"
+              id="nomeFantasiaInput"
               className="mb-3"
               label="Nome Fantasia"
             >
               <Form.Control
-                type="email"
+                type="text"
                 placeholder=""
-                {...register("email")}
+                {...register("nomeFantasia")}
               />
             </FloatingLabel>
           </Col>
@@ -89,14 +98,14 @@ const CadastroAssistencia = () => {
           {/* Razão social */}
           <Col>
             <FloatingLabel
-              id="userRazaoSocialInput"
+              id="RazaoSocialInput"
               className="mb-3"
               label="Razão Social"
             >
               <Form.Control
-                type="email"
+                type="text"
                 placeholder=""
-                {...register("email")}
+                {...register("razaoSocial")}
               />
             </FloatingLabel>
           </Col>
@@ -105,37 +114,58 @@ const CadastroAssistencia = () => {
         <Row className="">
           {/* Cnpj e Telefone */}
           <Col>
-            <FloatingLabel id="userCnpjInput" className="mb-3" label="CNPJ">
+            <FloatingLabel id="CnpjInput" className="mb-3" label="CNPJ">
               <Form.Control
                 type="text"
                 placeholder="00.000.000/0000-00"
-                {...register("cnpj")}
+                {...register("cnpj",{
+                  required:"cnpj necessário",
+                  maxLength:{
+                    value:14,
+                    message:"necessario 14 digitos"
+                  },
+                  minLength:{
+                    value:14,
+                    message:"necessario 14 digitos"
+                  },
+                  //regex para numeros
+                })}
               />
             </FloatingLabel>
           </Col>
 
           <Col>
-            <FloatingLabel id="userTelInput" className="mb-3" label="Telefone">
+            <FloatingLabel id="assistenciaTelInput" className="mb-3" label="Telefone">
               <Form.Control
                 type="text"
                 placeholder="(00) 00000-0000"
-                {...register("telefone")}
+                {...register("assistenciaTelefone")}
               />
             </FloatingLabel>
           </Col>
         </Row>
 
-        <Row className="my-3">
-          {/* Checkbox de termos de uso */}
-          <Col sm={6}>
-            <Form.Check
-              className={styles.checkbox}
-              type="checkbox"
-              id="termsCheck"
-              label="Li e aceito os termos de uso"
-            />
-          </Col>
-        </Row>
+        <Form.Check
+          className={styles.checkbox}
+          type="checkbox"
+          id="termsCheck"
+          value={true}
+          {...register("assistenciaTermos", {
+            required: "Termos necessários",
+          })}
+          label={
+            <>
+              Li e aceito os{" "}
+              <Link
+                to="/termos-de-uso"
+                className={styles.link}
+                style={{ fontSize: "13px" }}
+              >
+                termos de uso
+              </Link>
+            </>
+          }
+        />
 
         <Row>
           <Col>

@@ -47,13 +47,13 @@ const CadastroUser = () => {
     // console.log(data);
     
     // jogar infos para o localStorage
-    localStorage.setItem("userEmail",data.userEmail);
-    localStorage.setItem("userSenha",data.senha);
     localStorage.setItem("userCategoria",data.userCategoria)
-    localStorage.setItem("userCpf",data.userCpf);
     localStorage.setItem("userNome",data.userNome);
     localStorage.setItem("userSobrenome",data.userSobrenome);
+    localStorage.setItem("userCpf",data.userCpf);
+    localStorage.setItem("userEmail",data.userEmail);
     localStorage.setItem("userTelefone",data.userTelefone);
+    localStorage.setItem("userSenha",data.senha);
     localStorage.setItem("userTermos",data.userTermos);
 
     navigate("/pergunta-seguranca");

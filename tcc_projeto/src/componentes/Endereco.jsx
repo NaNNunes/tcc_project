@@ -3,11 +3,9 @@ import {Form, FloatingLabel, Row, Col, Button} from "react-bootstrap";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { getEnd_API, getEnd_local_API} from "../hooks/useApi"; 
-
 const Endereco = () => {
   // pega enderecos na api local
-  const enderecos = getEnd_local_API();
+  
   
   // useForm para gerenciamento do form
   // register para registrar campus do form

@@ -37,14 +37,7 @@ const PerguntaSeguranca = () => {
     }
 
     localStorage.setItem("userPergunta",data.userPergunta);
-    localStorage.setItem("userResposta",data.userResposta);
-
-    // if (dataState.id == "1" ){
-    //   navigate("/cadastro-assistencia", { state: data })
-    // }
-    // else if (dataState.id == "2"){
-    //   navigate("/login", { state: data }) // cadastrar  solicitante no banco
-    // }
+    localStorage.setItem("userResposta",data.resposta);
 
     console.log(data);
     navigate("/cadastro-endereco");
