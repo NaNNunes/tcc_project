@@ -13,8 +13,6 @@ import { useForm } from "react-hook-form";
 
 import styles from "./cadastro.module.css";
 
-import { verificadorCpf } from "../../functions/verificador_cpf";
-
 const CadastroEndereco = () => {
   const navigate = useNavigate();
 
@@ -25,18 +23,15 @@ const CadastroEndereco = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    if (!verificadorCpf(data.cpf)) {
-      return false;
-    }
-
-    navigate("/pergunta-seguranca", { state: data });
+   
+    
   };
 
   const onError = (errors) => {
     console.log("Error: ", errors);
   };
 
-  // to do renan : chamar funcao para registro na api local
+
 
   return (
     <Container className={styles.containerEndereco}>
@@ -53,9 +48,10 @@ const CadastroEndereco = () => {
         </Row>
         <Row>
           <Col className="d-flex flex-column align-items-center">
+            {/* Lembrar de modificar texto de acordo como o  tipo de user */}
             <h5 className="text-center text-white">
               Estamos quase lá!
-              <br /> Pra finalizar, coloque o endereço de seu negócio.
+              <br /> Pra finalizar, coloque o endereço de seu negócio. 
             </h5>
             <hr className="mb-3 text-white border-2 w-75" />
           </Col>
@@ -67,7 +63,7 @@ const CadastroEndereco = () => {
             <FloatingLabel id="userCepInput" className="mb-3" label="CEP">
               <Form.Control
                 type="text"
-                placeholder="00.000.000"
+                placeholder="00000000"
                 {...register("cep")}
               />
             </FloatingLabel>

@@ -29,7 +29,15 @@ const PerguntaSeguranca = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => { 
-    localStorage.setItem("pergunta",data.pergunta);
+    
+    // tratativa provisoria para nenhuma pergunta selecionada
+    if(data.userPergunta < 1 || data.userPergunta > 3){
+      alert("Defina uma pergunta de segurança");
+      return false;
+    }
+
+    localStorage.setItem("userPergunta",data.userPergunta);
+    localStorage.setItem("userResposta",data.userResposta);
 
     // if (dataState.id == "1" ){
     //   navigate("/cadastro-assistencia", { state: data })
@@ -38,8 +46,8 @@ const PerguntaSeguranca = () => {
     //   navigate("/login", { state: data }) // cadastrar  solicitante no banco
     // }
 
-    console.log(dataState);
-
+    console.log(data);
+    navigate("/cadastro-endereco");
   };
 
   const onError = (errors) => {
@@ -79,13 +87,13 @@ const PerguntaSeguranca = () => {
 
             <Form onSubmit={handleSubmit(onSubmit, onError)}>
              
-                <Form.Select size="lg" aria-label>
-                  <option selected disabled>
+                <Form.Select size="lg" aria-label {...register("userPergunta")}>
+                  <option value={0}>
                     Escolha sua pergunta de Segurança
                   </option>
-                  <option value="1">Qual é o nome do seu primeiro animal de estimação?</option>
-                  <option value="2">Qual é o nome da escola onde você estudou na infância?</option>
-                  <option value="3">Qual é o nome da cidade onde  seus pais se conheceram?</option>
+                  <option value={1}>Qual é o nome do seu primeiro animal de estimação?</option>
+                  <option value={2}>Qual é o nome da escola onde você estudou na infância?</option>
+                  <option value={3}>Qual é o nome da cidade onde  seus pais se conheceram?</option>
                 </Form.Select>
               
 

@@ -1,4 +1,5 @@
-import { Card } from "react-bootstrap";
+//react bootstrap componentes
+import Card  from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
@@ -7,15 +8,17 @@ import Button from "react-bootstrap/Button";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 
+//navegação by router dom
 import { Link, useNavigate } from "react-router-dom";
+
+// form
 import { useForm } from "react-hook-form";
 
+//styles
 import styles from "./cadastro.module.css";
 
-import { verificadorCpf } from "../../functions/verificador_cpf";
-
-//hook
-import { useCadastraUser } from "../../hooks/useApi";
+//hooks
+import { useVerificadorDeCpf } from "../../hooks/useApi";
 
 const CadastroUser = () => {
 
@@ -28,8 +31,7 @@ const CadastroUser = () => {
     formState: { errors },
   } = useForm();
 
-  const {inserirInfoAcessoSolicitante} = useCadastraUser();
-
+  const {verificador} = useVerificadorDeCpf();
   const onSubmit = (data) => {
     
     // há maneira melhor de definir essa limitaçãp
@@ -39,7 +41,7 @@ const CadastroUser = () => {
     }
 
     // verifica se cpf informado é válido
-    if (!verificadorCpf(data.userCpf)) {
+    if (!verificador(data.userCpf)) {
       return false;
     }
     // console.log(data);

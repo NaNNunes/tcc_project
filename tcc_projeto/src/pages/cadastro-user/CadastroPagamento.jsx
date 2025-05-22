@@ -13,8 +13,6 @@ import { useForm } from "react-hook-form";
 
 import styles from "./cadastro.module.css";
 
-import { verificadorCpf } from "../../functions/verificador_cpf";
-
 const CadastroUser = () => {
   const navigate = useNavigate();
 
@@ -26,14 +24,9 @@ const CadastroUser = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    if (!verificadorCpf(data.cpf)) {
-      return false;
-    }
 
-    navigate("/pergunta-seguranca", { state: data });
   };
 
-  const senha = watch("senha");
   const onError = (errors) => {
     console.log("Error: ", errors);
   };
