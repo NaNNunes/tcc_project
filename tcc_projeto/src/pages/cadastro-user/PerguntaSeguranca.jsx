@@ -12,15 +12,12 @@ import {
 
 import Form from "react-bootstrap/Form"
 
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import styles from "./cadastro.module.css";
 
 const PerguntaSeguranca = () => {
-
-  const navigate = useNavigate();
-  const dataState = useLocation().state;
 
   const {
     register,
@@ -28,14 +25,18 @@ const PerguntaSeguranca = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (dataState) => {
-    
-    if (dataState.id == "1" ){
-      navigate("/cadastro-assistencia", { state: data })
-    }
-    else if (dataState.id == "2"){
-      navigate("/login", { state: data }) // cadastrar  solicitante no banco
-    }
+  // navegação
+  const navigate = useNavigate();
+
+  const onSubmit = (data) => { 
+    localStorage.setItem("pergunta",data.pergunta);
+
+    // if (dataState.id == "1" ){
+    //   navigate("/cadastro-assistencia", { state: data })
+    // }
+    // else if (dataState.id == "2"){
+    //   navigate("/login", { state: data }) // cadastrar  solicitante no banco
+    // }
 
     console.log(dataState);
 
@@ -44,6 +45,7 @@ const PerguntaSeguranca = () => {
   const onError = (errors) => {
     console.log("Error: ", errors);
   };
+
   return (
     <Container>
       <Card  className={styles.containerPergunta}>
@@ -76,20 +78,16 @@ const PerguntaSeguranca = () => {
         <Card.Body>
 
             <Form onSubmit={handleSubmit(onSubmit, onError)}>
-               <Form.Select aria-label size="lg" {...register("pergunta")}>
-                <option className={styles.dropdown} id="dropdown-basic">
-                  Escolha sua Pergunta de Segurança
-                </option>
-                <option value="1">
-                  Qual é o nome do seu primeiro animal de estimação?
-                </option>
-                <option value="2">
-                  Qual é o nome da escola onde você estudou na infância?
-                </option>
-                <option value="3">
-                  Qual é o nome da cidade onde seus pais se conheceram?
-                </option>
-              </Form.Select>
+             
+                <Form.Select size="lg" aria-label>
+                  <option selected disabled>
+                    Escolha sua pergunta de Segurança
+                  </option>
+                  <option value="1">Qual é o nome do seu primeiro animal de estimação?</option>
+                  <option value="2">Qual é o nome da escola onde você estudou na infância?</option>
+                  <option value="3">Qual é o nome da cidade onde  seus pais se conheceram?</option>
+                </Form.Select>
+              
 
               {/* Resposta Segurança */}
               
@@ -119,15 +117,6 @@ const PerguntaSeguranca = () => {
                     className={`${styles.Button}`}
                   />
                 </Col>
-                <Col>
-                    <Button
-                      as="input"
-                      value="Finalizar"
-                      type="submit"
-                      size="lg"
-                      className={`${styles.Button}`}
-                    />
-                  </Col>
               </Row>
             </Form>
 

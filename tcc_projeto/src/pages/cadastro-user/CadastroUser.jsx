@@ -15,7 +15,11 @@ import styles from "./cadastro.module.css";
 
 import { verificadorCpf } from "../../functions/verificador_cpf";
 
+//hook
+import { useCadastraUser } from "../../hooks/useApi";
+
 const CadastroUser = () => {
+
   const navigate = useNavigate();
 
   const {
@@ -25,13 +29,33 @@ const CadastroUser = () => {
     formState: { errors },
   } = useForm();
 
+  const {inserirInfoAcessoSolicitante} = useCadastraUser();
+
   const onSubmit = (data) => {
-    console.log(data);
-    if (!verificadorCpf(data.cpf)) {
+    
+    // há maneira melhor de definir essa limitaçãp
+    if(data.userCategoria != 1 && data.userCategoria != 2){
+      alert("Defina um tipo de user");
       return false;
     }
 
-    navigate("/pergunta-seguranca", { state: data });
+    // verifica se cpf informado é válido
+    if (!verificadorCpf(data.userCpf)) {
+      return false;
+    }
+    // console.log(data);
+    
+    // jogar infos para o localStorage
+    localStorage.setItem("userEmail",data.userEmail);
+    localStorage.setItem("userSenha",data.senha);
+    localStorage.setItem("userCategoria",data.userCategoria)
+    localStorage.setItem("userCpf",data.userCpf);
+    localStorage.setItem("userNome",data.userNome);
+    localStorage.setItem("userSobrenome",data.userSobrenome);
+    localStorage.setItem("userTelefone",data.userTelefone);
+    localStorage.setItem("userTermos",data.userTermos);
+
+    navigate("/pergunta-seguranca");
   };
 
   const senha = watch("senha");
@@ -39,9 +63,6 @@ const CadastroUser = () => {
     console.log("Error: ", errors);
   };
 
-  // to do renan : chamar funcao para registro na api local
-
-  //ta com erro de estrutura
   return (
     <Container>
       <Card className={styles.container}>
@@ -73,7 +94,7 @@ const CadastroUser = () => {
                 <Form.Control
                   type="email"
                   placeholder=""
-                  {...register("email")}
+                  {...register("userEmail",{/*require */})}
                 />
               </FloatingLabel>
             </Col>
@@ -86,7 +107,18 @@ const CadastroUser = () => {
                 <Form.Control
                   type="text"
                   placeholder="000.000.000-00"
-                  {...register("cpf")}
+                  {...register("userCpf",{
+                    required:"CPF necessário",
+                    minLength: {
+                      value: 11,
+                      message:"Necessário 11 dígitos"
+                    },
+                    maxLength:{ 
+                      value: 11,
+                      message:"Necessário 11 dígitos"
+                    },
+                    /* regex para apenas números */
+                  })}
                 />
               </FloatingLabel>
             </Col>
@@ -95,7 +127,7 @@ const CadastroUser = () => {
                 <Form.Control
                   type="text"
                   placeholder="(00) 00000-0000"
-                  {...register("telefone")}
+                  {...register("userTelefone",{/*require */})}
                 />
               </FloatingLabel>
             </Col>
@@ -107,7 +139,7 @@ const CadastroUser = () => {
                 <Form.Control
                   type="text"
                   placeholder="Nome"
-                  {...register("nome")}
+                  {...register("userNome")}
                 />
               </FloatingLabel>
             </Col>
@@ -120,7 +152,7 @@ const CadastroUser = () => {
                 <Form.Control
                   type="text"
                   placeholder="Sobrenome"
-                  {...register("sobrenome")}
+                  {...register("userSobrenome")}
                 />
               </FloatingLabel>
             </Col>
@@ -175,7 +207,7 @@ const CadastroUser = () => {
                 label="Li e aceito os termos de uso"
                 value={true}
                 {
-                  ...register("termos",{
+                  ...register("userTermos",{
                     required:"Termos necessários"
                   })
                 }
@@ -205,10 +237,10 @@ const CadastroUser = () => {
             </Col>
           </Row>
           <Form.Group>
-            <Form.Select as="select" aria-label {...register("categoriaUser")}>
+            <Form.Select as="select" aria-label {...register("userCategoria")}>
               <option >Escolha seu nivel de user</option>
-              <option value="1">Solicitante</option>
-              <option value="2">ADM</option>
+              <option value={1}>Solicitante</option>
+              <option value={2}>ADM</option>
             </Form.Select>
           </Form.Group>
         </Form>

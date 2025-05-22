@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+const url = import.meta.env.VITE_API_URL;
+
 // consulta de endereco por cep na api de brasil api
 export function getEnd_API(cep){
     const urlCep = "https://brasilapi.com.br/api/cep/v1/"+cep;
@@ -57,4 +59,22 @@ export function getEnd_local_API(){
         fetchData();
     }, [])
     return enderecos;
+}
+
+
+export function useCadastraUser(){
+    const inserirInfoAcessoSolicitante = async (data) => {
+        const request = await fetch(`${url}/solicitante`,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(data)
+        });
+        const response = await request.json();
+        console.log(response.id);
+        return response.id;
+    }
+
+    return {inserirInfoAcessoSolicitante};
 }

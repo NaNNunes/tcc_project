@@ -1,10 +1,10 @@
-export function verificadorCpf(cpfStr = "000.000.000-00"){
+export function verificadorCpf(cpfStr = "00000000000"){
     // verifica se todos os digitos são repetidos | obs: da pra fazer um laço e comparar
     if (
-        (cpfStr == "000.000.000-00") || (cpfStr == "111.111.111-11") || (cpfStr == "222.222.222-22") || 
-        (cpfStr == "333.333.333-33") || (cpfStr == "444.444.444-44") || (cpfStr == "555.555.555-55") || 
-        (cpfStr == "666.666.666-66") || (cpfStr == "777.777.777-77") || (cpfStr == "888.888.888-88") ||
-        (cpfStr == "999.999.999-99") 
+        (cpfStr == "00000000000") || (cpfStr == "11111111111") || (cpfStr == "22222222222") || 
+        (cpfStr == "33333333333") || (cpfStr == "44444444444") || (cpfStr == "55555555555") || 
+        (cpfStr == "66666666666") || (cpfStr == "77777777777") || (cpfStr == "88888888888") ||
+        (cpfStr == "99999999999") 
     ) {
         console.log("cpf não válido: ", cpfStr);
         return false;
@@ -32,6 +32,6 @@ export function verificadorCpf(cpfStr = "000.000.000-00"){
         resto_somaProd = somaProdutos % 11;
         verificador[i] = ((resto_somaProd == 0) || (resto_somaProd == 1) ? 0 : (11 - resto_somaProd));
     }
-    console.log((verificador[0] == cpfDigitos[cpfDigitos.length-2]) && (verificador[1] == cpfDigitos[cpfDigitos.length-1]));
+   
     return ((verificador[0] == cpfStr[cpfStr.length - 2]) && (verificador[1] == cpfStr[cpfStr.length - 1]));
 }
