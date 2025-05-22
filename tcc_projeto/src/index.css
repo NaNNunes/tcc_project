@@ -18,6 +18,15 @@ body.login-background {
   width: 100vw;
 }
 
+.error{
+  color: red;
+  font-size: 16px;
+  position: absolute;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
 /* :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

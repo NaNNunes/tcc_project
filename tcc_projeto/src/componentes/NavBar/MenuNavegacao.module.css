@@ -1,8 +1,6 @@
 /* Definição de style do "Navbar" */
 .navbar {
     background: #034C8C;
-    color: white;
-    transition: width 0.3s ease; /* Transição de tamanho */
     box-shadow: 10px 7px 10px 0px rgb(204, 204, 204);
 }
 
@@ -16,25 +14,35 @@
     width: 100%;
 }
 
-/* Todo o dropdown */
-.dropdown {
-    background-color: transparent;
-}
-
-.dropdown:focus:focus-visible {
-    background-color: #005DB1;
-}
-
-/* Titulo do dropdown */
-.dropdownTitle {
+/* Titulo do dropdown. */
+.dropDownTitle {
     color: white;
     font-weight: bold;
     font-size: 1.2rem;
-    text-decoration: none;
 }
 
+.icone {
+    padding-right: 8%;
+}
+
+/* Quando o dropdown for ativado. */
+.dropDownActive {
+    background-color: #005DB1;
+    border-radius: 10px 10px 10px 0px;
+}
+
+/* Mudando o estilo do menu quando está ativo. */
+.dropDownActive :global(.dropdown-menu.show) {
+    background-color: #005DB1;
+    margin: 0;
+    border: 0;
+
+}
 .dropdownItem {
-    background-color: red;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0;
 }
 
 /* Tirando o icone do dropdown 🙏 */
@@ -70,30 +78,4 @@
     border: 2px solid #FFDB8C;
     background-color: #005DB1;
     color: white;
-}
-
-
-/* Definição de style do icone e do texto ao lado*/
-.meuLink .icone {
-    width: 30px;
-    max-width: 30px;
-    max-height: 30px;
-    flex-shrink: 0;
-    position: fixed;
-    left: 40px;
-}   
-
-
-
-.meuLink .texto {
-    position: fixed;
-    font-size: 18px;
-    font-weight: 600;
-    color: white;
-    left: 75px;
-}
-
-.navbar:hover .icone {
-    transform: translateX(-10px); /* Move o ícone quando tiver o hover no navbar */
-    transition: transform 0.3s ease;
 }

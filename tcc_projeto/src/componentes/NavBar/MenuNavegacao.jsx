@@ -10,9 +10,10 @@ import { useState } from 'react';
 
 // Importação de icons
 import { TiArrowSortedDown } from "react-icons/ti";
+import { TiArrowSortedUp } from "react-icons/ti";   
 
 const MenuNavegacao = () => {
-    const [hovered, setHovered] = useState(false); // useState do hover para Navbar.
+    const [open, setOpen] = useState(false); // useState para se o dropdown esta aberto ou não.
 
   return (
     <div>
@@ -50,16 +51,21 @@ const MenuNavegacao = () => {
                     <Image src="/logos/connectfix_logo.svg"></Image>
                 </Navbar.Brand>
 
+                <Navbar.Toggle aria-controls='minha-nav' />
+
                 <Navbar.Collapse>
                     <Nav>
                         <NavDropdown 
                             title={
-                                <span className={styles.dropdownTitle}>
-                                    Demandas <TiArrowSortedDown />
+                                <span className={styles.dropDownTitle}>
+                                    {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
+                                    Demandas {open ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
                                 </span>
                             }
-                            className={styles.dropdown} 
-                            id="collasible-nav-dropdown" 
+                            // Verifca se o NavDropdown está ativo ou não.
+                            className={`${open ? styles.dropDownActive : ''}`} 
+                            id="collasible-nav-dropdown"
+                            onToggle={(isOpen) => setOpen(isOpen)} 
                             >
                             <NavDropdown.Item href='/criar-Demanda' className={styles.dropdownItem}><Image className={styles.icone} src='/icons/Icon_pedido.svg' />Cadastro pedido</NavDropdown.Item>
                             <NavDropdown.Item>Consultar pedidos</NavDropdown.Item>
