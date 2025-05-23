@@ -31,13 +31,11 @@ const CadastroAssistencia = () => {
     }
 
     // socando mais coisas no localStorage
-    localStorage.setItem("assistenciaEmail",data.assistenciaEmail);
-    localStorage.setItem("assistenciaNomeFantasia",data.nomeFantasia);
-    localStorage.setItem("assistenciaRazaoSocial",data.razaoSocial);
-    localStorage.setItem("assistenciaCnpj",data.cnpj);
-    localStorage.setItem("assistenciaTelefone",data.assistenciaTelefone);
-
-    console.log(data);
+    for (const [key, value] of Object.entries(data)){
+      localStorage.setItem(key,value);
+    }
+    // console.log(data);
+    // navigate("/cadastro-pagamento");
   };
 
   const onError = (errors) => {

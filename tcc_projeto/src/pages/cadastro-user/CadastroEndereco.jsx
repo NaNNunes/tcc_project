@@ -27,44 +27,59 @@ const CadastroEndereco = () => {
   } = useForm();
   
   const navigate = useNavigate();
-
   const {cadastrarUser} = useCadastraUser();
+  const [endereco, setEndereco] = useState({
+      city:"",
+      neighborhood:"",
+      street:"",
+      state:""
+    }
+  )
 
   const userCategoria = localStorage.getItem("userCategoria");
+
+  // enable input at the fields
+  const [inputFieldEnable, setInputFieldEnable] = useState(false);
 
   //to do - passar para hooks
   // busca o cep informado na api e define valores da instancia do objeto nos campos
   const handleZipCodeBlur = async (e) =>{
     const zipCode = e.target.value; //cep informado
-    // console.log("cep:", zipCode);
-    
+
     // consulta
-    const response = await fetch(`https://brasilapi.com.br/api/cep/v2/${zipCode}`);
-    
-    // consulta sem sucesso
-    if(!(response.ok)){
-      // alerta de erro
-      alert("Endereço não encontrado");
+    try{
+      const response = await fetch(`https://brasilapi.com.br/api/cep/v2/${zipCode}`);
+      const data = await response.json();
+
+      // consulta sem sucesso
+      if(!(response.ok)){
+        // alerta de erro
+        alert("Endereço não encontrado");
+        //limpa campos
+        for(const[key, value] of Object.entries(endereco)){
+          setValue(key,value)
+        }
+        return false;
+      }
+
+      //define valores da instancia em seus determinados campos
+      for(const [key, value] of Object.entries(data)){
+        setValue(key, value);
+      }
+
+    }
+    catch(erro){
+      setInputFieldEnable(true);
       //limpa campos
-      setValue("city","");
-      setValue("neighborhood","");
-      setValue("street","");
-      setValue("state","");
-      return false;
+      for(const[key, value] of Object.entries(endereco)){
+        setValue(key,value)
+      }
     }
 
-    // caso sucesso
-    const data = await response.json();
-    // console.log("Endereço localizado: ", data);
-    
-    //define valores da instancia em seus determinados campos
-    setValue("city",data.city);
-    setValue("neighborhood",data.neighborhood);
-    setValue("street",data.street);
-    setValue("state",data.state);
+
   }
 
-  const onSubmit = (endereco) => {
+  const onSubmit = (data) => {
 
     // caso user seja solicitante
     if(userCategoria == 1){
@@ -93,12 +108,9 @@ const CadastroEndereco = () => {
 
     // caso user seja administrador
     //salvando localmente
-    localStorage.setItem("userCep",endereco.zipcode);
-    localStorage.setItem("userStreet",endereco.street);
-    localStorage.setItem("userCity",endereco.city);
-    localStorage.setItem("userNeighborhood",endereco.neighborhood);
-    localStorage.setItem("userState",endereco.state);
-    localStorage.setItem("userEndNum", endereco.number);
+    for (const [key, value] of Object.entries(data)){
+      localStorage.setItem(key,value);
+    }
 
     navigate("/cadastro-assistencia")
   };

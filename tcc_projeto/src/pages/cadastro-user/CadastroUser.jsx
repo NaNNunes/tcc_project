@@ -19,10 +19,12 @@ import styles from "./cadastro.module.css";
 
 //hooks
 import { useVerificadorDeCpf } from "../../hooks/useApi";
+import { useContext } from "react";
+
+// context do user
+import { AuthContext } from "../../context/userContext";
 
 const CadastroUser = () => {
-
-  const navigate = useNavigate();
 
   const {
     register,
@@ -30,6 +32,10 @@ const CadastroUser = () => {
     watch,
     formState: { errors },
   } = useForm();
+  
+  // const {salvaDados} = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const {verificador} = useVerificadorDeCpf();
   const onSubmit = (data) => {
@@ -47,14 +53,10 @@ const CadastroUser = () => {
     // console.log(data);
     
     // jogar infos para o localStorage
-    localStorage.setItem("userCategoria",data.userCategoria)
-    localStorage.setItem("userNome",data.userNome);
-    localStorage.setItem("userSobrenome",data.userSobrenome);
-    localStorage.setItem("userCpf",data.userCpf);
-    localStorage.setItem("userEmail",data.userEmail);
-    localStorage.setItem("userTelefone",data.userTelefone);
-    localStorage.setItem("userSenha",data.senha);
-    localStorage.setItem("userTermos",data.userTermos);
+    // salvaDados(data)
+    for (const [key, value] of Object.entries(data)){
+      localStorage.setItem(key,value);
+    }
 
     navigate("/pergunta-seguranca");
   };
