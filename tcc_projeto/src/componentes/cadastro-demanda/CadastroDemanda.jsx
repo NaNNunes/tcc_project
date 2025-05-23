@@ -16,7 +16,7 @@ import { FaHeadphones } from "react-icons/fa6";
 
 // Importação de estilo.
 import stylesForm from '../estilo-form/estiloForm.module.css'
-import styles from './CadastroDemanda.module.css'
+import stylesCad from './CadastroDemanda.module.css'
 
 import { useState } from 'react';
 
@@ -58,19 +58,19 @@ const categoriaDispositivo = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         {/* Div para controlar o tamanho do Form. */}
-        <div className={styles.formulario}>
+        <div className={stylesCad.formulario}>
             <Form onSubmit={handleSubmit(onSubmit, onError)}>
                 {/* Categoria do dispositivo */}
                 <Container fluid className={stylesForm.parteFormulario}>
-                    {/* Campo oculto para fazer o registro da categoria e caso tenha algum erro mostrar na tela. */}
-                    <input 
-                        type="hidden" 
+                     {/* Campo oculto para fazer o registro da categoria e caso tenha algum erro mostrar na tela. */}
+                    <input
+                        type="hidden"
                         {...register("categoria", {
                             required: "A categoria é obrigatória"
                         })}
                     />
                     {/* Título do container */}
-                    <Row> 
+                    <Row style={{paddingBottom: '1%'}}> 
                         <Col>
                             <h3>Categoria do dispositivo</h3>
                         </Col>
@@ -80,19 +80,19 @@ const categoriaDispositivo = () => {
                         <Col style={{maxHeight: 'fit-content'}}>
                             <ListGroup 
                                 horizontal 
-                                className={styles.lista}
+                                className={stylesCad.lista}
                             >
-                                {/* Map para carregar as categorias da 'const categorias' */}
+                                {/* Map para carregar as categorias de 'const categorias' */}
                                 {categorias.map((cat) => (
                                     <ListGroup.Item
                                         key={cat.value}
                                         value={cat.value}
                                         className={
-                                            `${styles.listaBotao} ${categoriaSelecionada === cat.value 
-                                            ? styles.listaBotaoSelecionado 
+                                            `${stylesCad.listaBotao} ${categoriaSelecionada === cat.value 
+                                            ? stylesCad.listaBotaoSelecionado 
                                             : ""}`
                                         }
-                                        active={categoriaSelecionada === cat.value}
+
                                         onClick={() => setValue("categoria", cat.value, { shouldValidate: true })} 
                                         // shouldValidate serve para caso o erro já estiver presente na tela do usuário, quando for selecionado um campo o erro some imediatamente.
                                     >
@@ -101,7 +101,9 @@ const categoriaDispositivo = () => {
                                     </ListGroup.Item>
                                 ))}
                             </ListGroup>
-                            {errors.categoria && (<span className='error'>{errors.categoria.message}</span>)}
+                            {errors.categoria && (
+                                <span className='error'>{errors.categoria.message}</span>
+                            )}
                         </Col>
                     </Row>
                 </Container>
@@ -109,7 +111,7 @@ const categoriaDispositivo = () => {
                 {/* Informações do dispositivo */}
                 <Container fluid className={stylesForm.parteFormulario}>
                     {/* Título do container */}
-                    <Row> 
+                    <Row style={{paddingBottom: '1%'}}> 
                         <Col md={12} xs={12}>
                             <h3 
                                 style={{
@@ -122,7 +124,7 @@ const categoriaDispositivo = () => {
                     </Row>
 
                     {/* Informações do dispositivo */}
-                    <Row>
+                    <Row style={{paddingBottom: '3%'}}>
                         {/* Coluna de marca */}
                         <Col md={4} xs={12} className={stylesForm.campo}>
                             <FloatingLabel
@@ -131,12 +133,18 @@ const categoriaDispositivo = () => {
                             >
                                 <Form.Select
                                     type='select'
-                                    placeholder=''   
+                                    placeholder=''
+                                    {...register("marca", {
+                                        required: "A marca é obrigatória"
+                                    })}
                                 >
                                     <option value="">Selecione uma opção</option>
                                     <option value="Xbox">Xbox</option>
                                 </Form.Select>
                             </FloatingLabel>
+                            {errors.marca && (
+                                <span className='error'>{errors.marca.message}</span>
+                            )}
                         </Col>
                         
                         {/* Coluna de fabricante */}
@@ -148,9 +156,13 @@ const categoriaDispositivo = () => {
                                 <Form.Control 
                                     type='text'
                                     placeholder=''
+                                    {...register("fabricante")}
                                 />
 
                             </FloatingLabel>
+                            {errors.fabricante && (
+                                <span className='error'>{errors.fabricante.message}</span>
+                            )}
                         </Col>
 
                         {/* Coluna de modelo */}
@@ -162,12 +174,18 @@ const categoriaDispositivo = () => {
                                 <Form.Select 
                                     type='text'
                                     placeholder=''
+                                    {...register("modelo", {
+                                        required: 'O modelo é obrigatório'
+                                    })}
                                 >
                                     <option value="">Selecione uma opção</option>
                                     <option value="Xbox-Series-S">Xbox Series S</option>
                                     <option value="Xbox-Series-X">Xbox Series X</option>
                                 </Form.Select>
                             </FloatingLabel>
+                            {errors.modelo && (
+                                <span className='error'>{errors.modelo.message}</span>
+                            )}
                         </Col>
                     </Row>
 
@@ -181,8 +199,12 @@ const categoriaDispositivo = () => {
                                 <Form.Control 
                                     type='text'
                                     placeholder=''
+                                    {...register("numSerie")}
                                 />
                             </FloatingLabel>
+                            {errors.numSerie && (
+                                <span className='error'>{errors.numSerie.message}</span>
+                            )}
                         </Col>
 
                         {/* Coluna de tensao */}
@@ -194,8 +216,12 @@ const categoriaDispositivo = () => {
                                 <Form.Control 
                                     type='text'
                                     placeholder=''
+                                    {...register("tensao")}
                                 />
                             </FloatingLabel>
+                            {errors.tensao && (
+                                <span className='error'>{errors.tensao.message}</span>
+                            )}
                         </Col>
 
                         {/* Coluna de amperagem */}
@@ -207,8 +233,12 @@ const categoriaDispositivo = () => {
                                 <Form.Control 
                                     type='text'
                                     placeholder=''
+                                    {...register("amperagem")}
                                 />
                             </FloatingLabel>
+                            {errors.amperagem && (
+                                <span className='error'>{errors.amperagem.message}</span>
+                            )}
                         </Col>
 
                         {/* Coluna de cor */}
@@ -220,8 +250,17 @@ const categoriaDispositivo = () => {
                                 <Form.Control 
                                     type='text'
                                     placeholder=''
+                                    {...register("cor", {
+                                        pattern: {
+                                            value: /^[a-zA-ZÀ-ÿ\s]+$/,
+                                            message: "Use apenas letras"
+                                        }
+                                    })}
                                 />
                             </FloatingLabel>
+                            {errors.cor && (
+                                <span className='error'>{errors.cor.message}</span>
+                            )}
                         </Col>
                     </Row>
                 </Container>
@@ -229,7 +268,7 @@ const categoriaDispositivo = () => {
                 {/* Contextualize-nos */}
                 <Container fluid className={stylesForm.parteFormulario}>
                     {/* Título do container */}
-                    <Row>
+                    <Row style={{paddingBottom: '1%'}}>
                         <Col md={12} xs={12}>
                             <h3
                                 style={{
@@ -251,8 +290,14 @@ const categoriaDispositivo = () => {
                                 <Form.Control 
                                     as='textarea'
                                     style={{height: "100px", resize: "none"}}
+                                    {...register("descProblema", {
+                                        required: "A descrição do problema é obrigatória"
+                                    })}
                                 />
                             </FloatingLabel>
+                            {errors.descProblema && (
+                                <span className='error'>{errors.descProblema.message}</span>
+                            )}
                         </Col>
                             
                         {/* Coluna de observações */}
@@ -264,14 +309,18 @@ const categoriaDispositivo = () => {
                                 <Form.Control 
                                     as='textarea'
                                     style={{height: "100px", resize: "none"}}
+                                    {...register("observacoes")}
                                 />
                             </FloatingLabel>
+                            {errors.observacoes && (
+                                <span className='error'>{errors.observacoes.message}</span>
+                            )}
                         </Col>
                     </Row>
 
                     <Row>
                         {/* Botão para prosseguir */}
-                        <Col>
+                        <Col style={{paddingTop: "40px"}}>
                             <Button
                                 as='input'
                                 value='Avançar'
@@ -286,5 +335,32 @@ const categoriaDispositivo = () => {
     
   )
 }
+
+/* Marca/modelo celular:
+LG - LG K62+; 
+     LG K62; 
+     LG K41S; 
+     LG K22+
+
+Motorola - Edge 60 Fusion; 
+           Moto G05;
+           Moto G35; 
+           Moto G75
+
+Nokia - Nokia 110;
+        Nokia 6300 4G;
+        Nokia 106;
+        Nokia 150;
+
+Samsung - Galaxy A06;
+          Galaxy S24 FE;
+          Galaxy A16;
+          Galaxy S24 Ultra
+
+Apple - iPhone 16;
+        iPhone 15;
+        iPhone 14;
+        iPhone 13;
+*/
 
 export default categoriaDispositivo
