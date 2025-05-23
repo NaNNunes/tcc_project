@@ -91,12 +91,12 @@ const CadastroUser = () => {
           </Row>
           <Row>
             <Col className="d-flex align-items-center justify-content-center">
-              <h6 className="text-white">
+              <h5 className="text-white">
                 Primeiro, queremos saber mais sobre você
-              </h6>
+              </h5>
 
             </Col>
-            <hr className="mb-3 mx-5 text-white border-2" />
+            <hr className="mb-3 mx-5 text-white border-2 w-75" />
           </Row>
         </Row>
         <Form className="px-4" onSubmit={handleSubmit(onSubmit, onError)}>
@@ -309,7 +309,8 @@ const CadastroUser = () => {
               </>
             }
           />
-
+          
+          {/* Botão */}
           <Row>
             <Col className="d-flex align-items-center justify-content-center mt-3">
               <Button
