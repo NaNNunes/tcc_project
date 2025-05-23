@@ -61,7 +61,8 @@ const CadastroEndereco = () => {
         }
         return false;
       }
-
+      // desabilita alteração de campo
+      setInputFieldEnable(false);
       //define valores da instancia em seus determinados campos
       for(const [key, value] of Object.entries(data)){
         setValue(key, value);
@@ -69,7 +70,9 @@ const CadastroEndereco = () => {
 
     }
     catch(erro){
+      // abilita alteração de campo
       setInputFieldEnable(true);
+      alert("ops, algo deu errado")
       //limpa campos
       for(const[key, value] of Object.entries(endereco)){
         setValue(key,value)
@@ -182,27 +185,56 @@ const CadastroEndereco = () => {
 
           <Col>
             <FloatingLabel id="userCityInput" className="mb-3" label="Cidade">
-              <Form.Control
-                disabled
-                type="text"
-                placeholder=" "
-                
-                {...register("city")}
-              />
+              {
+                inputFieldEnable
+                ?
+                  <>
+                    <Form.Control
+                      type="text"
+                      placeholder=" "
+                      {...register("city")}
+                    />
+                  </>
+                :
+                  <>
+                    <Form.Control
+                      disabled
+                      type="text"
+                      placeholder=" "
+                      {...register("city")}
+                    />
+                  </>
+              }
+              
+              
             </FloatingLabel>
           </Col>
         </Row>
 
         <Row className="">
           <Col className="">
+
             <FloatingLabel id="userBairroInput" className="mb-3" label="Bairro">
-              <Form.Control
-                disabled
-                type="text"
-                placeholder="Bairro"
-                
-                {...register("neighborhood")}
-              />
+              {
+                inputFieldEnable 
+                ?
+                  <>
+                    <Form.Control
+                      type="text"
+                      placeholder="Bairro"
+                      {...register("neighborhood")}
+                    />
+                  </> 
+                :
+                  <>
+                    <Form.Control
+                      disabled
+                      type="text"
+                      placeholder="Bairro"
+                      {...register("neighborhood")}
+                    />
+                  </>
+              }
             </FloatingLabel>
           </Col>
 
@@ -212,13 +244,26 @@ const CadastroEndereco = () => {
               className="mb-3"
               label="Logradouro"
             >
-              <Form.Control
-                disabled
-                type="text"
-                placeholder="Logradouro"
-                
-                {...register("street")}
-              />
+              {
+                inputFieldEnable
+                ?
+                  <>
+                    <Form.Control
+                      type="text"
+                      placeholder="Logradouro"
+                      {...register("street")}
+                    />
+                  </>
+                :
+                <>
+                  <Form.Control
+                    disabled
+                    type="text"
+                    placeholder="Logradouro"
+                    {...register("street")}
+                  />
+                </>
+              }
             </FloatingLabel>
           </Col>
         </Row>
@@ -226,12 +271,27 @@ const CadastroEndereco = () => {
         <Row>
           <Col>
             <FloatingLabel id="userUFInput" className="mb-3" label="UF">
-              <Form.Control 
-                disabled
-                type="text"
-                placeholder="UF"
-                
-                {...register("state")} />
+              {
+                inputFieldEnable
+                ?
+                  <>
+                    <Form.Control 
+                      type="text"
+                      placeholder="UF"
+                      {...register("state")} 
+                    />
+                  </>
+                :
+                  <>
+                    <Form.Control 
+                      disabled
+                      type="text"
+                      placeholder="UF"
+                      {...register("state")} 
+                    />
+                  </>
+              }
+              
             </FloatingLabel>
           </Col>
           <Col>
