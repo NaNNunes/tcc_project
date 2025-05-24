@@ -23,9 +23,6 @@ import { useState } from 'react';
 // Importação do useForm para mexer com o formulário.
 import { useForm } from "react-hook-form";
 
-import ToggleButton from 'react-bootstrap/ToggleButton';
-import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
-
 const categoriaDispositivo = () => {
     const {
         register,
@@ -35,7 +32,19 @@ const categoriaDispositivo = () => {
         formState: {errors},
     } = useForm();
 
+    // Categoria selecionada no ListGroup.
     const categoriaSelecionada = watch("categoria");
+    const [marcaSelecionada, setMarcaSelecionada] = useState("");
+
+    const dadosDispositivos = {
+        "Celular": {
+            "LG": ["LG K62+", "LG K62", "LG K41S", "LG K22+"],
+            "Motorolo": ["Edge 60 Fusion", "Moto G05", "Moto G35", "Moto G75"],
+            "Nokia": ["Nokia 110", "Nokia 6300", "Nokia 106", "Nokia 150"],
+            "Samsung": ["Galaxy A06", "Galaxy S24 FE", "Galaxy A16", "Galaxy S24 Ultra"],
+            "Apple": ["iPhone 16", "iPhone 15", "iPhone 14", "iPhone 13"]
+        }
+    }
 
     // Lista com as categorias do dispositivo
     const categorias = [
@@ -46,6 +55,10 @@ const categoriaDispositivo = () => {
         {label: "Periférico", value: "Periférico", icon: <FaHeadphones className="me-2" />},
         {label: "Outros", value: "Outros", icon: null},   
     ];
+
+    const marcas = {
+        "Celular": []
+    };
 
     const onSubmit = async (dados) => {
         console.log("Dados: ", dados)
@@ -335,32 +348,5 @@ const categoriaDispositivo = () => {
     
   )
 }
-
-/* Marca/modelo celular:
-LG - LG K62+; 
-     LG K62; 
-     LG K41S; 
-     LG K22+
-
-Motorola - Edge 60 Fusion; 
-           Moto G05;
-           Moto G35; 
-           Moto G75
-
-Nokia - Nokia 110;
-        Nokia 6300 4G;
-        Nokia 106;
-        Nokia 150;
-
-Samsung - Galaxy A06;
-          Galaxy S24 FE;
-          Galaxy A16;
-          Galaxy S24 Ultra
-
-Apple - iPhone 16;
-        iPhone 15;
-        iPhone 14;
-        iPhone 13;
-*/
 
 export default categoriaDispositivo
