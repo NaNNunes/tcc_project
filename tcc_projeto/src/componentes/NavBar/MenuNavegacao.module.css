@@ -2,17 +2,28 @@
 .navbar {
     background: #034C8C;
     box-shadow: 10px 7px 10px 0px rgb(204, 204, 204);
+    max-width: 100%;
 }
 
-/* Definição de style do "Container" */
-.container {
+/* Definição de style do container de navegacao entre funcionalidas */
+.containerNavegacao {
+    display: flex;
+    align-items: center !important;
+    width: 100% !important;
+    padding-left: 4%;
+    padding-right: 4%;
+    margin: 0;
+}
+
+
+/* .containerNavegacao {
     display: flex;
     flex-direction: column !important;
     flex-wrap: nowrap !important;
     padding: 0px;
     align-items: center !important;
     width: 100%;
-}
+} */
 
 /* Titulo do dropdown. */
 .dropDownTitle {
@@ -51,34 +62,26 @@
     display: none !important;
 }
 
+.botaoToggle {
+    background-color: transparent;
+    border: 0;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+
+}
+
+.botaoToggle:focus, .botaoToggle:focus-visible {
+    box-shadow: none !important;
+    outline: 2px solid white !important;
+}
+
+.imgConnect {
+    max-width: 60%;
+}
+
 /* 
 .brand {
     /* Colocar css 
 } */
-
-/* Definição de style de "Nav.Link" */
-.meuLink {
-    display: flex;
-    align-items: center;
-
-    color: white;
-    background-color: transparent;
-    padding: 0px 0px !important;
-    border-radius: 8px;
-    height: 60px;
-    width: 90%;
-    justify-self: center;
-}
-
-.meuLink:hover {
-    background-color: #005DB1;
-    color: white;
-}
-
-.meuLink:active,
-.meuLink:focus {
-    color: white;
-    border: 2px solid #FFDB8C;
-    background-color: #005DB1;
-    color: white;
-}
