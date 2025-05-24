@@ -1,3 +1,6 @@
+//styles
+import styles from "./cadastro.module.css";
+
 //react bootstrap componentes
 import Card  from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
@@ -11,33 +14,26 @@ import Form from "react-bootstrap/Form";
 //navegação by router dom
 import { Link, useNavigate } from "react-router-dom";
 
-// form
-import { useForm } from "react-hook-form";
-
-//styles
-import styles from "./cadastro.module.css";
 
 //hooks
-import { useVerificadorDeCpf } from "../../hooks/useApi";
-import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { useVerificadorDeCpf, useCadastraUser } from "../../hooks/useApi";
 
-// context do user
+import { useContext } from "react";
 import { AuthContext } from "../../context/userContext";
+
 
 const CadastroUser = () => {
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, watch, formState: { errors }} = useForm();
   
-  // const {salvaDados} = useContext(AuthContext);
+  const {salvaDadosUser} = useContext(AuthContext);
 
   const navigate = useNavigate();
 
   const {verificador} = useVerificadorDeCpf();
+  const {cadastrarInfosUser} = useCadastraUser();
+
   const onSubmit = (data) => {
     
     // há maneira melhor de definir essa limitaçãp
@@ -51,12 +47,9 @@ const CadastroUser = () => {
       return false;
     }
     // console.log(data);
-    
-    // jogar infos para o localStorage
-    // salvaDados(data)
-    for (const [key, value] of Object.entries(data)){
-      localStorage.setItem(key,value);
-    }
+
+    // salva dados no localStorage
+    salvaDadosUser(data);
 
     navigate("/pergunta-seguranca");
   };
@@ -173,13 +166,13 @@ const CadastroUser = () => {
                   type="password"
                   placeholder="Senha"
                   isInvalid={!!errors.senha}
-                  {...register("senha", {
-                    required: "A senha é obrigatória",
-                    minLength: {
-                      value: 8,
-                      message: "A senha deve ter pelo menos 8 caracteres",
-                    },
-                  })}
+                  // {...register("senha", {
+                  //   required: "A senha é obrigatória",
+                  //   minLength: {
+                  //     value: 8,
+                  //     message: "A senha deve ter pelo menos 8 caracteres",
+                  //   },
+                  // })}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.senha?.message}
@@ -196,11 +189,11 @@ const CadastroUser = () => {
                   type="password"
                   placeholder="Confirmar Senha"
                   isInvalid={!!errors.confirmarSenha}
-                  {...register("confirmarSenha", {
-                    required: "A confirmação de senha é obrigatória",
-                    validate: (value) =>
-                      value === senha || "As senhas não coincidem",
-                  })}
+                  // {...register("confirmarSenha", {
+                  //   required: "A confirmação de senha é obrigatória",
+                  //   validate: (value) =>
+                  //     value === senha || "As senhas não coincidem",
+                  // })}
                 />
               </FloatingLabel>
             </Col>

@@ -45,6 +45,17 @@ const CadastroEndereco = () => {
   // busca o cep informado na api e define valores da instancia do objeto nos campos
   const handleZipCodeBlur = async (e) =>{
     const zipCode = e.target.value; //cep informado
+    
+    // caso campo vazio
+    // transformar em regex
+    if(zipCode == false){
+      alert("Campo vazio");
+      //limpa campos
+      for(const[key, value] of Object.entries(endereco)){
+        setValue(key,value)
+      }
+      return false;
+    }
 
     // consulta
     try{
@@ -70,16 +81,16 @@ const CadastroEndereco = () => {
 
     }
     catch(erro){
+
       // abilita alteração de campo
       setInputFieldEnable(true);
+      
       alert("ops, algo deu errado")
       //limpa campos
       for(const[key, value] of Object.entries(endereco)){
         setValue(key,value)
       }
     }
-
-
   }
 
   const onSubmit = (data) => {
@@ -114,7 +125,6 @@ const CadastroEndereco = () => {
     for (const [key, value] of Object.entries(data)){
       localStorage.setItem(key,value);
     }
-
     navigate("/cadastro-assistencia")
   };
 

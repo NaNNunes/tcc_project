@@ -4,6 +4,8 @@ export const AuthProvider = ({children}) => {
 
     const [usuarioNome, setUsuarioNome] = useState("")
 
+    const [dadosUser, setDadosUser] = useState({});
+
     useEffect( () => {
         const nome  = localStorage.getItem("userName") || "Visitante"
         setUsuarioNome(nome)
@@ -22,16 +24,14 @@ export const AuthProvider = ({children}) => {
         setUsuarioNome("Visitante")
     }
 
-    const salvaDados = (data = null) => {
-        if(data != null){
-            for (const [key, value] of Object.entries(data)){
-                localStorage.setItem(key,value);
-            }
+    const salvaDadosUser = (dados) =>{
+        for(const [key, value] of Object.entries(dados)){
+            localStorage.setItem(key, value);
         }
     }
-
+    
     return (
-        <AuthContext.Provider value={{usuarioNome, login, logout, salvaDados}}>
+        <AuthContext.Provider value={{usuarioNome, login, logout, dadosUser, salvaDadosUser}}>
             {children}
         </AuthContext.Provider>
     )

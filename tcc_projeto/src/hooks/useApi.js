@@ -49,9 +49,9 @@ export function useVerificadorDeCpf(){
 export function useCadastraUser(){
 
     // cadastra solicitante
-    const cadastrarUser = async (data) => {
-        const userCateg = data.userCateg;
-        let user = userCateg == 1 ? "solicitante" : "administrador"
+    const cadastrarInfosUser = async (data) => {
+        const userCateg = data.userCategoria;
+        const user = (userCateg == 1) ? "solicitante" : "administrador"
 
         const request = await fetch(`${url}/${user}`,{
             method:"POST",
@@ -60,9 +60,58 @@ export function useCadastraUser(){
             },
             body: JSON.stringify(data)
         });
+
         const response = await request.json();
+        inserirValidacaoUser(response.id, user, false);
+    }
+
+    const [users, setUsers] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            try{
+                const request = await fetch(`${url}/`)
+            }
+            catch(error){
+                console.log(error);
+            }
+        }
+    },[])
+    
+
+    const inserirValidacaoUser = async (userId, user, validacao) =>{
+        const request = await fetch(`${url}/${user}/${userId}`,{
+            method: "PATCH",
+            body: JSON.stringify({"contaValida":validacao})
+        })
+    }
+
+    const inserirPerguntaResposta = async (data) =>{
+        const user = (localStorage.getItem("userCategoria") == 1) ? "solicitante" : "administrador";
+        const userId = localStorage.getItem("userId");
+
+        const request = await fetch(`${url}/${user}/${userId}`,{
+            method:"PATCH",
+            body: JSON.stringify(data)
+        })
+        const  response = await request.json();
         return response;
     }
 
-    return {cadastrarUser};
+
+
+    return {cadastrarInfosUser, inserirPerguntaResposta};
+}
+
+export function useBuscaUsers(){
+    const [users, setUsers] = useState([]);
+    useEffect(() => {
+        async function fetchData(){
+            try{
+                const request = await fetch(`${url}`)
+            }
+            catch(error){
+                console.log(error.message)
+            }
+        }
+    })
 }

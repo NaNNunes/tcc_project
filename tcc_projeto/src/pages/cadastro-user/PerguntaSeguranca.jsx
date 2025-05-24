@@ -5,8 +5,6 @@ import {
   Col,
   Container,
   Image,
-  Dropdown,
-  ButtonGroup,
   Card
 } from "react-bootstrap";
 
@@ -14,6 +12,8 @@ import Form from "react-bootstrap/Form"
 
 import { Link, useNavigate} from "react-router-dom";
 import { useForm } from "react-hook-form";
+
+import { useCadastraUser } from "../../hooks/useApi";
 
 import styles from "./cadastro.module.css";
 
@@ -28,6 +28,8 @@ const PerguntaSeguranca = () => {
   // navegação
   const navigate = useNavigate();
 
+  const {inserirPerguntaResposta} = useCadastraUser();
+
   const onSubmit = (data) => { 
     
     // tratativa provisoria para nenhuma pergunta selecionada
@@ -36,10 +38,9 @@ const PerguntaSeguranca = () => {
       return false;
     }
 
-    localStorage.setItem("userPergunta",data.userPergunta);
-    localStorage.setItem("userResposta",data.resposta);
+    inserirPerguntaResposta(data);
 
-    console.log(data);
+    // console.log(data);
     navigate("/cadastro-endereco");
   };
 
@@ -80,7 +81,7 @@ const PerguntaSeguranca = () => {
 
             <Form onSubmit={handleSubmit(onSubmit, onError)}>
              
-                <Form.Select size="lg" aria-label {...register("userPergunta")}>
+                <Form.Select size="lg" aria-label {...register("pergunta")}>
                   <option value={0}>
                     Escolha sua pergunta de Segurança
                   </option>

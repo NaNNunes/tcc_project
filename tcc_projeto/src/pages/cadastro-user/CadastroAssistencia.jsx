@@ -30,10 +30,32 @@ const CadastroAssistencia = () => {
 
     }
 
-    // socando mais coisas no localStorage
-    for (const [key, value] of Object.entries(data)){
-      localStorage.setItem(key,value);
+    const user = {
+      nome: "",
+      sobrenome: "",
+      cpf: "",
+      email: "",
+      telefone: "",
+      senha: "",
+      termos: "",
+      pergunta: "",
+      resposta:"",
+      cep:"",
+      logradouro:"",
+      cidade:"",
+      bairro:"",
+      estado:"",
+      numeroEndereco:""
     }
+
+    for( const key of Object.keys(userData)){
+      const userData = Objeect.create(localStorage.getItem(key));
+    }
+
+    // socando mais coisas no localStorage
+    // for (const [key, value] of Object.entries(data)){
+    //   localStorage.setItem(key,value);
+    // }
     // console.log(data);
     // navigate("/cadastro-pagamento");
   };

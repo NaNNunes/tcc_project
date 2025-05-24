@@ -1,5 +1,27 @@
 {
-  "solicitante": [],
-  "administrador": [],
-  "assistencia":[]
+  "solicitante": [
+    {
+      "id": "5ed0",
+      "userEmail": "user@gmail.com",
+      "userCpf": "84850899013",
+      "userTelefone": "40028922",
+      "userNome": "User",
+      "userSobrenome": "SobreUser",
+      "termos": "true",
+      "userCategoria": "1",
+      "contaValida": false
+    },
+    {
+      "id": "d683",
+      "userEmail": "user@gmail.com",
+      "userCpf": "84850899013",
+      "userTelefone": "40028922",
+      "userNome": "User",
+      "userSobrenome": "SobreUser",
+      "termos": "true",
+      "userCategoria": "1",
+      "contaValida": false
+    }
+  ],
+  "assistencia": []
 }
