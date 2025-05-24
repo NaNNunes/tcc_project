@@ -16,6 +16,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -26,6 +27,15 @@ const Login = () => {
   const onError = (errors) => {
     console.log("Error: ", errors);
   };
+
+  const formatarCPF = (cpf) => {
+    const numeros = cpf.replace(/\D/g, "").slice(0, 11);
+    return numeros
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+  };
+
 
   return (
     <Container className={styles.container}>
@@ -43,16 +53,52 @@ const Login = () => {
         </div>
         <hr className="mb-4 mx-5 text-white border-2" />
 
+        {/* Campo CPF */}
         <FloatingLabel id="fuserCpfInput" className="mb-3 mx-5" label="CPF">
           <Form.Control
             type="text"
             placeholder="000.000.000-00"
-            {...register("cpf")}
+            isInvalid={!!errors.cpf}
+            {...register("cpf", {
+              required: "Informe o CPF para efetuar o login",
+              minLength: {
+                value: 11,
+                message: "Necessário 11 dígitos"
+              },
+              maxLength: {
+                value: 11,
+                message: "Necessário 11 dígitos"
+              }
+            })}
+            onChange={(e) => {
+              const formatado = formatarCPF(e.target.value);
+              setValue("cpf", formatado);
+            }}
+
           />
+          <Form.Control.Feedback type="invalid">
+            {errors.cpf?.message}
+          </Form.Control.Feedback>
+
         </FloatingLabel>
 
+        {/* Campo senha */}
         <FloatingLabel id="userSenhaInput" className="mb-3 mx-5" label="Senha">
-          <Form.Control type="password" placeholder="" {...register("senha")} />
+          <Form.Control
+            type="password"
+            placeholder="Senha"
+            isInvalid={!!errors.senha} // deixa a borda vermelha
+            {...register("senha", {
+              required: "A senha é obrigatória",
+              minLength: {
+                value: 8,
+                message: "A senha deve ter pelo menos 8 caracteres",
+              },
+            })}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.senha?.message}
+          </Form.Control.Feedback>
         </FloatingLabel>
 
         <div className={styles.ancor}>

@@ -11,11 +11,13 @@ import PerguntaSeguranca from "./pages/cadastro-user/PerguntaSeguranca.jsx";
 import CadastroAssistencia from "./pages/cadastro-user/CadastroAssistencia.jsx";
 import CadastroEndereco from "./pages/cadastro-user/CadastroEndereco.jsx";
 import CadastroPagamento from "./pages/cadastro-user/CadastroPagamento.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",

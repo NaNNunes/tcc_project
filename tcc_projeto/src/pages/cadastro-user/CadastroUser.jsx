@@ -2,7 +2,7 @@
 import styles from "./cadastro.module.css";
 
 //react bootstrap componentes
-import Card  from "react-bootstrap/Card";
+import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
@@ -35,15 +35,10 @@ const CadastroUser = () => {
   const {cadastrarInfosUser} = useCadastraUser();
 
   const onSubmit = (data) => {
-    
-    // há maneira melhor de definir essa limitaçãp
-    if(data.userCategoria != 1 && data.userCategoria != 2){
-      alert("Defina um tipo de user");
-      return false;
-    }
 
-    // verifica se cpf informado é válido
-    if (!verificador(data.userCpf)) {
+    // há maneira melhor de definir essa limitaçãp
+    if (data.userCategoria != 1 && data.userCategoria != 2) {
+      alert("Defina um tipo de user");
       return false;
     }
     // console.log(data);
@@ -54,9 +49,21 @@ const CadastroUser = () => {
     navigate("/pergunta-seguranca");
   };
 
+
+
+
   const senha = watch("senha");
+
   const onError = (errors) => {
     console.log("Error: ", errors);
+  };
+
+  const formatarCPF = (cpf) => {
+    const numeros = cpf.replace(/\D/g, "").slice(0, 11);
+    return numeros
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
   };
 
   return (
@@ -75,12 +82,12 @@ const CadastroUser = () => {
           </Row>
           <Row>
             <Col className="d-flex align-items-center justify-content-center">
-              <h6 className="text-white">
+              <h5 className="text-white">
                 Primeiro, queremos saber mais sobre você
-              </h6>
-              
+              </h5>
+
             </Col>
-            <hr className="mb-3 mx-5 text-white border-2" />
+            <hr className="mb-3 mx-5 text-white border-2 w-75" />
           </Row>
         </Row>
         <Form className="px-4" onSubmit={handleSubmit(onSubmit, onError)}>
@@ -89,36 +96,61 @@ const CadastroUser = () => {
             <Col>
               <FloatingLabel id="userEmailInput" className="mb-3" label="Email">
                 <Form.Control
+                  size="sm"
                   type="email"
                   placeholder=""
-                  {...register("userEmail",{/*require */})}
+                  {...register("email", {
+                    required: "O email é obrigatório",
+                    pattern: {
+                      value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                      message: "Email inválido",
+                    },
+                    validate: (value) => value.includes("@") || "Email inválido",
+                  })}
                 />
+                {errors.email && (
+                  <p className={styles.error}>{errors.email.message}</p>
+                )}
               </FloatingLabel>
             </Col>
           </Row>
 
-          {/* CPF e Telefone */}
+          {/* CPF */}
           <Row className="">
             <Col>
               <FloatingLabel id="userCpfInput" className="mb-3" label="CPF">
                 <Form.Control
                   type="text"
                   placeholder="000.000.000-00"
-                  {...register("userCpf",{
-                    required:"CPF necessário",
-                    minLength: {
-                      value: 11,
-                      message:"Necessário 11 dígitos"
+                  value={formatarCPF(watch("userCpf") || "")}
+                  isInvalid={!!errors.userCpf}
+                  onChange={(e) => {
+                    const apenasNumeros = e.target.value.replace(/\D/g, "");
+                    if (apenasNumeros.length <= 11) {
+                      setValue("userCpf", apenasNumeros);
+                    }
+                  }}
+                  {...register("userCpf", {
+                    required: "CPF necessário",
+                    validate: (value) => {
+                      const somenteNumeros = value.replace(/\D/g, ""); // remove tudo que não é número
+                      if (somenteNumeros.length !== 11) {
+                        return "Necessário 11 dígitos";
+                      }
+                      if (!verificador(somenteNumeros)) {
+                        return "CPF inválido";
+                      }
+                      return true;
                     },
-                    maxLength:{ 
-                      value: 11,
-                      message:"Necessário 11 dígitos"
-                    },
-                    /* regex para apenas números */
                   })}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.userCpf?.message}
+                </Form.Control.Feedback>
               </FloatingLabel>
             </Col>
+
+            {/* Telefone */}
             <Col>
               <FloatingLabel
                 id="userTelInput"
@@ -128,22 +160,49 @@ const CadastroUser = () => {
                 <Form.Control
                   type="text"
                   placeholder="(00) 00000-0000"
-                  {...register("userTelefone",{/*require */})}
+                  {...register("userTelefone", {
+                    required: "Telefone necessário",
+                    pattern: {
+                      value: /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
+                      message: "Telefone inválido",
+                    },
+                  })}
                 />
+                {errors.userTelefone && (
+                  <p className={styles.error}>{errors.userTelefone.message}</p>
+                )}
               </FloatingLabel>
             </Col>
           </Row>
+
           {/* Nome e Sobrenome */}
           <Row className="">
             <Col className="">
               <FloatingLabel id="userNomeInput" className="mb-3" label="Nome">
                 <Form.Control
+                  size="sm"
                   type="text"
-                  placeholder="Nome"
-                  {...register("userNome")}
+                  placeholder=""
+                  {...register("nome", {
+                    required: "O nome é obrigatório",
+                    minLength: {
+                      value: 2,
+                      message: "O nome deve ter pelo menos 2 caracteres",
+                    },
+                    maxLength: {
+                      value: 20,
+                      message: "O nome deve ter ate 20 caracteres",
+                    },
+                    pattern: {
+                      value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/i,
+                      message: "O nome só pode conter letras e espaços",
+                    },
+                  })}
                 />
+                {errors.nome && <p className={styles.error}>{errors.nome.message}</p>}
               </FloatingLabel>
             </Col>
+
             <Col className="">
               <FloatingLabel
                 id="userSobrenomeInput"
@@ -151,34 +210,56 @@ const CadastroUser = () => {
                 label="Sobrenome"
               >
                 <Form.Control
+                  size="sm"
                   type="text"
-                  placeholder="Sobrenome"
-                  {...register("userSobrenome")}
+                  placeholder=""
+                  {...register("sobrenome", {
+                    required: "O sobrenome é obrigatório",
+                    minLength: {
+                      value: 2,
+                      message: "O sobrenome deve ter pelo menos 2 caracteres",
+                    },
+                    maxLength: {
+                      value: 20,
+                      message: "O sobrenome deve ter ate 20 caracteres",
+                    },
+                    pattern: {
+                      value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/i,
+                      message: "O sobrenome só pode conter letras e espaços",
+                    },
+                  })}
                 />
+                {errors.sobrenome && <p className={styles.error}>{errors.sobrenome.message}</p>}
               </FloatingLabel>
             </Col>
           </Row>
           <Row>
+
             {/* Senha */}
             <Col>
               <FloatingLabel id="userSenhaInput" className="mb-3" label="Senha">
                 <Form.Control
                   type="password"
                   placeholder="Senha"
-                  isInvalid={!!errors.senha}
-                  // {...register("senha", {
-                  //   required: "A senha é obrigatória",
-                  //   minLength: {
-                  //     value: 8,
-                  //     message: "A senha deve ter pelo menos 8 caracteres",
-                  //   },
-                  // })}
+
+                  isInvalid={!!errors.senha} // deixa a borda vermelha
+                  {...register("senha", {
+                    required: "A senha é obrigatória",
+                    minLength: {
+                      value: 8,
+                      message: "A senha deve ter pelo menos 8 caracteres",
+                    },
+                  })}
+
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.senha?.message}
                 </Form.Control.Feedback>
+
               </FloatingLabel>
             </Col>
+
+            {/* Confirmação */}
             <Col>
               <FloatingLabel
                 id="userConfirmaSenhaInput"
@@ -221,7 +302,8 @@ const CadastroUser = () => {
               </>
             }
           />
-
+          
+          {/* Botão */}
           <Row>
             <Col className="d-flex align-items-center justify-content-center mt-3">
               <Button
@@ -234,7 +316,7 @@ const CadastroUser = () => {
             </Col>
           </Row>
           <hr className="mt-3 mx-5 text-white border-2" />
-          
+
           <Row className="mt-3">
             <Col className="d-flex align-items-center justify-content-center mb-2">
               <h6 className="text-white">
