@@ -1,5 +1,13 @@
 import React from "react";
-import { Container, Row, Col, Button, Image } from "react-bootstrap";
+import {
+  Container,
+  Card,
+  Row,
+  Col,
+  Button,
+  Image,
+  Carousel,
+} from "react-bootstrap";
 import styles from "./home.module.css";
 
 const Home = () => {
@@ -97,9 +105,60 @@ const Home = () => {
               </ul>
             </Col>
             <Col md={6} className={styles.imagePlaceholder}>
-              {/* Imagem opcional */}
             </Col>
           </Row>
+        </Container>
+      </section>
+
+      {/* Carousel de testemunhos */}
+      <section className={styles.testimonials}>
+        <Container>
+          <h3 className={styles.sectionTitleTestimonials}>
+            O que dizem nossos clientes
+          </h3>
+          <Carousel indicators={false} controls={true}>
+            <Carousel.Item>
+              <Card className={styles.testimonialCard}>
+                <Card.Body>
+                  <Card.Text className={styles.testimonialText}>
+                    "O ConnectFix salvou meu computador no momento que mais
+                    precisei. Atendimento rápido e eficiente!"
+                  </Card.Text>
+                  <Card.Title className={styles.testimonialAuthor}>
+                    — Ana Souza
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+            </Carousel.Item>
+
+            <Carousel.Item>
+              <Card className={styles.testimonialCard}>
+                <Card.Body>
+                  <Card.Text className={styles.testimonialText}>
+                    "Excelente plataforma! Encontrei o técnico ideal com preço
+                    justo. Recomendo muito."
+                  </Card.Text>
+                  <Card.Title className={styles.testimonialAuthor}>
+                    — Carlos Lima
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+            </Carousel.Item>
+
+            <Carousel.Item>
+              <Card className={styles.testimonialCard}>
+                <Card.Body>
+                  <Card.Text className={styles.testimonialText}>
+                    "Serviço impecável, desde a busca até a finalização.
+                    Voltarei a usar sempre que precisar."
+                  </Card.Text>
+                  <Card.Title className={styles.testimonialAuthor}>
+                    — Marina Ferreira
+                  </Card.Title>
+                </Card.Body>
+              </Card>
+            </Carousel.Item>
+          </Carousel>
         </Container>
       </section>
 

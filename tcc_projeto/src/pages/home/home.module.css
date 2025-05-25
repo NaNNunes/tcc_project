@@ -44,7 +44,7 @@ h3::after {
   display: flex;
   align-items: center;
   text-align: center;
-  padding: 60px 0;
+  padding: 30px 0;
 }
 
 .heroContent {
@@ -106,13 +106,23 @@ h3::after {
   background-color: #7ec0f9;
 }
 
+.imagePlaceholder {
+  background-image: url("https://images.pexels.com/photos/9242887/pexels-photo-9242887.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 250px;
+  background-color: #9bd0ff;
+  border-radius: 16px;
+}
+
 /* ===== About Section ===== */
 .aboutSection {
   background-image: url("/backgrounds/image.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 60px 0;
+  padding: 30px 0;
   color: var(--black);
 }
 
@@ -165,7 +175,7 @@ h3::after {
 /* ===== How It Works Section ===== */
 .howItWorks {
   background-color: var(--gray-light);
-  padding: 60px 0;
+  padding: 30px 0;
 }
 
 .howItWorks .card {
@@ -182,7 +192,7 @@ h3::after {
 /* ===== Why Section ===== */
 .why {
   background-color: var(--white);
-  padding: 60px 0;
+  padding: 30px 0;
 }
 
 .benefits {
@@ -191,8 +201,59 @@ h3::after {
 }
 
 .benefits li {
+  margin-top: 1.5rem;
   font-size: 1.2rem;
   margin-bottom: 0.75rem;
+}
+
+/* ===== Testimonials ===== */
+.testimonials {
+  background-image: url("/backgrounds/image.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 30px 0;
+  text-align: center;
+}
+
+.sectionTitleTestimonials {
+  font-size: 2.2rem;
+  color: var(--white);
+  font-weight: 700;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.sectionTitleTestimonials::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--highlight-yellow);
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+.testimonialCard {
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 16px;
+  background-color: var(--white);
+  padding: 30px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.testimonialText {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--black);
+}
+
+.testimonialAuthor {
+  margin-top: 1rem;
+  color: var(--primary);
+  font-weight: 600;
 }
 
 /* ===== Footer ===== */
@@ -200,5 +261,5 @@ h3::after {
   background-color: var(--black);
   color: var(--white);
   text-align: center;
-  padding: 20px 0;
+  padding: 30px 0;
 }
