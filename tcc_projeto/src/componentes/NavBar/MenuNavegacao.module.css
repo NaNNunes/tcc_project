@@ -1,15 +1,15 @@
 /* Definição de style do "Navbar" */
 .navbar {
     background: #034C8C;
-    box-shadow: 10px 7px 10px 0px rgb(204, 204, 204);
+    /* box-shadow: 10px 7px 10px 0px rgb(204, 204, 204); */
     max-width: 100%;
 }
 
 /* Definição de style do container de navegacao entre funcionalidas */
 .containerNavegacao {
-    display: flex;
+    /* display: flex;
     align-items: center !important;
-    width: 100% !important;
+    width: 100% !important; */
     padding-left: 4%;
     padding-right: 4%;
     margin: 0;
@@ -48,6 +48,11 @@
 
 /* --- Aqui começa a estilização do dropdown e seus itens --- */
 
+/* Div com todo o dropdown */
+.divNavdropdown {
+    width: max-content;
+}
+
 /* Titulo do dropdown. */
 .dropDownTitle {
     color: white;
@@ -55,17 +60,11 @@
     font-size: 1.1rem;
 }
 
-/* Quando o dropdown for ativado. */
-.dropDownActive {
-    background-color: #005DB1;
-    border-radius: 10px;
-}
-
 .icone {
     padding-right: 10px;
 }
 
-/* Mudando o estilo do menu ativo. */
+/* Mudando o estilo do fundo do menu ativo. */
 .dropDownActive :global(.dropdown-menu.show) {
     background-color: #005DB1;
     border: 0;
@@ -99,6 +98,17 @@
     display: none !important;
 }
 
+@media screen and (min-width: 992px) {
+    /* Quando o dropdown for ativado. */
+    .dropDownActive {
+        border-radius: 10px;
+    }
+
+    .divNavdropdown {
+        margin-right: 80px;
+    }
+}
+
 @media screen and (max-width: 992px) {
     :global(.dropdown-toggle.nav-link) {
         border: 0;
@@ -107,7 +117,7 @@
 
     :global(.nav-item.dropdown) {
         max-width: fit-content;
-        flex-direction: column;
+        flex-direction: row;
     }
 
     :global(.navbar-nav) {
