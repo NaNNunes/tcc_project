@@ -164,36 +164,39 @@ export function useCadastroUser(){
         })
     }
 
-    return {cadastrarInfosUser, inserirPerguntaResposta};
+    return {cadastrarInfosUser, inserirPerguntaResposta, inserirValidacao};
 }
 
 export function useEndereco(){
     // insere endereço no cadastro
     const inserirEndereco = async (data, user) =>{
-        const id = localStorage.getItem("userId");
+        const id = (user === "solicitante") 
+            ? localStorage.getItem("userId")
+            : localStorage.getItem("assistenciaId");
         await fetch(`${url}/${user}/${id}`,{
             method:"PATCH",
             body: JSON.stringify(data)
         })
-    }
+    };
 
     return {inserirEndereco};
 }
 
 export function useCadastroAssistencia(){
 
-    const cadastrarAssistencia = async (data) => {
+    const inserirAssistencia = async (data) =>{
         const request = await fetch(`${url}/assistencia`,{
             method: "POST",
             headers: {
                 "Content-Type":"application/json"
             },
             body: JSON.stringify(data)
-        })
+        });
 
         const response = await request.json();
         const id = await response.id;
         inserirAdministrador(id);
+        localStorage.setItem("assistenciaId", id);
     }
 
     const inserirAdministrador = async (id) => {
@@ -206,5 +209,5 @@ export function useCadastroAssistencia(){
         })
     }
 
-    return (cadastrarAssistencia);
+    return {inserirAssistencia};
 }

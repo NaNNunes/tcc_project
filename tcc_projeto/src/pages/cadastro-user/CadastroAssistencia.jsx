@@ -15,7 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 // hooks
 import { useForm } from "react-hook-form";
-import { useVerificadorDeCnpj, useCadastroAssistencia } from "../../hooks/useApi";
+import { useVerificadorDeCnpj, useCadastroAssistencia} from "../../hooks/useApi";
 
 const CadastroAssistencia = () => {
   
@@ -26,7 +26,8 @@ const CadastroAssistencia = () => {
   } = useForm();
 
   const navigate = useNavigate();
-  const {cadastrarAssistencia} = useCadastroAssistencia();
+  
+  const {inserirAssistencia} = useCadastroAssistencia();
   const {verificador} = useVerificadorDeCnpj();
 
   const onSubmit = (data) => {
@@ -37,9 +38,9 @@ const CadastroAssistencia = () => {
       return false;
     }
 
-    cadastrarAssistencia(data);
+    inserirAssistencia(data);
 
-    navigate("/cadastro-pagamento");
+    navigate("/cadastro-endereco");
   };
 
   const onError = (errors) => {
@@ -125,7 +126,9 @@ const CadastroAssistencia = () => {
 
         <Row className="">
 
-          {/* Cnpj */}
+          {/* Cnpj 
+            fazer a contensao de inserçao indevida e auto preenchimento
+          */}
           <Col>
             <FloatingLabel id="CnpjInput" className="mb-3" label="CNPJ">
               <Form.Control

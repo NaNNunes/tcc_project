@@ -17,12 +17,13 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import {useEndereco} from "../../hooks/useApi";
+import {useCadastroUser, useEndereco} from "../../hooks/useApi";
 
 const CadastroEndereco = () => {
 
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
   const {inserirEndereco} = useEndereco();
+  const {inserirValidacao} = useCadastroUser();
   const navigate = useNavigate();
 
   const [endereco, setEndereco] = useState({
@@ -93,10 +94,13 @@ const CadastroEndereco = () => {
   const onSubmit = (data) => {
     const user = (localStorage.getItem("userType") === "solicitante") 
     ? "solicitante"
-    : "assitencia"
+    : "assistencia"
 
     inserirEndereco(data, user)
-    
+    inserirValidacao(true);
+
+    localStorage.clear();
+
     navigate("/login")
   };
 

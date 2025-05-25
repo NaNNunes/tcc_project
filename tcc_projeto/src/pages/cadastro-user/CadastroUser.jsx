@@ -238,11 +238,11 @@ const CadastroUser = () => {
 
                   isInvalid={!!errors.senha} // deixa a borda vermelha
                   {...register("senha", {
-                    // required: "A senha é obrigatória",
-                    // minLength: {
-                    //   value: 8,
-                    //   message: "A senha deve ter pelo menos 8 caracteres",
-                    // },
+                    required: "A senha é obrigatória",
+                    minLength: {
+                      value: 8,
+                      message: "A senha deve ter pelo menos 8 caracteres",
+                    },
                   })}
 
                 />
@@ -264,11 +264,11 @@ const CadastroUser = () => {
                   type="password"
                   placeholder="Confirmar Senha"
                   isInvalid={!!errors.confirmarSenha}
-                  // {...register("confirmarSenha", {
-                  //   required: "A confirmação de senha é obrigatória",
-                  //   validate: (value) =>
-                  //     value === senha || "As senhas não coincidem",
-                  // })}
+                  {...register("confirmarSenha", {
+                    required: "A confirmação de senha é obrigatória",
+                    validate: (value) =>
+                      value === senha || "As senhas não coincidem",
+                  })}
                 />
               </FloatingLabel>
             </Col>

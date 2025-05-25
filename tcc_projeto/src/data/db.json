@@ -1,20 +1,7 @@
 {
-  "solicitante": [],
-  "administrador": [
-    {
-      "id": "ae28",
-      "email": "user@gmail.com.br",
-      "cpf": "133.127.937-26",
-      "userTelefone": "40028922",
-      "nome": "User",
-      "sobrenome": "Usersurname",
-      "senha": "123",
-      "termos": "true",
-      "userCategoria": "2",
-      "isValido": false,
-      "pergunta": "3",
-      "resposta": "Cariacia"
-    }
+  "solicitante": [
+
   ],
+  "administrador": [],
   "assistencia": []
 }
