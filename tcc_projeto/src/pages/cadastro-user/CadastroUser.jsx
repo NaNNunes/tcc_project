@@ -14,45 +14,34 @@ import Form from "react-bootstrap/Form";
 //navegação by router dom
 import { Link, useNavigate } from "react-router-dom";
 
-
 //hooks
 import { useForm } from "react-hook-form";
-import { useVerificadorDeCpf, useCadastraUser } from "../../hooks/useApi";
-
-import { useContext } from "react";
-import { AuthContext } from "../../context/userContext";
-
+import { useCadastroUser } from "../../hooks/useApi";
+import { useVerificadorDeCpf} from "../../hooks/useApi";
 
 const CadastroUser = () => {
-
-  const { register, handleSubmit, watch, formState: { errors }} = useForm();
   
-  const {salvaDadosUser} = useContext(AuthContext);
+  const { register, handleSubmit, watch, formState: { errors }} = useForm();
+  const {cadastrarInfosUser} = useCadastroUser();
 
   const navigate = useNavigate();
-
   const {verificador} = useVerificadorDeCpf();
-  const {cadastrarInfosUser} = useCadastraUser();
 
-  const onSubmit = (data) => {
+  // ta usando??
+  const senha = watch("senha");
 
-    // há maneira melhor de definir essa limitaçãp
+  const onSubmit = async(data) => {
+    
+    // há maneira melhor de definir essa limitação
     if (data.userCategoria != 1 && data.userCategoria != 2) {
       alert("Defina um tipo de user");
       return false;
     }
-    // console.log(data);
-
-    // salva dados no localStorage
-    salvaDadosUser(data);
-
+    // cadastra user
+    cadastrarInfosUser(data);
+  
     navigate("/pergunta-seguranca");
   };
-
-
-
-
-  const senha = watch("senha");
 
   const onError = (errors) => {
     console.log("Error: ", errors);
@@ -90,9 +79,10 @@ const CadastroUser = () => {
             <hr className="mb-3 mx-5 text-white border-2 w-75" />
           </Row>
         </Row>
+        {/* Formulario */}
         <Form className="px-4" onSubmit={handleSubmit(onSubmit, onError)}>
+          {/* E-mail */}
           <Row>
-            {/* E-mail */}
             <Col>
               <FloatingLabel id="userEmailInput" className="mb-3" label="Email">
                 <Form.Control
@@ -115,14 +105,15 @@ const CadastroUser = () => {
             </Col>
           </Row>
 
-          {/* CPF */}
-          <Row className="">
+          {/* cpf e tel */}
+          <Row>
+            {/* CPF */}
             <Col>
               <FloatingLabel id="userCpfInput" className="mb-3" label="CPF">
                 <Form.Control
                   type="text"
                   placeholder="000.000.000-00"
-                  value={formatarCPF(watch("userCpf") || "")}
+                  value={formatarCPF(watch("cpf") || "")}
                   isInvalid={!!errors.userCpf}
                   onChange={(e) => {
                     const apenasNumeros = e.target.value.replace(/\D/g, "");
@@ -130,7 +121,7 @@ const CadastroUser = () => {
                       setValue("userCpf", apenasNumeros);
                     }
                   }}
-                  {...register("userCpf", {
+                  {...register("cpf", {
                     required: "CPF necessário",
                     validate: (value) => {
                       const somenteNumeros = value.replace(/\D/g, ""); // remove tudo que não é número
@@ -176,7 +167,8 @@ const CadastroUser = () => {
           </Row>
 
           {/* Nome e Sobrenome */}
-          <Row className="">
+          <Row>
+            {/* nome */}
             <Col className="">
               <FloatingLabel id="userNomeInput" className="mb-3" label="Nome">
                 <Form.Control
@@ -203,6 +195,7 @@ const CadastroUser = () => {
               </FloatingLabel>
             </Col>
 
+            {/* sobrenome */}
             <Col className="">
               <FloatingLabel
                 id="userSobrenomeInput"
@@ -233,8 +226,9 @@ const CadastroUser = () => {
               </FloatingLabel>
             </Col>
           </Row>
+          
+          {/* senha e confirmar senha */}
           <Row>
-
             {/* Senha */}
             <Col>
               <FloatingLabel id="userSenhaInput" className="mb-3" label="Senha">
@@ -244,11 +238,11 @@ const CadastroUser = () => {
 
                   isInvalid={!!errors.senha} // deixa a borda vermelha
                   {...register("senha", {
-                    required: "A senha é obrigatória",
-                    minLength: {
-                      value: 8,
-                      message: "A senha deve ter pelo menos 8 caracteres",
-                    },
+                    // required: "A senha é obrigatória",
+                    // minLength: {
+                    //   value: 8,
+                    //   message: "A senha deve ter pelo menos 8 caracteres",
+                    // },
                   })}
 
                 />
@@ -315,8 +309,10 @@ const CadastroUser = () => {
               />
             </Col>
           </Row>
+
           <hr className="mt-3 mx-5 text-white border-2" />
 
+          {/* tem conta? */}
           <Row className="mt-3">
             <Col className="d-flex align-items-center justify-content-center mb-2">
               <h6 className="text-white">
@@ -332,7 +328,7 @@ const CadastroUser = () => {
             </Col>
           </Row>
 
-          {/* select temporario temporario */}
+          {/* select temporario */}
           <Form.Group>
             <Form.Select as="select" aria-label {...register("userCategoria")}>
               <option >Escolha seu nivel de user</option>
@@ -340,6 +336,7 @@ const CadastroUser = () => {
               <option value={2}>ADM</option>
             </Form.Select>
           </Form.Group>
+
         </Form>
       </Card>
     </Container>

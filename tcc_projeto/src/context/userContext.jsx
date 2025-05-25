@@ -2,10 +2,27 @@ import { useState, useEffect, createContext } from "react";
 export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
 
+    // nao funciona
+        // teoria id = possivel n + str
+    const [userId, setUserId] = useState("");
+    // nao funciona 2
+    const [userType, setUserType] = useState("");
     const [usuarioNome, setUsuarioNome] = useState("")
 
-    const [dadosUser, setDadosUser] = useState({});
+    const setId = (data) =>{
+        // nao funciona
+        setUserId(data);
+        //alternativa
+        localStorage.setItem("userId", data);
+    }
 
+    const setType = (data) =>{
+        setUserType(data);
+        
+        localStorage.setItem("userType", data == 1 ? "solicitante" : "administrador");
+    }
+
+    // nome
     useEffect( () => {
         const nome  = localStorage.getItem("userName") || "Visitante"
         setUsuarioNome(nome)
@@ -24,14 +41,10 @@ export const AuthProvider = ({children}) => {
         setUsuarioNome("Visitante")
     }
 
-    const salvaDadosUser = (dados) =>{
-        for(const [key, value] of Object.entries(dados)){
-            localStorage.setItem(key, value);
-        }
-    }
-    
     return (
-        <AuthContext.Provider value={{usuarioNome, login, logout, dadosUser, salvaDadosUser}}>
+        <AuthContext.Provider 
+            value={{usuarioNome, login, logout, userId, setId, userType, setType}}
+        >
             {children}
         </AuthContext.Provider>
     )

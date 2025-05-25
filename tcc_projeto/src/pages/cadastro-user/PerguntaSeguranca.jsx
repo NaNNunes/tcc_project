@@ -1,24 +1,24 @@
-import {
-  FloatingLabel,
-  Button,
-  Row,
-  Col,
-  Container,
-  Image,
-  Card
-} from "react-bootstrap";
-
-import Form from "react-bootstrap/Form"
-
-import { Link, useNavigate} from "react-router-dom";
-import { useForm } from "react-hook-form";
-
-import { useCadastraUser } from "../../hooks/useApi";
-
+// styles
 import styles from "./cadastro.module.css";
 
-const PerguntaSeguranca = () => {
+// componentes bootstrap
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form"
 
+// router dom 
+import { Link, useNavigate} from "react-router-dom";
+
+// hooks
+import { useForm } from "react-hook-form";
+import { useCadastroUser } from "../../hooks/useApi";
+
+const PerguntaSeguranca = () => {
   const {
     register,
     handleSubmit,
@@ -27,11 +27,9 @@ const PerguntaSeguranca = () => {
 
   // navegação
   const navigate = useNavigate();
-
-  const {inserirPerguntaResposta} = useCadastraUser();
+  const {inserirPerguntaResposta} = useCadastroUser();
 
   const onSubmit = (data) => { 
-    
     // tratativa provisoria para nenhuma pergunta selecionada
     if(data.userPergunta < 1 || data.userPergunta > 3){
       alert("Defina uma pergunta de segurança");
@@ -40,8 +38,18 @@ const PerguntaSeguranca = () => {
 
     inserirPerguntaResposta(data);
 
-    // console.log(data);
-    navigate("/cadastro-endereco");
+    // casos user solicitante, abre tela de endereco, senao tela de cadastro de assistencia
+    const userType = localStorage.getItem("userType") ;
+    if(userType === "solicitante"){
+      navigate("/cadastro-endereco")
+    }
+    else if (userType === "administrador"){
+      navigate("/cadastro-assistencia")
+    }
+    else{
+      alert("User não válido")
+    }
+    
   };
 
   const onError = (errors) => {

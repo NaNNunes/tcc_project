@@ -1,35 +1,36 @@
-import {
-  Form,
-  FloatingLabel,
-  Button,
-  Row,
-  Col,
-  Container,
-  Image,
-} from "react-bootstrap";
+// styles
+import styles from "./cadastro.module.css";
+
+// react bootstrap componentes
 import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+
+// hooks
+import { useForm } from "react-hook-form";
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 
-import styles from "./cadastro.module.css";
-
-import { useCadastraUser } from "../../hooks/useApi";
+import {useEndereco} from "../../hooks/useApi";
 
 const CadastroEndereco = () => {
 
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
-
+  const {inserirEndereco} = useEndereco();
   const navigate = useNavigate();
-  const { cadastrarUser } = useCadastraUser();
+
   const [endereco, setEndereco] = useState({
     city: "",
     neighborhood: "",
     street: "",
     state: ""
-  }
-  )
+  })
 
   const userCategoria = localStorage.getItem("userCategoria");
 
@@ -53,6 +54,7 @@ const CadastroEndereco = () => {
     }
 
     // consulta
+  
     try {
       const response = await fetch(`https://brasilapi.com.br/api/cep/v2/${zipCode}`);
       const data = await response.json();
@@ -67,6 +69,7 @@ const CadastroEndereco = () => {
         }
         return false;
       }
+
       // desabilita alteração de campo
       setInputFieldEnable(false);
       //define valores da instancia em seus determinados campos
@@ -88,38 +91,13 @@ const CadastroEndereco = () => {
   }
 
   const onSubmit = (data) => {
+    const user = (localStorage.getItem("userType") === "solicitante") 
+    ? "solicitante"
+    : "assitencia"
 
-    // caso user seja solicitante
-    if (userCategoria == 1) {
-      const dados = {
-        nome: localStorage.getItem("userNome"),
-        sobrenome: localStorage.getItem("userSobrenome"),
-        cpf: localStorage.getItem("userCpf"),
-        email: localStorage.getItem("userEmail"),
-        telefone: localStorage.getItem("userTelefone"),
-        senha: localStorage.getItem("userSenha"),
-        termos: localStorage.getItem("userTermos"), // sem muita necessidade por hora
-        pergunta: localStorage.getItem("userPergunta"),
-        resposta: localStorage.getItem("userResposta"),
-        cep: endereco.zipcode,
-        logradouro: endereco.street,
-        cidade: endereco.city,
-        bairro: endereco.neighborhood,
-        estado: endereco.state,
-        numeroEndereco: endereco.number
-      };
-
-      // console.log("dados de solicitante: ",dados)
-      cadastrarUser(dados);
-      navigate("/login")
-    }
-
-    // caso user seja administrador
-    //salvando localmente
-    for (const [key, value] of Object.entries(data)) {
-      localStorage.setItem(key, value);
-    }
-    navigate("/cadastro-assistencia")
+    inserirEndereco(data, user)
+    
+    navigate("/login")
   };
 
   const formatarCEP = (cep) => {

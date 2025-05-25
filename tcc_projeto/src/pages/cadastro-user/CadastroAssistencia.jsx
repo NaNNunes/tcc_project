@@ -1,41 +1,45 @@
-import React from "react";
-import {
-  Form,
-  FloatingLabel,
-  Button,
-  Row,
-  Col,
-  Container,
-  Image,
-} from "react-bootstrap";
-
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-
+// styles
 import styles from "./cadastro.module.css";
 
-const CadastroAssistencia = () => {
-  const navigate = useNavigate();
+// import react-bootstrap componentes
+import Form from "react-bootstrap/Form";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
 
+// router
+import { Link, useNavigate } from "react-router-dom";
+
+// hooks
+import { useForm } from "react-hook-form";
+import { useVerificadorDeCnpj, useCadastroAssistencia } from "../../hooks/useApi";
+
+const CadastroAssistencia = () => {
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const navigate = useNavigate();
+  const {cadastrarAssistencia} = useCadastroAssistencia();
+  const {verificador} = useVerificadorDeCnpj();
+
   const onSubmit = (data) => {
 
     // verifica cnpj
-    if ("") {
-
+    if (!(verificador(data.cnpj))) {
+      alert("cnpj invalido")
+      return false;
     }
 
-    // socando mais coisas no localStorage
-    for (const [key, value] of Object.entries(data)) {
-      localStorage.setItem(key, value);
-    }
+    cadastrarAssistencia(data);
 
-    // navigate("/cadastro-pagamento");
+    navigate("/cadastro-pagamento");
   };
 
   const onError = (errors) => {
@@ -158,13 +162,16 @@ const CadastroAssistencia = () => {
                 })}
               />
               {errors.assistenciaTelefone && (
-                <p className={styles.error}>{errors.assistenciaTelefone.message}</p>
+                <p className={styles.error}>
+                  {errors.assistenciaTelefone.message}
+                </p>
               )}
             </FloatingLabel>
           </Col>
         </Row>
 
-        {/* <Form.Check
+        {/* termos 2 sobre assistência */}
+        <Form.Check
           className={styles.checkbox}
           type="checkbox"
           id="termsCheck"
@@ -184,7 +191,7 @@ const CadastroAssistencia = () => {
               </Link>
             </>
           }
-        /> */}
+        />
 
         <Row>
           <Col className="d-flex align-items-center justify-content-center mt-3">

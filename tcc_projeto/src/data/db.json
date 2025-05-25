@@ -1,26 +1,19 @@
 {
-  "solicitante": [
+  "solicitante": [],
+  "administrador": [
     {
-      "id": "5ed0",
-      "userEmail": "user@gmail.com",
-      "userCpf": "84850899013",
+      "id": "ae28",
+      "email": "user@gmail.com.br",
+      "cpf": "133.127.937-26",
       "userTelefone": "40028922",
-      "userNome": "User",
-      "userSobrenome": "SobreUser",
+      "nome": "User",
+      "sobrenome": "Usersurname",
+      "senha": "123",
       "termos": "true",
-      "userCategoria": "1",
-      "contaValida": false
-    },
-    {
-      "id": "d683",
-      "userEmail": "user@gmail.com",
-      "userCpf": "84850899013",
-      "userTelefone": "40028922",
-      "userNome": "User",
-      "userSobrenome": "SobreUser",
-      "termos": "true",
-      "userCategoria": "1",
-      "contaValida": false
+      "userCategoria": "2",
+      "isValido": false,
+      "pergunta": "3",
+      "resposta": "Cariacia"
     }
   ],
   "assistencia": []
