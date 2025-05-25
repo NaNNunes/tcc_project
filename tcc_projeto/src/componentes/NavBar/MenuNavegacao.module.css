@@ -15,53 +15,19 @@
     margin: 0;
 }
 
-
-/* .containerNavegacao {
-    display: flex;
-    flex-direction: column !important;
-    flex-wrap: nowrap !important;
-    padding: 0px;
-    align-items: center !important;
-    width: 100%;
-} */
-
-/* Titulo do dropdown. */
-.dropDownTitle {
-    color: white;
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-.icone {
-    padding-right: 8%;
-}
-
-/* Quando o dropdown for ativado. */
-.dropDownActive {
-    background-color: #005DB1;
-    border-radius: 10px 10px 10px 0px;
-}
-
-/* Mudando o estilo do menu quando está ativo. */
-.dropDownActive :global(.dropdown-menu.show) {
-    background-color: #005DB1;
-    margin: 0;
-    border: 0;
-
-}
-
-.dropdownItem {
-    color: white;
-    font-size: 1rem;
-    font-weight: 500;
+.navbarBrand {
     padding: 0;
+    height: 45px;
+    margin-right: 5%;
 }
 
-/* Tirando o icone do dropdown 🙏 */
-:global(.dropdown-toggle::after) {
-    display: none !important;
+/* Imagem do ConnectFix preenche 100% do navbar.brand */
+.imgConnect {
+    height: 100%;
+    width: 100%;
 }
 
+/* Botão hamburguer */
 .botaoToggle {
     background-color: transparent;
     border: 0;
@@ -69,7 +35,10 @@
     padding-right: 6px;
     padding-top: 4px;
     padding-bottom: 4px;
+}
 
+:global(.botaoToggle.show) {
+    width: fit-content;
 }
 
 .botaoToggle:focus, .botaoToggle:focus-visible {
@@ -77,11 +46,85 @@
     outline: 2px solid white !important;
 }
 
-.imgConnect {
-    max-width: 60%;
+/* --- Aqui começa a estilização do dropdown e seus itens --- */
+
+/* Titulo do dropdown. */
+.dropDownTitle {
+    color: white;
+    font-weight: bolder;
+    font-size: 1.1rem;
 }
 
-/* 
-.brand {
-    /* Colocar css 
-} */
+/* Quando o dropdown for ativado. */
+.dropDownActive {
+    background-color: #005DB1;
+    border-radius: 10px;
+}
+
+.icone {
+    padding-right: 10px;
+}
+
+/* Mudando o estilo do menu ativo. */
+.dropDownActive :global(.dropdown-menu.show) {
+    background-color: #005DB1;
+    border: 0;
+    padding: 0;
+    height: fit-content;
+    width: fit-content;
+}
+
+/* Itens dentro do menu. */
+.dropdownItem {
+    display: flex;
+    align-items: center;
+    color: white !important;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 16px;
+    text-decoration: none;
+    background-color: #005DB1 !important;
+    border-radius: inherit;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdownItem:hover {
+    background-color: #0069C6 !important;
+    border-radius: inherit;
+    color: white;
+}
+
+/* Tirando o icone do dropdown 🙏 */
+:global(.dropdown-toggle::after) {
+    display: none !important;
+}
+
+@media screen and (max-width: 992px) {
+    :global(.dropdown-toggle.nav-link) {
+        border: 0;
+        padding: 10px;
+    }   
+
+    :global(.nav-item.dropdown) {
+        max-width: fit-content;
+        flex-direction: column;
+    }
+
+    :global(.navbar-nav) {
+        margin-top: 15px;
+        display: flex ;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 315px) {
+    .containerNavegacao {
+        justify-content: center;
+        align-content: center;
+        flex-direction: column; 
+    }
+
+    .navbarBrand {
+        margin: 0;
+    }
+}

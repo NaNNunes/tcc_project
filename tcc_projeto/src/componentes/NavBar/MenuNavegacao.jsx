@@ -16,26 +16,23 @@ import { IoMenu } from "react-icons/io5";
 const MenuNavegacao = () => {
     const [open, setOpen] = useState(false); // useState para se o dropdown esta aberto ou não.
 
-    const [expanded, setExpanded] = useState(false); /* Usado para guardar se o menu esta aberto ou não. */
-
   return (
     <div>
         {/* data-bs-theme='dark' */}
         <Navbar className={styles.navbar} expand='lg'>
             <Container fluid className={styles.containerNavegacao}>
-                <Navbar.Brand href='/login'>
+                <Navbar.Brand href='/login' className={styles.navbarBrand}>
                     <Image className={styles.imgConnect} src="/logos/connectfix_logo.svg"></Image>
                 </Navbar.Brand>
 
                 <Navbar.Toggle 
                     aria-controls='minha-nav'  
-                    onClick={() => setExpanded(!expanded)} /* Alterna entre aberto e fechado */
                     className={styles.botaoToggle}
                 >
                     <IoMenu size={'40px'} color='white'/>
                 </Navbar.Toggle>
-
-                <Navbar.Collapse >
+                
+                <Navbar.Collapse>
                     <Nav>
                         <NavDropdown 
                             title={
@@ -48,10 +45,23 @@ const MenuNavegacao = () => {
                             className={`${open ? styles.dropDownActive : ''}`} 
                             id="collasible-nav-dropdown"
                             onToggle={(isOpen) => setOpen(isOpen)} 
-                            >
+                        >
                             <NavDropdown.Item href='/criar-Demanda' className={styles.dropdownItem}><Image className={styles.icone} src='/icons/Icon_pedido.svg' />Cadastro pedido</NavDropdown.Item>
-                            <NavDropdown.Item>Consultar pedidos</NavDropdown.Item>
+                            <NavDropdown.Item className={styles.dropdownItem}><Image className={styles.icone} src='/icons/Icon_consultar.svg'/>Consultar pedidos</NavDropdown.Item>
                         </NavDropdown>
+
+                        <NavDropdown 
+                            title={
+                                <span className={styles.dropDownTitle}>
+                                    {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
+                                    TESTE {open ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+                                </span>
+                            }
+                        >
+                            <NavDropdown.Item>opa</NavDropdown.Item>
+                        </NavDropdown>
+
+                        <Button>opa</Button>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
