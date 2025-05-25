@@ -5,6 +5,9 @@ body {
   padding: 0;
   height: 100%;
   width: 100%;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Background exclusivo para páginas sem login ativo */
@@ -15,16 +18,14 @@ body.login-background {
   background-repeat: no-repeat;
   background-attachment: fixed;
   min-height: 100vh;
-  width: 100vw;
 }
 
-.error{
+.error {
   color: red;
   font-size: 16px;
   position: absolute;
   text-align: center;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin: 0 auto;
 }
 
 /* :root {
