@@ -2,48 +2,96 @@
 .navbar {
     background: #034C8C;
     box-shadow: 10px 7px 10px 0px rgb(204, 204, 204);
+    max-width: 100%;
 }
 
-/* Definição de style do "Container" */
-.container {
+/* Definição de style do container de navegacao entre funcionalidas */
+.containerNavegacao {
     display: flex;
-    flex-direction: column !important;
-    flex-wrap: nowrap !important;
-    padding: 0px;
     align-items: center !important;
+    width: 100% !important;
+    padding-left: 4%;
+    padding-right: 4%;
+    margin: 0;
+}
+
+.navbarBrand {
+    padding: 0;
+    height: 45px;
+    margin-right: 5%;
+}
+
+/* Imagem do ConnectFix preenche 100% do navbar.brand */
+.imgConnect {
+    height: 100%;
     width: 100%;
 }
+
+/* Botão hamburguer */
+.botaoToggle {
+    background-color: transparent;
+    border: 0;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+:global(.botaoToggle.show) {
+    width: fit-content;
+}
+
+.botaoToggle:focus, .botaoToggle:focus-visible {
+    box-shadow: none !important;
+    outline: 2px solid white !important;
+}
+
+/* --- Aqui começa a estilização do dropdown e seus itens --- */
 
 /* Titulo do dropdown. */
 .dropDownTitle {
     color: white;
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-.icone {
-    padding-right: 8%;
+    font-weight: bolder;
+    font-size: 1.1rem;
 }
 
 /* Quando o dropdown for ativado. */
 .dropDownActive {
     background-color: #005DB1;
-    border-radius: 10px 10px 10px 0px;
+    border-radius: 10px;
 }
 
-/* Mudando o estilo do menu quando está ativo. */
+.icone {
+    padding-right: 10px;
+}
+
+/* Mudando o estilo do menu ativo. */
 .dropDownActive :global(.dropdown-menu.show) {
     background-color: #005DB1;
-    margin: 0;
     border: 0;
-
+    padding: 0;
+    height: fit-content;
+    width: fit-content;
 }
 
+/* Itens dentro do menu. */
 .dropdownItem {
-    color: white;
+    display: flex;
+    align-items: center;
+    color: white !important;
     font-size: 1rem;
-    font-weight: 500;
-    padding: 0;
+    font-weight: bold;
+    padding: 10px 16px;
+    text-decoration: none;
+    background-color: #005DB1 !important;
+    border-radius: inherit;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdownItem:hover {
+    background-color: #0069C6 !important;
+    border-radius: inherit;
+    color: white;
 }
 
 /* Tirando o icone do dropdown 🙏 */
@@ -51,34 +99,32 @@
     display: none !important;
 }
 
-/* 
-.brand {
-    /* Colocar css 
-} */
+@media screen and (max-width: 992px) {
+    :global(.dropdown-toggle.nav-link) {
+        border: 0;
+        padding: 10px;
+    }   
 
-/* Definição de style de "Nav.Link" */
-.meuLink {
-    display: flex;
-    align-items: center;
+    :global(.nav-item.dropdown) {
+        max-width: fit-content;
+        flex-direction: column;
+    }
 
-    color: white;
-    background-color: transparent;
-    padding: 0px 0px !important;
-    border-radius: 8px;
-    height: 60px;
-    width: 90%;
-    justify-self: center;
+    :global(.navbar-nav) {
+        margin-top: 15px;
+        display: flex ;
+        flex-direction: column;
+    }
 }
 
-.meuLink:hover {
-    background-color: #005DB1;
-    color: white;
-}
+@media screen and (max-width: 315px) {
+    .containerNavegacao {
+        justify-content: center;
+        align-content: center;
+        flex-direction: column; 
+    }
 
-.meuLink:active,
-.meuLink:focus {
-    color: white;
-    border: 2px solid #FFDB8C;
-    background-color: #005DB1;
-    color: white;
+    .navbarBrand {
+        margin: 0;
+    }
 }

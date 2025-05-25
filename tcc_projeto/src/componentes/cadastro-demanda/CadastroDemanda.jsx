@@ -15,10 +15,11 @@ import { FaDesktop } from "react-icons/fa";
 import { FaHeadphones } from "react-icons/fa6";
 
 // Importação de estilo.
-import stylesForm from '../estilo-form/estiloForm.module.css'
 import stylesCad from './CadastroDemanda.module.css'
 
 import { useState } from 'react';
+
+import { useEffect } from "react";
 
 // Importação do useForm para mexer com o formulário.
 import { useForm } from "react-hook-form";
@@ -32,21 +33,32 @@ const categoriaDispositivo = () => {
         formState: {errors},
     } = useForm();
 
-    // Categoria selecionada no ListGroup.
+    // Categoria e marca selecionada no ListGroup.
     const categoriaSelecionada = watch("categoria");
     const [marcaSelecionada, setMarcaSelecionada] = useState("");
 
+    // Marcas e modelos para cada categoria.
     const dadosDispositivos = {
         "Celular": {
             "LG": ["LG K62+", "LG K62", "LG K41S", "LG K22+"],
-            "Motorolo": ["Edge 60 Fusion", "Moto G05", "Moto G35", "Moto G75"],
+            "Motorola": ["Edge 60 Fusion", "Moto G05", "Moto G35", "Moto G75"],
             "Nokia": ["Nokia 110", "Nokia 6300", "Nokia 106", "Nokia 150"],
             "Samsung": ["Galaxy A06", "Galaxy S24 FE", "Galaxy A16", "Galaxy S24 Ultra"],
             "Apple": ["iPhone 16", "iPhone 15", "iPhone 14", "iPhone 13"]
+        },
+        "Tablet": {
+            "Samsung": ["Tab S10 FE+", "Galaxy Tab S6 Lite", "Galaxy Tab S9 FE", "Tab A9 Plus"],
+            "Xiaomi": ["Redmi Pad SE 8.7", "POCO PAD", "X95 Pro", "Redmi Pad Pro"],
+            "Apple": ["iPad Air", "iPad Mini", "iPad Pro"]
+        },
+        "Notebook": {
+            "Asus": ["ASUS Zenbook 14", "ASUS E510", "ASUS X515", "ASUS Vivobook 15"],
+            "Acer": ["15-51M-57RT", "Aspire 3 A315-510P-35D2", "A515-45-R0XR", "Acer Nitro 5"],
+            "Lenovo": ["IdeaPad 1 15IAU7", "82X5S00500", "IdeaPad 1 15IAU7", "LOQ 15IAX9E"]
         }
     }
 
-    // Lista com as categorias do dispositivo
+    // Lista com as categorias do dispositivo.
     const categorias = [
         {label: "Celular", value: "Celular", icon: <MdOutlineSmartphone className="me-2" />},
         {label: "Tablet", value: "Tablet", icon: <FaTabletAlt className="me-2" />},
@@ -56,9 +68,72 @@ const categoriaDispositivo = () => {
         {label: "Outros", value: "Outros", icon: null},   
     ];
 
-    const marcas = {
-        "Celular": []
-    };
+    // Se a categoria selecionada for igual a outros troca o campo para o usuário digitar.
+    const campoMarca = (categoriaSelecionada === "Outros" ? (
+        <Form.Control 
+            type='text'
+            placeholder=''
+            {...register("marca", {
+                required: "A marca é obrigatória"
+            })}
+        />
+    ) : (
+        <Form.Select
+            type='select'
+            placeholder=''
+            {...register("marca", {
+                required: "A marca é obrigatória"
+            })}
+            onChange={(e) => {
+                setMarcaSelecionada(e.target.value); // Atualiza a marca selecionada.
+                setValue("marca", e.target.value, { shouldValidate: true }); // Pegando o valor selecionado
+                setValue("modelo", ""); // Limpa o modelo ao trocar de marca.
+            }}
+        >   
+            <option value="">Selecione uma opção</option>
+            {/* Mostra as opções de acordo com a categoria. */}
+            {categoriaSelecionada && Object.keys(dadosDispositivos[categoriaSelecionada] || {}).map((marca) => (
+                <option key={marca} value={marca}>
+                    {marca}
+                </option>
+            ))}
+        </Form.Select>
+    ));
+
+    // Se a categoria selecionada for igual a outros troca o campo para o usuário digitar.
+    const campoModelo = (categoriaSelecionada === "Outros" ? (
+        <Form.Control 
+            type='text'
+            placeholder=''
+            {...register("modelo", {
+                required: "O modelo é obrigatório"
+            })}
+        />
+    ) : (
+        <Form.Select 
+            type='text'
+            placeholder=''
+            {...register("modelo", {
+                required: 'O modelo é obrigatório'
+            })}
+        >
+            <option value="">Selecione uma opção</option>
+            {/* Só carrega os modelos se houver uma categoria e marca selecionada. */}
+            {categoriaSelecionada && marcaSelecionada && dadosDispositivos[categoriaSelecionada]?.[marcaSelecionada]?.map((modelo) => (
+                <option key={modelo} value={modelo}>
+                    {modelo}
+                </option>
+            ))}
+        </Form.Select>
+    ));
+
+    // Quando o usuário selecionar a categoria outros, reseta os campos de marca de modelo.
+    useEffect(() => {
+        if (categoriaSelecionada === "Outros") {
+            setValue("marca", "");
+            setValue("modelo", "");
+        }
+    })
 
     const onSubmit = async (dados) => {
         console.log("Dados: ", dados)
@@ -74,7 +149,7 @@ const categoriaDispositivo = () => {
         <div className={stylesCad.formulario}>
             <Form onSubmit={handleSubmit(onSubmit, onError)}>
                 {/* Categoria do dispositivo */}
-                <Container fluid className={stylesForm.parteFormulario}>
+                <Container fluid className={stylesCad.parteFormulario} style={{paddingBottom: '1.7rem'}}>
                      {/* Campo oculto para fazer o registro da categoria e caso tenha algum erro mostrar na tela. */}
                     <input
                         type="hidden"
@@ -122,7 +197,7 @@ const categoriaDispositivo = () => {
                 </Container>
                 
                 {/* Informações do dispositivo */}
-                <Container fluid className={stylesForm.parteFormulario}>
+                <Container fluid className={stylesCad.parteFormulario}>
                     {/* Título do container */}
                     <Row style={{paddingBottom: '1%'}}> 
                         <Col md={12} xs={12}>
@@ -137,23 +212,14 @@ const categoriaDispositivo = () => {
                     </Row>
 
                     {/* Informações do dispositivo */}
-                    <Row style={{paddingBottom: '3%'}}>
+                    <Row>
                         {/* Coluna de marca */}
-                        <Col md={4} xs={12} className={stylesForm.campo}>
+                        <Col md={4} xs={12} className={stylesCad.campo}>
                             <FloatingLabel
                                 controlId='MarcaInput'
                                 label='Marca'
                             >
-                                <Form.Select
-                                    type='select'
-                                    placeholder=''
-                                    {...register("marca", {
-                                        required: "A marca é obrigatória"
-                                    })}
-                                >
-                                    <option value="">Selecione uma opção</option>
-                                    <option value="Xbox">Xbox</option>
-                                </Form.Select>
+                                {campoMarca}
                             </FloatingLabel>
                             {errors.marca && (
                                 <span className='error'>{errors.marca.message}</span>
@@ -161,7 +227,7 @@ const categoriaDispositivo = () => {
                         </Col>
                         
                         {/* Coluna de fabricante */}
-                        <Col md={4} xs={12} className={stylesForm.campo}>
+                        <Col md={4} xs={12} className={stylesCad.campo}>
                             <FloatingLabel
                                 controlId='FabricanteInput'
                                 label='Fabricante'
@@ -171,7 +237,6 @@ const categoriaDispositivo = () => {
                                     placeholder=''
                                     {...register("fabricante")}
                                 />
-
                             </FloatingLabel>
                             {errors.fabricante && (
                                 <span className='error'>{errors.fabricante.message}</span>
@@ -179,22 +244,12 @@ const categoriaDispositivo = () => {
                         </Col>
 
                         {/* Coluna de modelo */}
-                        <Col md={4} xs={12} className={stylesForm.campo}>
+                        <Col md={4} xs={12} className={stylesCad.campo}>
                             <FloatingLabel
                                 controlId='ModeloInput'
                                 label='Modelo'
                             >
-                                <Form.Select 
-                                    type='text'
-                                    placeholder=''
-                                    {...register("modelo", {
-                                        required: 'O modelo é obrigatório'
-                                    })}
-                                >
-                                    <option value="">Selecione uma opção</option>
-                                    <option value="Xbox-Series-S">Xbox Series S</option>
-                                    <option value="Xbox-Series-X">Xbox Series X</option>
-                                </Form.Select>
+                                {campoModelo} 
                             </FloatingLabel>
                             {errors.modelo && (
                                 <span className='error'>{errors.modelo.message}</span>
@@ -204,7 +259,7 @@ const categoriaDispositivo = () => {
 
                     <Row>
                         {/* Coluna de numero de serie */}
-                        <Col md={4} xs={12} className={stylesForm.campo}>
+                        <Col md={4} xs={12} className={stylesCad.campo}>
                             <FloatingLabel
                                 controlId="NumSerieInput"
                                 label="N° de série"
@@ -221,7 +276,7 @@ const categoriaDispositivo = () => {
                         </Col>
 
                         {/* Coluna de tensao */}
-                        <Col md={3} xs={12} className={stylesForm.campo}>
+                        <Col md={3} xs={12} className={stylesCad.campo}>
                             <FloatingLabel
                                 controlId="TensaoInput"
                                 label="Tensão(V)"
@@ -238,7 +293,7 @@ const categoriaDispositivo = () => {
                         </Col>
 
                         {/* Coluna de amperagem */}
-                        <Col md={3} xs={12} className={stylesForm.campo}>
+                        <Col md={3} xs={12} className={stylesCad.campo}>
                             <FloatingLabel
                                 controlId="AmperagemInput"
                                 label="Amperagem(A)"
@@ -255,7 +310,7 @@ const categoriaDispositivo = () => {
                         </Col>
 
                         {/* Coluna de cor */}
-                        <Col md={2} xs={12} className={stylesForm.campo}>
+                        <Col md={2} xs={12} className={stylesCad.campo}>
                             <FloatingLabel
                                 controlId="CorInput"
                                 label="Cor"
@@ -279,7 +334,7 @@ const categoriaDispositivo = () => {
                 </Container>
 
                 {/* Contextualize-nos */}
-                <Container fluid className={stylesForm.parteFormulario}>
+                <Container fluid className={stylesCad.parteFormulario}  style={{paddingBottom: '1.7rem'}}>
                     {/* Título do container */}
                     <Row style={{paddingBottom: '1%'}}>
                         <Col md={12} xs={12}>
@@ -295,7 +350,7 @@ const categoriaDispositivo = () => {
 
                     <Row>
                         {/* Coluna de descriçao do problema */}
-                        <Col md={6} xs={12} className={stylesForm.campo}>
+                        <Col md={6} xs={12} className={stylesCad.campo}>
                             <FloatingLabel
                                 controlId='DescProblemInput'
                                 label='Descrição do problema'
@@ -314,7 +369,7 @@ const categoriaDispositivo = () => {
                         </Col>
                             
                         {/* Coluna de observações */}
-                        <Col md={6} xs={12} className={stylesForm.campo}>
+                        <Col md={6} xs={12} className={stylesCad.campo}>
                             <FloatingLabel
                                 controlId='ObservacoesInput'
                                 label='Observações'
@@ -333,11 +388,12 @@ const categoriaDispositivo = () => {
 
                     <Row>
                         {/* Botão para prosseguir */}
-                        <Col style={{paddingTop: "40px"}}>
+                        <Col style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                             <Button
                                 as='input'
                                 value='Avançar'
                                 type='submit'
+                                className={stylesCad.botaoSubmit}
                             ></Button>
                         </Col>
                     </Row>

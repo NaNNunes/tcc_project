@@ -12,6 +12,7 @@ import CadastroAssistencia from "./pages/cadastro-user/CadastroAssistencia.jsx";
 import CadastroEndereco from "./pages/cadastro-user/CadastroEndereco.jsx";
 import CadastroPagamento from "./pages/cadastro-user/CadastroPagamento.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
+import Home from "./pages/home/Home.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Login />,
+        element: <Home />,
       },
       { path: "/login", element: <Login /> },
       {
