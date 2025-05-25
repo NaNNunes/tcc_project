@@ -104,8 +104,7 @@ const Home = () => {
                 <li>🔒 Segurança garantida</li>
               </ul>
             </Col>
-            <Col md={6} className={styles.imagePlaceholder}>
-            </Col>
+            <Col md={6} className={styles.imagePlaceholder}></Col>
           </Row>
         </Container>
       </section>
