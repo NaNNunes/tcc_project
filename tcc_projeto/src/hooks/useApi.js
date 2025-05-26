@@ -170,43 +170,47 @@ export function useCadastroUser(){
 }
 
 // nao funciona
-export function useBuscaCpf (){
+export function useBuscaUsers (){
     // suposições retornar lista de users e realizar verificação em cada um
-    const [solicitantes, setSolicitantes] = useState([]);
-    const [administradores, setAdministradores] = useState([]);
 
-    useEffect(()=>{
-        async function fetchData() {
-            try{
-                for(let i = 0; i < 2; i++){
-                    let userType = (i == 0) ? "solicitante" : "administrador";
-                    const request = await fetch(`${url}/${userType}`);
-                    const response = await request.json();
+    const [solicitantes, setSolicitantes] = useState();
+    const [adms, setAdms] = useState();
 
-                    (i == 0) 
-                    ? setSolicitantes(response) 
-                    : setAdministradores(response)
-                    
-                    console.log(users);
-                }
+    const buscaUsers = async () => {
+        for(let i = 0; i < 2; i++){
+
+            let userType = (i == 0) ? "solicitante" : "administrador";
+            
+            const request = await fetch(`${url}/${userType}`,{
+                method:"GET"
+            });
+            const response = await request.json();
+            
+            if(i == 0){
+                setSolicitantes(response);
+                console.log("solicitantes: ",solicitantes);
             }
-            catch(erro){
-                console.log(erro.message);
+            else{
+                setAdms(response);
+                console.log("adms: ",adms);
             }
         }
-        fetchData();
-    },[])
-    
-    // pegar lista e 
-    const buscaCpfCadastrado = async (cpf) => {
-    
+
+        return {solicitantes, adms}
     }
 
-
-    
-
-    return {buscaCpfCadastrado};
+    return {buscaUsers};
 }
+
+// export function buscaCPF (){
+    
+//     const users = useBuscaUsers();
+//     const buscaCpf = (cpf) => {
+//         console.log(users);
+//     }
+
+//     return {buscaCpf};
+// }
 
 export function useEndereco(){
     // insere endereço no cadastro
@@ -215,6 +219,7 @@ export function useEndereco(){
         const id = (user === "solicitante") 
             ? localStorage.getItem("userId")
             : localStorage.getItem("assistenciaId");
+            
         await fetch(`${url}/${user}/${id}`,{
             method:"PATCH",
             body: JSON.stringify(data)

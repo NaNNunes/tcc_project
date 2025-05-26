@@ -1,12 +1,96 @@
 {
   "solicitante": [
- 
+    {
+      "id": "375c",
+      "email": "user@gmail.com.br",
+      "cpf": "133.127.937-26",
+      "userTelefone": "40028922",
+      "nome": "User",
+      "sobrenome": "Usersurname",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "3",
+      "resposta": "Cariacia",
+      "zipcode": "29135-542",
+      "city": "Viana",
+      "neighborhood": "Marcílio de Noronha",
+      "street": "Rua Teófilo Otoni",
+      "state": "ES",
+      "number": "08",
+      "cep": "29135542",
+      "service": "open-cep",
+      "location": {
+        "type": "Point",
+        "coordinates": {}
+      }
+    },
+    {
+      "id": "375c",
+      "email": "user@gmail.com.br",
+      "cpf": "133.127.937-26",
+      "userTelefone": "40028922",
+      "nome": "User",
+      "sobrenome": "Usersurname",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "3",
+      "resposta": "Cariacia",
+      "zipcode": "29135-542",
+      "city": "Viana",
+      "neighborhood": "Marcílio de Noronha",
+      "street": "Rua Teófilo Otoni",
+      "state": "ES",
+      "number": "08",
+      "cep": "29135542",
+      "service": "open-cep",
+      "location": {
+        "type": "Point",
+        "coordinates": {}
+      }
+    }
   ],
   "administrador": [
-
+    {
+      "id": "b0ef",
+      "email": "user@gmail.com.br",
+      "cpf": "133.127.937-26",
+      "userTelefone": "40028922",
+      "nome": "User",
+      "sobrenome": "Usersurname",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "1",
+      "resposta": "Blu"
+    }
   ],
   "assistencia": [
-   
-    
+    {
+      "id": "2ae6",
+      "assistenciaEmail": "assistencia@gmail.com",
+      "nomeFantasia": "nome Fantasia",
+      "razaoSocial": "Razão Social",
+      "cnpj": "58577114000189",
+      "assistenciaTelefone": "40028922",
+      "assistenciaTermos": "true",
+      "administradorId": "b0ef",
+      "zipcode": "29135-542",
+      "city": "Viana",
+      "neighborhood": "Marcílio de Noronha",
+      "street": "Rua Teófilo Otoni",
+      "state": "ES",
+      "number": "08",
+      "cep": "29135542",
+      "service": "open-cep",
+      "location": {
+        "type": "Point",
+        "coordinates": {}
+      }
+    }
   ]
 }

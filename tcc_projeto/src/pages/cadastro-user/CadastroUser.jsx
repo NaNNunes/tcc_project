@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { 
   useCadastroUser,
   useVerificadorDeCpf,
-  useBuscaCpf
+  useBuscaUsers
 } from "../../hooks/useApi";
 
 
@@ -27,11 +27,11 @@ const CadastroUser = () => {
   
   const { register, handleSubmit, watch, formState: { errors }} = useForm();
   const {cadastrarInfosUser} = useCadastroUser();
-  const {buscaCpfCadastrado} = useBuscaCpf();
+  
 
   const navigate = useNavigate();
   const {verificador} = useVerificadorDeCpf();
-  // const {busca} = useBuscaCpf();
+  const buscaUsers = useBuscaUsers();
 
   const senha = watch("senha");
 
@@ -45,7 +45,7 @@ const CadastroUser = () => {
     }
 
     // verificar se cpf ja foi cadastrado por outrem
-    buscaCpfCadastrado(data.cpf);
+    
 
     // verificar se email ja foi cadastrado por outrem
     // if(""){
