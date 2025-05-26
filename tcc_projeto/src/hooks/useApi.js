@@ -170,19 +170,42 @@ export function useCadastroUser(){
 }
 
 // nao funciona
-export function useBuscaCpf(){
+export function useBuscaCpf (){
     // suposições retornar lista de users e realizar verificação em cada um
-    
-    useEffect(() => {
-        async function fetchData(){
-            const request = await fetch(`${url}/${user}`);
-            const response = await request.json();
-            console.log(await response);
+    const [solicitantes, setSolicitantes] = useState([]);
+    const [administradores, setAdministradores] = useState([]);
+
+    useEffect(()=>{
+        async function fetchData() {
+            try{
+                for(let i = 0; i < 2; i++){
+                    let userType = (i == 0) ? "solicitante" : "administrador";
+                    const request = await fetch(`${url}/${userType}`);
+                    const response = await request.json();
+
+                    (i == 0) 
+                    ? setSolicitantes(response) 
+                    : setAdministradores(response)
+                    
+                    console.log(users);
+                }
+            }
+            catch(erro){
+                console.log(erro.message);
+            }
         }
         fetchData();
-    }, [])
+    },[])
+    
+    // pegar lista e 
+    const buscaCpfCadastrado = async (cpf) => {
+    
+    }
 
 
+    
+
+    return {buscaCpfCadastrado};
 }
 
 export function useEndereco(){
