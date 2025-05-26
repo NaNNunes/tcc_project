@@ -25,7 +25,7 @@ const MenuNavegacao = () => {
     <div>
         <Navbar className={styles.navbar} expand='lg'>
             <Container fluid className={styles.containerNavegacao}>
-                <Navbar.Brand href='/login' className={styles.navbarBrand}>
+                <Navbar.Brand href='/home' className={styles.navbarBrand}>
                     <img className={styles.imgConnect} src="/logos/connectfix_logo.svg" alt='Logo ConnectFix'></img>
                 </Navbar.Brand>
 

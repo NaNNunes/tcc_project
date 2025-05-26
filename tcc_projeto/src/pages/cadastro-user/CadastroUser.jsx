@@ -16,8 +16,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 //hooks
 import { useForm } from "react-hook-form";
-import { useCadastroUser } from "../../hooks/useApi";
-import { useVerificadorDeCpf} from "../../hooks/useApi";
+import { 
+  useCadastroUser,
+  useVerificadorDeCpf,
+  useBuscaCpf
+} from "../../hooks/useApi";
+
 
 const CadastroUser = () => {
   
@@ -26,21 +30,31 @@ const CadastroUser = () => {
 
   const navigate = useNavigate();
   const {verificador} = useVerificadorDeCpf();
+  // const {busca} = useBuscaCpf();
 
-  // ta usando??
   const senha = watch("senha");
 
   const onSubmit = async(data) => {
     
     // há maneira melhor de definir essa limitação
-    if (data.userCategoria != 1 && data.userCategoria != 2) {
+    const userType = localStorage.getItem("userType");
+    if (userType !== "solicitante" && userType !== "administrador") {
       alert("Defina um tipo de user");
       return false;
     }
-    // cadastra user
-    cadastrarInfosUser(data);
+
+    // verificar se cpf ja foi cadastrado por outrem
+    // busca(userType, data.cpf);
+
+    // verificar se email ja foi cadastrado por outrem
+    // if(""){
+
+    // }
+
+    // // cadastra user
+    // cadastrarInfosUser(data);
   
-    navigate("/pergunta-seguranca");
+    // navigate("/pergunta-seguranca");
   };
 
   const onError = (errors) => {
@@ -327,16 +341,6 @@ const CadastroUser = () => {
               </h6>
             </Col>
           </Row>
-
-          {/* select temporario */}
-          <Form.Group>
-            <Form.Select as="select" aria-label {...register("userCategoria")}>
-              <option >Escolha seu nivel de user</option>
-              <option value={1}>Solicitante</option>
-              <option value={2}>ADM</option>
-            </Form.Select>
-          </Form.Group>
-
         </Form>
       </Card>
     </Container>

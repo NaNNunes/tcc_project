@@ -121,7 +121,7 @@ export function useCadastroUser(){
     // cadastra user
     const cadastrarInfosUser = async (data) => {
         // define o tipo de user
-        const user = (data.userCategoria == 1) ? "solicitante" : "administrador"
+        const user = localStorage.getItem("userType");
 
         const request = await fetch(`${url}/${user}`,{
             method:"POST",
@@ -135,8 +135,6 @@ export function useCadastroUser(){
 
         // nao funciona
         setId(id);
-        // console.log("userId:", localStorage.getItem("userId"));
-        setType(data.userCategoria);
 
         // user invalido pois falta endereco e/ou pergunta de segurança
         inserirValidacao(false);
@@ -164,12 +162,33 @@ export function useCadastroUser(){
         })
     }
 
-    return {cadastrarInfosUser, inserirPerguntaResposta, inserirValidacao};
+    return {
+        cadastrarInfosUser,
+        inserirPerguntaResposta,
+        inserirValidacao,
+    };
+}
+
+// nao funciona
+export function useBuscaCpf(){
+    // suposições retornar lista de users e realizar verificação em cada um
+    
+    useEffect(() => {
+        async function fetchData(){
+            const request = await fetch(`${url}/${user}`);
+            const response = await request.json();
+            console.log(await response);
+        }
+        fetchData();
+    }, [])
+
+
 }
 
 export function useEndereco(){
     // insere endereço no cadastro
     const inserirEndereco = async (data, user) =>{
+        // define o id de acordo com o user
         const id = (user === "solicitante") 
             ? localStorage.getItem("userId")
             : localStorage.getItem("assistenciaId");
@@ -184,6 +203,7 @@ export function useEndereco(){
 
 export function useCadastroAssistencia(){
 
+    // insere assistencia
     const inserirAssistencia = async (data) =>{
         const request = await fetch(`${url}/assistencia`,{
             method: "POST",
@@ -195,10 +215,12 @@ export function useCadastroAssistencia(){
 
         const response = await request.json();
         const id = await response.id;
+        // define o adm
         inserirAdministrador(id);
         localStorage.setItem("assistenciaId", id);
     }
 
+    // insere o adm da assistencia
     const inserirAdministrador = async (id) => {
         const administrador = {
             "administradorId": localStorage.getItem("userId")

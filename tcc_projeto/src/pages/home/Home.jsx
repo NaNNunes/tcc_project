@@ -10,7 +10,20 @@ import {
 } from "react-bootstrap";
 import styles from "./home.module.css";
 
+import { useNavigate } from "react-router-dom";
+
 const Home = () => {
+  const navigate = useNavigate();
+
+  const goSolicitante = () => {
+    localStorage.setItem("userType", "solicitante");
+    navigate("/login")
+  }
+  const goAdministrador = () => {
+    localStorage.setItem("userType", "administrador");
+    navigate("/cadastro")
+  }
+
   return (
     <div className={styles.pageWrapper}>
       {/* Hero Section */}
@@ -28,10 +41,16 @@ const Home = () => {
                 rápida, segura e prática.
               </p>
               <div className={styles.buttons}>
-                <Button className={styles.primaryButton}>
+                <Button 
+                  className={styles.primaryButton}
+                  onClick={goSolicitante} 
+                >
                   Encontrar Assistência
                 </Button>
-                <Button className={styles.secondaryButton}>
+                <Button 
+                  className={styles.secondaryButton}
+                  onClick={goAdministrador}  
+                >
                   Seja um Parceiro
                 </Button>
               </div>
