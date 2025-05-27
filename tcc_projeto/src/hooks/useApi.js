@@ -170,47 +170,154 @@ export function useCadastroUser(){
 }
 
 // nao funciona
-export function useBuscaUsers (){
+export function useComparaDados (){
     // suposições retornar lista de users e realizar verificação em cada um
 
     const [solicitantes, setSolicitantes] = useState();
     const [adms, setAdms] = useState();
+    const [assistencias, setAssistencias] = useState();
 
-    const buscaUsers = async () => {
-        for(let i = 0; i < 2; i++){
+    // isso é com certeza uma gambiarra
+    // consulta para carregar conexao com a api -- não atribui valores aos states solicitantes e adms
+    useEffect(() => {
+        async function fetchData(){
+            try{
+                for(let i = 0; i < 3; i++){
 
-            let userType = (i == 0) ? "solicitante" : "administrador";
+                    let userType = (i == 0) 
+                        ? "solicitante" 
+                        : (i == 1) 
+                            ? "administrador"
+                            : "assistencia"
+                    
+                    const request = await fetch(`${url}/${userType}`,{
+                        method:"GET"
+                    });
+                    const response = await request.json();
+                    
+                    if(i == 0){
+                        setSolicitantes(response);
+                    }
+                    else if(i == 1){
+                        setAdms(response);
+                    }
+                    else{
+                        setAssistencias(response);
+                    }
+                }
+            }
+            catch(error){
+                console.log(error.message);
+            }
+        }
+        fetchData();
+    },[])
+
+    // 2ª consulta atribuindo valores aos states de solicitante e adms
+    const buscaCadastro = async () => {
+       for(let i = 0; i < 3; i++){
+
+            let userType = (i == 0) 
+                ? "solicitante" 
+                : (i == 1) 
+                    ? "administrador"
+                    : "assistencia"
             
             const request = await fetch(`${url}/${userType}`,{
                 method:"GET"
             });
+
             const response = await request.json();
             
             if(i == 0){
                 setSolicitantes(response);
-                console.log("solicitantes: ",solicitantes);
+            }
+            else if(i == 1){
+                setAdms(response);
             }
             else{
-                setAdms(response);
-                console.log("adms: ",adms);
+                setAssistencias(response);
             }
         }
-
-        return {solicitantes, adms}
     }
 
-    return {buscaUsers};
+    // verifica cpf
+    // verifica se cpf informado pelo user esta cadastrado em solicitantes
+    const verificaCpfDeSolicitantes = (cpf) => {
+        // renderização
+        buscaCadastro();
+
+        // procura cpf na lista de solicitantes
+        const solicitante2Find = solicitantes.find((solicitante) => {
+            // console.log(solicitante.cpf === cpf)
+            return solicitante.cpf === cpf;
+        })
+
+        return solicitante2Find;
+    }
+
+    // verifica se cpf informado pelo user já está cadastrado em adms
+    const verificaCpfDeAdms = (cpf) => {
+        // renderização
+        buscaCadastro();
+
+        // procura cpf na lista de adms
+        const adm2Find = adms.find((adm) => {
+            // console.log(adm.cpf === cpf)
+            return adm.cpf === cpf;
+        })
+
+        return adm2Find;
+    }
+
+    // verifica email
+    // verifica se email informado pelo user esta cadastrado em solicitantes
+    const verificaEmailDeSolicitantes = (email) => {
+        // renderização
+        buscaCadastro();
+
+        // procura email na lista de solicitantes
+        const solicitante2Find = solicitantes.find((solicitante) => {
+            // console.log(solicitante.cpf === cpf)
+            return solicitante.email === email;
+        })
+
+        return solicitante2Find;
+    }
+
+    // verifica se email informado pelo user já está cadastrado em adms
+    const verificaEmailDeAdms = (email) => {
+        // renderização
+        buscaCadastro();
+
+        // procura email na lista de adms
+        const adm2Find = adms.find((adm) => {
+            // console.log(adm.cpf === cpf)
+            return adm.email === email;
+        })
+
+        return adm2Find;
+    }
+
+    // verificar email de assistencias
+    const verificaEmailDeAssistencia = (email) => {
+        // renderização
+        buscaCadastro();
+
+        // procura email na lista de adms
+        const assistencia2Find = assistencias.find((assistencia) => {
+            // console.log(adm.cpf === cpf)
+            return assistencia.email === email;
+        })
+
+        return assistencia2Find;
+    }
+
+    return {
+        verificaCpfDeSolicitantes, verificaCpfDeAdms,
+        verificaEmailDeAdms, verificaEmailDeSolicitantes, verificaEmailDeAssistencia
+    };
 }
-
-// export function buscaCPF (){
-    
-//     const users = useBuscaUsers();
-//     const buscaCpf = (cpf) => {
-//         console.log(users);
-//     }
-
-//     return {buscaCpf};
-// }
 
 export function useEndereco(){
     // insere endereço no cadastro

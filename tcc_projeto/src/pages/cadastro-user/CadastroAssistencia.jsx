@@ -15,7 +15,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 // hooks
 import { useForm } from "react-hook-form";
-import { useVerificadorDeCnpj, useCadastroAssistencia} from "../../hooks/useApi";
+import { 
+  useVerificadorDeCnpj, 
+  useCadastroAssistencia,
+  useComparaDados
+} from "../../hooks/useApi";
 
 const CadastroAssistencia = () => {
   
@@ -29,12 +33,31 @@ const CadastroAssistencia = () => {
   
   const {inserirAssistencia} = useCadastroAssistencia();
   const {verificador} = useVerificadorDeCnpj();
+  const {
+    verificaEmailDeAdms,
+    verificaEmailDeSolicitantes,
+    verificaEmailDeAssistencia    
+  } = useComparaDados();
 
   const onSubmit = (data) => {
 
     // verifica cnpj
     if (!(verificador(data.cnpj))) {
       alert("cnpj invalido")
+      return false;
+    }
+
+    // verifica se email ja foi cadastrado por outrem
+    const emailDeAdm = verificaEmailDeAdms(data.assistenciaEmail);
+    const emailDeSolicitante = verificaEmailDeSolicitantes(data.assistenciaEmail);
+    const emailDeAssistencia = verificaEmailDeAssistencia(data.assistenciaEmail)
+
+    if(
+        emailDeAdm !== undefined ||
+        emailDeSolicitante !== undefined || 
+        emailDeAssistencia !== undefined
+      ){
+      alert("Email em uso");
       return false;
     }
 

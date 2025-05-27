@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { 
   useCadastroUser,
   useVerificadorDeCpf,
-  useBuscaUsers
+  useComparaDados
 } from "../../hooks/useApi";
 
 
@@ -28,10 +28,17 @@ const CadastroUser = () => {
   const { register, handleSubmit, watch, formState: { errors }} = useForm();
   const {cadastrarInfosUser} = useCadastroUser();
   
-
   const navigate = useNavigate();
   const {verificador} = useVerificadorDeCpf();
-  const buscaUsers = useBuscaUsers();
+
+  const {
+    verificaCpfDeSolicitantes,
+    verificaCpfDeAdms,
+    verificaEmailDeAdms,
+    verificaEmailDeSolicitantes,
+    verificaEmailDeAssistencia
+
+  } = useComparaDados();
 
   const senha = watch("senha");
 
@@ -45,17 +52,35 @@ const CadastroUser = () => {
     }
 
     // verificar se cpf ja foi cadastrado por outrem
-    
+    const cpfDeSolicitante = verificaCpfDeSolicitantes(data.cpf);
+    const cpfDeAdm = verificaCpfDeAdms(data.cep);
 
-    // verificar se email ja foi cadastrado por outrem
-    // if(""){
+    if(
+      cpfDeSolicitante !== undefined 
+      ||
+      cpfDeAdm !== undefined
+    ){
+      alert("CPF já utilizado ");
+      return false;
+    } 
 
-    // }
+    // verifica se email ja foi cadastrado por outrem
+    const emailDeAdm = verificaEmailDeAdms(data.email);
+    const emailDeSolicitante = verificaEmailDeSolicitantes(data.email);
+    const emailDeAssistencia = verificaEmailDeAssistencia(data.email)
 
-    // // cadastra user
-    // cadastrarInfosUser(data);
-  
-    // navigate("/pergunta-seguranca");
+    if(
+        emailDeAdm !== undefined ||
+        emailDeSolicitante !== undefined || 
+        emailDeAssistencia !== undefined
+      ){
+      alert("Email em uso");
+      return false;
+    }
+
+    // cadastra user
+    cadastrarInfosUser(data);
+    navigate("/pergunta-seguranca");
   };
 
   const onError = (errors) => {
