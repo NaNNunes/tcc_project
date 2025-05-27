@@ -98,6 +98,17 @@
     display: none !important;
 }
 
+ /* --- Aqui começa a estilização do perfil --- */
+ 
+ .navdropdownPerfil {
+    background-color: red;
+    border-radius: 50%;
+    padding: 0 !important;
+    display: flex;
+    align-content: flex-end;
+    align-self: flex-end !important;
+ }
+
 @media screen and (min-width: 992px) {
     /* Quando o dropdown for ativado. */
     .dropDownActive {
