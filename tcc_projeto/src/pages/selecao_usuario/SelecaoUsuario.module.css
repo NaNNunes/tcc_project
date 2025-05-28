@@ -1,0 +1,73 @@
+/* Toda a div. */
+.divInteira {
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+/* Container com os cards. */
+.caixaCard {
+    max-width: 100%;
+    padding: 0;
+}
+
+/* É o card. */
+.dentroCard {
+    background-color: #002241;
+    border-radius: 10px;
+    padding: 20px;
+    height: 35rem;
+}
+
+/* Texto dentro do card. */
+.textCard {
+    color: #FFFFFF;
+    padding: 0;
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-align: justify;
+}
+
+/* Título do card. */
+.TitleCard {
+    color: #FFFFFF;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Imagem dentro do card. */
+.imgCard {
+    height: 60%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 1250px) {
+    .divInteira {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+    .TitleCard {
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .divInteira {
+        padding-left: 15%;
+        padding-right: 15%;
+        flex-direction: column;
+    }
+
+    .dentroCard {
+        height: fit-content;
+    }
+}
+
+.cardSelecionado {
+    border: 5px solid yellow;
+}
