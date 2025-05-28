@@ -13,6 +13,7 @@ import CadastroEndereco from "./pages/cadastro-user/CadastroEndereco.jsx";
 import CadastroPagamento from "./pages/cadastro-user/CadastroPagamento.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import Home from "./pages/home/Home.jsx";
+import SelecaoUsuario from "./pages/selecao_usuario/SelecaoUsuario.jsx";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/cadastro-pagamento",
         element: <CadastroPagamento />,
+      },
+      {
+        path: "/selecao-perfil",
+        element: <SelecaoUsuario />,
       },
     ],
   },

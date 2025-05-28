@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 const SelecaoUsuario = () => {
   return (
     <div>
-        Selecao
+        <h1>opa</h1>
     </div>
   )
 }
