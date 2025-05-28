@@ -7,21 +7,42 @@ import {
   Image,
   FloatingLabel,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import styles from "./login.module.css";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../../context/userContext";
+import { useVerificaLogin } from "../../hooks/useApi";
 
 const Login = () => {
+
+  const {login} = useContext(AuthContext);
+  // useEffect(()=>{
+  //   logout();
+  // },[])
+
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
   } = useForm();
+  
+  const {verificaLogin} = useVerificaLogin();
+  
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log("dados: ", data);
+    const respVerificacao = verificaLogin(data);
+    if(respVerificacao === "Login efetuado com sucesso"){
+      alert(respVerificacao);
+      navigate("/criar-demanda");
+    }
+    else{
+      alert(respVerificacao);
+    }
   };
 
   const onError = (errors) => {
@@ -61,14 +82,6 @@ const Login = () => {
             isInvalid={!!errors.cpf}
             {...register("cpf", {
               required: "Informe o CPF para efetuar o login",
-              minLength: {
-                value: 11,
-                message: "Necessário 11 dígitos"
-              },
-              maxLength: {
-                value: 11,
-                message: "Necessário 11 dígitos"
-              }
             })}
             onChange={(e) => {
               const formatado = formatarCPF(e.target.value);

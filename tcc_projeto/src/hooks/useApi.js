@@ -4,6 +4,43 @@ import { AuthContext } from "../context/userContext";
 
 const url = import.meta.env.VITE_API_URL;
 
+export function useVerificaLogin(){
+    const [users, setUsers] = useState([]);
+
+    const {login} = useContext(AuthContext);
+
+    useEffect(()=>{
+        async function fetchData(){
+            const userType = localStorage.getItem("userType");
+            try {
+                const request = await fetch(`${url}/${userType}`);
+                const response = await request.json();
+                setUsers(response);
+            } catch (error) {
+                console.log(error.message);
+            }
+        }
+        fetchData();
+    },[])
+
+    const verificaLogin = (data) => {
+        const user2find = users.find((user) => {
+            console.log(user.cpf === data.cpf);
+            return user.cpf === data.cpf;
+        })
+
+        if(user2find !== undefined && user2find.senha === data.senha){
+            login(user2find);
+            console.log("user logado", user2find.nome);
+            return "Login efetuado com sucesso";
+        } else{
+            return "usuario ou senha inválido";
+        }
+    }
+
+    return { verificaLogin };
+}
+
 // verificador de cpf valido
 export function useVerificadorDeCpf(){
     const verificador = (cpfStr = "000.000.000-00") => {
@@ -169,9 +206,8 @@ export function useCadastroUser(){
     };
 }
 
-// nao funciona
+// compara dados de entrada de cadastro com dados cadastrados de users e pseudousers
 export function useComparaDados (){
-    // suposições retornar lista de users e realizar verificação em cada um
 
     const [solicitantes, setSolicitantes] = useState();
     const [adms, setAdms] = useState();
@@ -319,6 +355,7 @@ export function useComparaDados (){
     };
 }
 
+// por enquato apenas insere endereco
 export function useEndereco(){
     // insere endereço no cadastro
     const inserirEndereco = async (data, user) =>{
@@ -336,6 +373,7 @@ export function useEndereco(){
     return {inserirEndereco};
 }
 
+// cadastra assistencia
 export function useCadastroAssistencia(){
 
     // insere assistencia
