@@ -1,3 +1,5 @@
+// TO DO: Fazer o envio de demanda para AT especifica ou colocar como público.
+
 // Importação do react-boostrap.
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -17,8 +19,8 @@ import { FaHeadphones } from "react-icons/fa6";
 // Importação de estilo.
 import stylesCad from './CadastroDemanda.module.css'
 
+// Importação de useState e useEffect para utilizar em marcaSelecionada
 import { useState } from 'react';
-
 import { useEffect } from "react";
 
 // Importação do useForm para mexer com o formulário.

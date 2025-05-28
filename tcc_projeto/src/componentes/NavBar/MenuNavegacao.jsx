@@ -6,11 +6,13 @@ import Navbar from 'react-bootstrap/Navbar'
 import Image from 'react-bootstrap/Image'
 import Button from "react-bootstrap/Button"
 
-// Importação dos estilos CSS
+// Importação dos estilos CSS.
 import styles from "./MenuNavegacao.module.css"
 
+// Importação do useState para verificar se o dropdown está aberto.
 import { useState } from 'react';
 
+// Importação do Link para fazer conexões entre telas.
 import { Link } from 'react-router-dom';
 
 // Importação de icons
@@ -19,15 +21,16 @@ import { TiArrowSortedUp } from "react-icons/ti";
 import { IoMenu } from "react-icons/io5";
 
 const MenuNavegacao = () => {
-    const [openDropdown, setOpenDropdown] = useState(null); // useState para se o dropdown esta aberto ou não.
+    const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
 
-    // Aqui vai ficar o context para pegar o usuario.
+    // AQUI VAI FICAR O CONTEXT PARA DEFINIR O USUÁRIO.
     const perfilUsuario = "solicitante"
 
     // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
-    const ContentNavSolicitante = (
+    const contentNavSolicitante = (
         <>
             <div className={styles.divNavdropdown}>
+                {/* NavDropdown de "Demandas" */}
                 <NavDropdown 
                     id="dropdown-demandas-solicitante"
                     show={openDropdown === "demandas-solicitante"}
@@ -41,6 +44,8 @@ const MenuNavegacao = () => {
                         </span>
                     }
                 >
+                    {/* Items que estarão dentro do navdropdown */}
+                    {/* Cadastro pedido */}
                     <NavDropdown.Item 
                         as={Link} 
                         to='/criar-Demanda' 
@@ -48,7 +53,8 @@ const MenuNavegacao = () => {
                     >
                         <Image className={styles.icone} src='/icons/Icon_pedido.svg' />Cadastro pedido
                     </NavDropdown.Item>
-
+                    
+                    {/* Consultar pedidos */}
                     <NavDropdown.Item 
                         as={Link}
                         to='#'
@@ -62,9 +68,10 @@ const MenuNavegacao = () => {
         
     )
 
-    const ContentNavADM = (
+    const contentNavADM = (
         <>
             <div className={styles.divNavdropdown}>
+                {/* NavDropdown de "Demandas" */}
                 <NavDropdown 
                     id="dropdown-demandas-adm"
                     show={openDropdown === "demandas-adm"}
@@ -78,6 +85,8 @@ const MenuNavegacao = () => {
                         </span>
                     }
                 >
+                    {/* Items que estarão dentro do navdropdown */}
+                    {/* Procurar demandas */}
                     <NavDropdown.Item 
                         as={Link} 
                         to='#' 
@@ -85,7 +94,8 @@ const MenuNavegacao = () => {
                     >
                         <Image className={styles.icone} src='/icons/zoom_in.svg' />Procurar demandas
                     </NavDropdown.Item>
-
+                    
+                    {/* Demandas abertas */}
                     <NavDropdown.Item 
                         as={Link}
                         to='#'
@@ -94,6 +104,7 @@ const MenuNavegacao = () => {
                         <Image className={styles.icone} src='/icons/pending_actions.svg'/>Demandas abertas
                     </NavDropdown.Item>
 
+                    {/* Histórico de demandas */}
                     <NavDropdown.Item 
                         as={Link}
                         to='#'
@@ -105,6 +116,7 @@ const MenuNavegacao = () => {
             </div>
                     
             <div className={styles.divNavdropdown}>
+                {/* NavDropdown de "Operador" */}
                 <NavDropdown 
                     id="dropdown-operador"
                     show={openDropdown === "operador"}
@@ -118,6 +130,7 @@ const MenuNavegacao = () => {
                         </span>
                     }
                 >
+                    {/* Adicionar operador */}
                     <NavDropdown.Item 
                         as={Link} 
                         to='#' 
@@ -126,6 +139,7 @@ const MenuNavegacao = () => {
                         <Image className={styles.icone} src='/icons/person_add_alt.svg' />Adicionar operador
                     </NavDropdown.Item>
 
+                    {/* Consultar operadores */}
                     <NavDropdown.Item
                         as={Link}
                         to='#'
@@ -137,6 +151,7 @@ const MenuNavegacao = () => {
             </div>
 
             <div className={styles.divNavdropdown}>
+                {/* NavDropdown de "Minha assistência" */}
                 <NavDropdown 
                     id="dropdown-assistencia"
                     show={openDropdown === "assistencia"}
@@ -150,6 +165,7 @@ const MenuNavegacao = () => {
                         </span>
                     }
                 >
+                    {/* Cadastrar local */}
                     <NavDropdown.Item 
                         as={Link} 
                         to='#' 
@@ -158,6 +174,7 @@ const MenuNavegacao = () => {
                         <Image className={styles.icone} src='/icons/add_location_alt.svg' />Cadastrar local
                     </NavDropdown.Item>
 
+                    {/* Consultar locais */}
                     <NavDropdown.Item 
                         as={Link}
                         to='#'
@@ -170,7 +187,7 @@ const MenuNavegacao = () => {
         </>
     )
 
-    const ContentNavDeslogado = (
+    const contentNavDeslogado = (
         <>
             <div>
                 vou fazer chegando no senai, estou atrasado por causa do menu. Muito obrigado a todos os participantes.
@@ -178,47 +195,97 @@ const MenuNavegacao = () => {
         </>
     )
 
-    // Faz associação de perfil com o conteúdo do menu.
+    // Faz associação do perfil do usuário com o conteúdo do menu.
     const menus = {
-        solicitante: ContentNavSolicitante,
-        adm: ContentNavADM
+        solicitante: contentNavSolicitante,
+        adm: contentNavADM
     };
 
-    // Menu de acordo com o perfil de usuário.
-    const mainNav = menus[perfilUsuario] ?? ContentNavDeslogado;
+    // Menu de acordo com o perfil de usuário. Se tiver deslogado mostra o nav para usuários deslogados.
+    const mainNav = menus[perfilUsuario] ?? contentNavDeslogado;
 
+    // Perfis para solicitante, adm e usuário deslogado.
     const perfilNavSolicitante = (
-        <div className={styles.navdropdownPerfil}>
-            <NavDropdown
-                align='end'
-                title={
-                    <Image 
-                        src='/icons/person.svg'
-                        width={30}
-                        height={30}
-                        alt='Perfil'
-                    />
-                }
-                id='dropdown-perfil'
-            >
-                <NavDropdown.Item
-                    as={Link}
-                    to='#'
-                >   
-                    Meu perfil
-                </NavDropdown.Item>
-            </NavDropdown>
-        </div>
+        <>
+            <div className={styles.navdropdownPerfil}>
+                {/* NavDropdown com as informações de perfil. */}
+                <NavDropdown
+                    align='end'
+                    title={
+                        <Image 
+                            src='/icons/person.svg'
+                            width={30}
+                            height={30}
+                            alt='Perfil'
+                        />
+                    }
+                    id='dropdown-perfil-solicitante'
+                >
+                    <NavDropdown.Item
+                        as={Link}
+                        to='#'
+                    >   
+                        Meu perfil
+                    </NavDropdown.Item>
+                </NavDropdown>
+            </div>
+        </>
     )
+
+    const perfilNavAdm = (
+        <>
+            <div className={styles.navdropdownPerfil}>
+                {/* NavDropdown com as informações de perfil. */}
+                <NavDropdown
+                    align='end'
+                    title={
+                        <Image 
+                            src='/icons/person.svg'
+                            width={30}
+                            height={30}
+                            alt='Perfil'
+                        />
+                    }
+                    id='dropdown-perfil-adm'
+                >
+                    <NavDropdown.Item
+                        as={Link}
+                        to='#'
+                    >   
+                        Meu perfil
+                    </NavDropdown.Item>
+                </NavDropdown>
+            </div>
+        </>
+    )
+
+    const perfilNavDeslogado = (
+        <>
+            <div>
+                ta deslogado padrinho
+            </div>
+        </>
+    )
+
+    // Faz associação do perfil do usuário com o conteúdo que haverá no perfil.
+    const perfis = {
+        solicitante: perfilNavSolicitante,
+        adm: perfilNavAdm
+    }
+
+    // Perfil de acordo com o perfil do usuário. Se tiver deslogado mostra o botão para entrar.
+    const mainPerfil = perfis[perfilUsuario] ?? perfilNavDeslogado;
 
   return (
     <div>
         <Navbar className={styles.navbar} expand='lg'>
             <Container fluid className={styles.containerNavegacao}>
+                {/* Logo ConnectFix. */}
                 <Navbar.Brand href='/home' className={styles.navbarBrand}>
                     <img className={styles.imgConnect} src="/logos/connectfix_logo.svg" alt='Logo ConnectFix'></img>
                 </Navbar.Brand>
 
+                {/* Menu hamburguer. */}
                 <Navbar.Toggle 
                     aria-controls='minha-nav'
                     aria-label="Abrir menu"
@@ -235,7 +302,7 @@ const MenuNavegacao = () => {
 
                     {/* Nav com o dropdown para navegação no perfil. */}
                     <Nav className="ms-auto">
-                        {perfilNavSolicitante}
+                        {mainPerfil}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

@@ -1,33 +1,30 @@
-/* Definição de style do "Navbar" */
+/* Definição de style do "Navbar". */
 .navbar {
     background: #034C8C;
-    /* box-shadow: 10px 7px 10px 0px rgb(204, 204, 204); */
     max-width: 100%;
 }
 
-/* Definição de style do container de navegacao entre funcionalidas */
+/* Definição de style do container de navegacao entre funcionalidas. */
 .containerNavegacao {
-    /* display: flex;
-    align-items: center !important;
-    width: 100% !important; */
     padding-left: 4%;
     padding-right: 4%;
     margin: 0;
 }
 
+/* Icone do ConnectFix. */
 .navbarBrand {
     padding: 0;
     height: 45px;
     margin-right: 5%;
 }
 
-/* Imagem do ConnectFix preenche 100% do navbar.brand */
+/* Imagem do ConnectFix preenche 100% do navbar.brand. */
 .imgConnect {
     height: 100%;
     width: 100%;
 }
 
-/* Botão hamburguer */
+/* Botão hamburguer. */
 .botaoToggle {
     background-color: transparent;
     border: 0;
@@ -37,10 +34,12 @@
     padding-bottom: 4px;
 }
 
+/* O dropdown fica no tamanho do conteúdo que está dentro dele. */
 :global(.botaoToggle.show) {
     width: fit-content;
 }
 
+/* Faz a customização de com o hamburguer esta em foco. */
 .botaoToggle:focus, .botaoToggle:focus-visible {
     box-shadow: none !important;
     outline: 2px solid white !important;
@@ -100,12 +99,12 @@
 
  /* --- Aqui começa a estilização do perfil --- */
  
+ /* Botão do dropdown com o perfil. */
  .navdropdownPerfil {
     background-color: red;
     border-radius: 50%;
     padding: 0 !important;
     display: flex;
-    align-content: flex-end;
     align-self: flex-end !important;
  }
 
