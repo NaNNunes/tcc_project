@@ -4,6 +4,7 @@ import "./App.css";
 import Container from "react-bootstrap/Container";
 import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./componentes/NavBar/MenuNavegacao.jsx";
+import Footer from "./componentes/footer/Footer.jsx";
 
 function App() {
   const location = useLocation();
@@ -40,8 +41,9 @@ function App() {
     <div className={isLoginPage ? "login-background" : ""}>
       <Navbar />
       {/* AQUI */}
-      <Container style={{maxWidth: '100%', margin: '0', padding: '0'}}>
+      <Container style={{ maxWidth: "100%", margin: "0", padding: "0" }}>
         <Outlet />
+        <Footer />
       </Container>
     </div>
   );

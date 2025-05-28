@@ -15,14 +15,10 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const navigate = useNavigate();
 
-  const goSolicitante = () => {
+  const goEscolha = () => {
     localStorage.setItem("userType", "solicitante");
-    navigate("/login")
-  }
-  const goAdministrador = () => {
-    localStorage.setItem("userType", "administrador");
-    navigate("/cadastro")
-  }
+    navigate("/selecao-perfil");
+  };
 
   return (
     <div className={styles.pageWrapper}>
@@ -41,17 +37,11 @@ const Home = () => {
                 rápida, segura e prática.
               </p>
               <div className={styles.buttons}>
-                <Button 
+                <Button
                   className={styles.primaryButton}
-                  onClick={goSolicitante} 
+                  onClick={goEscolha}
                 >
-                  Encontrar Assistência
-                </Button>
-                <Button 
-                  className={styles.secondaryButton}
-                  onClick={goAdministrador}  
-                >
-                  Seja um Parceiro
+                  Veja aqui as melhores opções para você
                 </Button>
               </div>
             </Col>
@@ -181,9 +171,7 @@ const Home = () => {
       </section>
 
       {/* Footer */}
-      <footer className={styles.footer}>
-        <p>© 2025 ConnectFix. Todos os direitos reservados.</p>
-      </footer>
+      
     </div>
   );
 };

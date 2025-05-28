@@ -1,7 +1,6 @@
 .container {
   margin: auto;
   justify-content: auto;
-
 }
 
 .text {
@@ -11,11 +10,12 @@
 /* LOGIN */
 .loginForm {
   width: 400px;
-  height: 530px;
+  /* height: 550px; */
   background: linear-gradient(to bottom, #034c8c, #001b32);
   border-radius: 10px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
   margin: 3rem auto;
+  padding-bottom: 1.3rem;
   /* justify-content: center; Centraliza o conteúdo interno */
   align-items: center;
   box-sizing: border-box;
@@ -43,7 +43,17 @@
 
 .link {
   text-decoration: none;
-  color: #efd088;
+  color: #fce63d;
   font: bold 1rem arial;
   text-align: left;
+}
+
+h5::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 3px;
+  background-color: var(--highlight-yellow);
+  margin-top: 8px;
+  border-radius: 2px;
 }
