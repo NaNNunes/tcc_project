@@ -16,7 +16,6 @@ const Home = () => {
   const navigate = useNavigate();
 
   const goEscolha = () => {
-    localStorage.setItem("userType", "solicitante");
     navigate("/selecao-perfil");
   };
 

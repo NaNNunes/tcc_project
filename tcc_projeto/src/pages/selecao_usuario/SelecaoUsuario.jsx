@@ -5,17 +5,26 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button"
 
 import styles from "./SelecaoUsuario.module.css";
+import { useNavigate } from "react-router-dom";
 
 const SelecaoUsuario = () => {
   const [selectedUserType, setSelectedUserType] = useState(null);
 
-  const handleCardClick = (type) => {
-    setSelectedUserType(type);
-  };
+  const navigate = useNavigate();
 
-  const onSubmit = async (dados) => {
-    console.log("Dados: ", dados)
-  }
+  const handleCardClick = (type) => {
+    // nao funciona 
+    (
+      (type === "solicitante")
+      ? setSelectedUserType("solicitante")
+      : setSelectedUserType("administrador")
+    )
+    
+    // funciona
+    localStorage.setItem("userType", type);
+
+    navigate("/login");
+  };
 
   return (
     <div>
@@ -25,15 +34,21 @@ const SelecaoUsuario = () => {
 
       <div className={styles.divInteira}>
         <Container className={styles.caixaCard}>
+          {/* Solicitante btn */}
           <Card 
             style={{border: 'none', borderRadius: '10px'}}
             onClick={() => handleCardClick("solicitante")}
           >
             <Card.Body
               style={{backgroundColor: "#0054a1"}}
-              className={`${styles.dentroCard} ${
-                selectedUserType === "solicitante" ? styles.cardSelecionado : ""
-              }`}
+              className={`
+                ${styles.dentroCard} 
+                ${
+                  selectedUserType === "solicitante"
+                   ? styles.cardSelecionado
+                   : ""
+                }`
+              }
             >
               <Card.Img
                 variant="top"
@@ -51,15 +66,20 @@ const SelecaoUsuario = () => {
         </Container>
 
         <Container className={styles.caixaCard}>
+          {/* adm btn */}
           <Card 
             style={{border: 'none', borderRadius: '10px'}}
             onClick={() => handleCardClick("administrador")}
           >
             <Card.Body 
               style={{backgroundColor: "#004381"}}
-              className={`${styles.dentroCard} ${
-                selectedUserType === "administrador" ? styles.cardSelecionado : ""
-              }`}
+              className={`
+                ${styles.dentroCard} 
+                ${ selectedUserType === "administrador"
+                    ? styles.cardSelecionado
+                    : ""
+                  }`
+              }
             >
               <Card.Img
                 variant="top"
