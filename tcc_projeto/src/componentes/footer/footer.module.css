@@ -1,3 +1,8 @@
+.divtudo {
+  align-self: baseline !important;
+  align-content: baseline !important;
+}
+
 .footer {
   background-color: var(--black);
   color: var(--white);

@@ -4,19 +4,22 @@
     display: flex;
     flex-direction: row;
     gap: 30px;
-    padding-left: 10%;
-    padding-right: 10%;
+    padding-left: 15%;
+    padding-right: 15%;
 }
+
+/* Aqui começa a estilização do Card. */
 
 /* Container com os cards. */
 .caixaCard {
     max-width: 100%;
     padding: 0;
+    box-shadow: 0px 0px 10px 2px rgb(204, 204, 204);
+    border-radius: 10px;
 }
 
 /* É o card. */
 .dentroCard {
-    background-color: #002241;
     border-radius: 10px;
     padding: 20px;
     height: 35rem;
@@ -28,14 +31,14 @@
     padding: 0;
     font-size: 1.5rem;
     font-weight: 400;
-    text-align: justify;
 }
 
 /* Título do card. */
 .TitleCard {
     color: #FFFFFF;
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: bold;
+    margin-top: 10px;
     margin-bottom: 15px;
 }
 
@@ -46,21 +49,66 @@
     border-radius: 10px;
 }
 
-@media screen and (max-width: 1250px) {
-    .divInteira {
-        padding-left: 5%;
-        padding-right: 5%;
-    }
-    .TitleCard {
-        font-size: 2.5rem;
+/* Aqui começa a estilização do resto da página. */
+.titleGeral {
+    font-weight: bold;
+    font-size: 2.5rem;
+    color: #034c8c;
+    justify-self: center;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.divBotao {
+    margin-top: 60px;
+    margin-bottom: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.botaoAvancar {
+    font-weight: bold;
+    width: 25%;
+    height: 50px;
+}
+
+@media screen and (max-width: 1610px) {
+    .imgCard {
+        height: 50%;
     }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1440px) {
+    .imgCard {
+        height: 40%;
+    }
+}
+
+@media screen and (max-width: 1250px) {
     .divInteira {
-        padding-left: 15%;
-        padding-right: 15%;
+        padding-left: 7%;
+        padding-right: 7%;
+    }
+    .TitleCard {
+        font-size: 2.2rem;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .divInteira {
+        padding-left: 20%;
+        padding-right: 20%;
         flex-direction: column;
+    }
+
+    .TitleCard {
+        font-size: 2rem;
+    }
+
+    .textCard {
+        font-size: 1.2rem;
     }
 
     .dentroCard {
@@ -68,6 +116,26 @@
     }
 }
 
+@media screen and (max-width: 750px) {
+    .divInteira {
+        padding-left: 15%;
+        padding-right: 15%;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .divInteira {
+        padding-left: 10%;
+        padding-right: 10%;
+        flex-direction: column;
+    }
+
+    .TitleCard {
+        font-size: 1.8rem;
+    }
+}
+
 .cardSelecionado {
-    border: 5px solid yellow;
+    border: 5px solid #FFDB8C;
 }
