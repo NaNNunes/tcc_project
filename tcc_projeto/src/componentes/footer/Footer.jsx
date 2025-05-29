@@ -29,14 +29,14 @@ const Footer = () => {
         {/* Coluna Funcionalidades */}
         <div className={styles.coluna}>
           <h4 className={styles.tituloFooter}>Funcionalidades</h4>
-          <a className={styles.linkFooter} href="/inicio">
+          <a className={styles.linkFooter} href="/home">
             Início
           </a>
           <a className={styles.linkFooter} href="/sobre">
             Quem somos
           </a>
-          <a className={styles.linkFooter} href="/inicio#principais-cursos">
-            Cursos
+          <a className={styles.linkFooter} href="/demandas">
+            Demandas
           </a>
         </div>
 
