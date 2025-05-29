@@ -14,6 +14,7 @@ import CadastroPagamento from "./pages/cadastro-user/CadastroPagamento.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import Home from "./pages/home/Home.jsx";
 import SelecaoUsuario from "./pages/selecao_usuario/SelecaoUsuario.jsx";
+import Sobre from "./pages/sobre/Sobre.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,8 +30,7 @@ const router = createBrowserRouter([
         path: "/home",
         element: <Home />,
       },
-      { path: "/login",
-        element: <Login /> },
+      { path: "/login", element: <Login /> },
       {
         path: "/cadastro",
         element: <CadastroUser />,
@@ -66,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: "/selecao-perfil",
         element: <SelecaoUsuario />,
+      },
+      {
+        path: "/sobre",
+        element: <Sobre />,
       },
     ],
   },
