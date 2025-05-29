@@ -99,7 +99,7 @@ const CadastroEndereco = () => {
     cadastrarEndereco(data, /*user*/ )
     inserirValidacao(true);
 
-    localStorage.clear();
+    // localStorage.clear();
 
     navigate("/login");
   };

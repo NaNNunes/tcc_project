@@ -426,16 +426,21 @@ export function useEndereco(){
 
     // define id de endereco de acordo com o user, solicitante ou pseudo user
     const setaIdEmUser = async (endereco_id) =>{
+
         const user =( (localStorage.getItem("userType") === "solicitante") 
             ? "solicitante"
             : "assistencia"
         );
+        const id = (user === "solicitante") 
+            ? localStorage.getItem("userId")
+            : localStorage.getItem("assistenciaId");
+            alert(localStorage.getItem("assistenciaId"))
 
         const enderecoId = {
             "id_endereco": endereco_id
         }
 
-        await fetch(`${url}/${user}`,{
+        await fetch(`${url}/${user}/${id}`,{
             method: "PATCH",
             body: JSON.stringify(enderecoId)
         })
@@ -459,9 +464,11 @@ export function useCadastroAssistencia(){
 
         const response = await request.json();
         const id = await response.id;
+
+        localStorage.setItem("assistenciaId", id);
         // define o adm
         inserirAdministrador(id);
-        localStorage.setItem("assistenciaId", id);
+
     }
 
     // insere o adm da assistencia
