@@ -17,13 +17,14 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import {useCadastroUser, useEndereco} from "../../hooks/useApi";
+import {useUser, useEndereco} from "../../hooks/useApi";
 
 const CadastroEndereco = () => {
 
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
+
   const {cadastrarEndereco} = useEndereco();
-  const {inserirValidacao} = useCadastroUser();
+  const {inserirValidacao} = useUser();
   const navigate = useNavigate();
 
   const [endereco, setEndereco] = useState({
@@ -47,6 +48,8 @@ const CadastroEndereco = () => {
     // caso endereco invalido
     if (zipCode.length !== 8) {
       alert("CEP deve conter exatamente 8 números.");
+      // desabilita alteração de campo
+      setInputFieldEnable(false);
       //limpa campos
       for(const[key, value] of Object.entries(endereco)){
         setValue(key,value)
@@ -92,14 +95,10 @@ const CadastroEndereco = () => {
   }
 
   const onSubmit = (data) => {
-    // const user = (localStorage.getItem("userType") === "solicitante") 
-    // ? "solicitante"
-    // : "assistencia"
-
-    cadastrarEndereco(data, /*user*/ )
+    cadastrarEndereco(data)
     inserirValidacao(true);
 
-    // localStorage.clear();
+    localStorage.clear();
 
     navigate("/login");
   };

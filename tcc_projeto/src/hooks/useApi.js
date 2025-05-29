@@ -8,13 +8,12 @@ export function useVerificaLogin(){
     const [solicitantes, setSolicitantes] = useState([]);
     const [administradores, setAdministradores] = useState([]);
 
-    const {login} = useContext(AuthContext);
+    const {login, setId, setType} = useContext(AuthContext);
 
     // -- ATENCAO --
     // o codigo a seguir segue o paradigma POG,
     // Programação Orientada a Gambiarra, não repita isso em casa
     // isso ocorre devido ao state por motivo de não sei
-
     useEffect(()=>{
     async function fetchData(){
             try {
@@ -65,21 +64,61 @@ export function useVerificaLogin(){
         }
     }
 
-
     const verificaLogin = (data) => {
+        // renderização de lista
         buscaCadastros();
 
-        // verificar email e cpf
-        const user2find = solicitantes.find((solicitante) => {
-            console.log(solicitante.cpf === data.loginOuCpf);
-            return solicitante.cpf === data.loginOuCpf;
+        // verifica se email ou senha foi encontrado em solicitantes
+        const solicitante2find = solicitantes.find((solicitante) => {
+            console.log(
+                "solicitante: ",
+                solicitante.cpf === data.loginOuCpf
+                ||
+                solicitante.email === data.loginOuCpf
+            );
+            return (
+                solicitante.cpf === data.loginOuCpf
+                ||
+                solicitante.email === data.loginOuCpf
+            );
         })
 
-        if(user2find !== undefined && user2find.senha === data.senha){
-            login(user2find);
-            console.log("user logado", user2find.nome);
+        // verifica se email ou senha foi encontrado em administradores
+        const administrador2find = administradores.find((administrador)=>{
+            console.log(
+                "administrador: ",
+                administrador.cpf === data.loginOuCpf
+                ||
+                administrador.email === data.loginOuCpf
+            );
+            return (
+                administrador.cpf === data.loginOuCpf
+                ||
+                administrador.email === data.loginOuCpf
+            );
+        })
+
+        if(solicitante2find !== undefined && solicitante2find.senha === data.senha){
+            login(solicitante2find);
+            setId(solicitante2find.id);
+
+            setType("solicitante");
+
+            console.log("user logado:", solicitante2find.nome);
+            console.log("----------------")
             return "Login efetuado com sucesso";
-        } else{
+        } 
+        else if (administrador2find !== undefined && administrador2find.senha === data.senha){
+            login(administrador2find);
+            setId(administrador2find.id);
+
+            setType("administrador");
+
+            console.log("user logado:", administrador2find.nome);
+            console.log("----------------")
+            return "Login efetuado com sucesso";
+        } 
+        else {
             return "usuario ou senha inválido";
         }
     }
@@ -196,11 +235,12 @@ export function useVerificadorDeCnpj(){
 }
 
 // cadastro de user
-export function useCadastroUser(){
+export function useUser(){
 
     // funçoes do context para salvar id e tipo de user
     const {setId} = useContext(AuthContext);
-    
+    const [infosUser, setInfosUser] = useState({});
+
     // cadastra user
     const cadastrarInfosUser = async (data) => {
         // define o tipo de user
@@ -411,6 +451,7 @@ export function useEndereco(){
 
     // cadastra endereco
     const cadastrarEndereco = async (data) =>{
+
         const request = await fetch(`${url}/endereco`,{
             method:"POST",
             headers:{
@@ -421,20 +462,21 @@ export function useEndereco(){
 
         const response = await request.json();
         const endereco_id = response.id;      
+        // define id do endereco como chave estrangeira 
         setaIdEmUser(endereco_id);
     }
 
     // define id de endereco de acordo com o user, solicitante ou pseudo user
     const setaIdEmUser = async (endereco_id) =>{
-
+        // define quem receberá o id do endereco
         const user =( (localStorage.getItem("userType") === "solicitante") 
             ? "solicitante"
             : "assistencia"
         );
+        // pega o id do endereco
         const id = (user === "solicitante") 
             ? localStorage.getItem("userId")
             : localStorage.getItem("assistenciaId");
-            alert(localStorage.getItem("assistenciaId"))
 
         const enderecoId = {
             "id_endereco": endereco_id
@@ -465,10 +507,12 @@ export function useCadastroAssistencia(){
         const response = await request.json();
         const id = await response.id;
 
+        // jogar para o context?
         localStorage.setItem("assistenciaId", id);
+        console.log(localStorage.getItem("assistenciaId"));
+
         // define o adm
         inserirAdministrador(id);
-
     }
 
     // insere o adm da assistencia
@@ -483,4 +527,58 @@ export function useCadastroAssistencia(){
     }
 
     return {inserirAssistencia};
+}
+
+export function useDemada(){
+    
+    // cadastra dispositivo no sistema
+    const cadastrarDispositivo = async (data) =>{
+        
+        const request = await fetch(`${url}/dispositivo`,{
+            method: "POST",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        const response =  await request.json();
+
+        //definir dono do dispositivo
+        defineIdSolicitante("dispositivo", response.id);
+        // retorna id Dispositivo para cadastrar em demanda
+        return response.id;
+    }
+
+    // cadastrar demanda
+    const cadastrarDemanda = async (data) => {
+        
+        const request = await fetch(`${url}/demanda`,{
+            method: "POST",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        
+        const response = await request.json();
+        
+        // define id emissor da demanda
+        defineIdSolicitante("demanda", response.id);
+    }
+
+    // define o id do solicitante 
+    const defineIdSolicitante = async (tabelaDestino, id) =>{
+        // tabela Destino = dispositivo || demanda
+
+        const userId = {
+            "solicitante_id": localStorage.getItem("userId")
+        }
+
+        fetch(`${url}/${tabelaDestino}/${id}`,{
+            method: "PATCH",
+            body: JSON.stringify(userId)
+        })
+    }
+
+    return {cadastrarDispositivo, cadastrarDemanda};
 }

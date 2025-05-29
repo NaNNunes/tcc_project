@@ -1,12 +1,11 @@
-import {
-  Row,
-  Col,
-  Button,
-  Form,
-  Container,
-  Image,
-  FloatingLabel,
-} from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -16,11 +15,6 @@ import { AuthContext } from "../../context/userContext";
 import { useVerificaLogin } from "../../hooks/useApi";
 
 const Login = () => {
-
-  const {logout} = useContext(AuthContext);
-  useEffect(()=>{
-    logout();
-  },[])
 
   const {
     register,
@@ -33,8 +27,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    console.log("dados: ", data);
+    // console.log("dados: ", data);
     const respVerificacao = verificaLogin(data);
+
     if(respVerificacao === "Login efetuado com sucesso"){
       alert(respVerificacao);
       navigate("/criar-demanda");
@@ -49,6 +44,8 @@ const Login = () => {
   };
 
   return (
+    // codigo a baixo nao fora removido devido a sua utilidade não identificada.
+    // Favor Front-Enzo, refatore-o se necessário 
 // <<<<<<< HEAD
 //     <Container className={styles.container}>
 //       <Form

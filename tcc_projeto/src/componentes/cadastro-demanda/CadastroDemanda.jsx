@@ -26,6 +26,9 @@ import { useEffect } from "react";
 // Importação do useForm para mexer com o formulário.
 import { useForm } from "react-hook-form";
 
+// hooks json-server
+import { useDemada } from '../../hooks/useApi';
+
 const categoriaDispositivo = () => {
     const {
         register,
@@ -71,36 +74,40 @@ const categoriaDispositivo = () => {
     ];
 
     // Se a categoria selecionada for igual a outros troca o campo para o usuário digitar.
-    const campoMarca = (categoriaSelecionada === "Outros" ? (
-        <Form.Control 
-            type='text'
-            placeholder=''
-            {...register("marca", {
-                required: "A marca é obrigatória"
-            })}
-        />
-    ) : (
-        <Form.Select
-            type='select'
-            placeholder=''
-            {...register("marca", {
-                required: "A marca é obrigatória"
-            })}
-            onChange={(e) => {
-                setMarcaSelecionada(e.target.value); // Atualiza a marca selecionada.
-                setValue("marca", e.target.value, { shouldValidate: true }); // Pegando o valor selecionado
-                setValue("modelo", ""); // Limpa o modelo ao trocar de marca.
-            }}
-        >   
-            <option value="">Selecione uma opção</option>
-            {/* Mostra as opções de acordo com a categoria. */}
-            {categoriaSelecionada && Object.keys(dadosDispositivos[categoriaSelecionada] || {}).map((marca) => (
-                <option key={marca} value={marca}>
-                    {marca}
-                </option>
-            ))}
-        </Form.Select>
-    ));
+    const campoMarca = (categoriaSelecionada === "Outros" 
+        ?   (
+            <Form.Control 
+                type='text'
+                placeholder=''
+                {...register("marca", {
+                    required: "A marca é obrigatória"
+                })}
+            />
+            ) 
+        : (
+            <Form.Select
+                type='select'
+                placeholder=''
+                {...register("marca", {
+                    required: "A marca é obrigatória"
+                })}
+                onChange={(e) => {
+                    setMarcaSelecionada(e.target.value); // Atualiza a marca selecionada.
+                    setValue("marca", e.target.value, { shouldValidate: true }); // Pegando o valor selecionado
+                    setValue("modelo", ""); // Limpa o modelo ao trocar de marca.
+                }}
+            >   
+                <option value="">Selecione uma opção</option>
+                {/* Mostra as opções de acordo com a categoria. */}
+                {categoriaSelecionada && 
+                    Object.keys(dadosDispositivos[categoriaSelecionada] || {}).map((marca) => (
+                    <option key={marca} value={marca}>
+                        {marca}
+                    </option>
+                ))}
+            </Form.Select>
+            )
+    );
 
     // Se a categoria selecionada for igual a outros troca o campo para o usuário digitar.
     const campoModelo = (categoriaSelecionada === "Outros" ? (
@@ -137,8 +144,71 @@ const categoriaDispositivo = () => {
         }
     })
 
+    /*
+        dados {
+            categoria:
+            marca:
+            fabricante:
+            modelo:
+            numSerie:
+            tensao:
+            amperagem:
+            cor:
+            descProblema:
+            observacoes:
+        }
+
+        dispositivo{
+            categoria:
+            marca:
+            fabricante:
+            modelo:
+            numSerie:
+            tensao:
+            amperagem:
+            cor:
+        }
+
+        demanda{
+            id dispositivo:
+            id solicitante:
+            descProblema:
+            observacoes:
+        }
+
+    */
+
+    //
+    const {cadastrarDispositivo, cadastrarDemanda} = useDemada();
+
     const onSubmit = async (dados) => {
-        console.log("Dados: ", dados)
+        // console.log("Dados: ", dados);
+        
+        // nao consegui fazer a tempo de forma eficiente e mais segura
+        // separando dados de dispositivo
+        const dispositivo = {
+            "categoria": dados.categoria,
+            "marca": dados.marca,
+            "fabricante": dados.fabricante,
+            "modelo": dados.modelo,
+            "numSerie": dados.numSerie,
+            "tensao": dados.tensao,
+            "amperagem": dados.amperagem,
+            "cor": dados.cor
+        }
+
+        // cadastrar dispositivo
+        const idDispostivo = await cadastrarDispositivo(dispositivo);
+
+        // separando dados de demanda
+        const infosDemanda = {
+            "idDispostivo" : idDispostivo,
+            "descProblema" : dados.descProblema,
+            "observacoes": dados.observacoes
+        }
+
+        // cadastrar demanda
+        cadastrarDemanda(infosDemanda);
     }
 
     const onError = (errors) => {

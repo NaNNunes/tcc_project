@@ -17,7 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 //hooks
 import { useForm } from "react-hook-form";
 import { 
-  useCadastroUser,
+  useUser,
   useVerificadorDeCpf,
   useComparaDados
 } from "../../hooks/useApi";
@@ -25,7 +25,7 @@ import {
 const CadastroUser = () => {
   
   const { register, handleSubmit, watch, formState: { errors }} = useForm();
-  const {cadastrarInfosUser} = useCadastroUser();
+  const {cadastrarInfosUser} = useUser();
   
   const navigate = useNavigate();
   const {verificador} = useVerificadorDeCpf();

@@ -16,7 +16,7 @@ import { Link, useNavigate} from "react-router-dom";
 
 // hooks
 import { useForm } from "react-hook-form";
-import { useCadastroUser } from "../../hooks/useApi";
+import { useUser } from "../../hooks/useApi";
 
 const PerguntaSeguranca = () => {
   const {
@@ -27,7 +27,7 @@ const PerguntaSeguranca = () => {
 
   // navegação
   const navigate = useNavigate();
-  const {inserirPerguntaResposta} = useCadastroUser();
+  const {inserirPerguntaResposta} = useUser();
 
   const onSubmit = (data) => { 
     // tratativa provisoria para nenhuma pergunta selecionada
