@@ -58,77 +58,77 @@ const Login = () => {
   };
 
   return (
-<<<<<<< HEAD
-    <Container className={styles.container}>
-      <Form
-        className={styles.loginForm}
-        onSubmit={handleSubmit(onSubmit, onError)}
-      >
-        <Image
-          className={styles.Image}
-          src="/logos/connectfix_logo.svg"
-          fluid
-        />
-        <div className="d-flex align-items-center justify-content-center">
-          <h6 className="text-white">Confiança que gera conexões</h6>
-        </div>
-        <hr className="mb-4 mx-5 text-white border-2" />
+// <<<<<<< HEAD
+//     <Container className={styles.container}>
+//       <Form
+//         className={styles.loginForm}
+//         onSubmit={handleSubmit(onSubmit, onError)}
+//       >
+//         <Image
+//           className={styles.Image}
+//           src="/logos/connectfix_logo.svg"
+//           fluid
+//         />
+//         <div className="d-flex align-items-center justify-content-center">
+//           <h6 className="text-white">Confiança que gera conexões</h6>
+//         </div>
+//         <hr className="mb-4 mx-5 text-white border-2" />
 
-        {/* Campo CPF */}
-        <FloatingLabel id="fuserCpfInput" className="mb-3 mx-5" label="CPF">
-          <Form.Control
-            type="text"
-            placeholder="000.000.000-00"
-            isInvalid={!!errors.cpf}
-            {...register("cpf", {
-              required: "Informe o CPF para efetuar o login",
-            })}
-            onChange={(e) => {
-              const formatado = formatarCPF(e.target.value);
-              setValue("cpf", formatado);
-            }}
+//         {/* Campo CPF */}
+//         <FloatingLabel id="fuserCpfInput" className="mb-3 mx-5" label="CPF">
+//           <Form.Control
+//             type="text"
+//             placeholder="000.000.000-00"
+//             isInvalid={!!errors.cpf}
+//             {...register("cpf", {
+//               required: "Informe o CPF para efetuar o login",
+//             })}
+//             onChange={(e) => {
+//               const formatado = formatarCPF(e.target.value);
+//               setValue("cpf", formatado);
+//             }}
 
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.cpf?.message}
-          </Form.Control.Feedback>
+//           />
+//           <Form.Control.Feedback type="invalid">
+//             {errors.cpf?.message}
+//           </Form.Control.Feedback>
 
-        </FloatingLabel>
+//         </FloatingLabel>
 
-        {/* Campo senha */}
-        <FloatingLabel id="userSenhaInput" className="mb-3 mx-5" label="Senha">
-          <Form.Control
-            type="password"
-            placeholder="Senha"
-            isInvalid={!!errors.senha} // deixa a borda vermelha
-            {...register("senha", {
-              required: "A senha é obrigatória",
-              minLength: {
-                value: 8,
-                message: "A senha deve ter pelo menos 8 caracteres",
-              },
-            })}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.senha?.message}
-          </Form.Control.Feedback>
-        </FloatingLabel>
+//         {/* Campo senha */}
+//         <FloatingLabel id="userSenhaInput" className="mb-3 mx-5" label="Senha">
+//           <Form.Control
+//             type="password"
+//             placeholder="Senha"
+//             isInvalid={!!errors.senha} // deixa a borda vermelha
+//             {...register("senha", {
+//               required: "A senha é obrigatória",
+//               minLength: {
+//                 value: 8,
+//                 message: "A senha deve ter pelo menos 8 caracteres",
+//               },
+//             })}
+//           />
+//           <Form.Control.Feedback type="invalid">
+//             {errors.senha?.message}
+//           </Form.Control.Feedback>
+//         </FloatingLabel>
 
-        <div className={styles.ancor}>
-          <Link
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.link}
-=======
+//         <div className={styles.ancor}>
+//           <Link
+//             href="#"
+//             target="_blank"
+//             rel="noopener noreferrer"
+//             className={styles.link}
+// =======
     <div className="pageWrapper">
       <div className="mainContent">
         <Container className={styles.container}>
           <Form
             className={styles.loginForm}
             onSubmit={handleSubmit(onSubmit, onError)}
->>>>>>> b00edda6b8272a61ad516a065f4dfe9149a986af
           >
+            
             <Image
               className={styles.Image}
               src="/logos/connectfix_logo.svg"
