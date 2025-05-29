@@ -22,7 +22,6 @@ import {
   useComparaDados
 } from "../../hooks/useApi";
 
-
 const CadastroUser = () => {
   
   const { register, handleSubmit, watch, formState: { errors }} = useForm();
@@ -120,12 +119,17 @@ const CadastroUser = () => {
           </Row>
         </Row>
         {/* Formulario */}
-        <Form className="px-4" onSubmit={handleSubmit(onSubmit, onError)}>
+        <Form 
+          action="/user/cadastrar" method="POST"
+          className="px-4"
+          onSubmit={handleSubmit(onSubmit, onError)}
+        >
           {/* E-mail */}
           <Row>
             <Col>
               <FloatingLabel id="userEmailInput" className="mb-3" label="Email">
                 <Form.Control
+                  name="email"
                   size="sm"
                   type="email"
                   placeholder=""

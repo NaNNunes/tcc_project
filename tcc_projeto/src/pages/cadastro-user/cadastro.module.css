@@ -2,7 +2,7 @@
   margin: 20px auto;
   padding: 1rem;
   width: 570px;
-  height: 730px;
+  /* height: 730px; */
   box-sizing: border-box;
   background: linear-gradient(to bottom, #034c8c, #001b32);
   border-radius: 20px;
@@ -14,7 +14,7 @@
   margin: 20px auto;
   padding: 1rem;
   width: 570px;
-  height: 650px;
+  /* height: 650px; */
   box-sizing: border-box;
   background: linear-gradient(to bottom, #034c8c, #001b32);
   border-radius: 20px;
@@ -26,7 +26,7 @@
   margin: auto;
   padding: 1rem;
   width: 570px;
-  height: 490px;
+  /* height: 490px; */
   background: linear-gradient(to bottom, #034c8c, #001b32);
   border-radius: 20px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
@@ -36,7 +36,7 @@
   margin: 3rem auto;
   padding: 1rem;
   width: 570px;
-  height: 630px;
+  /* height: 630px; */
   background: linear-gradient(to bottom, #034c8c, #001b32);
   border-radius: 20px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
@@ -46,7 +46,7 @@
   margin: 3rem auto;
   padding: 1rem;
   width: 570px;
-  height: 550px;
+  /* height: 550px; */
   background: linear-gradient(to bottom, #034c8c, #001b32);
   border-radius: 20px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
@@ -86,7 +86,7 @@
 }
 
 .link {
-  color: #ffdb8c;
+  color: #fce63d;
   text-decoration: none;
   font: bold 1.1rem arial;
 }
@@ -100,5 +100,4 @@
   color: red;
   font-size: 0.9rem;
   margin-top: 4px;
-  
 }

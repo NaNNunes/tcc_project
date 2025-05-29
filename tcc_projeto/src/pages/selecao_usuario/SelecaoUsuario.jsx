@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button"
 
 import styles from "./SelecaoUsuario.module.css";
 
@@ -10,21 +11,26 @@ const SelecaoUsuario = () => {
 
   const handleCardClick = (type) => {
     setSelectedUserType(type);
-    console.log("Selecionado: ", type)
   };
+
+  const onSubmit = async (dados) => {
+    console.log("Dados: ", dados)
+  }
 
   return (
     <div>
-      <div>
-        <h1>Escolha como vamos ajudar você a buscar soluções</h1>
+      <div style={{marginTop: '80px', marginBottom: '30px'}}>
+        <h1 className={styles.titleGeral}>Escolha como vamos ajudar você a buscar soluções</h1>
       </div>
+
       <div className={styles.divInteira}>
         <Container className={styles.caixaCard}>
           <Card 
-            style={{border: 'none'}}
+            style={{border: 'none', borderRadius: '10px'}}
             onClick={() => handleCardClick("solicitante")}
           >
             <Card.Body
+              style={{backgroundColor: "#0054a1"}}
               className={`${styles.dentroCard} ${
                 selectedUserType === "solicitante" ? styles.cardSelecionado : ""
               }`}
@@ -32,7 +38,7 @@ const SelecaoUsuario = () => {
               <Card.Img
                 variant="top"
                 className={styles.imgCard}
-                src="/imagens/usuario_solicitante.png"
+                src="/imagens/usuario_solicitante_2.jpg"
               />
               <Card.Title className={styles.TitleCard}>
                 Preciso de conserto
@@ -46,12 +52,13 @@ const SelecaoUsuario = () => {
 
         <Container className={styles.caixaCard}>
           <Card 
-            style={{border: 'none'}}
-            onClick={() => handleCardClick("adm")}
+            style={{border: 'none', borderRadius: '10px'}}
+            onClick={() => handleCardClick("administrador")}
           >
             <Card.Body 
+              style={{backgroundColor: "#004381"}}
               className={`${styles.dentroCard} ${
-                selectedUserType === "adm" ? styles.cardSelecionado : ""
+                selectedUserType === "administrador" ? styles.cardSelecionado : ""
               }`}
             >
               <Card.Img
@@ -68,6 +75,10 @@ const SelecaoUsuario = () => {
             </Card.Body>
           </Card>
         </Container>
+      </div>
+      
+      <div className={styles.divBotao} >
+        <Button className={styles.botaoAvancar}>Avançar</Button>
       </div>
     </div>
     

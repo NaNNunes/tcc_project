@@ -45,7 +45,7 @@ h3::after {
     ),
     url("https://images.pexels.com/photos/955395/pexels-photo-955395.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2")
       center/cover no-repeat;
-  min-height: 90vh;
+  min-height: 95vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,11 +67,11 @@ h3::after {
 .heroContent h2::after {
   content: "";
   display: block;
-  width: 171px;
+  width: 180px;
   height: 4px;
   background-color: var(--highlight-yellow);
   margin-top: 4px;
-  margin-left: 41.3rem;
+  margin-left: 46.7rem;
   border-radius: 2px;
 }
 
@@ -141,7 +141,7 @@ h3::after {
 }
 
 .aboutSection p {
-  max-width: 500px;
+  max-width:500px;
 }
 
 .rowWithGap {
@@ -263,10 +263,3 @@ h3::after {
   font-weight: 600;
 }
 
-/* ===== Footer ===== */
-.footer {
-  background-color: var(--black);
-  color: var(--white);
-  text-align: center;
-  padding: 30px 0;
-}

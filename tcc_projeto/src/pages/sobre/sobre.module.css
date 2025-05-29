@@ -1,0 +1,47 @@
+.sobreContainer {
+  padding: 30px 10px;
+}
+
+.card {
+  border-radius: 16px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border: none;
+}
+
+.title {
+  font-size: 2.2rem;
+  color: var(--primary);
+  font-weight: 700;
+  position: relative;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.title::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--highlight-yellow);
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+.text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555555;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 576px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .text {
+    font-size: 1rem;
+  }
+}

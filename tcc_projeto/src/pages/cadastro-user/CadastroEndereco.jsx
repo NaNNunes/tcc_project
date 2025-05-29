@@ -22,7 +22,7 @@ import {useCadastroUser, useEndereco} from "../../hooks/useApi";
 const CadastroEndereco = () => {
 
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
-  const {inserirEndereco} = useEndereco();
+  const {cadastrarEndereco} = useEndereco();
   const {inserirValidacao} = useCadastroUser();
   const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ const CadastroEndereco = () => {
 
   //to do - passar para hooks
   // busca o cep informado na api e define valores da instancia do objeto nos campos
-
+  // permitir user inserir infos nos campos
   const handleZipCodeBlur = async (e) =>{
     const zipCode = e.target.value.replace(/\D/g, "")    //cep informado
     
@@ -92,16 +92,16 @@ const CadastroEndereco = () => {
   }
 
   const onSubmit = (data) => {
-    const user = (localStorage.getItem("userType") === "solicitante") 
-    ? "solicitante"
-    : "assistencia"
+    // const user = (localStorage.getItem("userType") === "solicitante") 
+    // ? "solicitante"
+    // : "assistencia"
 
-    inserirEndereco(data, user)
+    cadastrarEndereco(data, /*user*/ )
     inserirValidacao(true);
 
     localStorage.clear();
 
-    navigate("/login")
+    navigate("/login");
   };
 
   const formatarCEP = (cep) => {

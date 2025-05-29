@@ -1,0 +1,110 @@
+.divtudo {
+  align-self: baseline !important;
+  align-content: baseline !important;
+}
+
+.footer {
+  background-color: var(--black);
+  color: var(--white);
+  padding: 2rem 0 1rem;
+  width: 100%;
+  margin-top: 3rem;
+}
+
+.containerFooter {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+}
+
+.coluna {
+  flex: 1;
+  min-width: 250px;
+}
+
+.colunaLogo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  width: 100px;
+}
+
+.sigaRedes {
+  font-size: 1rem;
+  color: var(--white);
+}
+
+.iconContainer {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.iconSocial {
+  color: var(--white);
+  transition: color 0.3s;
+}
+
+.iconSocial:hover {
+  color: var(--highlight-blue);
+}
+
+.tituloFooter {
+  color: var(--white);
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.linkFooter {
+  text-decoration: none;
+  color: var(--white);
+  font-size: 1rem;
+  display: block;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+.linkFooter:hover {
+  color: var(--highlight-blue);
+}
+
+.paragrafoFooter {
+  font-size: 1rem;
+  color: var(--white);
+  margin: 0.3rem 0;
+  text-align: center;
+}
+
+/* Responsivo */
+@media (max-width: 992px) {
+  .containerFooter {
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .tituloFooter {
+    font-size: 1.5rem;
+  }
+
+  .logo {
+    width: 80px;
+  }
+}
+
+@media (max-width: 576px) {
+  .tituloFooter {
+    font-size: 1.4rem;
+  }
+
+  .logo {
+    width: 60px;
+  }
+}

@@ -357,20 +357,40 @@ export function useComparaDados (){
 
 // por enquato apenas insere endereco
 export function useEndereco(){
-    // insere endereço no cadastro
-    const inserirEndereco = async (data, user) =>{
-        // define o id de acordo com o user
-        const id = (user === "solicitante") 
-            ? localStorage.getItem("userId")
-            : localStorage.getItem("assistenciaId");
-            
-        await fetch(`${url}/${user}/${id}`,{
-            method:"PATCH",
-            body: JSON.stringify(data)
-        })
-    };
 
-    return {inserirEndereco};
+    // cadastra endereco no bairro
+    const cadastrarEndereco = async (data) =>{
+        const request = await fetch(`${url}/endereco`,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(data)          
+        }) 
+
+        const response = await request.json();
+        const endereco_id = response.id;      
+        setaIdEmUser(endereco_id);
+    }
+
+    // define id de endereco de acordo com o user, solicitante ou pseudo user
+    const setaIdEmUser = async (endereco_id) =>{
+        const user =( (localStorage("userType") === "solicitante") 
+            ? "solicitante"
+            : "assistencia"
+        );
+
+        const enderecoId = {
+            "id_endereco": endereco_id
+        }
+
+        await fetch(`${url}/${user}`,{
+            method: "PATCH",
+            body: JSON.stringify(enderecoId)
+        })
+    }
+
+    return {cadastrarEndereco};
 }
 
 // cadastra assistencia
