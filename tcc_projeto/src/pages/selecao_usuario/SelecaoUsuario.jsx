@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button"
 
 import styles from "./SelecaoUsuario.module.css";
+
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/userContext";
 
 const SelecaoUsuario = () => {
   const [selectedUserType, setSelectedUserType] = useState(null);
+
+  const {setType} = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -21,7 +25,8 @@ const SelecaoUsuario = () => {
     )
     
     // funciona
-    localStorage.setItem("userType", type);
+    // coloca tipo de user no localstorage pelo context
+    setType(type);
 
     navigate("/login");
   };

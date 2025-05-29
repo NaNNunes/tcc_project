@@ -1,14 +1,23 @@
 {
   "solicitante": [
-
+    {
+      "id": "a6e4",
+      "email": "user@gmail.com.br",
+      "cpf": "466.498.600-93",
+      "userTelefone": "40028922",
+      "nome": "User",
+      "sobrenome": "Usersurname",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "1",
+      "resposta": "Blu"
+    }
   ],
-  "administrador": [
-
-  ],
-  "assistencia": [
-
-  ],
+  "administrador": [],
+  "assistencia": [],
   "endereco": [
-    
+
   ]
 }

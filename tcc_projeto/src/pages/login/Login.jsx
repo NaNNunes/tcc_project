@@ -17,15 +17,14 @@ import { useVerificaLogin } from "../../hooks/useApi";
 
 const Login = () => {
 
-  const {login} = useContext(AuthContext);
-  // useEffect(()=>{
-  //   logout();
-  // },[])
+  const {logout} = useContext(AuthContext);
+  useEffect(()=>{
+    logout();
+  },[])
 
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm();
   

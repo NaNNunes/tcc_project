@@ -5,28 +5,74 @@ import { AuthContext } from "../context/userContext";
 const url = import.meta.env.VITE_API_URL;
 
 export function useVerificaLogin(){
-    const [users, setUsers] = useState([]);
+    const [solicitantes, setSolicitantes] = useState([]);
+    const [administradores, setAdministradores] = useState([]);
 
     const {login} = useContext(AuthContext);
 
+    // -- ATENCAO --
+    // o codigo a seguir segue o paradigma POG,
+    // Programação Orientada a Gambiarra, não repita isso em casa
+    // isso ocorre devido ao state por motivo de não sei
+
     useEffect(()=>{
-        async function fetchData(){
-            const userType = localStorage.getItem("userType");
+    async function fetchData(){
             try {
-                const request = await fetch(`${url}/${userType}`);
-                const response = await request.json();
-                setUsers(response);
+                for(let i = 0; i < 2; i++){
+
+                    const userType = (i == 0)
+                        ? "solicitante"
+                        : "administrador"
+
+                    const request = await fetch(`${url}/${userType}`);
+                    const response = await request.json();
+                    
+                    (i == 0) 
+                        ? setSolicitantes(response)
+                        : setAdministradores(response)
+                }
             } catch (error) {
                 console.log(error.message);
             }
         }
         fetchData();
+        
     },[])
 
+    // 2ª consulta atribuindo valores aos states de solicitante e adms
+    const buscaCadastros = async () => {
+       for(let i = 0; i < 2; i++){
+
+            // define onde consultará
+            let userType = (i == 0) 
+                ? "solicitante" 
+                : "administrador"
+
+            
+            const request = await fetch(`${url}/${userType}`,{
+                method:"GET"
+            });
+
+            const response = await request.json();
+            
+            if(i == 0){
+                setSolicitantes(response);
+            }
+            else{
+                setAdministradores(response);
+            }
+
+        }
+    }
+
+
     const verificaLogin = (data) => {
-        const user2find = users.find((user) => {
-            console.log(user.cpf === data.cpf);
-            return user.cpf === data.cpf;
+        buscaCadastros();
+
+        // verificar email e cpf
+        const user2find = solicitantes.find((solicitante) => {
+            console.log(solicitante.cpf === data.loginOuCpf);
+            return solicitante.cpf === data.loginOuCpf;
         })
 
         if(user2find !== undefined && user2find.senha === data.senha){
@@ -153,7 +199,7 @@ export function useVerificadorDeCnpj(){
 export function useCadastroUser(){
 
     // funçoes do context para salvar id e tipo de user
-    const {setId, setType} = useContext(AuthContext);
+    const {setId} = useContext(AuthContext);
     
     // cadastra user
     const cadastrarInfosUser = async (data) => {
@@ -171,6 +217,7 @@ export function useCadastroUser(){
         const id = await response.id;
 
         // nao funciona
+            // alternativa definir id no localstorage
         setId(id);
 
         // user invalido pois falta endereco e/ou pergunta de segurança
@@ -191,7 +238,7 @@ export function useCadastroUser(){
     // adiciona pergunta de segurança
     const inserirPerguntaResposta = async (data) => {
         const id = localStorage.getItem("userId");
-        const user = localStorage.getItem("userType")
+        const user = localStorage.getItem("userType");
 
        await fetch(`${url}/${user}/${id}`,{
             method: "PATCH",
@@ -213,7 +260,9 @@ export function useComparaDados (){
     const [adms, setAdms] = useState();
     const [assistencias, setAssistencias] = useState();
 
-    // isso é com certeza uma gambiarra
+    // -- ATENÇÃO --
+    // o código a seguir segue o paradigma POG, 
+    // Programação Orientada a Gambiarra, não repita isso em casa.
     // consulta para carregar conexao com a api -- não atribui valores aos states solicitantes e adms
     useEffect(() => {
         async function fetchData(){
@@ -253,6 +302,7 @@ export function useComparaDados (){
     const buscaCadastro = async () => {
        for(let i = 0; i < 3; i++){
 
+            // define onde consultará
             let userType = (i == 0) 
                 ? "solicitante" 
                 : (i == 1) 
@@ -351,14 +401,15 @@ export function useComparaDados (){
 
     return {
         verificaCpfDeSolicitantes, verificaCpfDeAdms,
-        verificaEmailDeAdms, verificaEmailDeSolicitantes, verificaEmailDeAssistencia
+        verificaEmailDeAdms, verificaEmailDeSolicitantes, 
+        verificaEmailDeAssistencia
     };
 }
 
 // por enquato apenas insere endereco
 export function useEndereco(){
 
-    // cadastra endereco no bairro
+    // cadastra endereco
     const cadastrarEndereco = async (data) =>{
         const request = await fetch(`${url}/endereco`,{
             method:"POST",
@@ -375,7 +426,7 @@ export function useEndereco(){
 
     // define id de endereco de acordo com o user, solicitante ou pseudo user
     const setaIdEmUser = async (endereco_id) =>{
-        const user =( (localStorage("userType") === "solicitante") 
+        const user =( (localStorage.getItem("userType") === "solicitante") 
             ? "solicitante"
             : "assistencia"
         );

@@ -19,7 +19,7 @@ export const AuthProvider = ({children}) => {
     const setType = (data) =>{
         setUserType(data);
         
-        localStorage.setItem("userType", data == 1 ? "solicitante" : "administrador");
+        localStorage.setItem("userType", data === "solicitante" ? "solicitante" : "administrador");
     }
 
     // nome
