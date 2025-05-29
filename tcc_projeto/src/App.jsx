@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
 import Container from "react-bootstrap/Container";
 import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./componentes/NavBar/MenuNavegacao.jsx";
@@ -8,6 +7,7 @@ import Footer from "./componentes/footer/Footer.jsx";
 
 function App() {
   const location = useLocation();
+
   const isLoginPage =
     location.pathname === "/" || location.pathname === "/login";
   const isRegisterPage = location.pathname === "/cadastro";
@@ -16,36 +16,38 @@ function App() {
   const isCadastroEndereco = location.pathname === "/cadastro-endereco";
   const isCadastroPagamento = location.pathname === "/cadastro-pagamento";
 
-  // UseEffect para adicionar e remover a classe no body
-  React.useEffect(() => {
-    if (
-      isLoginPage ||
-      isRegisterPage ||
-      isSecureQuest ||
-      isCadastroAT ||
-      isCadastroEndereco ||
-      isCadastroPagamento
-    ) {
+  const isAuthPage =
+    isLoginPage ||
+    isRegisterPage ||
+    isSecureQuest ||
+    isCadastroAT ||
+    isCadastroEndereco ||
+    isCadastroPagamento;
+
+  useEffect(() => {
+    if (isAuthPage) {
       document.body.classList.add("login-background");
+      document.body.classList.remove("background");
     } else {
+      document.body.classList.add("background");
       document.body.classList.remove("login-background");
     }
 
-    // Cleanup function para garantir que a classe seja removida ao sair da página de login
+    // Limpeza ao desmontar
     return () => {
       document.body.classList.remove("login-background");
+      document.body.classList.remove("background");
     };
-  }, [isLoginPage]);
+  }, [isAuthPage]);
 
   return (
-    <div className={isLoginPage ? "login-background" : ""}>
+    <>
       <Navbar />
-      {/* AQUI */}
       <Container style={{ maxWidth: "100%", margin: "0", padding: "0" }}>
         <Outlet />
         <Footer />
       </Container>
-    </div>
+    </>
   );
 }
 

@@ -18,13 +18,17 @@ body {
   flex: 1;
 }
 
-/* Background exclusivo para páginas sem login ativo */
 body.login-background {
   background-image: url("/backgrounds/image.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+}
+
+body.background {
+  background-color: #e9f2ff !important;
+  background-image: none !important;
 }
 
 .error {
