@@ -1,9 +1,26 @@
+// botao para permitir visualizar senha
 import {Form, FloatingLabel, Button, Row, Col} from "react-bootstrap";
 
-const Seguranca = () => {
+import { useForm } from "react-hook-form";
+
+const Seguranca = (props) => {
+    
+    const { register, handleSubmit, setValue, formState: {errors}} = useForm();
+
+    const onSubmit = (data) => {
+        // verificar se senha atual é realmente a senha atual, comparar nova sena
+    }
+
+    const onError = (error) => {
+
+    }
+
   return (
     <>
-        <Form className="border rounded-3 shadow mb-3">
+        <Form 
+            className="border rounded-3 shadow mb-3"
+            onSubmit={handleSubmit(onSubmit, onError)}
+        >
             {/* alterar senha */}
             <Row className="mb-1 mt-2">
                 <Col xs={6}>
@@ -23,8 +40,11 @@ const Seguranca = () => {
                         className="mb-3"    
                     >
                         <Form.Control
-                            type="text"
+                            type="password"
                             placeholder=""
+                            {
+                                ...register("senha")
+                            }
                         />
 
                     </FloatingLabel>
@@ -36,8 +56,11 @@ const Seguranca = () => {
                         className="mb-3"    
                     >
                         <Form.Control
-                            type="text"
+                            type="password"
                             placeholder=""
+                            {
+                                ...register("NovaSenha")
+                            }
                         />
 
                     </FloatingLabel>
@@ -49,8 +72,11 @@ const Seguranca = () => {
                         className="mb-3"    
                     >
                         <Form.Control
-                            type="text"
+                            type="password"
                             placeholder=""
+                            {
+                                ...register("ConfirmaNovaSenha")
+                            }
                         />
 
                     </FloatingLabel>

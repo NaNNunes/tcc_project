@@ -1,51 +1,119 @@
+// alteração nao funciona, complicado viu
 import {Form, FloatingLabel, Row, Col, Button} from "react-bootstrap";
 
-import { useState } from "react";
+import { use, useState } from "react";
 import { useForm } from "react-hook-form";
 
-const Endereco = () => {
-  // pega enderecos na api local
-  
-  
-  // useForm para gerenciamento do form
-  // register para registrar campus do form
-  // hndlsub para envio de form
-  // formstate contem estado do form, erros inclusos
+// hooks
+import { useEndereco } from "../hooks/useApi";
+
+const Endereco = (props) => {
+
   const {
     register,
     handleSubmit,
+    setValue,
     formState: {errors}
   } = useForm();
 
+  // para cadastro de um novo endereco
+  const {cadastrarEndereco, atualizarEndereco} = useEndereco();
+
+  const endereco = props.endereco
+
+  // preenche campos de endereco // mudar para onload
+  for(const [key, value] of Object.entries(props.endereco)){
+    setValue(key, value);
+  }
+
+  // enable input at the fields
+    // !false para fazer teste de alteração
+  const [inputFieldEnable, setInputFieldEnable] = useState(!false);
+
+  // busca o cep informado na api e define valores da instancia do objeto nos campos
+  const handleZipCodeBlur = async (e) =>{
+    
+    const zipCode = e.target.value    //cep informado
+    
+    // nao funciona
+    // console.log((zipCode != props.endereco.zipcode))
+    // if(zipCode != props.endereco.zipcode)
+    // {
+    //     for(const [key, value] of Object.entries(props.endereco)){
+    //       if(props.endereco.key != "zipcode"){
+    //         setValue(key, "");
+    //       }
+    //       else{
+    //         setValue(key, zipCode)
+    //       }
+    //     }
+    // }
+
+    // caso endereco invalido
+    if (zipCode.length !== 8) {
+      alert("CEP deve conter exatamente 8 números.");
+      // desabilita alteração de campo
+      setInputFieldEnable(false);
+      //limpa campos
+      for(const[key, value] of Object.entries(props.endereco)){
+        setValue(key,"")
+      }
+      return false;
+    }
+
+    // consulta
+  
+    try {
+      const request = await fetch(`https://brasilapi.com.br/api/cep/v2/${zipCode}`);
+      const response = await request.json();
+
+      // consulta sem sucesso
+      if (!(response.ok)) {
+        // alerta de erro
+        alert("Endereço não encontrado");
+        //limpa campos
+        for (const [key, value] of Object.entries(props.endereco)) {
+          setValue(key, "")
+        }
+        return false;
+      }
+
+      // desabilita alteração de campo
+      setInputFieldEnable(false);
+      //define valores da instancia em seus determinados campos
+      for (const [key, value] of Object.entries(response)) {
+        setValue(key, value);
+      }
+
+    }
+    catch (erro) {
+      // Habilita alteração de campo
+      setInputFieldEnable(true);
+      
+      alert("ops, algo deu errado 2")
+      //limpa campos
+      for (const [key, value] of Object.entries(props.endereco)) {
+        setValue(key, "")
+      }
+    }
+  }
+  
   // form enviado com sucesso
   const onSubmit = (data) =>{
-    getEnd_API(data.cep);
-    console.log("---- mostrar dados ----")
-    mostraDadosEndereco(data.cep)
+    console.log(data);
+    
+    // verifica se o cep foi alterado
+    console.log(data.zipcode == props.endereco.zipcode);
+    (data.zipcode == props.endereco.zipcode)
+      ? cadastrarEndereco(data)
+      : atualizarEndereco(props.endereco.id ,data)
+
   }
 
   // form sem exito no envio
   const onError = (error) => {
     console.log("erro:",error);
   }
-
-  const mostraDadosEndereco = (cepInput) =>{
-    let endereco_encontrado = {};
-    
-    enderecos.map((endereco)=>{
-      console.log("endereco encontrado: ",endereco)
-      console.log("cep inputado: ", cepInput);
-    })
-    console.log("---------------------------")
-
-    // encontrar endereco na lista de enderecos na api local pelo cep inserido
-    // para isso necessario pegar o vetor e localizar a instancia do obj no array
-  }
-
-  const [bairro, setBairro] = useState("");
-  const [uf, setUf] = useState("");
-  const [logradouro, setLogradouro] = useState("");
-  const [cidade, setCidade] = useState("");
 
   return (
     <>
@@ -65,25 +133,41 @@ const Endereco = () => {
                 label="CEP"
                 className="mb-3"
               >
-                <Form.Control
-                  type="text"
-                  placeholder=""
-                  {
-                    ...register("cep")
-                  }
-                />
+               <Form.Control
+                 type="text"
+                 placeholder="00000-000"
+                 maxLength={9}
+                 {...register("zipcode", {
+                  //  validate: (value) => {
+                  //    const numeros = value.replace(/\D/g, "");
+                  //    if (numeros.length !== 8) return "Necessário 8 números";
+                  //    return true;
+                  //  },
+                  //  onChange: (e) => {
+                  //    const formatado = formatarCEP(e.target.value);
+                  //    setValue("zipcode", formatado);
+                  //  },
+                   onBlur: handleZipCodeBlur
+                 })}
+               />
+               {errors.zipcode && (
+                 <p className='text-danger'>{errors.zipcode.message}</p>
+               )}
               </FloatingLabel>
             </Col>
             <Col>
               <FloatingLabel
-                controlId="emailUserInput"
+                controlId="cityUserInput"
                 label="Cidade"
                 className="mb-3"
               >
                 <Form.Control
+                  disabled={inputFieldEnable}
                   type="text"
                   placeholder=""
-                  
+                  {
+                    ...register("city")
+                  }
                 />
               </FloatingLabel>
             </Col>
@@ -94,9 +178,12 @@ const Endereco = () => {
                 className="mb-3"
               >
                 <Form.Control
+                  disabled={inputFieldEnable}
                   type="text"
                   placeholder=""
-                  
+                  {
+                    ...register("neighborhood")
+                  }
                 />
               </FloatingLabel>
             </Col>
@@ -109,9 +196,12 @@ const Endereco = () => {
                 className="mb-3"
               >
                 <Form.Control
+                  disabled={inputFieldEnable}
                   type="text"
                   placeholder=""
-                  
+                  {
+                    ...register("street")
+                  }
                 />
               </FloatingLabel>
             </Col>
@@ -122,9 +212,12 @@ const Endereco = () => {
                 className="mb-3"
               >
                 <Form.Control
+                  disabled={inputFieldEnable}
                   type="text"
                   placeholder=""
-                  
+                  {
+                    ...register("state")
+                  }
                 />
               </FloatingLabel>
             </Col>
@@ -137,6 +230,9 @@ const Endereco = () => {
                 <Form.Control
                   type="text"
                   placeholder=""
+                  {
+                    ...register("number")
+                  }
                   
                 />
               </FloatingLabel>
@@ -145,7 +241,7 @@ const Endereco = () => {
           <Row className="m-1 mb-3">
             <Col>
               <FloatingLabel
-                controlId="numResidUserInput"
+                controlId="complementoUserInput"
                 label="Complemento"
                 className="mb-3"
               >

@@ -6,22 +6,29 @@ import Seguranca from "../../componentes/conta_perfil/Seguranca"
 
 // hook
 import { useEffect, useState } from "react"
-
+import { useEndereco } from "../../hooks/useApi"
 
 const Conta = () => {
   const [userInfos, setUserInfos] = useState({});
-  //
+  const [userEndereco, setUserEndereco] = useState({});
+
+  // busca dados do user
   useEffect(()=>  {
     async function fetcData() {
       const userType = localStorage.getItem("userType");
-      console.log(userType);
+      // console.log(userType);
       const userId = localStorage.getItem("userId");
       try{
         const request = await fetch(`http://localhost:5001/${userType}/${userId}`);
-
         const response = await request.json();
 
-        setUserInfos(response)
+        setUserInfos(response);
+
+        // POG
+        const reqBuscaEnderecoById = await fetch(`http://localhost:5001/endereco/${response.id_endereco}`)
+        const respBuscaEnderecoById = await reqBuscaEnderecoById.json();
+        
+        setUserEndereco(respBuscaEnderecoById);
       }
       catch(error){
         console.log(error.message);
@@ -29,7 +36,6 @@ const Conta = () => {
     }
     fetcData();
   },[])
-
 
   return (
     <>
@@ -40,11 +46,15 @@ const Conta = () => {
         userTelefone={userInfos.userTelefone}
       />
       {
-        localStorage.getItem("userType") == "administrador" 
-          ? <EditarPag/>
-          : <Endereco/>
+        localStorage.getItem("userType") === "administrador" 
+          ? <EditarPag />
+          : <Endereco 
+              endereco={userEndereco}
+            />
       }
       <Seguranca/>
+
+      {/*  verificação de certeza e definir registro de user como falso */}
       <Encerrar/>
     </>
   )

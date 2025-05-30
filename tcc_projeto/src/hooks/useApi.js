@@ -239,7 +239,6 @@ export function useUser(){
 
     // funçoes do context para salvar id e tipo de user
     const {setId} = useContext(AuthContext);
-    const [infosUser, setInfosUser] = useState({});
 
     // cadastra user
     const cadastrarInfosUser = async (data) => {
@@ -295,6 +294,10 @@ export function useUser(){
             body: JSON.stringify(data)
         })
         window.location.reload();
+    }
+
+    const alteraSenhaUser = async (data) => {
+        
     }
 
     return {
@@ -500,7 +503,23 @@ export function useEndereco(){
         })
     }
 
-    return {cadastrarEndereco};
+    // atualiza endereco do user
+    const atualizarEndereco = async (idEndereco, data) =>{
+        const request = await fetch(`${url}/endereco/${idEndereco}`,{
+            method: "PATCH",
+            body: JSON.stringify(data)
+        })
+        
+        const response = await request.json();
+        const endereco_id = response.id; 
+        setaIdEmUser(endereco_id);
+
+        location.reload();
+
+        return response;
+    }
+    
+    return {cadastrarEndereco, atualizarEndereco};
 }
 
 // cadastra assistencia

@@ -39,9 +39,7 @@ const CadastroEndereco = () => {
   // enable input at the fields
   const [inputFieldEnable, setInputFieldEnable] = useState(false);
 
-  //to do - passar para hooks
   // busca o cep informado na api e define valores da instancia do objeto nos campos
-  // permitir user inserir infos nos campos
   const handleZipCodeBlur = async (e) =>{
     const zipCode = e.target.value.replace(/\D/g, "")    //cep informado
     

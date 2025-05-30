@@ -5,8 +5,8 @@
       "email": "usuario@gmail.com",
       "cpf": "907.942.010-75",
       "userTelefone": "40028922",
-      "nome": "User",
-      "sobrenome": "Sobrenome",
+      "nome": "User modificado",
+      "sobrenome": "Usersurname",
       "senha": "Senha@123",
       "confirmarSenha": "Senha@123",
       "termos": "true",
@@ -66,21 +66,13 @@
     },
     {
       "id": "019e",
-      "zipcode": "29118-480",
+      "zipcode": "29118-489",
       "city": "Vila Velha",
       "neighborhood": "Santa Rita",
       "street": "Rua Olavo Bilac",
       "state": "ES",
       "number": "10",
-      "cep": "29118480",
-      "service": "open-cep",
-      "location": {
-        "type": "Point",
-        "coordinates": {
-          "longitude": "-40.3339382",
-          "latitude": "-20.3474948"
-        }
-      }
+      "cep": "29118480"
     }
   ],
   "dispositivo": [
@@ -101,7 +93,7 @@
     {
       "id": "8b4d",
       "idDispostivo": "070a",
-      "descProblema": "Problema",
+      "descProblema": "Probroblema",
       "observacoes": "",
       "solicitante_id": "4f54"
     }

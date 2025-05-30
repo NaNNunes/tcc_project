@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 
 // hooks
 import { useUser } from "../../hooks/useApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const MinhasInfos = (props) => {
 
@@ -30,9 +30,9 @@ const MinhasInfos = (props) => {
     const onSubmit = async (data) => {
         // atualiza dados
         atualizaInfosUser(data);
-
     }
-    const onError = async (data) => {
+    const onError = async (erro) => {
+        console.log(erro);
     }
 
     return (
@@ -84,7 +84,7 @@ const MinhasInfos = (props) => {
                 <Row className="m-1">
                     <Col xs={6}>
                         <FloatingLabel 
-                            controlId="nameUserInput"
+                            controlId="emailUserInput"
                             label="Email"
                             className="mb-3"
                         >
@@ -110,7 +110,7 @@ const MinhasInfos = (props) => {
                     </Col>
                     <Col>
                         <FloatingLabel 
-                            controlId="surnameUserInput"
+                            controlId="TelefoneUserInput"
                             label="Telefone"
                             className="mb-3"
                         >
