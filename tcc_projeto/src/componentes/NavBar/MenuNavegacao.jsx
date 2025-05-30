@@ -16,7 +16,7 @@ import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/userContext';
 
 // Importação do Link para fazer conexões entre telas.
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Importação de icons
 import { TiArrowSortedDown } from "react-icons/ti";
@@ -24,13 +24,20 @@ import { TiArrowSortedUp } from "react-icons/ti";
 import { IoMenu } from "react-icons/io5";
 
 const MenuNavegacao = () => {
-    const {logout} = useContext(AuthContext);
+
+    const navigate = useNavigate();
+
+    const sair = () => {
+        logout();
+        navigate("/login");
+    }
+
+    const {logout, userType} = useContext(AuthContext);
 
     const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
 
     // AQUI VAI FICAR O CONTEXT PARA DEFINIR O USUÁRIO.
-    // const perfilUsuario = localStorage.getItem("userType");
-    const perfilUsuario = "administrador"
+    const perfilUsuario = userType;
 
     // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
     const contentNavSolicitante = (
@@ -134,7 +141,7 @@ const MenuNavegacao = () => {
                             {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
                             Operador {openDropdown === 'operador' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
                         </span>
-                    }
+                    }f
                 >
                     {/* Adicionar operador */}
                     <NavDropdown.Item 
@@ -259,7 +266,10 @@ const MenuNavegacao = () => {
                     </NavDropdown.Item>
 
                     <NavDropdown.Item
+                        as={Button}
+                        href='/login'
                         className={styles.dropdownItem}
+                        // ta funcionando mas nao sei como
                         // AQUI ENTRA O CÓDIGO PARA DESLOGAR
                     >   
                         <Image className={styles.icone} src="/icons/sair.svg" />Sair
@@ -302,7 +312,10 @@ const MenuNavegacao = () => {
                     </NavDropdown.Item>
 
                     <NavDropdown.Item
+                        as={Button}
+                        href='/login'
                         className={styles.dropdownItem}
+                        // ta funcionando mas nao sei como
                         // AQUI ENTRA O CÓDIGO PARA DESLOGAR
                     >   
                         <Image className={styles.icone} src="/icons/sair.svg" />Sair

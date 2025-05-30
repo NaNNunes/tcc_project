@@ -1,5 +1,7 @@
 // TO DO refatorar codigo onde é pego id e type do user pelo localstorage
 import { useState, useEffect, createContext } from "react";
+import { useNavigate } from "react-router-dom";
+
 export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
 
