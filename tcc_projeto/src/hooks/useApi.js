@@ -265,7 +265,7 @@ export function useUser(){
         // nao funciona
             // alternativa definir id no localstorage
         setId(id);
-
+        setType(user);
         // user invalido pois falta endereco e/ou pergunta de segurança
         inserirValidacao(false);
     }
@@ -300,7 +300,7 @@ export function useUser(){
             method: "PATCH",
             body: JSON.stringify(data)
         })
-        window.location.reload();
+        location.reload();
     }
 
     const verificaSenhaInformada = async (data) => {
