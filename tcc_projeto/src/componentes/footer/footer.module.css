@@ -8,7 +8,6 @@
   color: var(--white);
   padding-top: 2rem;
   width: 100%;
-
 }
 
 .containerFooter {
@@ -20,8 +19,10 @@
 }
 
 .coluna {
-  flex: 1;
-  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 !important;
 }
 
 .colunaLogo {
@@ -35,20 +36,27 @@
   width: 100px;
 }
 
+/* Span com texto para seguir. */
 .sigaRedes {
   font-size: 1rem;
   color: var(--white);
 }
 
+/* Container com todos os icones. */
 .iconContainer {
   display: flex;
   gap: 1rem;
   justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
+/*  */
 .iconSocial {
   color: var(--white);
   transition: color 0.3s;
+  width: 24px;
+  height: 24px;
 }
 
 .iconSocial:hover {
@@ -83,28 +91,29 @@
   text-align: center;
 }
 
-/* Responsivo */
-@media (max-width: 992px) {
-  .containerFooter {
-    justify-content: center;
-    gap: 2rem;
-  }
+@media screen and (max-width: 992px) {
+    .coluna {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+    }
 
-  .tituloFooter {
-    font-size: 1.5rem;
-  }
-
-  .logo {
-    width: 80px;
-  }
+    .imgSenai {
+        width: 40vh;
+    }
 }
 
-@media (max-width: 576px) {
-  .tituloFooter {
-    font-size: 1.4rem;
-  }
+@media screen and (max-width: 440px) {
+    .imgSenai {
+        width: 100%;
+    }
 
-  .logo {
-    width: 60px;
-  }
+    .tituloFooter {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 220px) {
+  
 }

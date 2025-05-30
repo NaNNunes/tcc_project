@@ -32,7 +32,7 @@ const SelecaoUsuario = () => {
   };
 
   return (
-    <div>
+    <div className={styles.tudo}>
       <div style={{marginBottom: '30px'}}>
         <h1 className={styles.titleGeral}>Escolha como vamos ajudar você a buscar soluções</h1>
       </div>
@@ -101,8 +101,7 @@ const SelecaoUsuario = () => {
           </Card>
         </Container>
       </div>
-    </div>
-    
+    </div> 
   );
 };
 
