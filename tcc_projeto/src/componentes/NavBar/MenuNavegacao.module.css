@@ -49,6 +49,7 @@
 /* Div com todo o dropdown */
 .divNavdropdown {
     width: max-content;
+    margin: 0 !important;
 }
 
 /* Titulo do dropdown. */
@@ -199,7 +200,13 @@
 .navbarE {
     margin-left: auto;
     margin-right: auto;
-    gap: 50px;
+    gap: 100px;
+}
+
+@media screen and (max-width: 1300px) {
+    .navbarE {
+        gap: 30px;
+    }
 }
 
 @media screen and (min-width: 992px) {
@@ -213,7 +220,7 @@
     }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 991px) {
     :global(.dropdown-toggle.nav-link) {
         border: 0;
         padding: 10px;

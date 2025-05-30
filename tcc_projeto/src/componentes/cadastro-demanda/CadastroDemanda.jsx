@@ -221,7 +221,7 @@ const categoriaDispositivo = () => {
         <div className={stylesCad.formulario}>
             <Form onSubmit={handleSubmit(onSubmit, onError)}>
                 {/* Categoria do dispositivo */}
-                <Container fluid className={stylesCad.parteFormulario} style={{paddingBottom: '1.7rem'}}>
+                <Container fluid className={stylesCad.parteFormulario} style={{paddingBottom: '1.7rem', marginBottom: '20px'}}>
                      {/* Campo oculto para fazer o registro da categoria e caso tenha algum erro mostrar na tela. */}
                     <input
                         type="hidden"
@@ -269,7 +269,7 @@ const categoriaDispositivo = () => {
                 </Container>
                 
                 {/* Informações do dispositivo */}
-                <Container fluid className={stylesCad.parteFormulario}>
+                <Container fluid className={stylesCad.parteFormulario} style={{marginBottom: '20px'}}>
                     {/* Título do container */}
                     <Row style={{paddingBottom: '1%'}}> 
                         <Col md={12} xs={12}>
