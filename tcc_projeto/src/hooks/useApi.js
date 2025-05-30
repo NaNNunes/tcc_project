@@ -265,6 +265,7 @@ export function useUser(){
         // nao funciona
             // alternativa definir id no localstorage
         setId(id);
+        localStorage.setItem('userId', response.id)
         setType(user);
         // user invalido pois falta endereco e/ou pergunta de segurança
         inserirValidacao(false);
@@ -272,17 +273,22 @@ export function useUser(){
 
     // define validaçao do user
     const inserirValidacao = async (isValido) =>{
-        const id = localStorage.getItem("userId");
-        const user = localStorage.getItem("userType")
 
-        await fetch(`${url}/${user}/${id}`,{
+        const id = localStorage.getItem('userId');
+        const user = localStorage.getItem('userType')
+
+        fetch(`${url}/${user}/${id}`,{
             method:"PATCH",
             body: JSON.stringify({"isValido":isValido})
         })
+
+        // ultima etapa valida o user e não será mais necessário infos do localStorage
+        if(isValido === true) { localStorage.clear() }
     }
 
     // adiciona pergunta de segurança
     const inserirPerguntaResposta = async (data) => {
+
         const id = localStorage.getItem("userId");
         const user = localStorage.getItem("userType");
 
@@ -293,10 +299,11 @@ export function useUser(){
     }
 
     const atualizaInfosUser = async (data) => {
-        const userType = localStorage.getItem("userType");
-        const userId = localStorage.getItem("userId");
 
-        const request = await fetch(`${url}/${userType}/${userId}`,{
+        const user = localStorage.getItem("userType");
+        const id = localStorage.getItem("userId");
+
+        const request = await fetch(`${url}/${user}/${id}`,{
             method: "PATCH",
             body: JSON.stringify(data)
         })
@@ -515,10 +522,12 @@ export function useEndereco(){
     // define id de endereco de acordo com o user, solicitante ou pseudo user
     const setaIdEmUser = async (endereco_id) =>{
         // define quem receberá o id do endereco
-        const user =( (localStorage.getItem("userType") === "solicitante") 
+        const tipo = localStorage.getItem('userType');
+
+        const user = (tipo === "solicitante") 
             ? "solicitante"
             : "assistencia"
-        );
+
         // pega o id do endereco
         const id = (user === "solicitante") 
             ? localStorage.getItem("userId")
@@ -528,7 +537,7 @@ export function useEndereco(){
             "id_endereco": endereco_id
         }
 
-        await fetch(`${url}/${user}/${id}`,{
+        fetch(`${url}/${user}/${id}`,{
             method: "PATCH",
             body: JSON.stringify(enderecoId)
         })

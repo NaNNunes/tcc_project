@@ -12,11 +12,13 @@ export const AuthProvider = ({children}) => {
     // define id do user
     const setId = (data) =>{
         setUserId(data);
+        localStorage.setItem('userId',data);
     }
 
     // define tipo do user
     const setType = (data) =>{
         setUserType(data);
+        localStorage.setItem('userType', data);
     }
 
     // nome

@@ -83,7 +83,6 @@ const CadastroEndereco = () => {
     catch (erro) {
       // Habilita alteração de campo
       setInputFieldEnable(true);
-      
       alert("ops, algo deu errado")
       //limpa campos
       for (const [key, value] of Object.entries(endereco)) {
@@ -95,8 +94,6 @@ const CadastroEndereco = () => {
   const onSubmit = (data) => {
     cadastrarEndereco(data)
     inserirValidacao(true);
-
-    localStorage.clear();
 
     navigate("/login");
   };
