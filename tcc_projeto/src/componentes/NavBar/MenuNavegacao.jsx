@@ -29,8 +29,8 @@ const MenuNavegacao = () => {
     const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
 
     // AQUI VAI FICAR O CONTEXT PARA DEFINIR O USUÁRIO.
-    // const perfilUsuario = localStorage.getItem("userType");
-    const perfilUsuario = "administrador"
+    const perfilUsuario = localStorage.getItem("userType");
+    // const perfilUsuario = "administrador"
 
     // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
     const contentNavSolicitante = (
@@ -347,7 +347,7 @@ const MenuNavegacao = () => {
                     aria-label="Abrir menu"
                     className={styles.botaoToggle}
                 >
-                    <IoMenu size={'40px'} color='white'/>
+                    <IoMenu size={'37px'} color='white'/>
                 </Navbar.Toggle>
                 
                 <Navbar.Collapse>
@@ -357,7 +357,7 @@ const MenuNavegacao = () => {
                     </Nav>
 
                     {/* Nav com o dropdown para navegação no perfil. */}
-                    <Nav style={{margin: '0'}}>
+                    <Nav className='ms-auto'>
                         {mainPerfil}
                     </Nav>
                 </Navbar.Collapse>
