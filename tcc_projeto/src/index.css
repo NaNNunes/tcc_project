@@ -19,7 +19,7 @@ body {
 }
 
 body.login-background {
-  background-image: url("/backgrounds/image.png");
+  background-image: url("/backgrounds/image.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

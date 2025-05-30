@@ -28,12 +28,12 @@ const SelecaoUsuario = () => {
     // coloca tipo de user no localstorage pelo context
     setType(type);
 
-    navigate("/login");
+    navigate("/cadastro");
   };
 
   return (
     <div>
-      <div style={{marginTop: '80px', marginBottom: '30px'}}>
+      <div style={{marginBottom: '30px'}}>
         <h1 className={styles.titleGeral}>Escolha como vamos ajudar você a buscar soluções</h1>
       </div>
 
@@ -100,10 +100,6 @@ const SelecaoUsuario = () => {
             </Card.Body>
           </Card>
         </Container>
-      </div>
-      
-      <div className={styles.divBotao} >
-        <Button className={styles.botaoAvancar}>Avançar</Button>
       </div>
     </div>
     

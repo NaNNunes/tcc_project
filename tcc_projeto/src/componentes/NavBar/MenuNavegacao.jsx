@@ -29,7 +29,8 @@ const MenuNavegacao = () => {
     const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
 
     // AQUI VAI FICAR O CONTEXT PARA DEFINIR O USUÁRIO.
-    const perfilUsuario = localStorage.getItem("userType");
+    // const perfilUsuario = localStorage.getItem("userType");
+    const perfilUsuario = "da"
 
     // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
     const contentNavSolicitante = (
@@ -195,7 +196,21 @@ const MenuNavegacao = () => {
     const contentNavDeslogado = (
         <>
             <div>
-                vou fazer chegando no senai, estou atrasado por causa do menu. Muito obrigado a todos os participantes.
+                <Nav.Link 
+                    className={styles.navText}
+                    href='/home'
+                >
+                    Início
+                </Nav.Link>
+                
+            </div>
+            <div>
+                <Nav.Link 
+                    className={styles.navText}
+                    href='/sobre'
+                >
+                    Quem somos
+                </Nav.Link>
             </div>
         </>
     )
@@ -203,7 +218,7 @@ const MenuNavegacao = () => {
     // Faz associação do perfil do usuário com o conteúdo do menu.
     const menus = {
         solicitante: contentNavSolicitante,
-        adm: contentNavADM
+        administrador: contentNavADM
     };
 
     // Menu de acordo com o perfil de usuário. Se tiver deslogado mostra o nav para usuários deslogados.
@@ -267,8 +282,11 @@ const MenuNavegacao = () => {
 
     const perfilNavDeslogado = (
         <>
-            <div>
-                ta deslogado padrinho
+            <div >
+                <a href="/login" className={styles.navEntrar}>
+                    <img src="/icons/person.svg" style={{height: '45px'}} alt="Icon de perfil" />
+                    <p className={styles.navText}>Entrar</p>
+                </a>
             </div>
         </>
     )
@@ -276,7 +294,7 @@ const MenuNavegacao = () => {
     // Faz associação do perfil do usuário com o conteúdo que haverá no perfil.
     const perfis = {
         solicitante: perfilNavSolicitante,
-        adm: perfilNavAdm
+        administrador: perfilNavAdm
     }
 
     // Perfil de acordo com o perfil do usuário. Se tiver deslogado mostra o botão para entrar.
@@ -302,7 +320,7 @@ const MenuNavegacao = () => {
                 
                 <Navbar.Collapse>
                     {/* Nav com os dropdowns para navegação. */}
-                    <Nav>
+                    <Nav className="mx-auto gap-5">
                         {mainNav}
                     </Nav>
 

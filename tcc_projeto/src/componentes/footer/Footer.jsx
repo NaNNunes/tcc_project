@@ -27,19 +27,19 @@ const Footer = () => {
             </div>
           </div>
 
-        {/* Coluna Funcionalidades */}
-        <div className={styles.coluna}>
-          <h4 className={styles.tituloFooter}>Funcionalidades</h4>
-          <a className={styles.linkFooter} href="/home">
-            Início
-          </a>
-          <a className={styles.linkFooter} href="/sobre">
-            Quem somos
-          </a>
-          <a className={styles.linkFooter} href="/demandas">
-            Demandas
-          </a>
-        </div>
+          {/* Coluna Funcionalidades */}
+          <div className={styles.coluna}>
+            <h4 className={styles.tituloFooter}>Funcionalidades</h4>
+            <a className={styles.linkFooter} href="/home">
+              Início
+            </a>
+            <a className={styles.linkFooter} href="/sobre">
+              Quem somos
+            </a>
+            <a className={styles.linkFooter} href="/demandas">
+              Demandas
+            </a>
+          </div>
 
           {/* Coluna Fale Conosco */}
           <div className={styles.coluna}>
@@ -52,14 +52,17 @@ const Footer = () => {
             </p>
           </div>
         </div>
+        <hr className="mb-3 mx-5 text-white border-2 w-75" />
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            alignItems: "left",
+            justifyContent: "left",
           }}
         >
-          <p>© 2025 ConnectFix. Todos os direitos reservados.</p>
+          <p style={{ marginTop: "1rem" }}>
+            © 2025 ConnectFix. Todos os direitos reservados.
+          </p>
         </div>
       </div>
     </div>
