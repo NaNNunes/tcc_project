@@ -37,7 +37,7 @@ const Conta = () => {
         nome={userInfos.nome}
         sobrenome={userInfos.sobrenome}
         email={userInfos.email}
-        telefone={userInfos.userTelefone}
+        userTelefone={userInfos.userTelefone}
       />
       {
         localStorage.getItem("userType") == "administrador" 

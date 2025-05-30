@@ -286,10 +286,22 @@ export function useUser(){
         })
     }
 
+    const atualizaInfosUser = async (data) => {
+        const userType = localStorage.getItem("userType");
+        const userId = localStorage.getItem("userId");
+
+        const request = await fetch(`${url}/${userType}/${userId}`,{
+            method: "PATCH",
+            body: JSON.stringify(data)
+        })
+        window.location.reload();
+    }
+
     return {
         cadastrarInfosUser,
         inserirPerguntaResposta,
         inserirValidacao,
+        atualizaInfosUser
     };
 }
 

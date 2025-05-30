@@ -14,9 +14,22 @@ import { useState } from "react";
 
 const MinhasInfos = (props) => {
 
-    const { register, handleSubmit, formState: {errors}} = useForm();
+    const { register, handleSubmit, setValue, formState: {errors}} = useForm();
+    
+    const {atualizaInfosUser} = useUser();
+
+    // enable input at the fields
+        // !false para fazer teste de alteração
+    const [inputFieldEnable, setInputFieldEnable] = useState(!false);
+
+    // atribuindo valores aos campos
+    for(const [key, value] of Object.entries(props)){
+        setValue(key, value);
+    }
 
     const onSubmit = async (data) => {
+        // atualiza dados
+        atualizaInfosUser(data);
 
     }
     const onError = async (data) => {
@@ -44,7 +57,10 @@ const MinhasInfos = (props) => {
                             <Form.Control
                                 type="text"
                                 placeholder=""
-                                value={props.nome}
+                                disabled={!inputFieldEnable}
+                                {
+                                    ...register("nome")
+                                }
                             />
                         </FloatingLabel>
                     </Col>
@@ -57,7 +73,10 @@ const MinhasInfos = (props) => {
                             <Form.Control
                                 type="text"
                                 placeholder=""
-                                value={props.sobrenome}
+                                disabled={!inputFieldEnable}
+                                {
+                                    ...register("sobrenome")
+                                }
                             />
                         </FloatingLabel>
                     </Col>
@@ -70,10 +89,23 @@ const MinhasInfos = (props) => {
                             className="mb-3"
                         >
                             <Form.Control
+                                name="email"
+                                size="sm"
                                 type="email"
-                                placeholder="name@example.com"
-                                value={props.email}
+                                placeholder=""
+                                // campo quando invalido não permite auteração favor verificar lembrar de fazer em telefone
+                                {...register("email", {
+                                    required: "O email é obrigatório",
+                                    pattern: {
+                                    value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                                    message: "Email inválido",
+                                    },
+                                    validate: (value) => value.includes("@") || "Email inválido",
+                                })}
                             />
+                            {errors.email && (
+                            <p className='text-danger'>{errors.email.message}</p>
+                            )}
                         </FloatingLabel>
                     </Col>
                     <Col>
@@ -83,20 +115,49 @@ const MinhasInfos = (props) => {
                             className="mb-3"
                         >
                             <Form.Control
-                                type="text" 
-                                placeholder="name@example.com"
-                                value={props.telefone}
+                            type="text"
+                            placeholder="(00) 00000-0000"
+                            {...register("userTelefone", {
+                                required: "Telefone necessário",
+                                pattern: {
+                                value: /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
+                                message: "Telefone inválido",
+                                },
+                            })}
                             />
+                            {errors.userTelefone && (
+                            <p className='text-danger'>{errors.userTelefone.message}</p>
+                            )}
                         </FloatingLabel>
                     </Col>
                     <Col xs={2}>
-                        <Button 
-                            as="input"
-                            value="Salvar"
-                            type="submit"
-                            size="lg"
-                            className="mt-1"
-                        />
+                        {
+                            // are inputs enabled?
+                            (inputFieldEnable)
+                            ?
+                                <>
+                                    <Button 
+                                        as="input"
+                                        value="Salvar"
+                                        type="submit"
+                                        size="lg"
+                                        className="mt-1"
+                                        // onClick={()=>{setInputFieldEnable(false)}}
+                                    />
+                                </>
+                            :
+                                <>
+                                    <Button 
+                                        as="input"
+                                        value="Editar"
+                                        type="submit"
+                                        size="lg"
+                                        className="mt-1"
+                                        // onClick={() => {setInputFieldEnable(true)}}
+                                    />
+                                </>
+                        }
+                        
                     </Col>
                 </Row>
             </Form>

@@ -175,28 +175,14 @@ const CadastroEndereco = () => {
 
           <Col>
             <FloatingLabel id="userCityInput" className="mb-3" label="Cidade">
-              {
-                inputFieldEnable
-                  ?
-                  <>
-                    <Form.Control
-                      type="text"
-                      placeholder=" "
-                      {...register("city")}
-                    />
-                  </>
-                  :
-                  <>
-                    <Form.Control
-                      disabled
-                      type="text"
-                      placeholder=" "
-                      {...register("city")}
-                    />
-                  </>
-              }
-
-
+  
+              <Form.Control
+                disabled={!inputFieldEnable}
+                type="text"
+                placeholder=" "
+                {...register("city")}
+              />
+                  
             </FloatingLabel>
           </Col>
         </Row>
@@ -205,26 +191,14 @@ const CadastroEndereco = () => {
           <Col className="">
 
             <FloatingLabel id="userBairroInput" className="mb-3" label="Bairro">
-              {
-                inputFieldEnable
-                  ?
-                  <>
-                    <Form.Control
-                      type="text"
-                      placeholder="Bairro"
-                      {...register("neighborhood")}
-                    />
-                  </>
-                  :
-                  <>
-                    <Form.Control
-                      disabled
-                      type="text"
-                      placeholder="Bairro"
-                      {...register("neighborhood")}
-                    />
-                  </>
-              }
+
+              <Form.Control
+                disabled={!inputFieldEnable}
+                type="text"
+                placeholder="Bairro"
+                {...register("neighborhood")}
+              />
+
             </FloatingLabel>
           </Col>
 
@@ -234,26 +208,13 @@ const CadastroEndereco = () => {
               className="mb-3"
               label="Logradouro"
             >
-              {
-                inputFieldEnable
-                  ?
-                  <>
-                    <Form.Control
-                      type="text"
-                      placeholder="Logradouro"
-                      {...register("street")}
-                    />
-                  </>
-                  :
-                  <>
-                    <Form.Control
-                      disabled
-                      type="text"
-                      placeholder="Logradouro"
-                      {...register("street")}
-                    />
-                  </>
-              }
+              <Form.Control
+                disabled={!inputFieldEnable}
+                type="text"
+                placeholder="Logradouro"
+                {...register("street")}
+              />
+
             </FloatingLabel>
           </Col>
         </Row>
@@ -261,33 +222,17 @@ const CadastroEndereco = () => {
         <Row>
           <Col>
             <FloatingLabel id="userUFInput" className="mb-3" label="UF">
-              {
-                inputFieldEnable
-                  ?
-                  <>
-                    <Form.Control
-                      type="text"
-                      placeholder="UF"
-                      {...register("state")}
-                    />
-                  </>
-                  :
-                  <>
-                    <Form.Control
-                      disabled
-                      type="text"
-                      placeholder="UF"
-                      {...register("state")}
-                    />
-                  </>
-              }
-
+              <Form.Control
+                disabled={!inputFieldEnable}
+                type="text"
+                placeholder="UF"
+                {...register("state")}
+              />
             </FloatingLabel>
           </Col>
           <Col>
             <FloatingLabel id="userNumInput" className="mb-3" label="Nº">
               <Form.Control
-
                 type="text"
                 placeholder=""
                 {...register("number", {
