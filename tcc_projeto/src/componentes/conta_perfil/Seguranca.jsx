@@ -3,16 +3,29 @@ import {Form, FloatingLabel, Button, Row, Col} from "react-bootstrap";
 
 import { useForm } from "react-hook-form";
 
+// hooks
+import { useUser } from "../../hooks/useApi";
+
 const Seguranca = (props) => {
     
     const { register, handleSubmit, setValue, formState: {errors}} = useForm();
 
-    const onSubmit = (data) => {
-        // verificar se senha atual é realmente a senha atual, comparar nova sena
+    const {verificaSenhaInformada, alteraSenhaUser} = useUser();
+
+    const onSubmit = async (data) => {
+        // verifica se senha atual é realmente a senha atual, comparar nova senha
+        const isSenhaValida = await verificaSenhaInformada(data.senha);
+        (isSenhaValida)
+            ?  alert("Senha atual inválida ou vazia")
+            : 
+                (data.novaSenha == data.confirmaNovaSenha)
+                    ? alteraSenhaUser(data.novaSenha)
+                    : alert("senha e confirmar senha divergentes");
+                        
     }
 
     const onError = (error) => {
-
+        console.log(error)
     }
 
   return (
@@ -59,7 +72,7 @@ const Seguranca = (props) => {
                             type="password"
                             placeholder=""
                             {
-                                ...register("NovaSenha")
+                                ...register("novaSenha")
                             }
                         />
 
@@ -75,7 +88,7 @@ const Seguranca = (props) => {
                             type="password"
                             placeholder=""
                             {
-                                ...register("ConfirmaNovaSenha")
+                                ...register("confirmaNovaSenha")
                             }
                         />
 

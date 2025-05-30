@@ -1,28 +1,23 @@
+// TO DO refatorar codigo onde é pego id e type do user pelo localstorage
 import { useState, useEffect, createContext } from "react";
 export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
 
-    // nao funciona 1
-        // teoria state é asincrono
     const [userId, setUserId] = useState("");
-    // nao funciona 2
     const [userType, setUserType] = useState("");
     const [usuarioNome, setUsuarioNome] = useState("")
 
     // define id do user
     const setId = (data) =>{
-        // nao funciona
         setUserId(data);
         //alternativa
         localStorage.setItem("userId", data);
-        console.log("user ID:",localStorage.getItem("userId"));
     }
 
     // define tipo do user
     const setType = (data) =>{
         setUserType(data);
         localStorage.setItem("userType", data);
-        console.log("user selecionado:",localStorage.getItem("userType"));
     }
 
     // nome
@@ -31,8 +26,12 @@ export const AuthProvider = ({children}) => {
         setUsuarioNome(nome)
     }, [])
 
-    const login = (data) => {
+    const login = (data, tipoUser) => {
         localStorage.setItem("isLogado", "sim");
+
+        setUserId(data.id);
+        setUserType(tipoUser);
+
         setUsuarioNome(data.nome)
     }
 

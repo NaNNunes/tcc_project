@@ -1,9 +1,52 @@
 import {Form, FloatingLabel, Row, Col, Button} from 'react-bootstrap';
 
+import Card from 'react-bootstrap/Card';
+
+import { useUser } from '../../hooks/useApi';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 const Encerrar = () => {
+    const {register, handleSubmit, formState:{error}} = useForm();
+    
+    const {inserirValidacao, verificaSenhaInformada} = useUser();
+    const [liberaCampoSenha, setLiberaCampoSenha] = useState(false);
+
+    
+    const verificaCerteza = () => {
+        // é um teste 
+        if(confirm("Ação a seguir excluirá a sua conta, deseja prosseguir?")){
+            setLiberaCampoSenha(true);
+        }
+        else{
+            setLiberaCampoSenha(false);
+        }
+    }
+
+    // alternativa   
+    const exclusao = async () => {
+        if(confirm("Ação a seguir excluirá a sua conta, deseja prosseguir?")){
+            const inputSenha = prompt("Inisra sua senha para confirmar")
+            verificaSenhaInformada(inputSenha)
+                && inserirValidacao(false)}
+    }
+
+    const onSubmit = async (data) => {
+        // nao funciona
+        console.log(data);
+        (verificaSenhaInformada(data.senha))
+            && inserirValidacao(false)
+    }
+
+    const onError = (error) => {
+        console.log(error);
+    }
+
   return (
     <>
-        <Form className='border rounded-3 shadow'>
+        <Card
+            className='border rounded-3 shadow'
+            onSubmit={handleSubmit(onSubmit, onError)}
+        >
             <Row className='m-2 mt-3'>
                 <Col xs={4}>
                     <h3>Encerrar conta</h3>
@@ -26,10 +69,41 @@ const Encerrar = () => {
                         value="Encerrar"
                         type="submit"
                         size="lg"
+                        onClick={()=>{verificaCerteza()}}
                     />
                 </Col>
+                {
+                    // nao funciona
+                    (liberaCampoSenha)
+                        &&
+                            <Form
+                                onSubmit={handleSubmit(onSubmit, onError)}
+                            >
+                                <Col xs={3}>
+                                    <FloatingLabel
+                                        controlId='senhaExclusao'
+                                        label='senha'
+                                        className='mb-3'
+                                    >
+                                        <Form.Control
+                                            type='password'
+                                            placeholder=''
+                                            {
+                                                ...register("senha")
+                                            }
+                                        />
+                                    </FloatingLabel>
+                                    <Button
+                                        as='input'
+                                        value="confirmar"
+                                        type='button'
+                                        onClick={()=>{exclusao()}}
+                                    />
+                                </Col>
+                            </Form>      
+                }
             </Row>
-        </Form>
+        </Card>
     </>
   )
 }

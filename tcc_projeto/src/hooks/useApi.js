@@ -1,3 +1,4 @@
+// TO DO refatorar codigo onde é pego id e type do user pelo localstorage
 import { useEffect, useState, useContext } from "react";
 
 import { AuthContext } from "../context/userContext";
@@ -8,7 +9,8 @@ export function useVerificaLogin(){
     const [solicitantes, setSolicitantes] = useState([]);
     const [administradores, setAdministradores] = useState([]);
 
-    const {login, setId, setType} = useContext(AuthContext);
+    // funçoes do context para salvar id e tipo de user
+    const {setId, userId, setType, userType, login} = useContext(AuthContext);
 
     // -- ATENCAO --
     // o codigo a seguir segue o paradigma POG,
@@ -98,25 +100,30 @@ export function useVerificaLogin(){
             );
         })
 
-        if(solicitante2find !== undefined && solicitante2find.senha === data.senha){
-            login(solicitante2find);
-            setId(solicitante2find.id);
-
-            setType("solicitante");
-
-            console.log("user logado:", solicitante2find.nome);
-            console.log("----------------")
-            return "Login efetuado com sucesso";
+        // verifica se solcitante foi encontrado e se senha inserida é a mesma do cadastro
+        if( solicitante2find !== undefined && solicitante2find.senha === data.senha)
+        {
+            // verifica se cadastro do solicitante é válido
+            (solicitante2find.isValido !== true)
+                ? alert("user Invalido")
+                :   
+                    login(solicitante2find, "solicitante");
+                    console.log("user logado:", solicitante2find.nome);
+                    console.log("----------------")
+                    return "Login efetuado com sucesso";
+                    
         } 
-        else if (administrador2find !== undefined && administrador2find.senha === data.senha){
-            login(administrador2find);
-            setId(administrador2find.id);
-
-            setType("administrador");
-
-            console.log("user logado:", administrador2find.nome);
-            console.log("----------------")
-            return "Login efetuado com sucesso";
+        else if // verifica se solcitante foi encontrado e se senha inserida é a mesma do cadastro
+        (administrador2find !== undefined && administrador2find.senha === data.senha)
+        {
+             // verifica se cadastro do solicitante é válido            
+            (administrador2find.isValido !== true)
+                ? alert("userInválido")
+                :
+                    login(administrador2find, "administrador");
+                    console.log("user logado:", administrador2find.nome);
+                    console.log("----------------")
+                    return "Login efetuado com sucesso";
         } 
         else {
             return "usuario ou senha inválido";
@@ -238,7 +245,7 @@ export function useVerificadorDeCnpj(){
 export function useUser(){
 
     // funçoes do context para salvar id e tipo de user
-    const {setId} = useContext(AuthContext);
+    const {setId, userId, setType, userType} = useContext(AuthContext);
 
     // cadastra user
     const cadastrarInfosUser = async (data) => {
@@ -296,15 +303,39 @@ export function useUser(){
         window.location.reload();
     }
 
-    const alteraSenhaUser = async (data) => {
-        
+    const verificaSenhaInformada = async (data) => {
+
+        const request = await fetch(`${url}/${userType}/${userId}`);
+        const response = await request.json();
+
+        // compara senha inserida com senha do user
+        console.log(data.senha === response.senha)
+        return (data.senha === response.senha);
     }
+
+    // altera senha do user
+    const alteraSenhaUser = async (senha) =>{
+
+        const newSenha = {
+            "senha": senha
+        }
+        
+        fetch(`${url}/${userType}/${userId}`,{
+            method: "PATCH",
+            body: JSON.stringify(newSenha)
+        })
+
+        location.reload();
+    }
+
 
     return {
         cadastrarInfosUser,
         inserirPerguntaResposta,
         inserirValidacao,
-        atualizaInfosUser
+        atualizaInfosUser,
+        verificaSenhaInformada,
+        alteraSenhaUser
     };
 }
 
