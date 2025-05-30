@@ -244,6 +244,12 @@ const MenuNavegacao = () => {
                     }
                     className={styles.dropDownActive}
                 >
+                    <NavDropdown.Header>
+                        {/* SÓ BOTAR O NOME DO CABA AQUI */}
+                    </NavDropdown.Header>
+
+                    <NavDropdown.Divider style={{borderTop: '2px solid rgb(255, 255, 255)', margin: '4px 0'}}/>
+                    
                     <NavDropdown.Item
                         as={Link}
                         to='/conta'
@@ -281,6 +287,12 @@ const MenuNavegacao = () => {
                     }
                     className={styles.dropDownActive}
                 >
+                    <NavDropdown.Header>
+                        {/* SÓ BOTAR O NOME DO CABA AQUI */}
+                    </NavDropdown.Header>
+
+                    <NavDropdown.Divider style={{borderTop: '2px solid rgb(255, 255, 255)', margin: '4px 0'}}/>
+
                     <NavDropdown.Item
                         as={Link}
                         to='/conta'
