@@ -45,8 +45,8 @@ function App() {
       <Navbar />
       <Container style={{ maxWidth: "100%", margin: "0", padding: "0" }}>
         <Outlet />
-        <Footer />
       </Container>
+      <Footer />
     </>
   );
 }
