@@ -30,7 +30,7 @@ const MenuNavegacao = () => {
 
     // AQUI VAI FICAR O CONTEXT PARA DEFINIR O USUÁRIO.
     // const perfilUsuario = localStorage.getItem("userType");
-    const perfilUsuario = "da"
+    const perfilUsuario = "administrador"
 
     // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
     const contentNavSolicitante = (
@@ -195,7 +195,7 @@ const MenuNavegacao = () => {
 
     const contentNavDeslogado = (
         <>
-            <div>
+            <div className={styles.divNavdropdown}>
                 <Nav.Link 
                     className={styles.navText}
                     href='/home'
@@ -204,7 +204,8 @@ const MenuNavegacao = () => {
                 </Nav.Link>
                 
             </div>
-            <div>
+
+            <div className={styles.divNavdropdown}>
                 <Nav.Link 
                     className={styles.navText}
                     href='/sobre'
@@ -229,24 +230,33 @@ const MenuNavegacao = () => {
         <>
             <div className={styles.navdropdownPerfil}>
                 {/* NavDropdown com as informações de perfil. */}
+                {/* MUDAR O CSS PORQUE ESTÁ FICANDO MUITO COLADO NO MENU. */}
                 <NavDropdown
                     align='end'
+                    id='dropdown-perfil-adm'
                     title={
                         <Image 
                             src='/icons/person.svg'
-                            width={30}
-                            height={30}
+                            width={29}
+                            height={29}
                             alt='Perfil'
                         />
                     }
-                    id='dropdown-perfil-solicitante'
+                    className={styles.dropDownActive}
                 >
-                    {/* envia user para a tela de gestao da conta/perfil */}
                     <NavDropdown.Item
                         as={Link}
                         to='/conta'
+                        className={styles.dropdownItem}
                     >   
-                        Meu perfil
+                        <Image className={styles.icone} width={34} height={24} src="/icons/person.svg" />Meu perfil
+                    </NavDropdown.Item>
+
+                    <NavDropdown.Item
+                        className={styles.dropdownItem}
+                        // AQUI ENTRA O CÓDIGO PARA DESLOGAR
+                    >   
+                        <Image className={styles.icone} src="/icons/sair.svg" />Sair
                     </NavDropdown.Item>
                 </NavDropdown>
             </div>
@@ -257,23 +267,33 @@ const MenuNavegacao = () => {
         <>
             <div className={styles.navdropdownPerfil}>
                 {/* NavDropdown com as informações de perfil. */}
+                {/* MUDAR O CSS PORQUE ESTÁ FICANDO MUITO COLADO NO MENU. */}
                 <NavDropdown
                     align='end'
+                    id='dropdown-perfil-adm'
                     title={
                         <Image 
                             src='/icons/person.svg'
-                            width={30}
-                            height={30}
+                            width={29}
+                            height={29}
                             alt='Perfil'
                         />
                     }
-                    id='dropdown-perfil-adm'
+                    className={styles.dropDownActive}
                 >
                     <NavDropdown.Item
                         as={Link}
                         to='/conta'
+                        className={styles.dropdownItem}
                     >   
-                        Meu perfil
+                        <Image className={styles.icone} width={34} height={24} src="/icons/person.svg" />Meu perfil
+                    </NavDropdown.Item>
+
+                    <NavDropdown.Item
+                        className={styles.dropdownItem}
+                        // AQUI ENTRA O CÓDIGO PARA DESLOGAR
+                    >   
+                        <Image className={styles.icone} src="/icons/sair.svg" />Sair
                     </NavDropdown.Item>
                 </NavDropdown>
             </div>
@@ -285,7 +305,7 @@ const MenuNavegacao = () => {
             <div >
                 <a href="/login" className={styles.navEntrar}>
                     <img src="/icons/person.svg" style={{height: '45px'}} alt="Icon de perfil" />
-                    <p className={styles.navText}>Entrar</p>
+                    <p className={styles.navEntrarText}>Entrar</p>
                 </a>
             </div>
         </>
@@ -320,12 +340,12 @@ const MenuNavegacao = () => {
                 
                 <Navbar.Collapse>
                     {/* Nav com os dropdowns para navegação. */}
-                    <Nav className="mx-auto gap-5">
+                    <Nav className={styles.navbarE}>
                         {mainNav}
                     </Nav>
 
                     {/* Nav com o dropdown para navegação no perfil. */}
-                    <Nav className="ms-auto">
+                    <Nav style={{margin: '0'}}>
                         {mainPerfil}
                     </Nav>
                 </Navbar.Collapse>
