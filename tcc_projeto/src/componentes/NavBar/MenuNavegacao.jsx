@@ -27,12 +27,12 @@ const MenuNavegacao = () => {
 
     const navigate = useNavigate();
 
-    const {logout, userType} = useContext(AuthContext);
+    const {logout, userType, usuarioNome} = useContext(AuthContext);
 
     const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
 
     // AQUI VAI FICAR O CONTEXT PARA DEFINIR O USUÁRIO.
-    const perfilUsuario = userType;
+    const perfilUsuario = (usuarioNome !== "Visitante") && userType;
 
 
     // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
