@@ -59,19 +59,18 @@ h3::after {
 }
 
 .heroContent h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  font-weight: 700;
+  position: relative;
 }
 
 .heroContent h2::after {
   content: "";
-  display: block;
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 180px;
   height: 4px;
   background-color: var(--highlight-yellow);
-  margin-top: 4px;
-  margin-left: 46.7rem;
   border-radius: 2px;
 }
 
