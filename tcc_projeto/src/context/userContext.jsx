@@ -4,10 +4,10 @@ import { useState, useEffect, createContext } from "react";
 export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
 
-    const [userId, setUserId] = useState("");
-    const [userType, setUserType] = useState("");
+    const [userId, setUserId] = useState();
+    const [userType, setUserType] = useState();
 
-    const [usuarioNome, setUsuarioNome] = useState("")
+    const [usuarioNome, setUsuarioNome] = useState();
 
     // define id do user
     const setId = (data) =>{
@@ -28,21 +28,24 @@ export const AuthProvider = ({children}) => {
     }, [])
 
     const login = (data, tipoUser) => {
-        localStorage.setItem("isLogado", "sim");
-
         setUserId(data.id);
         setUserType(tipoUser);
-
         setUsuarioNome(data.nome)
     }
 
     const logout = () =>{
         setUsuarioNome("Visitante")
+        localStorage.clear();
     }
 
     return (
         <AuthContext.Provider 
-            value={{usuarioNome, login, logout, userId, setId, userType, setType}}
+            value={
+                {
+                    usuarioNome, login, logout, 
+                    userId, setId, userType, setType
+                }
+            }
         >
             {children}
         </AuthContext.Provider>

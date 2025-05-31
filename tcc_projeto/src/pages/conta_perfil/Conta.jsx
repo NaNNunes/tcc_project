@@ -5,10 +5,15 @@ import MinhasInfos from "../../componentes/conta_perfil/MinhasInfos"
 import Seguranca from "../../componentes/conta_perfil/Seguranca"
 
 // hook
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useEndereco } from "../../hooks/useApi"
+import { AuthContext } from "../../context/userContext"
+import { Navigate } from "react-router-dom"
 
 const Conta = () => {
+  const {usuarioNome} = useContext(AuthContext);
+  if(usuarioNome === "Visitante") return <Navigate to="/login"/>
+
   const [userInfos, setUserInfos] = useState({});
   const [userEndereco, setUserEndereco] = useState({});
 

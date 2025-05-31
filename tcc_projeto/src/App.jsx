@@ -5,6 +5,9 @@ import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./componentes/NavBar/MenuNavegacao.jsx";
 import Footer from "./componentes/footer/Footer.jsx";
 
+import { AuthProvider } from "./context/userContext.jsx";
+
+
 function App() {
   const location = useLocation();
 
@@ -42,11 +45,15 @@ function App() {
 
   return (
     <>
-      <Navbar />
-      <Container style={{ maxWidth: "100%", margin: "0", padding: "0" }}>
-        <Outlet />
-      </Container>
-      <Footer />
+      <AuthProvider>
+          <div>
+            <Navbar />
+            <Container style={{ maxWidth: "100%", margin: "0", padding: "0" }}>
+              <Outlet />
+            </Container>
+            <Footer />
+          </div>
+      </AuthProvider>
     </>
   );
 }

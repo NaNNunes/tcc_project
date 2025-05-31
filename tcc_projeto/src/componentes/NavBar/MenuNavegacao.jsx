@@ -27,12 +27,12 @@ const MenuNavegacao = () => {
 
     const navigate = useNavigate();
 
-    const {logout, userType} = useContext(AuthContext);
+    const {logout, userType, usuarioNome} = useContext(AuthContext);
 
     const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
 
     // AQUI VAI FICAR O CONTEXT PARA DEFINIR O USUÁRIO.
-    const perfilUsuario = userType;
+    const perfilUsuario = (usuarioNome !== "Visitante") && userType;
 
 
     // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
@@ -294,14 +294,14 @@ const MenuNavegacao = () => {
                     className={styles.dropDownActive}
                 >
                     <NavDropdown.Header>
-                        {/* SÓ BOTAR O NOME DO CABA AQUI */}
+                        {usuarioNome}
                     </NavDropdown.Header>
 
                     <NavDropdown.Divider style={{borderTop: '2px solid rgb(255, 255, 255)', margin: '4px 0'}}/>
 
                     <NavDropdown.Item
-                        as={Link}
-                        to='/conta'
+                        as={Button}
+                        href='/conta'
                         className={styles.dropdownItem}
                     >   
                         <Image className={styles.icone} width={34} height={24} src="/icons/person.svg" />Meu perfil
@@ -311,8 +311,6 @@ const MenuNavegacao = () => {
                         as={Button}
                         href='/login'
                         className={styles.dropdownItem}
-                        // ta funcionando mas nao sei como
-                        // AQUI ENTRA O CÓDIGO PARA DESLOGAR
                     >   
                         <Image className={styles.icone} src="/icons/sair.svg" />Sair
                     </NavDropdown.Item>
