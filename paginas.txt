@@ -1,0 +1,8 @@
+Kevin: 
+Criar_demanda, SelecaoUsuario, NavBar;
+
+Natã:
+CadastroAssistencia, CadastroEndereco, CadastroPagamento, CadastroUser, Home, Sobre, ErrorPage
+
+Renan:
+Login, PerguntaSeguranca, Conta, AssistenciaInfo, ;
