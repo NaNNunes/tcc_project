@@ -32,7 +32,8 @@ const MenuNavegacao = () => {
     const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
 
     // AQUI VAI FICAR O CONTEXT PARA DEFINIR O USUÁRIO.
-    const perfilUsuario = (usuarioNome !== "Visitante") && userType;
+    // const perfilUsuario = (usuarioNome !== "Visitante") && userType;
+    const perfilUsuario = 'solicitante';
 
 
     // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
@@ -293,7 +294,7 @@ const MenuNavegacao = () => {
                     }
                     className={styles.dropDownActive}
                 >
-                    <NavDropdown.Header>
+                    <NavDropdown.Header className={styles.textPerfil}>
                         {usuarioNome}
                     </NavDropdown.Header>
 

@@ -60,6 +60,14 @@ const categoriaDispositivo = () => {
             "Asus": ["ASUS Zenbook 14", "ASUS E510", "ASUS X515", "ASUS Vivobook 15"],
             "Acer": ["15-51M-57RT", "Aspire 3 A315-510P-35D2", "A515-45-R0XR", "Acer Nitro 5"],
             "Lenovo": ["IdeaPad 1 15IAU7", "82X5S00500", "IdeaPad 1 15IAU7", "LOQ 15IAX9E"]
+        },
+        "Desktop": {
+            "Nvidia": ["RTX 4060", "RTX 3060 ti", "RTX 2060", "RTX 1060"],
+            "Intel": ["Intel Core i5-12400F", "Intol Core I9-14900K", "Intel Core I7-3770", "Intel Core I5-3470"],
+        },
+        "Periférico": {
+            "Logitech": ["Logitech G PRO X SUPERLIGHT 2", "Logitech G502 HERO", "Logitech G203", "Logitech G403 HERO"],
+            "Razer": ["Razer Cobra", "Razer DeathAdder Essential", "Razer Viper Mini", "Razer Viper V3 Pro"]
         }
     }
 
