@@ -294,14 +294,14 @@ const MenuNavegacao = () => {
                     className={styles.dropDownActive}
                 >
                     <NavDropdown.Header>
-                        {/* SÓ BOTAR O NOME DO CABA AQUI */}
+                        {usuarioNome}
                     </NavDropdown.Header>
 
                     <NavDropdown.Divider style={{borderTop: '2px solid rgb(255, 255, 255)', margin: '4px 0'}}/>
 
                     <NavDropdown.Item
-                        as={Link}
-                        to='/conta'
+                        as={Button}
+                        href='/conta'
                         className={styles.dropdownItem}
                     >   
                         <Image className={styles.icone} width={34} height={24} src="/icons/person.svg" />Meu perfil
@@ -311,8 +311,6 @@ const MenuNavegacao = () => {
                         as={Button}
                         href='/login'
                         className={styles.dropdownItem}
-                        // ta funcionando mas nao sei como
-                        // AQUI ENTRA O CÓDIGO PARA DESLOGAR
                     >   
                         <Image className={styles.icone} src="/icons/sair.svg" />Sair
                     </NavDropdown.Item>

@@ -12,7 +12,16 @@ import { useForm } from "react-hook-form";
 import styles from "./login.module.css";
 import { useVerificaLogin } from "../../hooks/useApi";
 
+import { AuthContext } from "../../context/userContext";
+import { useContext, useEffect } from "react";
+
 const Login = () => {
+
+  const {logout} = useContext(AuthContext);
+
+  useEffect(()=>{
+    logout();
+  },[])
 
   const {
     register,
