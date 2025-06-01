@@ -1,6 +1,6 @@
 import Image from "react-bootstrap/Image";
 import { FaInstagram, FaFacebook } from "react-icons/fa";
-import styles from "./Footer.module.css";
+import styles from "./footer.module.css";
 
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
