@@ -1,42 +1,41 @@
 {
-  "solicitante": [],
-  "administrador": [
+  "solicitante": [
     {
-      "id": "0548",
+      "id": "4161",
       "email": "user@gmail.com.br",
-      "cpf": "429.453.750-79",
+      "cpf": "466.498.600-93",
       "userTelefone": "40028922",
-      "nome": "user",
-      "sobrenome": "Sobrenome",
+      "nome": "User ",
+      "sobrenome": "UserSurname",
       "senha": "Senha@123",
       "confirmarSenha": "Senha@123",
       "termos": "true",
       "isValido": true,
       "pergunta": "1",
-      "resposta": "Blu"
+      "resposta": "Blu",
+      "id_endereco": "6b03"
     }
   ],
-  "assistencia": [
-    {
-      "id": "62aa",
-      "assistenciaEmail": "assistencia@gmail.com",
-      "nomeFantasia": "nome Fantasia",
-      "razaoSocial": "Razão Social",
-      "cnpj": "58577114000189",
-      "assistenciaTelefone": "40028922",
-      "assistenciaTermos": "true",
-      "administradorId": "0548"
-    }
-  ],
+  "administrador": [],
+  "assistencia": [],
   "endereco": [
     {
-      "id": "bc99",
-      "zipcode": "29135-542",
-      "city": "",
-      "neighborhood": "",
-      "street": "",
-      "state": "",
-      "number": "18"
+      "id": "6b03",
+      "zipcode": "29118-480",
+      "city": "Vila Velha",
+      "neighborhood": "Santa Rita",
+      "street": "Rua Olavo Bilac",
+      "state": "ES",
+      "number": "10",
+      "cep": "29118480",
+      "service": "open-cep",
+      "location": {
+        "type": "Point",
+        "coordinates": {
+          "longitude": "-40.3339382",
+          "latitude": "-20.3474948"
+        }
+      }
     }
   ],
   "dispositivo": [],

@@ -27,12 +27,14 @@ const MenuNavegacao = () => {
 
     const navigate = useNavigate();
 
-    const {logout, userType, usuarioNome} = useContext(AuthContext);
+    const {logout, usuarioNome} = useContext(AuthContext);
 
     const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
 
     // AQUI VAI FICAR O CONTEXT PARA DEFINIR O USUÁRIO.
-    const perfilUsuario = (usuarioNome !== "Visitante") && userType;
+    const tipoUser = localStorage.getItem("userType");
+    const perfilUsuario = (tipoUser !== "Visitante") && localStorage.getItem("userType");
+
 
 
     // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
@@ -221,8 +223,8 @@ const MenuNavegacao = () => {
 
     // Faz associação do perfil do usuário com o conteúdo do menu.
     const menus = {
-        solicitante: contentNavSolicitante,
-        administrador: contentNavADM
+        "solicitante": contentNavSolicitante,
+        "administrador": contentNavADM
     };
 
     // Menu de acordo com o perfil de usuário. Se tiver deslogado mostra o nav para usuários deslogados.
@@ -249,6 +251,7 @@ const MenuNavegacao = () => {
                 >
                     <NavDropdown.Header>
                         {/* SÓ BOTAR O NOME DO CABA AQUI */}
+                        {usuarioNome}
                     </NavDropdown.Header>
 
                     <NavDropdown.Divider style={{borderTop: '2px solid rgb(255, 255, 255)', margin: '4px 0'}}/>

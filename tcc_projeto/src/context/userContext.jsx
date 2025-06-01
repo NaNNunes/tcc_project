@@ -6,7 +6,7 @@ export const AuthProvider = ({children}) => {
 
     const [userId, setUserId] = useState();
     const [userType, setUserType] = useState();
-
+    const [isLogado, setIsLogado] = useState();
     const [usuarioNome, setUsuarioNome] = useState();
 
     // define id do user
@@ -28,22 +28,29 @@ export const AuthProvider = ({children}) => {
     }, [])
 
     const login = (data, tipoUser) => {
+        localStorage.clear();
         setUserId(data.id);
+
         setUserType(tipoUser);
+        localStorage.setItem("userType", tipoUser);
+        
         setUsuarioNome(data.nome)
+        localStorage.setItem("isLogado", true);
     }
 
     const logout = () =>{
-        setUsuarioNome("Visitante")
-        localStorage.clear();
+        setUsuarioNome("Visitante");
+        localStorage.setItem("userType", "Visitante");
     }
 
     return (
         <AuthContext.Provider 
             value={
                 {
-                    usuarioNome, login, logout, 
-                    userId, setId, userType, setType
+                    usuarioNome,  
+                    userId, setId,
+                    userType, setType,
+                    login, logout
                 }
             }
         >

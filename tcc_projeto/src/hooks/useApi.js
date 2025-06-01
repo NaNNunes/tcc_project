@@ -10,7 +10,7 @@ export function useVerificaLogin(){
     const [administradores, setAdministradores] = useState([]);
 
     // funçoes do context para salvar id e tipo de user
-    const {setId, userId, setType, userType, login} = useContext(AuthContext);
+    const {setId, userId, setType, userType, login, setUsuarioNome} = useContext(AuthContext);
 
     // -- ATENCAO --
     // o codigo a seguir segue o paradigma POG,
@@ -69,6 +69,7 @@ export function useVerificaLogin(){
     const verificaLogin = (data) => {
         // renderização de lista
         buscaCadastros();
+        console.log("login")
 
         // verifica se email ou senha foi encontrado em solicitantes
         const solicitante2find = solicitantes.find((solicitante) => {
@@ -249,6 +250,7 @@ export function useUser(){
 
     // cadastra user
     const cadastrarInfosUser = async (data) => {
+        console.log("cadastrarInfosUser")
         // define o tipo de user
         const user = localStorage.getItem("userType");
 
@@ -273,7 +275,7 @@ export function useUser(){
 
     // define validaçao do user
     const inserirValidacao = async (isValido) =>{
-
+        console.log("inserirValidacao")
         const id = localStorage.getItem('userId');
         const user = localStorage.getItem('userType')
 
@@ -281,13 +283,11 @@ export function useUser(){
             method:"PATCH",
             body: JSON.stringify({"isValido":isValido})
         })
-
-        // ultima etapa valida o user e não será mais necessário infos do localStorage
-        if(isValido === true) { localStorage.clear() }
     }
 
     // adiciona pergunta de segurança
     const inserirPerguntaResposta = async (data) => {
+        console.log("inserirPerguntaResposta")
 
         const id = localStorage.getItem("userId");
         const user = localStorage.getItem("userType");
@@ -299,6 +299,7 @@ export function useUser(){
     }
 
     const atualizaInfosUser = async (data) => {
+        console.log("atualizaInfosUser")
 
         const user = localStorage.getItem("userType");
         const id = localStorage.getItem("userId");
@@ -311,6 +312,7 @@ export function useUser(){
     }
 
     const verificaSenhaInformada = async (data) => {
+        console.log("verificaSenhaInformada")
 
         const request = await fetch(`${url}/${userType}/${userId}`);
         const response = await request.json();
@@ -322,6 +324,7 @@ export function useUser(){
 
     // altera senha do user
     const alteraSenhaUser = async (senha) =>{
+        console.log("alteraSenhaUser")
 
         const newSenha = {
             "senha": senha
@@ -504,6 +507,7 @@ export function useEndereco(){
 
     // cadastra endereco
     const cadastrarEndereco = async (data) =>{
+        console.log("cadastrarEndereco")
 
         const request = await fetch(`${url}/endereco`,{
             method:"POST",
@@ -521,10 +525,12 @@ export function useEndereco(){
 
     // define id de endereco de acordo com o user, solicitante ou pseudo user
     const setaIdEmUser = async (endereco_id) =>{
+        console.log("setaIdEmUser")
+
         // define quem receberá o id do endereco
         const tipo = localStorage.getItem('userType');
-
-        const user = (tipo === "solicitante") 
+        alert(tipo);
+        const user = (localStorage.getItem('userType') == "solicitante") 
             ? "solicitante"
             : "assistencia"
 
@@ -545,6 +551,8 @@ export function useEndereco(){
 
     // atualiza endereco do user
     const atualizarEndereco = async (idEndereco, data) =>{
+        console.log("atualizarEndereco")
+
         const request = await fetch(`${url}/endereco/${idEndereco}`,{
             method: "PATCH",
             body: JSON.stringify(data)
@@ -564,6 +572,7 @@ export function useEndereco(){
 
 // cadastra assistencia
 export function useCadastroAssistencia(){
+    console.log("useCadastroAssistencia")
 
     // insere assistencia
     const inserirAssistencia = async (data) =>{
@@ -588,6 +597,8 @@ export function useCadastroAssistencia(){
 
     // insere o adm da assistencia
     const inserirAdministrador = async (id) => {
+        console.log("inserirAdministrador")
+
         const administrador = {
             "administradorId": localStorage.getItem("userId")
         }
@@ -604,6 +615,7 @@ export function useDemada(){
     
     // cadastra dispositivo no sistema
     const cadastrarDispositivo = async (data) =>{
+        console.log("cadastrarDispositivo")
         
         const request = await fetch(`${url}/dispositivo`,{
             method: "POST",
@@ -622,6 +634,7 @@ export function useDemada(){
 
     // cadastrar demanda
     const cadastrarDemanda = async (data) => {
+        console.log("cadastrarDemanda")
         
         const request = await fetch(`${url}/demanda`,{
             method: "POST",
@@ -640,6 +653,8 @@ export function useDemada(){
     // define o id do solicitante 
     const defineIdSolicitante = async (tabelaDestino, id) =>{
         // tabela Destino = dispositivo || demanda
+        console.log("defineIdSolicitante")
+
 
         const userId = {
             "solicitante_id": localStorage.getItem("userId")

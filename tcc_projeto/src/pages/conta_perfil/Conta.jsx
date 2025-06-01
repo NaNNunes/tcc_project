@@ -11,8 +11,9 @@ import { AuthContext } from "../../context/userContext"
 import { Navigate } from "react-router-dom"
 
 const Conta = () => {
-  const {usuarioNome} = useContext(AuthContext);
-  if(usuarioNome === "Visitante") return <Navigate to="/login"/>
+  const {usuarioNome, userType, userId} = useContext(AuthContext);
+  if(localStorage.getItem("usuarioNome") === "Visitante") return <Navigate to="/login"/>
+  
 
   const [userInfos, setUserInfos] = useState({});
   const [userEndereco, setUserEndereco] = useState({});
@@ -20,9 +21,9 @@ const Conta = () => {
   // busca dados do user
   useEffect(()=>  {
     async function fetcData() {
-      const userType = localStorage.getItem("userType");
+      // const userType = localStorage.getItem("userType");
       // console.log(userType);
-      const userId = localStorage.getItem("userId");
+      // const userId = localStorage.getItem("userId");
       try{
         const request = await fetch(`http://localhost:5001/${userType}/${userId}`);
         const response = await request.json();
@@ -40,6 +41,8 @@ const Conta = () => {
       }
     }
     fetcData();
+    //  acompanhamento de context
+    console.log("Context --- Conta: ", (userType));
   },[])
 
   return (
