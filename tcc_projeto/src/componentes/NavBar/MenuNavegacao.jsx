@@ -237,7 +237,7 @@ const MenuNavegacao = () => {
                 {/* MUDAR O CSS PORQUE ESTÁ FICANDO MUITO COLADO NO MENU. */}
                 <NavDropdown
                     align='end'
-                    id='dropdown-perfil-adm'
+                    id='dropdown-perfil-solicitante'
                     title={
                         <Image 
                             src='/icons/person.svg'
@@ -248,7 +248,7 @@ const MenuNavegacao = () => {
                     }
                     className={styles.dropDownActive}
                 >
-                    <NavDropdown.Header>
+                    <NavDropdown.Header className={styles.navHeaderText}>
                         {/* SÓ BOTAR O NOME DO CABA AQUI */}
                         {usuarioNome}
                     </NavDropdown.Header>
@@ -295,7 +295,7 @@ const MenuNavegacao = () => {
                     }
                     className={styles.dropDownActive}
                 >
-                    <NavDropdown.Header>
+                    <NavDropdown.Header className={styles.navHeaderText}>
                         {usuarioNome}
                     </NavDropdown.Header>
 
@@ -336,8 +336,8 @@ const MenuNavegacao = () => {
 
     // Faz associação do perfil do usuário com o conteúdo que haverá no perfil.
     const perfis = {
-        solicitante: perfilNavSolicitante,
-        administrador: perfilNavAdm
+        "solicitante": perfilNavSolicitante,
+        "administrador": perfilNavAdm
     }
 
     // Perfil de acordo com o perfil do usuário. Se tiver deslogado mostra o botão para entrar.

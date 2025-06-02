@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import styles from "./Sobre.module.css";
+import styles from "./sobre.module.css";
 
 const Sobre = () => {
   return (

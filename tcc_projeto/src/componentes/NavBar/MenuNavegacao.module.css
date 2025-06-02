@@ -135,10 +135,15 @@
  
  /* Botão do dropdown com o perfil. */
  .navdropdownPerfil {
-    background-color: red;
-    border-radius: 50%;
     padding: 0 !important;
     display: flex;
+ }
+
+ .navHeaderText {
+    color: white !important;
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: center;
  }
 
 /* --- Aqui começa a estilização de quando estiver deslogado --- */
@@ -239,6 +244,10 @@
 
     .navbarE {
         gap: 0;
+    }
+
+    .navdropdownPerfil {
+        width: fit-content;
     }
 }
 
