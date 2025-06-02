@@ -133,6 +133,10 @@
     .botaoSubmit {
         width: 100%;
     }
+
+    .titleh3 {
+        font-size: 1.5rem;
+    }
 }
 
 @media screen and (max-width: 310px) {
@@ -143,5 +147,10 @@
     
     .listaBotao {
         width: 100%;
+    }
+
+    .titleh3 {
+        word-break: break-word;
+        overflow-wrap: break-word;
     }
 }

@@ -5,9 +5,11 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container'
+import Container from 'react-bootstrap/Container';
 import FloatingLabel  from 'react-bootstrap/FloatingLabel';
 import ListGroup from 'react-bootstrap/ListGroup';
+import Modal from 'react-bootstrap/Modal';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 // Importação dos icones.
 import { MdOutlineSmartphone } from "react-icons/md";
@@ -15,6 +17,8 @@ import { FaTabletAlt } from "react-icons/fa";
 import { FaLaptop } from "react-icons/fa6";
 import { FaDesktop } from "react-icons/fa";
 import { FaHeadphones } from "react-icons/fa6";
+import { TiArrowSortedDown } from "react-icons/ti";
+import { TiArrowSortedUp } from "react-icons/ti";   
 
 // Importação de estilo.
 import stylesCad from './CadastroDemanda.module.css'
@@ -38,9 +42,20 @@ const categoriaDispositivo = () => {
         formState: {errors},
     } = useForm();
 
+    const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
+
     // Categoria e marca selecionada no ListGroup.
     const categoriaSelecionada = watch("categoria");
     const [marcaSelecionada, setMarcaSelecionada] = useState("");
+
+    // Estados do modal.
+    const [mostrarModal, setMostrarModal] = useState(false);
+
+    // Dados do Form temporários.
+    const [dadosTemporarios, setDadosTemporarios] = useState(null);
+
+    // Assistência pre-selecionada como público.
+    const [atSelecionada, setAtSelecionada] = useState("Público");
 
     // Marcas e modelos para cada categoria.
     const dadosDispositivos = {
@@ -60,8 +75,22 @@ const categoriaDispositivo = () => {
             "Asus": ["ASUS Zenbook 14", "ASUS E510", "ASUS X515", "ASUS Vivobook 15"],
             "Acer": ["15-51M-57RT", "Aspire 3 A315-510P-35D2", "A515-45-R0XR", "Acer Nitro 5"],
             "Lenovo": ["IdeaPad 1 15IAU7", "82X5S00500", "IdeaPad 1 15IAU7", "LOQ 15IAX9E"]
+        },
+        "Desktop": {
+            "Nvidia": ["RTX 1060", "RTX 2060", "RTX 3060", "RTX 4060", "RTX 5060", "GT 710"],
+            "AMD Placa de Vídeo": ["RX 6600", "RX 9060 XT", "RX 7600", "RX 580"],
+            "AMD Processador": ["Ryzen 7 3800X", "Ryzen 7 5700X3D", "Ryzen 5 5600X", "Ryzen 5 7600X"],
+            "Intel Placa de Vídeo": ["Arc A750", "Arc B570", "Arc B580"],
+            "Intel Processador": ["I7 14700K", "I9 14900K", "I5 14600K", "Ultra 5 245KF"]
+        },
+        "Periférico": {
+            "Logitech Mouse": ["G Pro X Superlight 2", "G Pro", "G203", "G403"],
+            "Logitech Teclado": ["G213 Prodigy", "G413", "G512 Carbon"],
+            "Logitech Fone": ["Astro A50 X", "Astro A40", "Zone Vibe 100"],
+            "Razer Mouse": ["Viper", "Deathadder V3", "Viper V3 Pro"],
+            "Razer Teclado": ["Huntsman V3 Pro", "BlackWidow V3 Tenkeyless", "Huntsman Mini", "Deathstalker V2"]
         }
-    }
+    };
 
     // Lista com as categorias do dispositivo.
     const categorias = [
@@ -142,48 +171,22 @@ const categoriaDispositivo = () => {
             setValue("marca", "");
             setValue("modelo", "");
         }
-    })
+    });
 
-    /*
-        dados {
-            categoria:
-            marca:
-            fabricante:
-            modelo:
-            numSerie:
-            tensao:
-            amperagem:
-            cor:
-            descProblema:
-            observacoes:
-        }
-
-        dispositivo{
-            categoria:
-            marca:
-            fabricante:
-            modelo:
-            numSerie:
-            tensao:
-            amperagem:
-            cor:
-        }
-
-        demanda{
-            id dispositivo:
-            id solicitante:
-            descProblema:
-            observacoes:
-        }
-
-    */
-
-    //
     const {cadastrarDispositivo, cadastrarDemanda} = useDemada();
 
-    const onSubmit = async (dados) => {
-        // console.log("Dados: ", dados);
-        
+    const onSubmit = (dados) => {
+        setDadosTemporarios(dados);
+
+        // Mostrando o Modal para ser selecionada a assistência.
+        setMostrarModal(true);
+    }
+
+    const enviarDemandaCompleta = async (assistencia) => {
+        setMostrarModal(false);
+
+        const dados = dadosTemporarios;
+
         // nao consegui fazer a tempo de forma eficiente e mais segura
         // separando dados de dispositivo
         const dispositivo = {
@@ -195,7 +198,7 @@ const categoriaDispositivo = () => {
             "tensao": dados.tensao,
             "amperagem": dados.amperagem,
             "cor": dados.cor
-        }
+        };
 
         // cadastrar dispositivo
         const idDispostivo = await cadastrarDispositivo(dispositivo);
@@ -204,8 +207,9 @@ const categoriaDispositivo = () => {
         const infosDemanda = {
             "idDispostivo" : idDispostivo,
             "descProblema" : dados.descProblema,
-            "observacoes": dados.observacoes
-        }
+            "observacoes": dados.observacoes,
+            "assistencia": atSelecionada || "pública"
+        };
 
         // cadastrar demanda
         cadastrarDemanda(infosDemanda);
@@ -232,7 +236,7 @@ const categoriaDispositivo = () => {
                     {/* Título do container */}
                     <Row style={{paddingBottom: '1%'}}> 
                         <Col>
-                            <h3>Categoria do dispositivo</h3>
+                            <h3 className={stylesCad.titleh3}>Categoria do dispositivo</h3>
                         </Col>
                     </Row>
                     {/* Seleção de categoria */}
@@ -273,13 +277,7 @@ const categoriaDispositivo = () => {
                     {/* Título do container */}
                     <Row style={{paddingBottom: '1%'}}> 
                         <Col md={12} xs={12}>
-                            <h3 
-                                style={{
-                                    textAlign: "left"
-                                }}
-                            >
-                                Informações do dispositivo
-                            </h3>
+                            <h3 className={stylesCad.titleh3}>Informações do dispositivo</h3>
                         </Col>
                     </Row>
 
@@ -410,13 +408,7 @@ const categoriaDispositivo = () => {
                     {/* Título do container */}
                     <Row style={{paddingBottom: '1%'}}>
                         <Col md={12} xs={12}>
-                            <h3
-                                style={{
-                                    textAlign: "left"
-                                }}
-                            >
-                                Contextualize-nos
-                            </h3>
+                            <h3 className={stylesCad.titleh3}>Contextualize-nos</h3>
                         </Col>
                     </Row>
 
@@ -472,8 +464,55 @@ const categoriaDispositivo = () => {
                 </Container>
             </Form>
         </div>
-    </div>
-    
+
+        {/* Modal para escolher a assistência e fazer o envio da demanda. */}
+        <Modal show={mostrarModal} onHide={() => setMostrarModal(false)} centered>
+            {/* Título */}
+            <Modal.Header closeButton className="border-0">
+                <Modal.Title>Direcionar demanda</Modal.Title>
+            </Modal.Header>
+            
+            {/* Corpo com a seleção de assistência técnica. */}
+            <Modal.Body>
+                <span>
+                    Se tiver uma assistência técnica de preferência, escolha uma. Caso contrário, deixe como público.
+                </span>
+                <Dropdown 
+                    onToggle={(isOpen) => setOpenDropdown(isOpen ? 'selecaoAt' : null)}
+                >
+                    <Dropdown.Toggle
+                        id="dropdown-assistencia" 
+                    >
+                        {atSelecionada} {openDropdown === 'selecaoAt' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => setAtSelecionada("Público")}>
+                            Enviar como público
+                        </Dropdown.Item>
+
+                        <Dropdown.Divider />
+
+                        <Dropdown.Item onClick={() => setAtSelecionada("Assistência A")}>
+                            Assistência A
+                        </Dropdown.Item>
+
+                        <Dropdown.Item onClick={() => setAtSelecionada("Assistência B")}>
+                            Assistência B
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            </Modal.Body>
+
+            <Modal.Footer className="border-0">
+                <Button
+                    onClick={() => enviarDemandaCompleta(atSelecionada || null)}
+                >
+                    Enviar
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    </div> 
   )
 }
 

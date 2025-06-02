@@ -1,8 +1,4 @@
-.divtudo {
-  align-self: baseline !important;
-  align-content: baseline !important;
-}
-
+/* Div com todo o footer. */
 .footer {
   background-color: var(--black);
   color: var(--white);
@@ -10,14 +6,12 @@
   width: 100%;
 }
 
-.containerFooter {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  gap: 4rem;
+/* Linha onde o footer está. */
+.linhaFooter {
+  margin-left: auto;
 }
 
+/* Coluna com a logo e funcionalidades. */
 .coluna {
   display: flex;
   flex-direction: column;
@@ -25,18 +19,12 @@
   padding: 0 !important;
 }
 
-.colunaLogo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
+/* Imagem do ConnectFix. */
 .logo {
   width: 100px;
 }
 
-/* Span com texto para seguir. */
+/* Span com texto para seguir nas redes sociais. */
 .sigaRedes {
   font-size: 1rem;
   color: var(--white);
@@ -51,7 +39,7 @@
   padding: 0;
 }
 
-/*  */
+/* Link para as redes sociais. */
 .iconSocial {
   color: var(--white);
   transition: color 0.3s;
@@ -63,6 +51,7 @@
   color: var(--highlight-blue);
 }
 
+/* Título dentro do footer. */
 .tituloFooter {
   color: var(--white);
   font-size: 1.8rem;
@@ -71,6 +60,7 @@
   text-align: center;
 }
 
+/* Funcionalidades de navegação no footer. */
 .linkFooter {
   text-decoration: none;
   color: var(--white);
@@ -84,6 +74,7 @@
   color: var(--highlight-blue);
 }
 
+/* Informações que não são interagíveis. */
 .paragrafoFooter {
   font-size: 1rem;
   color: var(--white);
@@ -102,6 +93,10 @@
     .imgSenai {
         width: 40vh;
     }
+
+    .linhaFooter {
+      margin: auto;
+    }
 }
 
 @media screen and (max-width: 440px) {
@@ -115,5 +110,11 @@
 }
 
 @media screen and (max-width: 220px) {
+  .tituloFooter {
+    font-size: 1.05rem;
+  }
   
+  .sigaRedes {
+    font-size: 0.95rem;
+  }
 }
