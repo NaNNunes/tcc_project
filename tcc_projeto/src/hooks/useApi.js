@@ -5,17 +5,19 @@ import { AuthContext } from "../context/userContext";
 
 const url = import.meta.env.VITE_API_URL;
 
+// verifica credenciais de login
 export function useVerificaLogin(){
     const [solicitantes, setSolicitantes] = useState([]);
     const [administradores, setAdministradores] = useState([]);
 
     // funçoes do context para salvar id e tipo de user
-    const {setId, userId, setType, userType, login, setUsuarioNome} = useContext(AuthContext);
+    const {login} = useContext(AuthContext);
 
     // -- ATENCAO --
     // o codigo a seguir segue o paradigma POG,
     // Programação Orientada a Gambiarra, não repita isso em casa
-    // isso ocorre devido ao state por motivo de não sei
+    // isso ocorre devido a assincronia do state
+        // 1º chamada
     useEffect(()=>{
     async function fetchData(){
             try {
@@ -37,7 +39,6 @@ export function useVerificaLogin(){
             }
         }
         fetchData();
-        
     },[])
 
     // 2ª consulta atribuindo valores aos states de solicitante e adms
@@ -48,20 +49,17 @@ export function useVerificaLogin(){
             let userType = (i == 0) 
                 ? "solicitante" 
                 : "administrador"
-
-            
+    
             const request = await fetch(`${url}/${userType}`,{
                 method:"GET"
             });
 
             const response = await request.json();
             
-            if(i == 0){
-                setSolicitantes(response);
-            }
-            else{
-                setAdministradores(response);
-            }
+            // atribui a lista encontrada de acordo com o laço
+            (i == 0)
+                ?   setSolicitantes(response)
+                :   setAdministradores(response)
 
         }
     }
@@ -126,7 +124,8 @@ export function useVerificaLogin(){
                     console.log("----------------")
                     return "Login efetuado com sucesso";
         } 
-        else {
+        else // caso credenciais não localizada em nenhuma das tabelas
+        {
             return "usuario ou senha inválido";
         }
     }
@@ -137,7 +136,6 @@ export function useVerificaLogin(){
 // verificador de cpf valido
 export function useVerificadorDeCpf(){
     const verificador = (cpfStr = "000.000.000-00") => {
-
         // verifica se todos os digitos são repetidos | obs: da pra fazer um laço e comparar
         if (
             (cpfStr == "000.000.000-00") || (cpfStr == "111.111.111-11") || (cpfStr == "222.222.222-22") || 
@@ -250,7 +248,6 @@ export function useUser(){
 
     // cadastra user
     const cadastrarInfosUser = async (data) => {
-        console.log("cadastrarInfosUser")
         // define o tipo de user
         const user = localStorage.getItem("userType");
 
@@ -275,7 +272,6 @@ export function useUser(){
 
     // define validaçao do user
     const inserirValidacao = async (isValido) =>{
-        console.log("inserirValidacao")
         const id = localStorage.getItem('userId');
         const user = localStorage.getItem('userType')
 
@@ -287,7 +283,6 @@ export function useUser(){
 
     // adiciona pergunta de segurança
     const inserirPerguntaResposta = async (data) => {
-        console.log("inserirPerguntaResposta")
 
         const id = localStorage.getItem("userId");
         const user = localStorage.getItem("userType");
@@ -299,7 +294,6 @@ export function useUser(){
     }
 
     const atualizaInfosUser = async (data) => {
-        console.log("atualizaInfosUser")
 
         const user = localStorage.getItem("userType");
         const id = localStorage.getItem("userId");
@@ -312,7 +306,6 @@ export function useUser(){
     }
 
     const verificaSenhaInformada = async (data) => {
-        console.log("verificaSenhaInformada")
 
         const request = await fetch(`${url}/${userType}/${userId}`);
         const response = await request.json();
@@ -324,7 +317,6 @@ export function useUser(){
 
     // altera senha do user
     const alteraSenhaUser = async (senha) =>{
-        console.log("alteraSenhaUser")
 
         const newSenha = {
             "senha": senha
@@ -435,7 +427,8 @@ export function useComparaDados (){
             return solicitante.cpf === cpf;
         })
 
-        return solicitante2Find;
+        // true or false
+        return solicitante2Find !== undefined;
     }
 
     // verifica se cpf informado pelo user já está cadastrado em adms
@@ -446,10 +439,11 @@ export function useComparaDados (){
         // procura cpf na lista de adms
         const adm2Find = adms.find((adm) => {
             // console.log(adm.cpf === cpf)
-            return adm.cpf === cpf;
+            return adm.cpf !== cpf;
         })
 
-        return adm2Find;
+        // true or false
+        return adm2Find !== undefined;
     }
 
     // verifica email
@@ -464,7 +458,8 @@ export function useComparaDados (){
             return solicitante.email === email;
         })
 
-        return solicitante2Find;
+        // true or false
+        return solicitante2Find !== undefined;
     }
 
     // verifica se email informado pelo user já está cadastrado em adms
@@ -478,7 +473,8 @@ export function useComparaDados (){
             return adm.email === email;
         })
 
-        return adm2Find;
+        // true or false
+        return adm2Find !== undefined;
     }
 
     // verificar email de assistencias
@@ -492,7 +488,8 @@ export function useComparaDados (){
             return assistencia.email === email;
         })
 
-        return assistencia2Find;
+        // true or false
+        return assistencia2Find !== undefined;
     }
 
     return {
@@ -507,7 +504,6 @@ export function useEndereco(){
 
     // cadastra endereco
     const cadastrarEndereco = async (data) =>{
-        console.log("cadastrarEndereco")
 
         const request = await fetch(`${url}/endereco`,{
             method:"POST",
@@ -525,19 +521,19 @@ export function useEndereco(){
 
     // define id de endereco de acordo com o user, solicitante ou pseudo user
     const setaIdEmUser = async (endereco_id) =>{
-        console.log("setaIdEmUser")
 
         // define quem receberá o id do endereco
         const tipo = localStorage.getItem('userType');
-        alert(tipo);
-        const user = (localStorage.getItem('userType') == "solicitante") 
-            ? "solicitante"
-            : "assistencia"
+        const user = (tipo != "Visitante") 
+            && (tipo === "solicitante")
+                ? "solicitante"
+                : "assistencia"
 
         // pega o id do endereco
-        const id = (user === "solicitante") 
-            ? localStorage.getItem("userId")
-            : localStorage.getItem("assistenciaId");
+        const id = (user !== "Visitante") 
+            && (tipo === "solicitante")
+                ? localStorage.getItem("userId")
+                : localStorage.getItem("assistenciaId");
 
         const enderecoId = {
             "id_endereco": endereco_id
@@ -551,7 +547,6 @@ export function useEndereco(){
 
     // atualiza endereco do user
     const atualizarEndereco = async (idEndereco, data) =>{
-        console.log("atualizarEndereco")
 
         const request = await fetch(`${url}/endereco/${idEndereco}`,{
             method: "PATCH",
@@ -572,7 +567,6 @@ export function useEndereco(){
 
 // cadastra assistencia
 export function useCadastroAssistencia(){
-    console.log("useCadastroAssistencia")
 
     // insere assistencia
     const inserirAssistencia = async (data) =>{
@@ -589,7 +583,6 @@ export function useCadastroAssistencia(){
 
         // jogar para o context?
         localStorage.setItem("assistenciaId", id);
-        console.log(localStorage.getItem("assistenciaId"));
 
         // define o adm
         inserirAdministrador(id);
@@ -597,7 +590,6 @@ export function useCadastroAssistencia(){
 
     // insere o adm da assistencia
     const inserirAdministrador = async (id) => {
-        console.log("inserirAdministrador")
 
         const administrador = {
             "administradorId": localStorage.getItem("userId")
@@ -615,7 +607,6 @@ export function useDemada(){
     
     // cadastra dispositivo no sistema
     const cadastrarDispositivo = async (data) =>{
-        console.log("cadastrarDispositivo")
         
         const request = await fetch(`${url}/dispositivo`,{
             method: "POST",
@@ -634,7 +625,6 @@ export function useDemada(){
 
     // cadastrar demanda
     const cadastrarDemanda = async (data) => {
-        console.log("cadastrarDemanda")
         
         const request = await fetch(`${url}/demanda`,{
             method: "POST",
@@ -653,7 +643,6 @@ export function useDemada(){
     // define o id do solicitante 
     const defineIdSolicitante = async (tabelaDestino, id) =>{
         // tabela Destino = dispositivo || demanda
-        console.log("defineIdSolicitante")
 
 
         const userId = {

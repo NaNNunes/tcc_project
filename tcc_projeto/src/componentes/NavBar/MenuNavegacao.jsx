@@ -32,10 +32,9 @@ const MenuNavegacao = () => {
     const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
 
     // AQUI VAI FICAR O CONTEXT PARA DEFINIR O USUÁRIO.
+        // pega info do context por sincronia evitando que ao recarregar page o user seja deslogado
     const tipoUser = localStorage.getItem("userType");
     const perfilUsuario = (tipoUser !== "Visitante") && localStorage.getItem("userType");
-
-
 
     // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
     const contentNavSolicitante = (
@@ -139,7 +138,7 @@ const MenuNavegacao = () => {
                             {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
                             Operador {openDropdown === 'operador' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
                         </span>
-                    }f
+                    }
                 >
                     {/* Adicionar operador */}
                     <NavDropdown.Item 
@@ -265,11 +264,11 @@ const MenuNavegacao = () => {
                     </NavDropdown.Item>
 
                     <NavDropdown.Item
+                        // AQUI ENTRA O CÓDIGO PARA DESLOGAR
                         as={Button}
                         href='/login'
+                        onClick={()=>{logout()}}
                         className={styles.dropdownItem}
-                        // ta funcionando mas nao sei como
-                        // AQUI ENTRA O CÓDIGO PARA DESLOGAR
                     >   
                         <Image className={styles.icone} src="/icons/sair.svg" />Sair
                     </NavDropdown.Item>
@@ -312,7 +311,9 @@ const MenuNavegacao = () => {
 
                     <NavDropdown.Item
                         as={Button}
+                        // AQUI ENTRA O CÓDIGO PARA DESLOGAR
                         href='/login'
+                        onClick={()=>{logout()}}
                         className={styles.dropdownItem}
                     >   
                         <Image className={styles.icone} src="/icons/sair.svg" />Sair

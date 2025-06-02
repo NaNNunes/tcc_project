@@ -17,10 +17,6 @@ import { useContext, useEffect } from "react";
 
 const Login = () => {
 
-  const {logout, userId, userType, usuarioNome} = useContext(AuthContext);
-  useEffect(()=>{
-    console.log(localStorage.getItem("userType"));
-  })
   const {
     register,
     handleSubmit,
@@ -32,14 +28,11 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    
     // console.log("dados: ", data);
     const respVerificacao = verificaLogin(data);
 
     if(respVerificacao === "Login efetuado com sucesso"){
       alert(respVerificacao);
-      // acompanhamento de context
-      console.log("Context --- login: ", (userType));
       navigate("/criar-demanda");
     }
     else{

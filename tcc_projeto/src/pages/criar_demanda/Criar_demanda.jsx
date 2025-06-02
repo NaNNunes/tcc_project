@@ -9,10 +9,6 @@ const Criar_demanda = () => {
   // motivo de logout quando há F5 é o state de usuarioNome resetando no context
   if(localStorage.getItem("usuarioNome") === "Visitante") return <Navigate to="/login"/>
   
-  useEffect(()=>{
-    console.log(localStorage.getItem("userType"));
-  },[])
-
   return (
     <>
       <CadastroDemanda />

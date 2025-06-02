@@ -14,7 +14,6 @@ const Conta = () => {
   const {usuarioNome, userType, userId} = useContext(AuthContext);
   if(localStorage.getItem("usuarioNome") === "Visitante") return <Navigate to="/login"/>
   
-
   const [userInfos, setUserInfos] = useState({});
   const [userEndereco, setUserEndereco] = useState({});
 

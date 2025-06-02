@@ -54,11 +54,8 @@ const CadastroUser = () => {
     const cpfDeSolicitante = verificaCpfDeSolicitantes(data.cpf);
     const cpfDeAdm = verificaCpfDeAdms(data.cep);
 
-    if(
-      cpfDeSolicitante !== undefined 
-      ||
-      cpfDeAdm !== undefined
-    ){
+    // caso adm ou solicitante não seja undefined
+    if(cpfDeSolicitante || cpfDeAdm){
       alert("CPF já utilizado ");
       return false;
     } 
@@ -68,11 +65,16 @@ const CadastroUser = () => {
     const emailDeSolicitante = verificaEmailDeSolicitantes(data.email);
     const emailDeAssistencia = verificaEmailDeAssistencia(data.email)
 
-    if(
-        emailDeAdm !== undefined ||
-        emailDeSolicitante !== undefined || 
-        emailDeAssistencia !== undefined
-      ){
+    // caso adm ou solicitante ou assistencia não seja undefined 2
+    if
+    (
+        emailDeAdm  
+        || 
+        emailDeSolicitante  
+        || 
+        emailDeAssistencia 
+    )
+    {
       alert("Email em uso");
       return false;
     }
@@ -86,6 +88,7 @@ const CadastroUser = () => {
     console.log("Error: ", errors);
   };
 
+  
   const formatarCPF = (cpf) => {
     const numeros = cpf.replace(/\D/g, "").slice(0, 11);
     return numeros
