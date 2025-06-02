@@ -53,9 +53,9 @@ const CadastroAssistencia = () => {
     const emailDeAssistencia = verificaEmailDeAssistencia(data.assistenciaEmail)
 
     if(
-        emailDeAdm !== undefined ||
-        emailDeSolicitante !== undefined || 
-        emailDeAssistencia !== undefined
+        emailDeAdm ||
+        emailDeSolicitante || 
+        emailDeAssistencia 
       ){
       alert("Email em uso");
       return false;

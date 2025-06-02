@@ -72,8 +72,8 @@ const MinhaAssistencia = () => {
             <Row className='m-1'>
                 <Col>
                     <FloatingLabel
-                        controlId='assistenciaNomeFantasiaInput'
-                        label="Nome fantasia"
+                        controlId='assistenciaRzSocialInput'
+                        label="Razão Social"
                         className='mb-3'
                     >
                         <Form.Control

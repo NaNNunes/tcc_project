@@ -10,6 +10,7 @@ export const AuthProvider = ({children}) => {
     // define id do user
     const setId = (data) =>{
         setUserId(data);
+        
         // alternativa
         localStorage.setItem('userId',data);
     }
@@ -21,10 +22,11 @@ export const AuthProvider = ({children}) => {
         localStorage.setItem('userType', data);
     }
 
-    // nome
     useEffect( () => {
         const nome  = localStorage.getItem("userName") || "Visitante"
-        setUsuarioNome(nome)
+        const user = localStorage.getItem("userType") || "Visitante"
+        setUsuarioNome(nome);
+        setUserType(user);
     }, [])
 
     const login = (data, tipoUser) => {
@@ -32,15 +34,17 @@ export const AuthProvider = ({children}) => {
         localStorage.clear();
         // novo acesso
         setUserId(data.id);
+
         setUserType(tipoUser);
-    
         localStorage.setItem("userType", tipoUser);
-        setUsuarioNome(data.nome)
+
+        setUsuarioNome(data.nome);
+        localStorage.setItem("userName", data.nome); 
     }
 
     const logout = () =>{
-        setUsuarioNome("Visitante");
-        localStorage.setItem("userType", "Visitante");
+        localStorage.removeItem("userType");
+        localStorage.removeItem("usuarionNome"); 
     }
 
     return (

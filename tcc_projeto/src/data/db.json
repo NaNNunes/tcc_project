@@ -16,8 +16,35 @@
       "id_endereco": "6b03"
     }
   ],
-  "administrador": [],
-  "assistencia": [],
+  "administrador": [
+    {
+      "id": "9a1d",
+      "email": "usuario@gmail.com",
+      "cpf": "907.942.010-75",
+      "userTelefone": "40028922",
+      "nome": "adm",
+      "sobrenome": "MMz",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "1",
+      "resposta": "Pingo"
+    }
+  ],
+  "assistencia": [
+    {
+      "id": "0cff",
+      "assistenciaEmail": "assistencia@gmail.com",
+      "nomeFantasia": "nome Fantasia",
+      "razaoSocial": "Razão Social",
+      "cnpj": "58577114000189",
+      "assistenciaTelefone": "40028922",
+      "assistenciaTermos": "true",
+      "administradorId": "9a1d",
+      "id_endereco": "05e3"
+    }
+  ],
   "endereco": [
     {
       "id": "6b03",
@@ -34,6 +61,24 @@
         "coordinates": {
           "longitude": "-40.3339382",
           "latitude": "-20.3474948"
+        }
+      }
+    },
+    {
+      "id": "05e3",
+      "zipcode": "29060-290",
+      "city": "Vitória",
+      "neighborhood": "Jardim da Penha",
+      "street": "Rua Francisco Eugênio Mussiello",
+      "state": "ES",
+      "number": "13",
+      "cep": "29060290",
+      "service": "open-cep",
+      "location": {
+        "type": "Point",
+        "coordinates": {
+          "longitude": "-40.2947229",
+          "latitude": "-20.2802427"
         }
       }
     }

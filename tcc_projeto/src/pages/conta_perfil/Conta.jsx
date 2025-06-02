@@ -1,6 +1,7 @@
 import EditarPag from "../../componentes/conta_perfil/EditarPag"
 import Encerrar from "../../componentes/conta_perfil/Encerrar"
 import Endereco from "../../componentes/Endereco"
+import MinhaAssistencia from "../../componentes/assistencia_info/MinhaAssistencia"
 import MinhasInfos from "../../componentes/conta_perfil/MinhasInfos"
 import Seguranca from "../../componentes/conta_perfil/Seguranca"
 
@@ -40,25 +41,33 @@ const Conta = () => {
       }
     }
     fetcData();
-    //  acompanhamento de context
-    console.log("Context --- Conta: ", (userType));
   },[])
 
   return (
     <>
+      
+      {/* infos do user */}
       <MinhasInfos 
         nome={userInfos.nome}
         sobrenome={userInfos.sobrenome}
         email={userInfos.email}
         userTelefone={userInfos.userTelefone}
       />
+
+      {/* infos da assistencia */}
       {
-        localStorage.getItem("userType") === "administrador" 
-          ? <EditarPag />
-          : <Endereco 
-              endereco={userEndereco}
-            />
+        (localStorage.getItem("userType") === "administrador")
+          &&
+            <>
+              <MinhaAssistencia/>
+              <EditarPag />
+            </> 
       }
+
+      <Endereco 
+        endereco={userEndereco}
+      />
+
       <Seguranca/>
 
       {/*  verificação de certeza e definir registro de user como falso */}
