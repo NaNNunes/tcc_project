@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import styles from "./login.module.css";
@@ -16,6 +16,9 @@ import { AuthContext } from "../../context/userContext";
 import { useContext, useEffect } from "react";
 
 const Login = () => {
+
+  const userTipo = localStorage.getItem("userType");
+  if( userTipo !== "Visitante")return <Navigate to={userTipo === "solicitante" ? "/criar-demanda" : "/conta"}/>
 
   const {
     register,

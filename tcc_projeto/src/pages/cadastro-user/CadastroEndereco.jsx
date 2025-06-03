@@ -58,8 +58,11 @@ const CadastroEndereco = () => {
     // consulta
   
     try {
-      const response = await fetch(`https://brasilapi.com.br/api/cep/v2/${zipCode}`);
+      // const response = await fetch(`https://brasilapi.com.br/api/cep/v2/${zipCode}`);
+      console.log(zipCode);
+      const response = await fetch(`https://viacep.com.br/ws/${zipCode}/json/`);
       const data = await response.json();
+      console.log(data);
 
       // consulta sem sucesso
       if (!(response.ok)) {
@@ -175,7 +178,7 @@ const CadastroEndereco = () => {
                 disabled={!inputFieldEnable}
                 type="text"
                 placeholder=" "
-                {...register("city")}
+                {...register("localidade")}
               />
                   
             </FloatingLabel>
@@ -191,7 +194,7 @@ const CadastroEndereco = () => {
                 disabled={!inputFieldEnable}
                 type="text"
                 placeholder="Bairro"
-                {...register("neighborhood")}
+                {...register("bairro")}
               />
 
             </FloatingLabel>
@@ -207,7 +210,7 @@ const CadastroEndereco = () => {
                 disabled={!inputFieldEnable}
                 type="text"
                 placeholder="Logradouro"
-                {...register("street")}
+                {...register("logradouro")}
               />
 
             </FloatingLabel>
@@ -221,7 +224,7 @@ const CadastroEndereco = () => {
                 disabled={!inputFieldEnable}
                 type="text"
                 placeholder="UF"
-                {...register("state")}
+                {...register("uf")}
               />
             </FloatingLabel>
           </Col>

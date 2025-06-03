@@ -439,7 +439,7 @@ export function useComparaDados (){
         // procura cpf na lista de adms
         const adm2Find = adms.find((adm) => {
             // console.log(adm.cpf === cpf)
-            return adm.cpf !== cpf;
+            return adm.cpf === cpf;
         })
 
         // true or false
@@ -605,6 +605,8 @@ export function useCadastroAssistencia(){
 
 export function useDemada(){
     
+    const {userId} = useContext(AuthContext);
+
     // cadastra dispositivo no sistema
     const cadastrarDispositivo = async (data) =>{
         
@@ -644,14 +646,14 @@ export function useDemada(){
     const defineIdSolicitante = async (tabelaDestino, id) =>{
         // tabela Destino = dispositivo || demanda
 
-
-        const userId = {
-            "solicitante_id": localStorage.getItem("userId")
+        const solicitante = {
+            "solicitante_id": userId || localStorage.getItem("userId")
         }
 
+        console.log(solicitante)
         fetch(`${url}/${tabelaDestino}/${id}`,{
             method: "PATCH",
-            body: JSON.stringify(userId)
+            body: JSON.stringify(solicitante)
         })
     }
 

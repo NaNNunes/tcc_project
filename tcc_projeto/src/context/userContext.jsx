@@ -10,7 +10,6 @@ export const AuthProvider = ({children}) => {
     // define id do user
     const setId = (data) =>{
         setUserId(data);
-        
         // alternativa
         localStorage.setItem('userId',data);
     }
@@ -33,18 +32,17 @@ export const AuthProvider = ({children}) => {
         // reset
         localStorage.clear();
         // novo acesso
-        setUserId(data.id);
+        setId(data.id);
 
-        setUserType(tipoUser);
-        localStorage.setItem("userType", tipoUser);
+        setType(tipoUser);
 
         setUsuarioNome(data.nome);
         localStorage.setItem("userName", data.nome); 
     }
 
     const logout = () =>{
-        localStorage.removeItem("userType");
-        localStorage.removeItem("usuarionNome"); 
+        localStorage.setItem("userType","Visitante");
+        localStorage.setItem("userName", "Visitante"); 
     }
 
     return (

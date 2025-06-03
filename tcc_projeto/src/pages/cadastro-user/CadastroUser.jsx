@@ -53,7 +53,8 @@ const CadastroUser = () => {
     // verificar se cpf ja foi cadastrado por outrem
     const cpfDeSolicitante = verificaCpfDeSolicitantes(data.cpf);
     const cpfDeAdm = verificaCpfDeAdms(data.cep);
-
+    console.log("cpfDeSolicitante: ", cpfDeSolicitante);
+    console.log("cpfDeAdm: ", cpfDeAdm);
     // caso adm ou solicitante não seja undefined
     if(cpfDeSolicitante || cpfDeAdm){
       alert("CPF já utilizado ");
