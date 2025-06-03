@@ -514,9 +514,13 @@ export function useEndereco(){
         }) 
 
         const response = await request.json();
+        
         const endereco_id = response.id;      
         // define id do endereco como chave estrangeira 
         setaIdEmUser(endereco_id);
+        
+        // retorna endereço fora cadastrado e user recebeu o id do endereco 
+        return response.ok; 
     }
 
     // define id de endereco de acordo com o user, solicitante ou pseudo user
@@ -539,10 +543,11 @@ export function useEndereco(){
             "id_endereco": endereco_id
         }
 
-        fetch(`${url}/${user}/${id}`,{
+        const request = await fetch(`${url}/${user}/${id}`,{
             method: "PATCH",
             body: JSON.stringify(enderecoId)
         })
+
     }
 
     // atualiza endereco do user

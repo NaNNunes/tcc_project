@@ -33,9 +33,7 @@ export const AuthProvider = ({children}) => {
         localStorage.clear();
         // novo acesso
         setId(data.id);
-
         setType(tipoUser);
-
         setUsuarioNome(data.nome);
         localStorage.setItem("userName", data.nome); 
     }
@@ -43,6 +41,8 @@ export const AuthProvider = ({children}) => {
     const logout = () =>{
         localStorage.setItem("userType","Visitante");
         localStorage.setItem("userName", "Visitante"); 
+        localStorage.removeItem("userId");
+        location.reload();
     }
 
     return (

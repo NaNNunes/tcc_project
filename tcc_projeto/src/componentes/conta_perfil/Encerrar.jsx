@@ -4,8 +4,12 @@ import Card from 'react-bootstrap/Card';
 
 import { useUser } from '../../hooks/useApi';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../context/userContext';
 const Encerrar = () => {
+    
+    const {logout} = useContext(AuthContext);
+
     const {register, handleSubmit, formState:{error}} = useForm();
     
     const {inserirValidacao, verificaSenhaInformada} = useUser();
@@ -24,10 +28,14 @@ const Encerrar = () => {
 
     // alternativa   
     const exclusao = async () => {
-        if(confirm("Ação a seguir excluirá a sua conta, deseja prosseguir?")){
+        const confirmacao = confirm("Ação a seguir excluirá a sua conta, deseja prosseguir?");
+        if(confirmacao){
             const inputSenha = prompt("Inisra sua senha para confirmar")
             verificaSenhaInformada(inputSenha)
-                && inserirValidacao(false)}
+                && 
+                    inserirValidacao(false);
+                    logout();
+        }
     }
 
     const onSubmit = async (data) => {

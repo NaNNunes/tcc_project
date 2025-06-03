@@ -1,11 +1,37 @@
 import {Button, Form, Row, Col, FloatingLabel} from 'react-bootstrap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-const MinhaAssistencia = () => {
+import EditarPag from '../conta_perfil/EditarPag';
+import Endereco from '../Endereco';
+
+const MinhaAssistencia = (props) => {
+
+    const {register, handleSubmit, setValue, formState:{errors}} = useForm();
+
+    const listaAssistencias = props.assistencias;
+
+    const onSubmit = (data) =>{
+
+    }
+
+    const onError = (error) =>{
+
+    }
+
+    const buscaEnderecoById = async (id_endereco) =>{
+        const buscaEnderecoById = await fetch(`http://localhost:5001/endereco/${id_endereco}`);
+        const respBuscaEnderecoById = await buscaEnderecoById.json();
+
+        console.log(respBuscaEnderecoById);
+    }
 
   return (
     <>
-        <Form className='border rounded-3 shadow mb-3 p-1'>
+        <Form 
+            className='border rounded-3 shadow mb-3 p-1'
+            onSubmit={handleSubmit(onSubmit, onError)}
+        >
             <Row className='p-1'>
                 <Col className='m-1'>
                     <h3>Minha Assistencia</h3>
@@ -24,10 +50,35 @@ const MinhaAssistencia = () => {
                 <Col sm={4}>
                     {/* Fazer verificaão da quantidade de assistencias
                         cadastradas pelo user de acordo com seu id */}
-                    <Form.Select className='mb-3 p-3'>
+                    <Form.Select 
+                        className='mb-3 p-3'
+                        // ao trocar opção do select, 
+                        // cnpj é definido e assim as infos da assistencia carregarão nos campos abaixo
+                        onChange={(e) =>{
+                            const cnpjSelecionado = e.target.value;
+                            
+                            // procura assistencia com cnpj selecionado na lista de assitencias do user
+                            const assistencia2find = listaAssistencias.find((assistencia) => {
+                                return assistencia.cnpj === cnpjSelecionado; 
+                            });
+                            const id_endereco_assistencia = assistencia2find.id_endereco;
+
+                            // preenche campos com dados da assistencia encontrada
+                            for(const [key,value] of Object.entries(assistencia2find)){
+                                setValue(key, value);
+                            }
+
+                            // pega fk id endereco da assistencia
+                            buscaEnderecoById(id_endereco_assistencia);
+                        }}
+                    >
                         <option> CNPJ </option>
-                        <option> 400.289.220/0001-01 </option>
-                        <option> 123.456.789/0001-01 </option>
+                        {
+                            listaAssistencias.map((assistencia) => (
+                                <option key={assistencia.id}>{assistencia.cnpj}</option>
+                            ))
+                        }
+
                     </Form.Select>
                 </Col>
                 <Col>
@@ -39,6 +90,9 @@ const MinhaAssistencia = () => {
                         <Form.Control
                             type="email"
                             placeholder=""
+                            {
+                                ...register("assistenciaEmail")
+                            }
                         />
                     </FloatingLabel>
                 </Col>
@@ -53,6 +107,9 @@ const MinhaAssistencia = () => {
                         <Form.Control
                             type='text'
                             placeholder=''
+                            {
+                                ...register("assistenciaTelefone")
+                            }
                         />
                     </FloatingLabel>
                 </Col>
@@ -65,6 +122,9 @@ const MinhaAssistencia = () => {
                         <Form.Control
                             type='text'
                             placeholder=''
+                            {
+                                ...register("nomeFantasia")
+                            }
                         />
                     </FloatingLabel>
                 </Col>
@@ -79,6 +139,9 @@ const MinhaAssistencia = () => {
                         <Form.Control
                             type='text'
                             placeholder=''
+                            {
+                                ...register("razaoSocial")
+                            }
                         />
                     </FloatingLabel>
                 </Col>
@@ -92,6 +155,9 @@ const MinhaAssistencia = () => {
                 </Col>
             </Row>
         </Form>
+
+        <Endereco  endereco={""}/>
+        <EditarPag />
     </>
   )
 }

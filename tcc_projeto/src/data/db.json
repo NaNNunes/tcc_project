@@ -1,20 +1,88 @@
 {
   "solicitante": [
-    
+    {
+      "id": "d150",
+      "email": "user@gmail.com.br",
+      "cpf": "466.498.600-93",
+      "userTelefone": "40028922",
+      "nome": "User",
+      "sobrenome": "Usersurname",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "1",
+      "resposta": "Blu",
+      "id_endereco": "3364"
+    }
   ],
   "administrador": [
-   
+    {
+      "id": "176d",
+      "email": "adm@gmail.com",
+      "cpf": "907.942.010-75",
+      "userTelefone": "40028922",
+      "nome": "adm",
+      "sobrenome": "MMz",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "1",
+      "resposta": "Blu"
+    }
   ],
   "assistencia": [
-   
+    {
+      "id": "28fd",
+      "assistenciaEmail": "assistencia@gmail.com",
+      "nomeFantasia": "nome Fantasia",
+      "razaoSocial": "Razão Social",
+      "cnpj": "58577114000189",
+      "assistenciaTelefone": "40028922",
+      "assistenciaTermos": "true",
+      "administradorId": "176d",
+      "id_endereco": "b19f"
+    }
   ],
   "endereco": [
-   
+    {
+      "id": "3364",
+      "zipcode": "29135-542",
+      "localidade": "Viana",
+      "bairro": "Marcílio de Noronha",
+      "logradouro": "Rua Teófilo Otoni",
+      "uf": "ES",
+      "number": "13",
+      "cep": "29135-542",
+      "complemento": "",
+      "unidade": "",
+      "estado": "Espírito Santo",
+      "regiao": "Sudeste",
+      "ibge": "3205101",
+      "gia": "",
+      "ddd": "27",
+      "siafi": "5701"
+    },
+    {
+      "id": "b19f",
+      "zipcode": "29118-480",
+      "localidade": "Vila Velha",
+      "bairro": "Santa Rita",
+      "logradouro": "Rua Olavo Bilac",
+      "uf": "ES",
+      "number": "10",
+      "complemento": "Perto do pet Shop",
+      "cep": "29118-480",
+      "unidade": "",
+      "estado": "Espírito Santo",
+      "regiao": "Sudeste",
+      "ibge": "3205200",
+      "gia": "",
+      "ddd": "27",
+      "siafi": "5703"
+    }
   ],
-  "dispositivo": [
-    
-  ],
-  "demanda": [
-    
-  ]
+  "dispositivo": [],
+  "demanda": []
 }

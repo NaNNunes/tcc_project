@@ -27,17 +27,18 @@ const CadastroEndereco = () => {
   const {inserirValidacao} = useUser();
   const navigate = useNavigate();
 
-  const [endereco, setEndereco] = useState({
-    city: "",
-    neighborhood: "",
-    street: "",
-    state: ""
-  })
-
   const userCategoria = localStorage.getItem("userCategoria");
 
   // enable input at the fields
   const [inputFieldEnable, setInputFieldEnable] = useState(false);
+
+  // endereco
+  const [endereco, setEndereco] = useState({
+    uf: "",
+    localidade: "",
+    bairro: "",
+    logradouro: ""
+  })
 
   // busca o cep informado na api e define valores da instancia do objeto nos campos
   const handleZipCodeBlur = async (e) =>{
@@ -58,19 +59,21 @@ const CadastroEndereco = () => {
     // consulta
   
     try {
+      // brasilApi
       // const response = await fetch(`https://brasilapi.com.br/api/cep/v2/${zipCode}`);
-      console.log(zipCode);
+
+      // viaCep
       const response = await fetch(`https://viacep.com.br/ws/${zipCode}/json/`);
       const data = await response.json();
-      console.log(data);
 
-      // consulta sem sucesso
-      if (!(response.ok)) {
+      if(data.erro){
         // alerta de erro
         alert("Endereço não encontrado");
+        setInputFieldEnable(true);
+
         //limpa campos
-        for (const [key, value] of Object.entries(endereco)) {
-          setValue(key, value)
+        for (const [key] of Object.entries(endereco)) {
+          setValue(key, "")
         }
         return false;
       }
@@ -88,8 +91,8 @@ const CadastroEndereco = () => {
       setInputFieldEnable(true);
       alert("ops, algo deu errado")
       //limpa campos
-      for (const [key, value] of Object.entries(endereco)) {
-        setValue(key, value)
+      for (const [key] of Object.entries(endereco)) {
+        setValue(key, "")
       }
     }
   }
@@ -97,7 +100,6 @@ const CadastroEndereco = () => {
   const onSubmit = (data) => {
     cadastrarEndereco(data)
     inserirValidacao(true);
-
     navigate("/login");
   };
 
@@ -246,6 +248,23 @@ const CadastroEndereco = () => {
                 })}
               />
             </FloatingLabel>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+              <FloatingLabel
+                controlId="complementoUserInput"
+                label="Complemento"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="text"
+                  placeholder=""
+                  {
+                    ...register("complemento")
+                  }
+                />
+              </FloatingLabel>
           </Col>
         </Row>
 

@@ -19,10 +19,11 @@ const Endereco = (props) => {
   // para cadastro de um novo endereco
   const {cadastrarEndereco, atualizarEndereco} = useEndereco();
 
-  const endereco = props.endereco
+  // 
+  const endereco = props.endereco;
 
   // preenche campos de endereco // mudar para onload
-  for(const [key, value] of Object.entries(props.endereco)){
+  for(const [key, value] of Object.entries(endereco)){
     setValue(key, value);
   }
 
@@ -55,7 +56,7 @@ const Endereco = (props) => {
       // desabilita alteração de campo
       setInputFieldEnable(false);
       //limpa campos
-      for(const[key, value] of Object.entries(props.endereco)){
+      for(const[key, value] of Object.entries(endereco)){
         setValue(key,"")
       }
       return false;
@@ -72,7 +73,7 @@ const Endereco = (props) => {
         // alerta de erro
         alert("Endereço não encontrado");
         //limpa campos
-        for (const [key, value] of Object.entries(props.endereco)) {
+        for (const [key] of Object.entries(endereco)) {
           setValue(key, "")
         }
         return false;
@@ -92,7 +93,7 @@ const Endereco = (props) => {
       
       alert("ops, algo deu errado 2")
       //limpa campos
-      for (const [key, value] of Object.entries(props.endereco)) {
+      for (const [key] of Object.entries(endereco)) {
         setValue(key, "")
       }
     }
@@ -103,10 +104,10 @@ const Endereco = (props) => {
     console.log(data);
     
     // verifica se o cep foi alterado
-    console.log(data.zipcode == props.endereco.zipcode);
-    (data.zipcode == props.endereco.zipcode)
+    console.log(data.zipcode == endereco.zipcode);
+    (data.zipcode == endereco.zipcode)
       ? cadastrarEndereco(data)
-      : atualizarEndereco(props.endereco.id ,data)
+      : atualizarEndereco(endereco.id ,data)
 
   }
 
@@ -166,7 +167,7 @@ const Endereco = (props) => {
                   type="text"
                   placeholder=""
                   {
-                    ...register("city")
+                    ...register("localidade")
                   }
                 />
               </FloatingLabel>
@@ -182,7 +183,7 @@ const Endereco = (props) => {
                   type="text"
                   placeholder=""
                   {
-                    ...register("neighborhood")
+                    ...register("bairro")
                   }
                 />
               </FloatingLabel>
@@ -200,7 +201,7 @@ const Endereco = (props) => {
                   type="text"
                   placeholder=""
                   {
-                    ...register("street")
+                    ...register("logradouro")
                   }
                 />
               </FloatingLabel>
@@ -216,7 +217,7 @@ const Endereco = (props) => {
                   type="text"
                   placeholder=""
                   {
-                    ...register("state")
+                    ...register("uf")
                   }
                 />
               </FloatingLabel>
