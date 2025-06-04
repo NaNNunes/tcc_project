@@ -1,0 +1,10 @@
+/* Card com o curso */
+.caixa {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    margin: 0px 0px;
+    padding-left: 8%;
+    padding-right: 8%;
+    max-width: none;
+}
