@@ -10,6 +10,8 @@ const MinhaAssistencia = (props) => {
     const {register, handleSubmit, setValue, formState:{errors}} = useForm();
 
     const listaAssistencias = props.assistencias;
+    const [idAssistencia, setIdAssistencia] = useState();
+    const [enderecoAssistencia, setEnderecoAssistencia] = useState({});
 
     const onSubmit = (data) =>{
 
@@ -24,6 +26,7 @@ const MinhaAssistencia = (props) => {
         const respBuscaEnderecoById = await buscaEnderecoById.json();
 
         console.log(respBuscaEnderecoById);
+        setEnderecoAssistencia(respBuscaEnderecoById);
     }
 
   return (
@@ -61,6 +64,8 @@ const MinhaAssistencia = (props) => {
                             const assistencia2find = listaAssistencias.find((assistencia) => {
                                 return assistencia.cnpj === cnpjSelecionado; 
                             });
+                            // props de edita pagamento
+                            setIdAssistencia(assistencia2find.id);
                             const id_endereco_assistencia = assistencia2find.id_endereco;
 
                             // preenche campos com dados da assistencia encontrada
@@ -155,9 +160,10 @@ const MinhaAssistencia = (props) => {
                 </Col>
             </Row>
         </Form>
-
-        <Endereco  endereco={""}/>
-        <EditarPag />
+        
+        
+        <Endereco  endereco={enderecoAssistencia}/>
+        <EditarPag id_assistencia={idAssistencia}/>
     </>
   )
 }

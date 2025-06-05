@@ -249,6 +249,9 @@ const Endereco = (props) => {
                 <Form.Control
                   type="text"
                   placeholder=""
+                  {
+                    ...register("complemento")
+                  }
                   
                 />
               </FloatingLabel>

@@ -273,7 +273,7 @@ export function useUser(){
     // define validaçao do user
     const inserirValidacao = async (isValido) =>{
         const id = localStorage.getItem('userId');
-        const user = localStorage.getItem('userType')
+        const user = localStorage.getItem('userType');
 
         fetch(`${url}/${user}/${id}`,{
             method:"PATCH",
@@ -591,6 +591,7 @@ export function useCadastroAssistencia(){
 
         // define o adm
         inserirAdministrador(id);
+        inserirValidacaoAssistencia(id, true)
     }
 
     // insere o adm da assistencia
@@ -605,7 +606,15 @@ export function useCadastroAssistencia(){
         })
     }
 
-    return {inserirAssistencia};
+    const inserirValidacaoAssistencia = async (idAssistencia, isValido) => {
+
+        fetch(`${url}/assistencia/${idAssistencia}`,{
+            method: "PATCH",
+            body: JSON.stringify({"isValido":isValido})
+        })
+    }
+
+    return {inserirAssistencia, inserirValidacaoAssistencia};
 }
 
 export function useDemada(){
