@@ -99,7 +99,7 @@ const MenuNavegacao = () => {
                     {/* Procurar demandas */}
                     <NavDropdown.Item 
                         as={Link} 
-                        to='#' 
+                        to='/procurar-demandas' 
                         className={styles.dropdownItem}
                     >
                         <Image className={styles.icone} src='/icons/zoom_in.svg' />Procurar demandas

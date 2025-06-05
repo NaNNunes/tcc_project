@@ -15,6 +15,7 @@ import Login from "./pages/login/Login.jsx";
 import PerguntaSeguranca from "./pages/cadastro-user/PerguntaSeguranca.jsx";
 import SelecaoUsuario from "./pages/selecao_usuario/SelecaoUsuario.jsx";
 import Sobre from "./pages/sobre/Sobre.jsx";
+import ProcurarDemandas from "./pages/procurar-demandas/ProcurarDemandas.jsx";
 
 const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
       {
         path: "/sobre",
         element: <Sobre />,
+      },
+      {
+        path: "/procurar-demandas",
+        element: <ProcurarDemandas />,
       },
     ],
   },
