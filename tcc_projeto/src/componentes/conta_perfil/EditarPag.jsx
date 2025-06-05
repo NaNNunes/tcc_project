@@ -3,11 +3,13 @@ import {Form, FloatingLabel, Row, Col, Button} from 'react-bootstrap';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useUser } from '../../hooks/useApi';
+import { useUser, useCadastroAssistencia } from '../../hooks/useApi';
 
-const EditarPag = () => {
+const EditarPag = (props) => { // TO DO solicitar senha e definir assistencia como falsa
     const {register, handleSubmit, formState:{error}} = useForm();
     
+    const {inserirValidacaoAssistencia} = useCadastroAssistencia();
+
     const {inserirValidacao, verificaSenhaInformada} = useUser();
     const [liberaCampoSenha, setLiberaCampoSenha] = useState(false);
 
@@ -24,17 +26,19 @@ const EditarPag = () => {
 
     // alternativa   
     const exclusao = async () => {
-        if(confirm("Ação a seguir excluirá a sua conta, deseja prosseguir?")){
+        const validacao = confirm("Ação a seguir excluirá a sua conta, deseja prosseguir?");
+        if(validacao){
             const inputSenha = prompt("Inisra sua senha para confirmar")
-            verificaSenhaInformada(inputSenha)
-                && inserirValidacao(false)}
+            verificaSenhaInformada(inputSenha) === true
+                &&  inserirValidacaoAssistencia(props.id_assistencia, false);
+        }
     }
 
     const onSubmit = async (data) => {
         // nao funciona
-        console.log(data);
-        (verificaSenhaInformada(data.senha))
-            && inserirValidacao(false)
+        // console.log(data);
+        // (verificaSenhaInformada(data.senha))
+        //     && inserirValidacao(false)
     }
 
     const onError = (error) => {
@@ -80,7 +84,7 @@ const EditarPag = () => {
                         value="Encerrar"
                         type="submit"
                         size="lg"
-                        onClick={()=>{verificaCerteza()}}
+                        onClick={()=>{exclusao()}}
                     />
                 </Col>
             </Row>
