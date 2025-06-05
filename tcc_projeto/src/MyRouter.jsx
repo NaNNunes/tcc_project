@@ -16,6 +16,8 @@ import PerguntaSeguranca from "./pages/cadastro-user/PerguntaSeguranca.jsx";
 import SelecaoUsuario from "./pages/selecao_usuario/SelecaoUsuario.jsx";
 import Sobre from "./pages/sobre/Sobre.jsx";
 import ProcurarDemandas from "./pages/procurar-demandas/ProcurarDemandas.jsx";
+import Inicial from "./pages/inicial/Inicial.jsx";
+import Termos from "./pages/termos/Termos.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,9 +33,14 @@ const router = createBrowserRouter([
         path: "/home",
         element: <Home />,
       },
-      { 
+      {
+
+        path: "/inicial",
+        element: <Inicial />
+      },
+      {
         path: "/login",
-        element: <Login /> 
+        element: <Login />
       },
       {
         path: "/cadastro",
@@ -79,6 +86,10 @@ const router = createBrowserRouter([
         path: "/procurar-demandas",
         element: <ProcurarDemandas />,
       },
+      {
+        path: "/termos-de-uso",
+        element: <Termos />
+      }
     ],
   },
 ]);
