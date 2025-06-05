@@ -109,7 +109,20 @@ const categoriaDispositivo = () => {
                 type='text'
                 placeholder=''
                 {...register("marca", {
-                    required: "A marca é obrigatória"
+                    required: "A marca é obrigatória",
+                    minLength: {
+                        value: 2,
+                        message: "A marca deve conter pelo menos 2 caracteres."
+                    },
+                    maxLength: {
+                        value: 45,
+                        message: "A marca não pode conter mais do que 45 caracteres"
+                    },
+                    pattern: {
+                    value: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 &+\-\.]+$/,
+                    message:
+                        "Use somente letras, números, espaços e símbolos",
+                    },
                 })}
             />
             ) 
@@ -118,7 +131,20 @@ const categoriaDispositivo = () => {
                 type='select'
                 placeholder=''
                 {...register("marca", {
-                    required: "A marca é obrigatória"
+                    required: "A marca é obrigatória",
+                    minLength: {
+                        value: 2,
+                        message: "A marca deve conter pelo menos 2 caractere."
+                    },
+                    maxLength: {
+                        value: 45,
+                        message: "A marca não pode conter mais do que 45 caracteres"
+                    },
+                    pattern: {
+                    value: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 &+\-\.]+$/,
+                    message:
+                        "Use somente letras, números, espaços e símbolos",
+                    },
                 })}
                 onChange={(e) => {
                     setMarcaSelecionada(e.target.value); // Atualiza a marca selecionada.
@@ -144,7 +170,20 @@ const categoriaDispositivo = () => {
             type='text'
             placeholder=''
             {...register("modelo", {
-                required: "O modelo é obrigatório"
+                required: "O modelo é obrigatório",
+                minLength: {
+                    value: 2,
+                    message: "A modelo deve conter pelo menos 2 caracteres."
+                },
+                maxLength: {
+                    value: 30,
+                    message: "A modelo não pode conter mais do que 30 caracteres"
+                },
+                pattern: {
+                value: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 &+\-\.]+$/,
+                message:
+                    "Use somente letras, números, espaços e símbolos",
+                },
             })}
         />
     ) : (
@@ -152,7 +191,20 @@ const categoriaDispositivo = () => {
             type='text'
             placeholder=''
             {...register("modelo", {
-                required: 'O modelo é obrigatório'
+                required: 'O modelo é obrigatório',
+                minLength: {
+                    value: 2,
+                    message: "A modelo deve conter pelo menos 2 caracteres."
+                },
+                maxLength: {
+                    value: 30,
+                    message: "A modelo não pode conter mais do que 30 caracteres"
+                },
+                pattern: {
+                value: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 &+\-\.]+$/,
+                message:
+                    "Use somente letras, números, espaços e símbolos",
+                },
             })}
         >
             <option value="">Selecione uma opção</option>
@@ -165,13 +217,12 @@ const categoriaDispositivo = () => {
         </Form.Select>
     ));
 
-    // Quando o usuário selecionar a categoria outros, reseta os campos de marca de modelo.
+    // Quando o usuário mudar a categoria, reseta os campos de marca de modelo.
     useEffect(() => {
-        if (categoriaSelecionada === "Outros") {
-            setValue("marca", "");
-            setValue("modelo", "");
-        }
-    });
+        setMarcaSelecionada("");
+        setValue("marca", "");
+        setValue("modelo", "");
+    }, [categoriaSelecionada]);
 
     const {cadastrarDispositivo, cadastrarDemanda} = useDemada();
 
@@ -305,7 +356,17 @@ const categoriaDispositivo = () => {
                                 <Form.Control 
                                     type='text'
                                     placeholder=''
-                                    {...register("fabricante")}
+                                    {...register("fabricante", {
+                                        maxLength: {
+                                            value: 45,
+                                            message: "A fabricante não pode conter mais do que 45 caracteres"
+                                        },
+                                        pattern: {
+                                        value: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 &+\-\.]+$/,
+                                        message:
+                                            "Use somente letras, números, espaços e símbolos",
+                                        },
+                                    })}
                                 />
                             </FloatingLabel>
                             {errors.fabricante && (
@@ -337,7 +398,17 @@ const categoriaDispositivo = () => {
                                 <Form.Control 
                                     type='text'
                                     placeholder=''
-                                    {...register("numSerie")}
+                                    {...register("numSerie", {
+                                        maxLength: {
+                                            value: 30,
+                                            message: "O número de série não pode ter mais de 30 caracteres",
+                                        }, 
+                                        pattern: {
+                                            value: /^[A-Za-z0-9\-\/]+$/,
+                                            message:
+                                            "Use somente letras, números e hífen (-)",
+                                        },
+                                    })}
                                 />
                             </FloatingLabel>
                             {errors.numSerie && (
@@ -392,7 +463,11 @@ const categoriaDispositivo = () => {
                                         pattern: {
                                             value: /^[a-zA-ZÀ-ÿ\s]+$/,
                                             message: "Use apenas letras"
-                                        }
+                                        },
+                                        maxLength: {
+                                            value: 20,
+                                            message: "A cor não pode ter mais de 20 caracteres",
+                                        },
                                     })}
                                 />
                             </FloatingLabel>
@@ -423,7 +498,25 @@ const categoriaDispositivo = () => {
                                     as='textarea'
                                     style={{height: "100px", resize: "none"}}
                                     {...register("descProblema", {
-                                        required: "A descrição do problema é obrigatória"
+                                        required: "A descrição do problema é obrigatória",
+                                        minLength: {
+                                            value: 15,
+                                            message: "A descrição deve conter pelo menos 15 caracteres"
+                                        },
+                                        maxLength: {
+                                            value: 500,
+                                            message: "A descrição não pode ter mais de 500 caracteres",
+                                        },
+                                        pattern: {
+                                            value: /^[a-zA-Z0-9À-ÿ\s.,!?@&#()/%-:]*$/,
+                                            message: "Use apenas letras, números e símbolos."
+                                        },
+                                        validate: (value) => {
+                                            if (/https?:\/\//i.test(value)) {
+                                            return "Não inclua links na descrição.";
+                                            }
+                                            return true;
+                                        }
                                     })}
                                 />
                             </FloatingLabel>
@@ -441,7 +534,22 @@ const categoriaDispositivo = () => {
                                 <Form.Control 
                                     as='textarea'
                                     style={{height: "100px", resize: "none"}}
-                                    {...register("observacoes")}
+                                    {...register("observacoes", {
+                                        maxLength: {
+                                            value: 200,
+                                            message: "As observações não pode ter mais de 200 caracteres",
+                                        },
+                                        pattern: {
+                                            value: /^[a-zA-Z0-9À-ÿ\s.,!?@&#()/%-:]*$/,
+                                            message: "Use apenas letras, números e símbolos."
+                                        },
+                                        validate: (value) => {
+                                            if (/https?:\/\//i.test(value)) {
+                                            return "Não inclua links na observação.";
+                                            }
+                                            return true;
+                                        }
+                                    })}
                                 />
                             </FloatingLabel>
                             {errors.observacoes && (
@@ -469,16 +577,17 @@ const categoriaDispositivo = () => {
         <Modal show={mostrarModal} onHide={() => setMostrarModal(false)} centered>
             {/* Título */}
             <Modal.Header closeButton className="border-0">
-                <Modal.Title>Direcionar demanda</Modal.Title>
+                <Modal.Title className={stylesCad.modalTitle}>Direcionar demanda</Modal.Title>
             </Modal.Header>
             
             {/* Corpo com a seleção de assistência técnica. */}
             <Modal.Body>
-                <span>
+                <span className={stylesCad.textSpan}>
                     Se tiver uma assistência técnica de preferência, escolha uma. Caso contrário, deixe como público.
                 </span>
                 <Dropdown 
                     onToggle={(isOpen) => setOpenDropdown(isOpen ? 'selecaoAt' : null)}
+                    className={stylesCad.dropdownAt}
                 >
                     <Dropdown.Toggle
                         id="dropdown-assistencia" 
@@ -486,18 +595,18 @@ const categoriaDispositivo = () => {
                         {atSelecionada} {openDropdown === 'selecaoAt' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
                     </Dropdown.Toggle>
 
-                    <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => setAtSelecionada("Público")}>
+                    <Dropdown.Menu className={stylesCad.dropdownMenu}>
+                        <Dropdown.Item className={stylesCad.dropdownItem} onClick={() => setAtSelecionada("Público")}>
                             Enviar como público
                         </Dropdown.Item>
 
-                        <Dropdown.Divider />
+                        <Dropdown.Divider className={stylesCad.divisor}/>
 
-                        <Dropdown.Item onClick={() => setAtSelecionada("Assistência A")}>
+                        <Dropdown.Item className={stylesCad.dropdownItem} onClick={() => setAtSelecionada("Assistência A")}>
                             Assistência A
                         </Dropdown.Item>
 
-                        <Dropdown.Item onClick={() => setAtSelecionada("Assistência B")}>
+                        <Dropdown.Item className={stylesCad.dropdownItem} onClick={() => setAtSelecionada("Assistência B")}>
                             Assistência B
                         </Dropdown.Item>
                     </Dropdown.Menu>

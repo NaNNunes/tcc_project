@@ -6,3 +6,10 @@
     padding-left: 4%;
     padding-bottom: 8%;
 }
+
+.textoCard {
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding-left: 8px;
+    color: #757575;
+}

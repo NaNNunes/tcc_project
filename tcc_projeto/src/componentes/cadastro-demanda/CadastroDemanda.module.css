@@ -76,6 +76,54 @@
     background-color: #0069C6;
 }
 
+/* --- AQUI COMEÇA A ESTILIZAÇÃO DO MODAL --- */
+
+.modalTitle {
+    font-size: 1.3rem;
+}
+
+.textSpan {
+    font-size: 1rem;
+}
+
+.dropdownAt {
+    background-color: transparent;
+}
+
+.dropdownMenu {
+    background-color: #005DB1;
+    border-radius: 8px;
+    padding: 0;
+    width: fit-content;
+}
+
+/* Divisor de público para assistências. */
+.divisor {
+    color: white !important;
+    margin: 0;
+    border: 1px solid white;
+}
+
+/* Itens dentro do menu. */
+.dropdownItem {
+    display: flex;
+    align-items: center;
+    color: white !important;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 10px 16px;
+    text-decoration: none;
+    background-color: #005DB1 !important;
+    border-radius: inherit;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdownItem:hover {
+    background-color: #0069C6 !important;
+    border-radius: inherit;
+    color: white;
+}
+
 @media screen and (max-width: 1465px) {
     .formulario {
         width: 75%;
