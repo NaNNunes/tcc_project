@@ -1,7 +1,4 @@
-// styles
 import styles from "./cadastro.module.css";
-
-// import react-bootstrap componentes
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Button from "react-bootstrap/Button";
@@ -10,53 +7,52 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 
-// router
 import { Link, useNavigate } from "react-router-dom";
 
-// hooks
 import { useForm } from "react-hook-form";
-import { 
-  useVerificadorDeCnpj, 
+import {
+  useVerificadorDeCnpj,
   useCadastroAssistencia,
-  useComparaDados
+  useComparaDados,
 } from "../../hooks/useApi";
 
+const { verificador } = useVerificadorDeCnpj();
+
 const CadastroAssistencia = () => {
-  
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
 
   const navigate = useNavigate();
-  
-  const {inserirAssistencia} = useCadastroAssistencia();
-  const {verificador} = useVerificadorDeCnpj();
+
+  const { inserirAssistencia } = useCadastroAssistencia();
+  const { verificador } = useVerificadorDeCnpj();
   const {
     verificaEmailDeAdms,
     verificaEmailDeSolicitantes,
-    verificaEmailDeAssistencia    
+    verificaEmailDeAssistencia,
   } = useComparaDados();
 
   const onSubmit = (data) => {
-
     // verifica cnpj
-    if (!(verificador(data.cnpj))) {
-      alert("cnpj invalido")
+    if (!verificador(data.cnpj)) {
+      alert("cnpj invalido");
       return false;
     }
 
     // verifica se email ja foi cadastrado por outrem
     const emailDeAdm = verificaEmailDeAdms(data.assistenciaEmail);
-    const emailDeSolicitante = verificaEmailDeSolicitantes(data.assistenciaEmail);
-    const emailDeAssistencia = verificaEmailDeAssistencia(data.assistenciaEmail)
+    const emailDeSolicitante = verificaEmailDeSolicitantes(
+      data.assistenciaEmail
+    );
+    const emailDeAssistencia = verificaEmailDeAssistencia(
+      data.assistenciaEmail
+    );
 
-    if(
-        emailDeAdm ||
-        emailDeSolicitante || 
-        emailDeAssistencia 
-      ){
+    if (emailDeAdm || emailDeSolicitante || emailDeAssistencia) {
       alert("Email em uso");
       return false;
     }
@@ -68,6 +64,15 @@ const CadastroAssistencia = () => {
 
   const onError = (errors) => {
     console.log("Error: ", errors);
+  };
+
+  const formatarCNPJ = (cnpj) => {
+    const numeros = cnpj.replace(/\D/g, "").slice(0, 14);
+    return numeros
+      .replace(/^(\d{2})(\d)/, "$1.$2")
+      .replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3")
+      .replace(/\.(\d{3})(\d)/, ".$1/$2")
+      .replace(/(\d{4})(\d)/, "$1-$2");
   };
 
   return (
@@ -93,7 +98,11 @@ const CadastroAssistencia = () => {
         <Row>
           {/* E-mail */}
           <Col>
-            <FloatingLabel id="assistenciaEmailInput" className="mb-3" label="Email">
+            <FloatingLabel
+              id="assistenciaEmailInput"
+              className="mb-3"
+              label="Email"
+            >
               <Form.Control
                 type="email"
                 placeholder=""
@@ -107,13 +116,14 @@ const CadastroAssistencia = () => {
                 })}
               />
               {errors.assistenciaEmail && (
-                <p className={styles.error}>{errors.assistenciaEmail.message}</p>
+                <p className={styles.error}>
+                  {errors.assistenciaEmail.message}
+                </p>
               )}
             </FloatingLabel>
           </Col>
         </Row>
         <Row>
-
           {/* Nome fantasia */}
           <Col>
             <FloatingLabel
@@ -148,7 +158,6 @@ const CadastroAssistencia = () => {
         </Row>
 
         <Row className="">
-
           {/* Cnpj 
             fazer a contensao de inserçao indevida e auto preenchimento
           */}
@@ -157,32 +166,49 @@ const CadastroAssistencia = () => {
               <Form.Control
                 type="text"
                 placeholder="00.000.000/0000-00"
+                value={formatarCNPJ(watch("cnpj") || "")}
+                isInvalid={!!errors.cnpj}
+                onChange={(e) => {
+                  const apenasNumeros = e.target.value.replace(/\D/g, "");
+                  if (apenasNumeros.length <= 14) {
+                    setValue("cnpj", apenasNumeros);
+                  }
+                }}
                 {...register("cnpj", {
                   required: "CNPJ obrigatório",
-                  maxLength: {
-                    value: 14,
-                    message: "Necessário 14 digitos"
+                  validate: (value) => {
+                    const somenteNumeros = value.replace(/\D/g, "");
+                    if (somenteNumeros.length !== 14) {
+                      return "Necessário 14 dígitos";
+                    }
+                    if (!verificador(somenteNumeros)) {
+                      return "CNPJ inválido";
+                    }
+                    return true;
                   },
-                  minLength: {
-                    value: 14,
-                    message: "Necessário 14 digitos"
-                  },
-                  //regex para numeros
                 })}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.cnpj?.message}
+              </Form.Control.Feedback>
             </FloatingLabel>
           </Col>
 
           {/* telefone */}
           <Col>
-            <FloatingLabel id="assistenciaTelInput" className="mb-3" label="Telefone">
+            <FloatingLabel
+              id="assistenciaTelInput"
+              className="mb-3"
+              label="Telefone"
+            >
               <Form.Control
                 type="text"
                 placeholder="(00) 00000-0000"
                 {...register("assistenciaTelefone", {
                   required: "Telefone necessário",
                   pattern: {
-                    value: /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
+                    value:
+                      /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
                     message: "Telefone inválido",
                   },
                 })}
@@ -237,7 +263,11 @@ const CadastroAssistencia = () => {
           <Col className="d-flex align-items-center justify-content-center mb-2">
             <h6 className="text-white">
               Já possui conta?{" "}
-              <Link to="/login" className={styles.link} style={{ fontSize: "16px" }}>
+              <Link
+                to="/login"
+                className={styles.link}
+                style={{ fontSize: "16px" }}
+              >
                 Login
               </Link>
             </h6>

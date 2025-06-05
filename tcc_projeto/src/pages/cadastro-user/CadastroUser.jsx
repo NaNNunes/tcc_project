@@ -20,7 +20,7 @@ import {
   useUser,
   useVerificadorDeCpf,
   useComparaDados
-} from "../../hooks/useApi";
+} from "../../hooks/useApi.js";
 
 const CadastroUser = () => {
   

@@ -30,6 +30,20 @@
       "isValido": true,
       "pergunta": "1",
       "resposta": "Blu"
+    },
+    {
+      "id": "0d6b",
+      "email": "natao@user.com",
+      "cpf": "074.067.536-24",
+      "userTelefone": "27996898479",
+      "nome": "Natã",
+      "sobrenome": "Jordão",
+      "senha": "12345678",
+      "confirmarSenha": "12345678",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "3",
+      "resposta": "Cachoeiro de Itapemirim"
     }
   ],
   "assistencia": [
@@ -43,6 +57,27 @@
       "assistenciaTermos": "true",
       "administradorId": "176d",
       "id_endereco": "b19f"
+    },
+    {
+      "id": "3418",
+      "assistenciaEmail": "at_loucura@mail.com",
+      "nomeFantasia": "Assistencia Técnica Loucuras de meu deus",
+      "razaoSocial": "Loucura LTDA.",
+      "cnpj": "36819765000103",
+      "assistenciaTelefone": "27996898479",
+      "assistenciaTermos": "true",
+      "administradorId": "0d6b"
+    },
+    {
+      "id": "1331",
+      "assistenciaEmail": "at_loucura@mail.com",
+      "nomeFantasia": "LOUCURAS ASSISTENCIA TECNICA",
+      "razaoSocial": "Loucura LTDA.",
+      "cnpj": "36.819.765/0001-03",
+      "assistenciaTelefone": "27996898479",
+      "assistenciaTermos": "true",
+      "administradorId": "0d6b",
+      "id_endereco": "8f04"
     }
   ],
   "endereco": [
@@ -75,6 +110,24 @@
       "complemento": "Perto do pet Shop",
       "cep": "29118-480",
       "unidade": "",
+      "estado": "Espírito Santo",
+      "regiao": "Sudeste",
+      "ibge": "3205200",
+      "gia": "",
+      "ddd": "27",
+      "siafi": "5703"
+    },
+    {
+      "id": "8f04",
+      "zipcode": "29102-906",
+      "localidade": "Vila Velha",
+      "bairro": "Coqueiral de Itaparica",
+      "logradouro": "Avenida Santa Leopoldina",
+      "uf": "ES",
+      "number": "2200",
+      "complemento": "sexta etapa",
+      "cep": "29102-906",
+      "unidade": "6ª Etapa - Condomínio Vila Mar",
       "estado": "Espírito Santo",
       "regiao": "Sudeste",
       "ibge": "3205200",
