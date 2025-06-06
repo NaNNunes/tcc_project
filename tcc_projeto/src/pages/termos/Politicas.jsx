@@ -1,150 +1,163 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
+import styles from "./termos.module.css";
 
-const Politicas = () => {
+const PoliticaPrivacidade = () => {
   return (
     <div>
-      {" "}
-      <Container fluid>
-        <Row>
-          <Col>
-            <h1>Termos e Condições de Uso</h1>
-            <h2>1. Aceitação dos Termos</h2>
-            <p>
-              Ao acessar e utilizar a plataforma, você concorda em cumprir e
-              estar legalmente vinculado aos presentes Termos e Condições de
-              Uso. Se você não concordar com qualquer parte destes termos, não
-              deverá utilizar nossos serviços.
-            </p>
-            <h2>2. Descrição da Plataforma</h2>
-            <p>
-              A plataforma tem como objetivo conectar{" "}
-              <strong>assistências técnicas</strong> e <strong>usuários</strong>
-              .
-            </p>
-            <ul>
-              <li>
-                <strong>Assistências Técnicas</strong>: Empresas ou
-                profissionais que se cadastram para divulgar seus serviços de
-                reparo de dispositivos eletrônicos.
-              </li>
-              <li>
-                <strong>Usuários</strong>: Pessoas físicas que se cadastram para
-                solicitar orçamentos e serviços de manutenção, cadastrando seus
-                dispositivos eletrônicos que necessitam de conserto.
-              </li>
-            </ul>
-            <p>
-              A plataforma atua exclusivamente como um intermediador entre as
-              partes, não realizando os serviços diretamente.
-            </p>
-            <h2>3. Cadastro de Usuários e Assistências</h2>
-            <h3>3.1. Elegibilidade</h3>
-            <ul>
-              <li>Ter pelo menos 18 anos de idade;</li>
-              <li>
-                Fornecer informações verdadeiras, completas e atualizadas no
-                momento do cadastro.
-              </li>
-            </ul>
-            <h3>3.2. Responsabilidades</h3>
-            <ul>
-              <li>
-                Cada usuário e assistência técnica é responsável pela veracidade
-                das informações fornecidas.
-              </li>
-              <li>
-                A assistência técnica se compromete a fornecer informações
-                precisas sobre seus serviços, prazos, qualificações e condições
-                comerciais.
-              </li>
-            </ul>
-            <h2>4. Uso da Plataforma</h2>
-            <h3>4.1. Para Usuários</h3>
-            <ul>
-              <li>
-                Cadastrar seus dispositivos eletrônicos, informando marca,
-                modelo, defeitos ou necessidades.
-              </li>
-              <li>
-                Solicitar orçamentos e contratar assistências cadastradas.
-              </li>
-              <li>Avaliar e comentar sobre os serviços prestados.</li>
-            </ul>
-            <h3>4.2. Para Assistências Técnicas</h3>
-            <ul>
-              <li>
-                Divulgar seus serviços de reparo, manutenção ou diagnóstico.
-              </li>
-              <li>Responder orçamentos e propostas.</li>
-              <li>
-                Cumprir os prazos, valores e condições acordadas diretamente com
-                os usuários.
-              </li>
-            </ul>
-            <h2>5. Responsabilidades da Plataforma</h2>
-            <ul>
-              <li>
-                Facilitar a conexão entre usuários e assistências técnicas.
-              </li>
-              <li>
-                Disponibilizar ferramentas de cadastro, comunicação e gestão dos
-                pedidos.
-              </li>
-              <li>
-                Não se responsabiliza pela qualidade, execução, prazos ou
-                resultados dos serviços prestados pelas assistências técnicas.
-              </li>
-            </ul>
-            <h2>6. Obrigações dos Usuários e Assistências</h2>
-            <ul>
-              <li>Utilizar a plataforma de forma ética e legal.</li>
-              <li>
-                Não praticar atos que possam prejudicar a plataforma, outros
-                usuários ou assistências.
-              </li>
-              <li>
-                Respeitar as leis vigentes, especialmente relacionadas a
-                direitos do consumidor, propriedade intelectual, privacidade e
-                segurança.
-              </li>
-            </ul>
-            <h2>7. Privacidade e Proteção de Dados</h2>
-            As informações fornecidas pelos usuários e assistências serão
-            tratadas de acordo com nossa Política de Privacidade, em
-            conformidade com a{" "}
-            <a
-              href="https://www.gov.br/esporte/pt-br/acesso-a-informacao/lgpd"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Lei Geral de Proteção de Dados (LGPD)
-            </a>
-            .<h2>8. Propriedade Intelectual</h2>
-            <p>
-              Todos os elementos da plataforma, incluindo textos, marcas,
-              logotipos, designs e funcionalidades, são protegidos por direitos
-              autorais e de propriedade intelectual. É proibido seu uso não
-              autorizado.
-            </p>
-            <h2>9. Suspensão e Cancelamento de Contas</h2>
-            <p>
-              A plataforma se reserva o direito de suspender ou cancelar contas
-              que violem estes termos, causem prejuízo a terceiros ou utilizem a
-              plataforma de forma indevida.
-            </p>
-            <h2>10. Alterações dos Termos</h2>
-            <p>
-              Estes termos podem ser alterados a qualquer momento, sendo
-              responsabilidade do usuário e das assistências técnicas
-              consultá-los periodicamente.
-            </p>
-            <h2>11. Foro</h2>
-            <p>
-              Fica eleito o foro da comarca de Vitória, Espírito Santo, para
-              dirimir quaisquer dúvidas ou conflitos oriundos destes Termos, com
-              renúncia expressa a qualquer outro.
-            </p>
+      <Container fluid className={styles.containerTermos}>
+        <Row className="justify-content-center">
+          <Col md={10} lg={12}>
+            <Card className={styles.card}>
+              <Card.Body>
+                <Card.Title className={styles.title}>
+                  Política de Privacidade
+                </Card.Title>
+
+                <Card.Subtitle className={styles.subtitle}>
+                  1. Introdução
+                </Card.Subtitle>
+                <Card.Text className={styles.text}>
+                  Esta Política de Privacidade descreve como a <strong>ConnectFix</strong> coleta, utiliza, armazena e protege os dados pessoais de seus usuários, sejam eles assistências técnicas ou clientes (usuários finais). Nosso compromisso é garantir a privacidade e a segurança das informações, em conformidade com a  <a
+                    href="https://www.gov.br/esporte/pt-br/acesso-a-informacao/lgpd"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.link}
+                  >
+                    Lei Geral de Proteção de Dados (LGPD) – Lei nº 13.709/2018.
+                  </a>.
+                </Card.Text>
+
+                <Card.Subtitle className={styles.subtitle}>
+                  2. Dados Coletados
+                </Card.Subtitle>
+                <Card.Subtitle className={styles.subsubtitle}>
+                  2.1. Dados de Cadastro
+                </Card.Subtitle>
+                <Card.Text className={styles.text}>
+                  <ul>
+                    <li>Nome completo ou razão social</li>
+                    <li>CPF ou CNPJ</li>
+                    <li>Endereço</li>
+                    <li>E-mail</li>
+                    <li>Número de telefone</li>
+                    <li>Dados de login (usuário e senha)</li>
+                  </ul>
+                </Card.Text>
+
+                <Card.Subtitle className={styles.subsubtitle}>
+                  2.2. Dados dos Dispositivos (Usuário)
+                </Card.Subtitle>
+                <Card.Text className={styles.text}>
+                  <ul>
+                    <li>Marca, modelo, número de série e descrição dos defeitos dos dispositivos cadastrados.</li>
+                  </ul>
+                </Card.Text>
+
+                <Card.Subtitle className={styles.subsubtitle}>
+                  2.3. Dados de Serviços (Assistências Técnicas)
+                </Card.Subtitle>
+                <Card.Text className={styles.text}>
+                  <ul>
+                    <li>Informações sobre os serviços prestados, orçamentos enviados, avaliações e comunicações realizadas na plataforma.</li>
+                  </ul>
+                </Card.Text>
+
+                <Card.Subtitle className={styles.subsubtitle}>
+                  2.4. Dados de Navegação
+                </Card.Subtitle>
+                <Card.Text className={styles.text}>
+                  <ul>
+                    <li>Endereço IP</li>
+                    <li>Dados de geolocalização (quando autorizado)</li>
+                    <li>Cookies e informações sobre o dispositivo, navegador e interações na plataforma</li>
+                  </ul>
+                </Card.Text>
+
+                <Card.Subtitle className={styles.subtitle}>
+                  3. Finalidade do Uso dos Dados
+                </Card.Subtitle>
+                <Card.Text className={styles.text}>
+                  <ul>
+                    <li>Permitir a criação e manutenção de sua conta</li>
+                    <li>Intermediar o contato entre usuários e assistências técnicas</li>
+                    <li>Gerenciar solicitações de orçamento e serviços</li>
+                    <li>Realizar comunicações importantes sobre sua conta ou serviços contratados</li>
+                    <li>Melhorar a experiência na plataforma, por meio de análises e aperfeiçoamentos</li>
+                    <li>Cumprir obrigações legais e regulatórias</li>
+                  </ul>
+                </Card.Text>
+
+                <Card.Subtitle className={styles.subtitle}>
+                  4. Compartilhamento de Dados
+                </Card.Subtitle>
+                <Card.Text className={styles.text}>
+                  <ul>
+                    <li>Com assistências técnicas, quando você solicita um serviço ou orçamento</li>
+                    <li>Com usuários, no caso de assistências técnicas, para possibilitar contato e contratação</li>
+                    <li>Com fornecedores de tecnologia, meios de pagamento, hospedagem e suporte, sempre resguardando a confidencialidade e segurança</li>
+                    <li>Mediante requisição de autoridades legais ou judiciais, conforme exigido pela legislação</li>
+                  </ul>
+                  Nunca vendemos seus dados pessoais.
+                </Card.Text>
+
+                <Card.Subtitle className={styles.subtitle}>
+                  5. Armazenamento e Segurança dos Dados
+                </Card.Subtitle>
+                <Card.Text className={styles.text}>
+                  Seus dados são armazenados em ambientes seguros, com acesso restrito e criptografia quando aplicável. Aplicamos medidas técnicas e administrativas adequadas para proteger contra acessos não autorizados, destruição, perda, alteração ou divulgação indevida.
+                </Card.Text>
+
+                <Card.Subtitle className={styles.subtitle}>
+                  6. Seus Direitos como Titular dos Dados
+                </Card.Subtitle>
+                <Card.Text className={styles.text}>
+                  Nos termos da LGPD, você tem direito a:
+                  <ul>
+                    <li>Confirmar a existência de tratamento dos seus dados</li>
+                    <li>Acessar seus dados pessoais</li>
+                    <li>Corrigir dados incompletos, inexatos ou desatualizados</li>
+                    <li>Solicitar anonimização, bloqueio ou eliminação de dados desnecessários</li>
+                    <li>Solicitar a portabilidade dos dados para outro fornecedor de serviço</li>
+                    <li>Revogar o consentimento a qualquer momento, quando aplicável</li>
+                    <li>Solicitar a exclusão dos seus dados, exceto quando houver obrigação legal de armazenamento</li>
+                  </ul>
+                  Para exercer seus direitos, entre em contato pelo e-mail: [inserir e-mail de contato].
+                </Card.Text>
+
+                <Card.Subtitle className={styles.subtitle}>
+                  7. Uso de Cookies
+                </Card.Subtitle>
+                <Card.Text className={styles.text}>
+                  Utilizamos cookies e tecnologias semelhantes para:
+                  <ul>
+                    <li>Melhorar sua experiência na navegação</li>
+                    <li>Guardar preferências de acesso</li>
+                    <li>Realizar análises de tráfego e comportamento na plataforma</li>
+                  </ul>
+                  Você pode desativar os cookies nas configurações do seu navegador, embora isso possa impactar algumas funcionalidades da plataforma.
+                </Card.Text>
+
+                <Card.Subtitle className={styles.subtitle}>
+                  8. Alterações na Política de Privacidade
+                </Card.Subtitle>
+                <Card.Text className={styles.text}>
+                  Esta política pode ser atualizada periodicamente. Recomendamos que você revise-a regularmente. Alterações significativas serão comunicadas por meio dos canais da plataforma.
+                </Card.Text>
+
+                <Card.Subtitle className={styles.subtitle}>
+                  9. Contato
+                </Card.Subtitle>
+                <Card.Text className={styles.text}>
+                  Se tiver dúvidas, solicitações ou reclamações relacionadas a esta Política de Privacidade ou ao tratamento de seus dados pessoais, entre em contato:
+                  <ul>
+                    <li>E-mail: contato@connectfix.com</li>
+                    <li>Telefone: (27)99999-9999</li>
+                    <li>Endereço: Av. Mal. Mascarenhas de Moraes, 2235 - Bento Ferreira, Vitória - ES, 29052-121</li>
+                  </ul>
+                </Card.Text>
+              </Card.Body>
+            </Card>
           </Col>
         </Row>
       </Container>
@@ -152,4 +165,4 @@ const Politicas = () => {
   );
 };
 
-export default Politicas;
+export default PoliticaPrivacidade;
