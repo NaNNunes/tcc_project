@@ -1,4 +1,3 @@
-import EditarPag from "../../componentes/conta_perfil/EditarPag"
 import Encerrar from "../../componentes/conta_perfil/Encerrar"
 import Endereco from "../../componentes/Endereco"
 import MinhaAssistencia from "../../componentes/assistencia_info/MinhaAssistencia"
@@ -7,20 +6,18 @@ import Seguranca from "../../componentes/conta_perfil/Seguranca"
 
 // hook
 import { useContext, useEffect, useState } from "react"
-import { useEndereco } from "../../hooks/useApi"
 import { AuthContext } from "../../context/userContext"
 import { Navigate } from "react-router-dom"
 
 const Conta = () => {
   const {userType, userId} = useContext(AuthContext);
+
+  // verifica se user está logado
   if(localStorage.getItem("userType") === "Visitante") return <Navigate to="/login"/>
   
   const [userInfos, setUserInfos] = useState({});
-  
   const [listaAssistencias, setListaAssistencia] = useState([]);
-
   const [userEndereco, setUserEndereco] = useState({});
-
 
   // busca dados do user
   useEffect(()=>  {
@@ -29,8 +26,7 @@ const Conta = () => {
       const id = userId || localStorage.getItem("userId");
 
       try{
-
-        const url = "http://localhost:5001"
+        const url = "http://localhost:5001";
 
         // busca dados do user pelo id do localstorage
         const reqBuscaDadosUserById = await fetch(`${url}/${user}/${id}`);
@@ -44,22 +40,18 @@ const Conta = () => {
         const reqBuscaAssistenciasByUserId = await fetch(`${url}/assistencia`);
         const resListaAssistencias = await reqBuscaAssistenciasByUserId.json();
 
-        // pegar assistencias apenas com id do adm
-        const assistenciasDoUser = resListaAssistencias.find((assistencia) => {
-          return assistencia.administradorId === id;
-        })
-
-        console.log("Assistencias do user:",assistenciasDoUser)
-
+        // define lista de assistencias encontradas
         setListaAssistencia(resListaAssistencias);
-        console.log("todas assistencias: ",resListaAssistencias); 
 
-        // POG
-        // busca dados de endereco pela FK id_endereco
-        const reqBuscaEnderecoById = await fetch(`${url}/endereco/${idEnderecoUser}`)
-        const respBuscaEnderecoById = await reqBuscaEnderecoById.json();
-        // atribuição ao state
-        setUserEndereco(respBuscaEnderecoById);
+        // somente se solicitante ocorrera a busca aqui
+        if(user === "solicitante"){
+          // POG
+          // busca dados de endereco pela FK id_endereco
+          const reqBuscaEnderecoById = await fetch(`${url}/endereco/${idEnderecoUser}`)
+          const respBuscaEnderecoById = await reqBuscaEnderecoById.json();
+          // atribuição ao state
+          setUserEndereco(respBuscaEnderecoById);
+        }
       }
       catch(error){
         console.log(error.message);
@@ -83,7 +75,8 @@ const Conta = () => {
       {
         (localStorage.getItem("userType") === "administrador")
           ?
-            <MinhaAssistencia assistencias={listaAssistencias}/>
+            // verificacao de assistencia pertencente ao user por id, apenas no componente
+            <MinhaAssistencia assistencias={listaAssistencias} admId={userInfos.id} />
           :
             <Endereco endereco={userEndereco}/>
       }

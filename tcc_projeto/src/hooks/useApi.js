@@ -305,14 +305,15 @@ export function useUser(){
         location.reload();
     }
 
-    const verificaSenhaInformada = async (data) => {
+    const verificaSenhaInformada = async (senha) => {
+        const user = userType || localStorage.getItem("userType");
+        const id = userId || localStorage.getItem("userId");
 
-        const request = await fetch(`${url}/${userType}/${userId}`);
+        const request = await fetch(`${url}/${user}/${id}`);
         const response = await request.json();
 
         // compara senha inserida com senha do user
-        console.log(data.senha === response.senha)
-        return (data.senha === response.senha);
+        return (senha === response.senha);
     }
 
     // altera senha do user

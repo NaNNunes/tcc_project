@@ -30,19 +30,19 @@ const Encerrar = () => {
     const exclusao = async () => {
         const confirmacao = confirm("Ação a seguir excluirá a sua conta, deseja prosseguir?");
         if(confirmacao){
-            const inputSenha = prompt("Inisra sua senha para confirmar")
-            verificaSenhaInformada(inputSenha)
-                && 
-                    inserirValidacao(false);
-                    logout();
+            const inputSenha = prompt("Inisra sua senha para confirmar");
+            const verificadorDeSenha = await verificaSenhaInformada(inputSenha);
+            if(verificadorDeSenha){
+                inserirValidacao(false);
+                logout();
+            } 
         }
     }
 
     const onSubmit = async (data) => {
         // nao funciona
         console.log(data);
-        (verificaSenhaInformada(data.senha))
-            && inserirValidacao(false)
+        exclusao();
     }
 
     const onError = (error) => {
@@ -105,7 +105,7 @@ const Encerrar = () => {
                                         as='input'
                                         value="confirmar"
                                         type='button'
-                                        onClick={()=>{exclusao()}}
+                                        onClick={()=>{onSubmit()}}
                                     />
                                 </Col>
                             </Form>      

@@ -5,11 +5,11 @@ import { useForm } from 'react-hook-form';
 
 import { useUser, useCadastroAssistencia } from '../../hooks/useApi';
 
-const EditarPag = (props) => { // TO DO solicitar senha e definir assistencia como falsa
-    const {register, handleSubmit, formState:{error}} = useForm();
-    
-    const {inserirValidacaoAssistencia} = useCadastroAssistencia();
+const EditarPag = (props) => {
+    const idAssistencia = props.id_assistencia;
 
+    const {register, handleSubmit, formState:{error}} = useForm();
+    const {inserirValidacaoAssistencia} = useCadastroAssistencia();
     const {inserirValidacao, verificaSenhaInformada} = useUser();
     const [liberaCampoSenha, setLiberaCampoSenha] = useState(false);
 
@@ -26,19 +26,19 @@ const EditarPag = (props) => { // TO DO solicitar senha e definir assistencia co
 
     // alternativa   
     const exclusao = async () => {
-        const validacao = confirm("Ação a seguir excluirá a sua conta, deseja prosseguir?");
-        if(validacao){
-            const inputSenha = prompt("Inisra sua senha para confirmar")
-            verificaSenhaInformada(inputSenha) === true
-                &&  inserirValidacaoAssistencia(props.id_assistencia, false);
+        const confirmacao = confirm("Ação a seguir excluirá a sua conta, deseja prosseguir?");
+        if(confirmacao){
+            const inputSenha = prompt("Inisra sua senha para confirmar");
+            const verificadorDeSenha = await verificaSenhaInformada(inputSenha);
+            if(verificadorDeSenha){
+                inserirValidacaoAssistencia(idAssistencia, false);
+                location.reload();
+            } 
         }
     }
 
     const onSubmit = async (data) => {
-        // nao funciona
-        // console.log(data);
-        // (verificaSenhaInformada(data.senha))
-        //     && inserirValidacao(false)
+        
     }
 
     const onError = (error) => {
@@ -76,7 +76,14 @@ const EditarPag = (props) => { // TO DO solicitar senha e definir assistencia co
                         />
                     </FloatingLabel>
                 </Col>
-
+                <Col>
+                    <Button
+                        as="input"
+                        value="Editar"
+                        type="submit"
+                        size="lg"
+                    />
+                </Col>
                 <Col sm={3} className='mx-2 my-1'>
                     <Button
                         variant='danger'

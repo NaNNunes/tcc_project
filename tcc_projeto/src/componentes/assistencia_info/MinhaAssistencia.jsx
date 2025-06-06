@@ -10,6 +10,7 @@ const MinhaAssistencia = (props) => {
     const {register, handleSubmit, setValue, formState:{errors}} = useForm();
 
     const listaAssistencias = props.assistencias;
+    const admId = props.admId || localStorage.getItem("userId");
     const [idAssistencia, setIdAssistencia] = useState();
     const [enderecoAssistencia, setEnderecoAssistencia] = useState({});
 
@@ -79,8 +80,10 @@ const MinhaAssistencia = (props) => {
                     >
                         <option> CNPJ </option>
                         {
+                            // mapeia elemento option apenas com cnpjs vinculados ao user
                             listaAssistencias.map((assistencia) => (
-                                <option key={assistencia.id}>{assistencia.cnpj}</option>
+                                (assistencia.administradorId === admId && assistencia.isValido === true)
+                                    && <option key={assistencia.id}>{assistencia.cnpj}</option>
                             ))
                         }
 
