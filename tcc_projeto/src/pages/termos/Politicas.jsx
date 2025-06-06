@@ -1,9 +1,10 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-const Termos = () => {
+const Politicas = () => {
   return (
     <div>
+      {" "}
       <Container fluid>
         <Row>
           <Col>
@@ -140,8 +141,9 @@ const Termos = () => {
             </p>
             <h2>11. Foro</h2>
             <p>
-              Fica eleito o foro da comarca de Vitória, Espírito Santo, para dirimir quaisquer dúvidas ou conflitos oriundos
-              destes Termos, com renúncia expressa a qualquer outro.
+              Fica eleito o foro da comarca de Vitória, Espírito Santo, para
+              dirimir quaisquer dúvidas ou conflitos oriundos destes Termos, com
+              renúncia expressa a qualquer outro.
             </p>
           </Col>
         </Row>
@@ -150,4 +152,4 @@ const Termos = () => {
   );
 };
 
-export default Termos;
+export default Politicas;
