@@ -6,7 +6,7 @@ const Sobre = () => {
   return (
     <Container className={styles.sobreContainer}>
       <Row className="justify-content-center">
-        <Col md={10} lg={8}>
+        <Col md={10} lg={12}>
           <Card className={styles.card}>
             <Card.Body>
               <Card.Title className={styles.title}>Quem somos</Card.Title>

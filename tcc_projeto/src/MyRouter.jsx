@@ -18,6 +18,7 @@ import Sobre from "./pages/sobre/Sobre.jsx";
 import ProcurarDemandas from "./pages/procurar-demandas/ProcurarDemandas.jsx";
 import Inicial from "./pages/inicial/Inicial.jsx";
 import Termos from "./pages/termos/Termos.jsx";
+import Politicas from "./pages/termos/Politicas.jsx";
 
 const router = createBrowserRouter([
   {
@@ -89,6 +90,10 @@ const router = createBrowserRouter([
       {
         path: "/termos-de-uso",
         element: <Termos />
+      },
+      {
+        path: "/politica-de-privacidade",
+        element: <Politicas />
       }
     ],
   },
