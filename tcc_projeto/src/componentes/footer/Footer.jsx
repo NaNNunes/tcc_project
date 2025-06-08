@@ -67,14 +67,11 @@ const Footer = () => {
             xs={12}
           >
             <h4 className={styles.tituloFooter}>Funcionalidades</h4>
-            <a className={styles.linkFooter} href="/home">
-              Início
+            <a className={styles.linkFooter} href="/termos-de-uso">
+              Termos de Uso
             </a>
-            <a className={styles.linkFooter} href="/sobre">
-              Quem somos
-            </a>
-            <a className={styles.linkFooter} href="/demandas">
-              Demandas
+            <a className={styles.linkFooter} href="/politica-de-privacidade">
+              Política de Privacidade
             </a>
           </Col>
 
