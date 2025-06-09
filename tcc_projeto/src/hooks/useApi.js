@@ -246,6 +246,33 @@ export function useUser(){
     // funçoes do context para salvar id e tipo de user
     const {setId, userId, setType, userType} = useContext(AuthContext);
 
+    // altera senha do user
+    const alteraSenhaUser = async (senha) =>{
+
+        const newSenha = {
+            "senha": senha
+        }
+        
+        fetch(`${url}/${userType}/${userId}`,{
+            method: "PATCH",
+            body: JSON.stringify(newSenha)
+        })
+
+        location.reload();
+    }
+
+    const atualizaInfosUser = async (data) => {
+
+        const user = localStorage.getItem("userType");
+        const id = localStorage.getItem("userId");
+
+        const request = await fetch(`${url}/${user}/${id}`,{
+            method: "PATCH",
+            body: JSON.stringify(data)
+        })
+        location.reload();
+    }
+    
     // cadastra user
     const cadastrarInfosUser = async (data) => {
         // define o tipo de user
@@ -270,6 +297,21 @@ export function useUser(){
         inserirValidacao(false);
     }
 
+    const favoritarAssistencia = async (data) =>{
+
+        const request = await fetch(`${url}/assistencia_Fav_Solicitante`,{
+            method: "POST",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const response = await request.json();
+
+        console.log("Assistencia favoritada:", response);
+    }
+
     // define validaçao do user
     const inserirValidacao = async (isValido) =>{
         const id = localStorage.getItem('userId');
@@ -280,7 +322,7 @@ export function useUser(){
             body: JSON.stringify({"isValido":isValido})
         })
     }
-
+    
     // adiciona pergunta de segurança
     const inserirPerguntaResposta = async (data) => {
 
@@ -291,18 +333,6 @@ export function useUser(){
             method: "PATCH",
             body: JSON.stringify(data)
         })
-    }
-
-    const atualizaInfosUser = async (data) => {
-
-        const user = localStorage.getItem("userType");
-        const id = localStorage.getItem("userId");
-
-        const request = await fetch(`${url}/${user}/${id}`,{
-            method: "PATCH",
-            body: JSON.stringify(data)
-        })
-        location.reload();
     }
 
     const verificaSenhaInformada = async (senha) => {
@@ -316,29 +346,15 @@ export function useUser(){
         return (senha === response.senha);
     }
 
-    // altera senha do user
-    const alteraSenhaUser = async (senha) =>{
-
-        const newSenha = {
-            "senha": senha
-        }
-        
-        fetch(`${url}/${userType}/${userId}`,{
-            method: "PATCH",
-            body: JSON.stringify(newSenha)
-        })
-
-        location.reload();
-    }
-
 
     return {
+        atualizaInfosUser,
+        alteraSenhaUser,
         cadastrarInfosUser,
+        favoritarAssistencia,
         inserirPerguntaResposta,
         inserirValidacao,
-        atualizaInfosUser,
-        verificaSenhaInformada,
-        alteraSenhaUser
+        verificaSenhaInformada
     };
 }
 
@@ -567,12 +583,25 @@ export function useEndereco(){
 
         return response;
     }
+
+    const buscaEnderecoById = async (idEndereco) =>{
+        const request = await fetch(`${url}/endereco/${idEndereco}`);
+        const response = await request.json();
+
+        return response;
+    }
     
-    return {cadastrarEndereco, atualizarEndereco};
+    return {cadastrarEndereco, atualizarEndereco, buscaEnderecoById};
 }
 
 // cadastra assistencia
 export function useCadastroAssistencia(){
+
+    const buscaAssistenciaById = async (id) =>{
+        const request = await fetch(`${url}/assistencia/${id}`);
+        const response = await request.json();
+        return response;
+    }
 
     // insere assistencia
     const inserirAssistencia = async (data) =>{
@@ -615,7 +644,11 @@ export function useCadastroAssistencia(){
         })
     }
 
-    return {inserirAssistencia, inserirValidacaoAssistencia};
+    return {
+        buscaAssistenciaById,
+        inserirAssistencia,
+        inserirValidacaoAssistencia
+    };
 }
 
 export function useDemada(){

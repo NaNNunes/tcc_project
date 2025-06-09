@@ -1,5 +1,3 @@
-// TO DO: Fazer o envio de demanda para AT especifica ou colocar como público.
-
 // Importação do react-boostrap.
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -31,7 +29,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 // hooks json-server
-import { useDemada } from '../../hooks/useApi';
+import { useDemada, useCadastroAssistencia} from '../../hooks/useApi';
 
 const categoriaDispositivo = () => {
     const {
@@ -42,8 +40,30 @@ const categoriaDispositivo = () => {
         formState: {errors},
     } = useForm();
 
+    // lista de matchs de assistencias favoritas
+    const {buscaAssistenciaById} = useCadastroAssistencia();
+    const [assistencias, setAssistencias] = useState([]);
+    const listaAssitencias = [];
+    const buscaMatchs = async() =>{
+        const url = import.meta.env.VITE_API_URL;
+        const request = await fetch(`${url}/assistencia_Fav_Solicitante`);
+        const response = await request.json();
+        console.log("Matchs:",response);
+        
+        // mapeia todas os matchs e retorna nome da assistencia pelo id encontrado no match
+        // pegar assitencias apenas com que seja favoritadas pelo user, verificando o id do solicitante no match
+        response.map(async (res)=>{
+            if(res.id_solicitante === localStorage.getItem("userId")){
+                const assistencia = await buscaAssistenciaById(res.id_assistencia);
+                listaAssitencias.push(assistencia);
+            }
+        })
+        setAssistencias(listaAssitencias);
+    }
+    
     const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
 
+    const {cadastrarDispositivo, cadastrarDemanda} = useDemada();
     // Categoria e marca selecionada no ListGroup.
     const categoriaSelecionada = watch("categoria");
     const [marcaSelecionada, setMarcaSelecionada] = useState("");
@@ -55,7 +75,7 @@ const categoriaDispositivo = () => {
     const [dadosTemporarios, setDadosTemporarios] = useState(null);
 
     // Assistência pre-selecionada como público.
-    const [atSelecionada, setAtSelecionada] = useState("Público");
+    const [atSelecionada, setAtSelecionada] = useState({});
 
     // Marcas e modelos para cada categoria.
     const dadosDispositivos = {
@@ -224,16 +244,16 @@ const categoriaDispositivo = () => {
         setValue("modelo", "");
     }, [categoriaSelecionada]);
 
-    const {cadastrarDispositivo, cadastrarDemanda} = useDemada();
-
-    const onSubmit = (dados) => {
+    const onSubmit = async (dados) => {
         setDadosTemporarios(dados);
+
+        buscaMatchs();
 
         // Mostrando o Modal para ser selecionada a assistência.
         setMostrarModal(true);
     }
 
-    const enviarDemandaCompleta = async (assistencia) => {
+    const enviarDemandaCompleta = async (assistenciaId) => {
         setMostrarModal(false);
 
         const dados = dadosTemporarios;
@@ -259,7 +279,7 @@ const categoriaDispositivo = () => {
             "idDispostivo" : idDispostivo,
             "descProblema" : dados.descProblema,
             "observacoes": dados.observacoes,
-            "assistencia": atSelecionada || "pública"
+            "assistencia": assistenciaId || "Público"
         };
 
         // cadastrar demanda
@@ -592,7 +612,7 @@ const categoriaDispositivo = () => {
                     <Dropdown.Toggle
                         id="dropdown-assistencia" 
                     >
-                        {atSelecionada} {openDropdown === 'selecaoAt' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+                        {atSelecionada.nomeFantasia || "Público"} {openDropdown === 'selecaoAt' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu className={stylesCad.dropdownMenu}>
@@ -601,21 +621,25 @@ const categoriaDispositivo = () => {
                         </Dropdown.Item>
 
                         <Dropdown.Divider className={stylesCad.divisor}/>
-
-                        <Dropdown.Item className={stylesCad.dropdownItem} onClick={() => setAtSelecionada("Assistência A")}>
-                            Assistência A
-                        </Dropdown.Item>
-
-                        <Dropdown.Item className={stylesCad.dropdownItem} onClick={() => setAtSelecionada("Assistência B")}>
-                            Assistência B
-                        </Dropdown.Item>
+                        {/* map de lista de assistencias favoritadas de acordo com matchs com id do solicitante */}
+                        {
+                            assistencias.map((assistencia) => (
+                                <Dropdown.Item 
+                                    key={assistencia.id} 
+                                    className={stylesCad.dropdownItem} 
+                                    onClick={() => setAtSelecionada(assistencia)}
+                                >
+                                    {assistencia.nomeFantasia}
+                                </Dropdown.Item>
+                            ))
+                        }
                     </Dropdown.Menu>
                 </Dropdown>
             </Modal.Body>
 
             <Modal.Footer className="border-0">
                 <Button
-                    onClick={() => enviarDemandaCompleta(atSelecionada || null)}
+                    onClick={() => enviarDemandaCompleta(atSelecionada.id || null)}
                 >
                     Enviar
                 </Button>

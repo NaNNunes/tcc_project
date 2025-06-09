@@ -67,7 +67,8 @@
       "cnpj": "36819765000103",
       "assistenciaTelefone": "27996898479",
       "assistenciaTermos": "true",
-      "administradorId": "0d6b"
+      "administradorId": "0d6b",
+      "id_endereco": "8f04"
     },
     {
       "id": "1331",
@@ -137,6 +138,80 @@
       "siafi": "5703"
     }
   ],
-  "dispositivo": [],
-  "demanda": []
+  "dispositivo": [
+    {
+      "id": "c68b",
+      "categoria": "Celular",
+      "marca": "Apple",
+      "fabricante": "Samsung",
+      "modelo": "iPhone 16",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "Cinza",
+      "solicitante_id": "d150"
+    },
+    {
+      "id": "9edd",
+      "categoria": "Celular",
+      "marca": "Motorola",
+      "fabricante": "Apple",
+      "modelo": "Edge 60 Fusion",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "solicitante_id": "d150"
+    },
+    {
+      "id": "90d3",
+      "categoria": "Celular",
+      "marca": "Apple",
+      "fabricante": "",
+      "modelo": "iPhone 13",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "solicitante_id": "d150"
+    }
+  ],
+  "demanda": [
+    {
+      "id": "5027",
+      "idDispostivo": "c68b",
+      "descProblema": "Probremas problematicos que problematizam problemas",
+      "observacoes": "Observe",
+      "assistencia": "Público",
+      "solicitante_id": "d150"
+    },
+    {
+      "id": "62df",
+      "idDispostivo": "9edd",
+      "descProblema": "Probremas problematicos que problematizam problemas",
+      "observacoes": "Observavel que há um problema na descrição",
+      "assistencia": "28fd",
+      "solicitante_id": "d150"
+    },
+    {
+      "id": "1df4",
+      "idDispostivo": "90d3",
+      "descProblema": "dsssssssssssssssssssssssssssss",
+      "observacoes": "ssssssssssssssssss",
+      "assistencia": "3418",
+      "solicitante_id": "d150"
+    }
+  ],
+  "assistencia_Fav_Solicitante": [
+    {
+      "id": "b087",
+      "id_solicitante": "d150",
+      "id_assistencia": "28fd"
+    },
+    {
+      "id": "e56e",
+      "id_solicitante": "d150",
+      "id_assistencia": "3418"
+    }
+  ]
 }

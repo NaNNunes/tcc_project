@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import EditarPag from '../conta_perfil/EditarPag';
 import Endereco from '../Endereco';
 
+import { useParams } from 'react-router-dom';
+
 const MinhaAssistencia = (props) => {
 
     const {register, handleSubmit, setValue, formState:{errors}} = useForm();

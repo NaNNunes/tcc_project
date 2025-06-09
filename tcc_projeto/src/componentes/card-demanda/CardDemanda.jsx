@@ -18,7 +18,6 @@ import { IoLocationOutline } from "react-icons/io5";
 
 const CardDemanda = (props) => {
 
-    console.log(props)
   return (
     <div style={{minWidth: '100%', maxWidth: '100%', margin: '0', padding: '0'}}>
         <Container className={styles.caixaCard}>
