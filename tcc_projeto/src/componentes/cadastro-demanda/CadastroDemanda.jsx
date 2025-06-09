@@ -576,12 +576,12 @@ const categoriaDispositivo = () => {
         {/* Modal para escolher a assistência e fazer o envio da demanda. */}
         <Modal show={mostrarModal} onHide={() => setMostrarModal(false)} centered>
             {/* Título */}
-            <Modal.Header closeButton className="border-0">
+            <Modal.Header closeButton className={stylesCad.headerModal}>
                 <Modal.Title className={stylesCad.modalTitle}>Direcionar demanda</Modal.Title>
-            </Modal.Header>
+            </Modal.Header> 
             
             {/* Corpo com a seleção de assistência técnica. */}
-            <Modal.Body>
+            <Modal.Body style={{padding: '24px', paddingTop: '0px'}}>
                 <span className={stylesCad.textSpan}>
                     Se tiver uma assistência técnica de preferência, escolha uma. Caso contrário, deixe como público.
                 </span>
@@ -613,9 +613,10 @@ const categoriaDispositivo = () => {
                 </Dropdown>
             </Modal.Body>
 
-            <Modal.Footer className="border-0">
+            <Modal.Footer className={stylesCad.footerModal}>
                 <Button
                     onClick={() => enviarDemandaCompleta(atSelecionada || null)}
+                    className={stylesCad.botaoModal}
                 >
                     Enviar
                 </Button>

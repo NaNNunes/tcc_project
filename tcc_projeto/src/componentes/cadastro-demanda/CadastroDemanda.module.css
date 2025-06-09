@@ -78,16 +78,20 @@
 
 /* --- AQUI COMEÇA A ESTILIZAÇÃO DO MODAL --- */
 
+/* Título modal */
 .modalTitle {
     font-size: 1.3rem;
 }
 
+/* Texto com informações */
 .textSpan {
     font-size: 1rem;
+    font-weight: bold;
+    color: #757575;
 }
 
 .dropdownAt {
-    background-color: transparent;
+    padding-top: 16px;
 }
 
 .dropdownMenu {
@@ -122,6 +126,24 @@
     background-color: #0069C6 !important;
     border-radius: inherit;
     color: white;
+}
+
+.headerModal {
+    border: 0;
+    padding-bottom: 0;
+}
+
+.botaoModal {
+    background-color: #0061B7;
+    width: 12rem;
+    border: 0;
+    height: 50px;
+    margin: 0;
+}
+
+.footerModal {
+    border: 0px;
+    align-self: center !important;
 }
 
 @media screen and (max-width: 1465px) {
@@ -180,6 +202,10 @@
 @media screen and (max-width: 352px) {
     .botaoSubmit {
         width: 100%;
+    }
+
+    .botaoModal {
+        width: 6rem;
     }
 
     .titleh3 {
