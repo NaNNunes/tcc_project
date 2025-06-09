@@ -698,11 +698,12 @@ export function useDemada(){
             "solicitante_id": userId || localStorage.getItem("userId")
         }
 
-        console.log(solicitante)
         fetch(`${url}/${tabelaDestino}/${id}`,{
             method: "PATCH",
             body: JSON.stringify(solicitante)
         })
+
+        location.reload();
     }
 
     return {cadastrarDispositivo, cadastrarDemanda};
