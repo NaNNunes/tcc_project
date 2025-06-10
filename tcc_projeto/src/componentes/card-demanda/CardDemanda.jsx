@@ -2,6 +2,7 @@
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 // Importação de styles.
 import styles from './CardDemanda.module.css';
@@ -21,6 +22,9 @@ import { useEffect, useState } from 'react';
 import CardFooter from 'react-bootstrap/esm/CardFooter';
 
 const CardDemanda = (props) => {
+
+    // Estados do modal.
+    const [mostrarModal, setMostrarModal] = useState(false);
 
     const url = import.meta.env.VITE_API_URL;
     const idSolicitante = props.solicitanteId;
@@ -58,48 +62,58 @@ const CardDemanda = (props) => {
 
   return (
     // deixar responsivo
-    <div style={{margin: '0', padding: '0', marginTop:"1rem"}}>
-        <Container className={styles.caixaCard}>
-            <Card style={{width: "100%", height: "25rem", display: "flex", flexDirection: "column"}}>
-                <Card.Body>
-                        <div style={{display: "flex", alignItems: "center", gap: "0.9rem", marginBottom: '16px'}}>
-                            <MdOutlineSmartphone size={50}/>
-                            <div>
-                                <Card.Text className={styles.textoCard}>
-                                    {dispositivo.categoria}
-                                </Card.Text>
+    <div style={{minWidth: '100%', maxWidth: '100%'}}>
+        <div style={{margin: '0', padding: '0', marginTop:"1rem"}}>
+            <Container className={styles.caixaCard}>
+                <Card style={{width: "100%", height: "25rem", display: "flex", flexDirection: "column"}}>
+                    <Card.Body>
+                            <div style={{display: "flex", alignItems: "center", gap: "0.9rem", marginBottom: '16px'}}>
+                                <MdOutlineSmartphone size={50}/>
+                                <div>
+                                    <Card.Text className={styles.textoCard}>
+                                        {dispositivo.categoria}
+                                    </Card.Text>
 
-                                <Card.Text className={styles.textoCard}>
-                                    {dispositivo.marca} - {dispositivo.modelo}
-                                </Card.Text>
+                                    <Card.Text className={styles.textoCard}>
+                                        {dispositivo.marca} - {dispositivo.modelo}
+                                    </Card.Text>
+                                </div>
                             </div>
-                        </div>
 
-                    <Card.Text className={styles.textoCard}>
-                        <IoLocationOutline color='black' size={30}/> {endereco.localidade} - {endereco.uf}
-                    </Card.Text>
+                        <Card.Text className={styles.textoCard}>
+                            <IoLocationOutline color='black' size={30}/> {endereco.localidade} - {endereco.uf}
+                        </Card.Text>
 
-                    <Card.Text className={styles.textoCard}>
-                        <MdOutlineCalendarMonth color='black' size={30}/> {props.dataEmissao}
-                    </Card.Text>
+                        <Card.Text className={styles.textoCard}>
+                            <MdOutlineCalendarMonth color='black' size={30}/> {props.dataEmissao}
+                        </Card.Text>
 
-                    <Card.Text className={styles.textoCard}>
-                        {props.status}
-                    </Card.Text>
-                </Card.Body>
+                        <Card.Text className={styles.textoCard}>
+                            {props.status}
+                        </Card.Text>
+                    </Card.Body>
 
-                <CardFooter className='text-center'>
+                    <CardFooter className='text-center'>
 
-                    <Button
-                        as='input'
-                        type='submit'
-                        value="ver"
-                        size='lg'
-                    />
+                        <Button
+                            as='input'
+                            type='submit'
+                            value="ver"
+                            size='lg'
+                            onClick={() => setMostrarModal(true)}
+                        />
+                    </CardFooter>
+                </Card>
+            </Container>
+        </div>
 
-                </CardFooter>
-            </Card>
-        </Container>
+        <div>
+            <Modal show={mostrarModal} onHide={() => setMostrarModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Visualização de informações da demanda</Modal.Title>
+                </Modal.Header>
+            </Modal>
+        </div>
     </div>
   )
 }
