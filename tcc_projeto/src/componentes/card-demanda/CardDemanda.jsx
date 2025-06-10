@@ -3,6 +3,8 @@ import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col'
 
 // Importação de styles.
 import styles from './CardDemanda.module.css';
@@ -108,10 +110,90 @@ const CardDemanda = (props) => {
         </div>
 
         <div>
-            <Modal show={mostrarModal} onHide={() => setMostrarModal(false)} centered>
-                <Modal.Header closeButton>
+            <Modal show={mostrarModal} onHide={() => setMostrarModal(false)} centered >
+                <Modal.Header closeButton style={{width: 'fit-content'}}>
                     <Modal.Title>Visualização de informações da demanda</Modal.Title>
                 </Modal.Header>
+
+                <Modal.Body>
+                    <h3>Dispositivo</h3>
+                    <Row>
+                        {/* Categoria */}
+                        <Col>
+                            <span>
+                                <strong>Categoria: </strong>
+                                CATEGORIA
+                            </span>
+                        </Col>
+
+                        {/* Marca */}
+                        <Col>
+                            <span>
+                                <strong>Marca: </strong>
+                                MARCA
+                            </span>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        {/* Fabricante */}
+                        <Col>
+                            <span>
+                                <strong>Fabricante: </strong>
+                                FABRICANTE
+                            </span>
+                        </Col>
+
+                        {/* Modelo */}
+                        <Col>
+                            <span>
+                                <strong>Modelo: </strong>
+                                MODELO
+                            </span>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        {/* Tensão */}
+                        <Col>
+                            <span>
+                                <strong>Tensão: </strong>
+                                TENSAO
+                            </span>
+                        </Col>
+
+                        {/* Amperagem */}
+                        <Col>
+                            <span>
+                                <strong>Amperagem: </strong>
+                                AMPERAGEM
+                            </span>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        {/* Cor */}
+                        <Col>
+                            <span>
+                                <strong>Cor: </strong>
+                                COR
+                            </span>
+                        </Col>
+
+                        {/* A */}
+                        <Col>
+                            <span>
+                                <strong>Amperagem: </strong>
+                                AMPERAGEM
+                            </span>
+                        </Col>
+                    </Row>
+                    
+
+                    <span>
+                        <strong>Tensão</strong>
+                    </span>
+                </Modal.Body>
             </Modal>
         </div>
     </div>
