@@ -150,15 +150,31 @@ const MenuNavegacao = () => {
           {/* Procurar demandas */}
           <NavDropdown.Item
             as={Link}
-            to="/procurar-demandas"
+            to={`/procurar-demandas/${false}`}
             className={styles.dropdownItem}
+            // espera a tela carregar para atualizar a tela e ocorrer a renderização das demandas
+            onClick={()=>{
+              setTimeout(() => {
+                location.reload()
+              }, 1);
+            }}
           >
             <Image className={styles.icone} src="/icons/zoom_in.svg" />
             Procurar demandas
           </NavDropdown.Item>
 
           {/* Demandas abertas */}
-          <NavDropdown.Item as={Link} to="#" className={styles.dropdownItem}>
+          <NavDropdown.Item 
+            as={Link} 
+            to={`/procurar-demandas/${true}`} 
+            className={styles.dropdownItem}
+            // espera a tela carregar para atualizar a tela e ocorrer a renderização das demandas
+            onClick={()=>{
+              setTimeout(() => {
+                location.reload()
+              }, 1);
+            }}
+          >
             <Image className={styles.icone} src="/icons/pending_actions.svg" />
             Demandas abertas
           </NavDropdown.Item>
@@ -166,8 +182,8 @@ const MenuNavegacao = () => {
           {/* Histórico de demandas */}
           <NavDropdown.Item as={Link} to="#" className={styles.dropdownItem}>
             <Image className={styles.icone} src="/icons/history.svg" />
-            Histórico de demandas
-          </NavDropdown.Item>
+              Histórico de demandas
+            </NavDropdown.Item>
         </NavDropdown>
       </div>
 
@@ -236,7 +252,17 @@ const MenuNavegacao = () => {
           </NavDropdown.Item>
 
           {/* Consultar locais */}
-          <NavDropdown.Item as={Link} to="#" className={styles.dropdownItem}>
+          <NavDropdown.Item 
+            as={Link} 
+            to="/buscar-assistencias" 
+            className={styles.dropdownItem}
+            // espera a tela carregar para atualizar a tela e ocorrer a renderização e assistencias
+            onClick={()=>{
+              setTimeout(() => {
+                location.reload()
+              }, 1);
+            }}
+          >
             <Image className={styles.icone} src="/icons/location_on.svg" />
             Consultar locais
           </NavDropdown.Item>

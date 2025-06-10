@@ -21,9 +21,6 @@ const VisualizarAssistencia = (props) => {
     const idUsuario = localStorage.getItem("userId");
     const idEndereco = props.idEndereco;
 
-    // lista de id de assistencias favoritas do user
-    const listaIdAssistenciasFavs = [];
-
     // states
     // state para receber endereco  
     const [endereco, setEndereco] = useState({});
@@ -55,14 +52,17 @@ const VisualizarAssistencia = (props) => {
                 const reqBuscaMatchs = await fetch(`${url}/assistencia_Fav_Solicitante`)
                 const resBuscaMatchs = await reqBuscaMatchs.json();
                 
+                // lista para armaenar id de assistencias favoritas do user
+                const listaIdAssistenciasFavs = [];
+
                 // mapeia lista de matchs e verifica qual match está vinculado ao solicitante e a assistencia renderizada
                 resBuscaMatchs.map((match)=>{
                     // verifica se match pertence ao solicitante
-                    const isMatchClienteAtual = match.id_solicitante === idUsuario;
-                    // verifica se match pertence a assistencia rendetizada
+                    const isMatchSolicitante = match.id_solicitante === idUsuario;
+                    // verifica se match pertence a assistencia renderizada
                     const isAssistenciaFav = match.id_assistencia === idAssistencia;
                     // assistencia pertence ao favoritos do solicitante
-                    if(isMatchClienteAtual && isAssistenciaFav){
+                    if(isMatchSolicitante && isAssistenciaFav){
                         // insere id de assistencia no match na lista de assistencias favoritas do solicitantef
                         listaIdAssistenciasFavs.push(match.id_assistencia);
                     }
@@ -79,7 +79,7 @@ const VisualizarAssistencia = (props) => {
             }
         }
         fetchData();
-    })
+    },[])
 
     // funcao chamada pelo botao de favoritar assistencia
     const favoritar = async() =>{
@@ -151,28 +151,33 @@ const VisualizarAssistencia = (props) => {
                         </Col>
                     </Row>
                 </Card.Body>
-                <Card.Footer>
-                    {/* colocar icone de favoritar */}
-                    {
-                        (assistenciaIsFav)
-                            ?
-                                <Button 
-                                    type='submit'
-                                    value='Remover Match'
-                                    as='input'
-                                    variant='warning'
-                                    onClick={removerMatch}
-                                />                            
-                            :
-                                <Button
-                                    type="submit"
-                                    value="Favoritar"
-                                    as="input"
-                                    variant='danger'
-                                    onClick={favoritar}
-                                />
-                    }
-                </Card.Footer>
+
+                {   
+                    // verifica o tipo do user para mostrar ou não opção de favoritar (melhorar essa logica)
+                    (localStorage.getItem("userType") === "solicitante") &&
+                        <Card.Footer>
+                            {/* colocar icone de favoritar */}
+                            {
+                                (assistenciaIsFav)
+                                    ?
+                                        <Button 
+                                            type='submit'
+                                            value='Remover Match'
+                                            as='input'
+                                            variant='warning'
+                                            onClick={removerMatch}
+                                        />                            
+                                    :
+                                        <Button
+                                            type="submit"
+                                            value="Favoritar"
+                                            as="input"
+                                            variant='danger'
+                                            onClick={favoritar}
+                                        />
+                            }
+                        </Card.Footer>
+                }
             </Card>
         </Container>
     </div>

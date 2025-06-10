@@ -30,7 +30,6 @@ const CardDemanda = (props) => {
     useEffect(()=>{
         async function fetchData() {
             try {
-                console.log(props)
                 // busca user by id
                 const reqBuscaSolicitanteById = await fetch(`${url}/solicitante/${idSolicitante}`);
                 const resBuscaSolicitanteById = await reqBuscaSolicitanteById.json();

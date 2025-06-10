@@ -4,31 +4,82 @@ import CardDemanda from "../../componentes/card-demanda/CardDemanda";
 // Importação do react-bootstrap.
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col'
 
 // Importação do styles.
 import styles from "./ProcurarDemandas.module.css";
 
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const ProcurarDemandas = () => {
+  const {isApenasPrivadas} = useParams();
+
   //todas as demandas
   const [demandas, setDemandas] = useState([]);
 
-  // buscar todas as demandas
+  const idAdministrador = localStorage.getItem("userId");
+
   const url = import.meta.env.VITE_API_URL;
+
+  // buscar por demandas
   useEffect(() => {
     async function fetchData() {
       try {
-        const request = await fetch(`${url}/demanda`);
-        const response = await request.json();
-        setDemandas(response);
+        // busca todas as demandas
+        const reqBuscaDemandas = await fetch(`${url}/demanda`);
+        const resBuscaDemandas = await reqBuscaDemandas.json();
+
+        // lista para armazenas apenas demandas públicas
+        const listaDemandasPublicas = [];
+
+        // mapeamento de demandas para encontrar apenas demandas publicas e definí-las
+        resBuscaDemandas.map((demanda)=>{
+          if(demanda.assistencia === "Público"){
+            listaDemandasPublicas.push(demanda)
+          }
+        })
+        setDemandas(listaDemandasPublicas);
+        // console.log("Todas as demandas publicas:", listaDemandasPublicas);
+
+        // caso seja uma consulta apenas por demandas das assistencias do adm
+        if(isApenasPrivadas === "true"){
+            // Busca por assitencias vinculadas ao adm
+            const request = await fetch(`${url}/assistencia`);
+            const response = await request.json();
+            
+            // pegar resposta e verificar quais assistencias da lista possuem o id do adm
+            // lista para armazenar id de assistencias do adm
+            const listaIdAssistencia = [];
+
+            // mapeamento de lista de todas assistencias para filtragem e insersao à lista de id assistencias
+            // apenas assistencias que possuam id do adm
+            response.map((assistencia) =>{
+              (assistencia.administradorId === idAdministrador) &&
+                listaIdAssistencia.push(assistencia.id);
+            })
+            // console.log("Assistencias do adm:", listaIdAssistencia);
+
+            // lista para armazenar apenas demandas que estejam atribuidas a assistencias do adm
+            const listaDemandasAssistenciasDoAdministrador = [];
+            
+            // mapeia demandas e verifica quais demandas estão vinculadas as assistencias do adm
+            resBuscaDemandas.map((demanda) =>{
+              listaIdAssistencia.map((idAssistencia)=>{
+                (demanda.assistencia === idAssistencia) &&
+                  listaDemandasAssistenciasDoAdministrador.push(demanda);
+              })
+            })
+            setDemandas(listaDemandasAssistenciasDoAdministrador);
+            // console.log("demandas atribuidas:",listaIdDemandasAssistenciasDoAdministrador);
+        }
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
   }, []);
+
+
 
   const [numLinhas, setNumLinhas] = useState(2);
   const cardsPorLinha = 3;
@@ -46,14 +97,14 @@ const ProcurarDemandas = () => {
       <Container className={styles.caixa}>
         {
           demandasParaMostrar.map((demanda) => (
-            (demanda.assistencia === "Público") &&
-                <CardDemanda
-                      key={demanda.id}
-                      id={demanda.id}
-                      idDispostivo={demanda.idDispostivo}
-                      solicitanteId={demanda.solicitante_id}
-                      dataEmissao={demanda.dataEmissao}
-                />
+            <CardDemanda
+                  key={demanda.id}
+                  id={demanda.id}
+                  idDispostivo={demanda.idDispostivo}
+                  solicitanteId={demanda.solicitante_id}
+                  dataEmissao={demanda.dataEmissao}
+                  dominioDemanda={demanda.assistencia} // mostrar em algum lugar do card
+            />
           ))
         }
       </Container>

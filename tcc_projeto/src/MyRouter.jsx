@@ -91,7 +91,7 @@ const router = createBrowserRouter([
         element: <Politicas />,
       },
       {
-        path: "/procurar-demandas",
+        path: "/procurar-demandas/:isApenasPrivadas",
         element: <ProcurarDemandas />,
       },
       {
