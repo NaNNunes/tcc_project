@@ -5,10 +5,11 @@
 }
 
 .icone {
-    padding-right: 10px;
-    width: 3rem;
+  padding-right: 10px;
+  width: 3rem;
 }
 
 .botaoTexto {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
+  margin: auto 1rem 1rem;
 }

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 //import pages
-  // POR FAVOR DEIXE EM ORDEM ALFABÉTICA
+// POR FAVOR DEIXE EM ORDEM ALFABÉTICA
 import App from "./App.jsx";
 import Assistencias from "./pages/assistencia/Assistencias.jsx";
 import Assistencia_info from "./pages/assistencia/Assistencia_info.jsx";
@@ -13,7 +13,6 @@ import Conta from "./pages/conta_perfil/Conta.jsx";
 import CriarDemanda from "./pages/demanda/Criar_demanda.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import Home from "./pages/home/Home.jsx";
-import Inicial from "./pages/inicial/Inicial.jsx";
 import Login from "./pages/login/Login.jsx";
 import MinhasDemandas from "./pages/demanda/MinhasDemandas.jsx";
 import PerguntaSeguranca from "./pages/cadastro-user/PerguntaSeguranca.jsx";
@@ -22,13 +21,15 @@ import ProcurarDemandas from "./pages/demanda/ProcurarDemandas.jsx";
 import SelecaoUsuario from "./pages/selecao_usuario/SelecaoUsuario.jsx";
 import Sobre from "./pages/sobre/Sobre.jsx";
 import Termos from "./pages/termos/Termos.jsx";
+import Inicio from "./pages/inicio/Inicio.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
-    children: [ // POR FAVOR DEIXE EM ORDEM ALFABÉTICA
+    children: [
+      // POR FAVOR DEIXE EM ORDEM ALFABÉTICA
       {
         path: "/",
         element: <Home />,
@@ -38,8 +39,8 @@ const router = createBrowserRouter([
         element: <Assistencia_info />,
       },
       {
-        path:"/buscar-assistencias",
-        element:<Assistencias/>
+        path: "/buscar-assistencias",
+        element: <Assistencias />,
       },
       {
         path: "/cadastro",
@@ -70,13 +71,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-
-        path: "/inicial",
-        element: <Inicial />
+        path: "/inicio",
+        element: <Inicio />,
       },
       {
         path: "/login",
-        element: <Login />
+        element: <Login />,
       },
       {
         path: "/minhas-demandas",
@@ -88,7 +88,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/politica-de-privacidade",
-        element: <Politicas />
+        element: <Politicas />,
       },
       {
         path: "/procurar-demandas",
@@ -104,8 +104,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/termos-de-uso",
-        element: <Termos />
-      }
+        element: <Termos />,
+      },
     ],
   },
 ]);
