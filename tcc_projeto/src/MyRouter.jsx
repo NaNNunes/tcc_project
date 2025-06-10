@@ -14,7 +14,6 @@ import CriarDemanda from "./pages/demanda/Criar_demanda.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import Home from "./pages/home/Home.jsx";
 import Login from "./pages/login/Login.jsx";
-import MinhasDemandas from "./pages/demanda/MinhasDemandas.jsx";
 import PerguntaSeguranca from "./pages/cadastro-user/PerguntaSeguranca.jsx";
 import Politicas from "./pages/termos/Politicas.jsx";
 import ProcurarDemandas from "./pages/demanda/ProcurarDemandas.jsx";
@@ -77,10 +76,6 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
-      },
-      {
-        path: "/minhas-demandas",
-        element: <MinhasDemandas/>
       },
       {
         path: "/pergunta-seguranca",

@@ -1,10 +1,6 @@
 // utilizado para mostrar todas as assistencias cadastradas
     // TODO aplicar filtro de asssitencias próximas, assitencia favorita
 
-    // TODO renan verificar qual user está acessando a tela
-        // mostrar apenas assistencias do user adm quando o memsmo acessa 
-        // e não mostrar botao de favoritar (mexer no componente card assistencia)
-
 // acredito eu que não há necessidade de criação de um componente para mostrar a assitencia ao user mas tudo bem
 
 import Form from "react-bootstrap/Form";
@@ -30,7 +26,6 @@ const Assistencias = () => {
     useEffect(()=>{
         async function fetchData() {
             try {
-                
                 const reqBuscaAssistencias = await fetch(`${url}/assistencia`);
                 const resBuscaAssistencias = await reqBuscaAssistencias.json();
                 setAssistencias(resBuscaAssistencias);
@@ -47,8 +42,6 @@ const Assistencias = () => {
                     })
                     setAssistencias(listaAssitenciasAdministrador);
                 }
-                
-
             } catch (error) {
                 console.log(error)
             }

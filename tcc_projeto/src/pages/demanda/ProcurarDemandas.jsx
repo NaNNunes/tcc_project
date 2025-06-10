@@ -17,7 +17,8 @@ const ProcurarDemandas = () => {
   //todas as demandas
   const [demandas, setDemandas] = useState([]);
 
-  const idAdministrador = localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId");
+  const userType = localStorage.getItem("userType");
 
   const url = import.meta.env.VITE_API_URL;
 
@@ -29,6 +30,24 @@ const ProcurarDemandas = () => {
         const reqBuscaDemandas = await fetch(`${url}/demanda`);
         const resBuscaDemandas = await reqBuscaDemandas.json();
 
+        // caso user seja solicitante
+        // lista apenas demandas emitidas por ele
+        if(userType == "solicitante"){
+
+          // lista para armazenas demandas emitidas pelo solicitante
+          const listaDemandasDoSolicitante = [];
+
+          // mapeia demandas identificando e saperando demandas do solicitante pelo id
+          resBuscaDemandas.map((demanda)=>{
+            (demanda.solicitante_id === userId) && listaDemandasDoSolicitante.push(demanda);
+          });
+
+          // return para finalizar o script
+          return setDemandas(listaDemandasDoSolicitante);
+        }
+
+        // caso solicitante seja adm
+        
         // lista para armazenas apenas demandas públicas
         const listaDemandasPublicas = [];
 
@@ -54,7 +73,7 @@ const ProcurarDemandas = () => {
             // mapeamento de lista de todas assistencias para filtragem e insersao à lista de id assistencias
             // apenas assistencias que possuam id do adm
             response.map((assistencia) =>{
-              (assistencia.administradorId === idAdministrador) &&
+              (assistencia.administradorId === userId) &&
                 listaIdAssistencia.push(assistencia.id);
             })
             // console.log("Assistencias do adm:", listaIdAssistencia);
