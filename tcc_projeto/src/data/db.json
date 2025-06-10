@@ -174,6 +174,18 @@
       "amperagem": "",
       "cor": "",
       "solicitante_id": "d150"
+    },
+    {
+      "id": "1f56",
+      "categoria": "Outros",
+      "marca": "LG",
+      "fabricante": "LG",
+      "modelo": "LG UltraGear",
+      "numSerie": "sim",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "preto",
+      "solicitante_id": "d150"
     }
   ],
   "demanda": [
@@ -183,7 +195,9 @@
       "descProblema": "Probremas problematicos que problematizam problemas",
       "observacoes": "Observe",
       "assistencia": "Público",
-      "solicitante_id": "d150"
+      "solicitante_id": "d150",
+      "dataEmissao": "09/06/2025",
+      "horaEmissao": "19:45:57"
     },
     {
       "id": "62df",
@@ -191,7 +205,9 @@
       "descProblema": "Probremas problematicos que problematizam problemas",
       "observacoes": "Observavel que há um problema na descrição",
       "assistencia": "28fd",
-      "solicitante_id": "d150"
+      "solicitante_id": "d150",
+      "dataEmissao": "09/06/2025",
+      "horaEmissao": "19:45:57"
     },
     {
       "id": "1df4",
@@ -199,19 +215,27 @@
       "descProblema": "dsssssssssssssssssssssssssssss",
       "observacoes": "ssssssssssssssssss",
       "assistencia": "3418",
-      "solicitante_id": "d150"
+      "solicitante_id": "d150",
+      "dataEmissao": "09/06/2025",
+      "horaEmissao": "19:45:57"
+    },
+    {
+      "id": "fbdb",
+      "idDispostivo": "1f56",
+      "descProblema": "Ta top demais ter um monitor de 1k em casa e não ter tempo de usar pois preciso trabalhar para pagar por ele",
+      "observacoes": "24'",
+      "assistencia": "28fd",
+      "solicitante_id": "d150",
+      "dataEmissao": "09/06/2025",
+      "horaEmissao": "19:45:57"
     }
   ],
   "assistencia_Fav_Solicitante": [
     {
-      "id": "b087",
+      "id": "99c5",
       "id_solicitante": "d150",
-      "id_assistencia": "28fd"
-    },
-    {
-      "id": "e56e",
-      "id_solicitante": "d150",
-      "id_assistencia": "3418"
+      "id_assistencia": "28fd",
+      "isAtivo": true
     }
   ]
 }

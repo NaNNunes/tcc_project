@@ -36,99 +36,91 @@ const MenuNavegacao = () => {
   const perfilUsuario =
     tipoUser !== "Visitante" && localStorage.getItem("userType");
 
-  // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
-  const contentNavSolicitante = (
-    <>
-      {/* demandas */}
-      <div className={styles.divNavdropdown}>
-        {/* NavDropdown de "Demandas" */}
-        <NavDropdown
-          id="dropdown-demandas-solicitante"
-          show={openDropdown === "demandas-solicitante"}
-          // Verifca se o NavDropdown está ativo ou não.
-          onToggle={(isOpen) =>
-            setOpenDropdown(isOpen ? "demandas-solicitante" : null)
-          }
-          className={`${
-            openDropdown === "demandas-solicitante" ? styles.dropDownActive : ""
-          }`}
-          title={
-            <span className={styles.dropDownTitle}>
-              {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
-              Demandas{" "}
-              {openDropdown === "demandas-solicitante" ? (
-                <TiArrowSortedUp />
-              ) : (
-                <TiArrowSortedDown />
-              )}
-            </span>
-          }
-        >
-          {/* Items que estarão dentro do navdropdown */}
-          {/* Cadastro pedido */}
-          <NavDropdown.Item
-            as={Link}
-            to="/criar-Demanda"
-            className={styles.dropdownItem}
-          >
-            <Image className={styles.icone} src="/icons/Icon_pedido.svg" />
-            Cadastro pedido
-          </NavDropdown.Item>
-
-          {/* Consultar pedidos */}
-          <NavDropdown.Item as={Link} to="#" className={styles.dropdownItem}>
-            <Image className={styles.icone} src="/icons/Icon_consultar.svg" />
-            Consultar pedidos
-          </NavDropdown.Item>
-        </NavDropdown>
-      </div>
-      {/* assistencias */}
-      <div className={styles.divNavdropdown}>
-        {/* NavDropdown de "assistencias" */}
-        <NavDropdown
-          id="dropdown-assistencias-solicitante"
-          show={openDropdown === "assistencias-solicitante"}
-          // Verifca se o NavDropdown está ativo ou não.
-          onToggle={(isOpen) =>
-            setOpenDropdown(isOpen ? "assistencias-solicitante" : null)
-          }
-          className={`${
-            openDropdown === "assistencias-solicitante"
-              ? styles.dropDownActive
-              : ""
-          }`}
-          title={
-            <span className={styles.dropDownTitle}>
-              {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
-              Assitências
-              {openDropdown === "assistencias-solicitante" ? (
-                <TiArrowSortedUp />
-              ) : (
-                <TiArrowSortedDown />
-              )}
-            </span>
-          }
-        >
-          {/* Items que estarão dentro do navdropdown */}
-          {/* Buscas assistencias */}
-          <NavDropdown.Item
-            as={Link}
-            to="/buscar-assistencias"
-            className={styles.dropdownItem}
-          >
-            <Image className={styles.icone} src="#" />
-            Encontrar Assistências
-          </NavDropdown.Item>
-
-          {/* Consultar pedidos */}
-          <NavDropdown.Item as={Link} to="#" className={styles.dropdownItem}>
-            <Image className={styles.icone} src="#" />
-            Assistências Favoritas
-          </NavDropdown.Item>
-        </NavDropdown>
-      </div>
-    </>
-  );
+    // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
+    const contentNavSolicitante = (
+        <>
+            {/* demandas */}
+            <div className={styles.divNavdropdown}>
+                {/* NavDropdown de "Demandas" */}
+                <NavDropdown 
+                    id="dropdown-demandas-solicitante"
+                    show={openDropdown === "demandas-solicitante"}
+                    // Verifca se o NavDropdown está ativo ou não.
+                    onToggle={(isOpen) => setOpenDropdown(isOpen ? 'demandas-solicitante' : null)} 
+                    className={`${openDropdown === 'demandas-solicitante' ? styles.dropDownActive : ''}`} 
+                    title={
+                        <span className={styles.dropDownTitle}>
+                            {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
+                            Demandas {openDropdown === 'demandas-solicitante' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+                        </span>
+                    }
+                >
+                    {/* Items que estarão dentro do navdropdown */}
+                    {/* Cadastro pedido */}
+                    <NavDropdown.Item 
+                        as={Link} 
+                        to='/criar-Demanda' 
+                        className={styles.dropdownItem}
+                    >
+                        <Image className={styles.icone} src='/icons/Icon_pedido.svg' />Cadastro pedido
+                    </NavDropdown.Item>
+                    
+                    {/* Consultar pedidos */}
+                    <NavDropdown.Item 
+                        as={Link}
+                        to='/minhas-demandas'
+                        className={styles.dropdownItem}
+                    >
+                        <Image className={styles.icone} src='/icons/Icon_consultar.svg'/>Consultar pedidos
+                    </NavDropdown.Item>
+                </NavDropdown>
+            </div>
+            {/* assistencias */}
+            <div className={styles.divNavdropdown}>
+                {/* NavDropdown de "assistencias" */}
+                <NavDropdown 
+                    id="dropdown-assistencias-solicitante"
+                    show={openDropdown === "assistencias-solicitante"}
+                    // Verifca se o NavDropdown está ativo ou não.
+                    onToggle={(isOpen) => setOpenDropdown(isOpen ? 'assistencias-solicitante' : null)} 
+                    className={`${openDropdown === 'assistencias-solicitante' ? styles.dropDownActive : ''}`} 
+                    title={
+                        <span className={styles.dropDownTitle}>
+                            {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
+                            Assitências{openDropdown === 'assistencias-solicitante' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+                        </span>
+                    }
+                >
+                    {/* Items que estarão dentro do navdropdown */}
+                    {/* Encontrar Assistências */}
+                    <NavDropdown.Item 
+                        as={Link} 
+                        to='/buscar-assistencias' 
+                        className={styles.dropdownItem}
+                    >
+                        <Image className={styles.icone} src='#' />Encontrar Assistências
+                    </NavDropdown.Item>
+                    
+                    {
+                        /* 
+                            ACREDITO QUE NÃO HÁ NECESSIDADE DE TER ESSE LINK 
+                            POIS PARA VER ASSITENCIAS FAVS BASTA UM FILTRO, bem simples, 
+                            NA PAGINAS DE ENCONTRAR ASSISTENCIAS
+                        */
+                    }
+                    {/* Consultar assistencias favoritas */}
+                    <NavDropdown.Item 
+                        as={Link}
+                        to='/minhas-demandas'
+                        className={styles.dropdownItem}
+                    >
+                        <Image className={styles.icone} src='#'/>Assistências Favoritas
+                    </NavDropdown.Item>
+                </NavDropdown>
+            </div>
+        </>
+        
+    )
 
   const contentNavADM = (
     <>

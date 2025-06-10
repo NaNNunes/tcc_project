@@ -1,6 +1,7 @@
 // Importação do react-bootstrap
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 // Importação de styles.
 import styles from './CardDemanda.module.css';
@@ -16,10 +17,49 @@ import { TiArrowSortedUp } from "react-icons/ti";
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 
+import { useEffect, useState } from 'react';
+import CardFooter from 'react-bootstrap/esm/CardFooter';
+
 const CardDemanda = (props) => {
 
+    const url = import.meta.env.VITE_API_URL;
+    const idSolicitante = props.solicitanteId;
+    const idDispostivo = props.idDispostivo;
+    const [endereco, setEndereco] = useState({});
+    const [dispositivo, setDispositivo] = useState({});
+    useEffect(()=>{
+        async function fetchData() {
+            try {
+                console.log(props)
+                // busca user by id
+                const reqBuscaSolicitanteById = await fetch(`${url}/solicitante/${idSolicitante}`);
+                const resBuscaSolicitanteById = await reqBuscaSolicitanteById.json();
+                // id do endereco
+                const idEndereco = resBuscaSolicitanteById.id_endereco;
+
+                //buscar dispositivo do user by id
+                const reqBuscaDispositivoSolicitanteById = await fetch(`${url}/dispositivo/${idDispostivo}`);
+                const resBuscaDispositivoSolicitanteById = await reqBuscaDispositivoSolicitanteById.json();
+                setDispositivo(resBuscaDispositivoSolicitanteById);
+
+                // buscar endereco do user by id
+                if(idEndereco != undefined){
+                    const reqBuscaEnderecoSolicitanteById = await fetch(`${url}/endereco/${idEndereco}`);
+                    const resBuscaEnderecoSolicitanteById = await reqBuscaEnderecoSolicitanteById.json();
+                    setEndereco(resBuscaEnderecoSolicitanteById);
+                }
+
+            } catch (error) {
+                console.log(error)
+            }
+        };
+        fetchData();
+    },[])
+
+
   return (
-    <div style={{minWidth: '100%', maxWidth: '100%', margin: '0', padding: '0'}}>
+    // deixar responsivo
+    <div style={{margin: '0', padding: '0', marginTop:"1rem"}}>
         <Container className={styles.caixaCard}>
             <Card style={{width: "100%", height: "25rem", display: "flex", flexDirection: "column"}}>
                 <Card.Body>
@@ -27,27 +67,38 @@ const CardDemanda = (props) => {
                             <MdOutlineSmartphone size={50}/>
                             <div>
                                 <Card.Text className={styles.textoCard}>
-                                    {props.categoria}
+                                    {dispositivo.categoria}
                                 </Card.Text>
 
                                 <Card.Text className={styles.textoCard}>
-                                    {props.marca} - {props.modelo}
+                                    {dispositivo.marca} - {dispositivo.modelo}
                                 </Card.Text>
                             </div>
                         </div>
 
                     <Card.Text className={styles.textoCard}>
-                        <IoLocationOutline color='black' size={30}/> {props.cidade} - {props.estado}
+                        <IoLocationOutline color='black' size={30}/> {endereco.localidade} - {endereco.uf}
                     </Card.Text>
 
                     <Card.Text className={styles.textoCard}>
-                        <MdOutlineCalendarMonth color='black' size={30}/> {props.dataDeEmissao}
+                        <MdOutlineCalendarMonth color='black' size={30}/> {props.dataEmissao}
                     </Card.Text>
 
                     <Card.Text className={styles.textoCard}>
                         {props.status}
                     </Card.Text>
                 </Card.Body>
+
+                <CardFooter className='text-center'>
+
+                    <Button
+                        as='input'
+                        type='submit'
+                        value="ver"
+                        size='lg'
+                    />
+
+                </CardFooter>
             </Card>
         </Container>
     </div>

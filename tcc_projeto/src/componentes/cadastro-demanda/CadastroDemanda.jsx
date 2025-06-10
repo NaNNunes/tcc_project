@@ -43,22 +43,22 @@ const categoriaDispositivo = () => {
     // lista de matchs de assistencias favoritas
     const {buscaAssistenciaById} = useCadastroAssistencia();
     const [assistencias, setAssistencias] = useState([]);
-    const listaAssitencias = [];
+    const listaAssistencias = [];
     const buscaMatchs = async() =>{
         const url = import.meta.env.VITE_API_URL;
         const request = await fetch(`${url}/assistencia_Fav_Solicitante`);
         const response = await request.json();
-        console.log("Matchs:",response);
+        // console.log("Matchs:",response);
         
         // mapeia todas os matchs e retorna nome da assistencia pelo id encontrado no match
         // pegar assitencias apenas com que seja favoritadas pelo user, verificando o id do solicitante no match
         response.map(async (res)=>{
             if(res.id_solicitante === localStorage.getItem("userId")){
                 const assistencia = await buscaAssistenciaById(res.id_assistencia);
-                listaAssitencias.push(assistencia);
+                listaAssistencias.push(assistencia);
             }
         })
-        setAssistencias(listaAssitencias);
+        setAssistencias(listaAssistencias);
     }
     
     const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
@@ -253,11 +253,12 @@ const categoriaDispositivo = () => {
         setMostrarModal(true);
     }
 
+
     const enviarDemandaCompleta = async (assistenciaId) => {
         setMostrarModal(false);
+        // defineDataEmissao();
 
         const dados = dadosTemporarios;
-
         // nao consegui fazer a tempo de forma eficiente e mais segura
         // separando dados de dispositivo
         const dispositivo = {
@@ -640,6 +641,7 @@ const categoriaDispositivo = () => {
             <Modal.Footer className={stylesCad.footerModal}>
                 <Button
                     onClick={() => enviarDemandaCompleta(atSelecionada.id || null)}
+                    className={stylesCad.botaoModal}
                 >
                     Enviar
                 </Button>

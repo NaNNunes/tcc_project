@@ -1,9 +1,13 @@
+// componente card para mostrar infos da assistencia para o solicitante
+
+
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
+// hooks
 import { useEndereco, useUser } from '../../hooks/useApi';
 import { useEffect, useState } from 'react';
 
@@ -11,28 +15,58 @@ const VisualizarAssistencia = (props) => {
 
     const {favoritarAssistencia} = useUser();
 
+    const idAssistencia = props.idAssistencia;
+
     // busca endereco da assitencia por id
     const [endereco, setEndereco] = useState({});
+
     const url = import.meta.env.VITE_API_URL;
     useEffect(()=>{
         async function buscaEnderecoById(){
-            const request = await fetch(`${url}/endereco/${props.idEndereco}`);
-            const response = await request.json();
-            setEndereco(response);
-            console.log(response);
+           try{
+                const reqBuscaEnderecoById = await fetch(`${url}/endereco/${props.idEndereco}`);
+                const resBuscaEnderecoById = await reqBuscaEnderecoById.json();
+                setEndereco(resBuscaEnderecoById);
+            }
+            catch(error){
+                console.log(error);
+            } 
         }
         buscaEnderecoById();
     },[]);
 
+    //TODO: verificar se assistencia ja esta favoritada pelo user
+    useEffect(()=>{
+        async function fetchData() {
+            try {
+                const reqBuscaMatchs = await fetch(`${url}/assistencia_Fav_Solicitante`)
+                const resBuscaMatchs = await reqBuscaMatchs.json();
+                
+                resBuscaMatchs.map((match)=>{
+                    const isAssistenciaFav = match.id_assistencia === idAssistencia && match.id_solicitante === localStorage.getItem("userId");
+                    if(isAssistenciaFav){
+                        console.log(match.id_assistencia,":",isAssistenciaFav)
+                    }
+                })
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchData();
+    })
+
+    // funcao chamada pelo botao de favoritar assistencia
     const favoritar = async() =>{
         const idUsuario = localStorage.getItem("userId");
         const idAssistencia = props.idAssistencia;
 
         const identificadores = {
             "id_solicitante": idUsuario,
-            "id_assistencia": idAssistencia
+            "id_assistencia": idAssistencia,
+            "isAtivo": true
         }
-
+        // funcao do hook
         favoritarAssistencia(identificadores);
     }
 
@@ -92,6 +126,11 @@ const VisualizarAssistencia = (props) => {
                 </Card.Body>
                 <Card.Footer>
                     {/* colocar icone de favoritar */}
+                    {/* 
+                        Fazer uma verificação de assistencia está favoritada ou nao
+                        caso não esteja favoritada mostrar botão de favoritar, 
+                        caso esteja favoritada mostrar botao de desfavoritar 
+                    */}
                     <Button
                         type="submit"
                         value="Favoritar"
