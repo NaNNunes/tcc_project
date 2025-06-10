@@ -230,12 +230,5 @@
       "horaEmissao": "19:45:57"
     }
   ],
-  "assistencia_Fav_Solicitante": [
-    {
-      "id": "99c5",
-      "id_solicitante": "d150",
-      "id_assistencia": "28fd",
-      "isAtivo": true
-    }
-  ]
+  "assistencia_Fav_Solicitante": []
 }

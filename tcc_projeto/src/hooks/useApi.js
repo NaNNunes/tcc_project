@@ -297,6 +297,7 @@ export function useUser(){
         inserirValidacao(false);
     }
 
+    // favorita assistencia
     const favoritarAssistencia = async (data) =>{
 
         const request = await fetch(`${url}/assistencia_Fav_Solicitante`,{
@@ -309,7 +310,10 @@ export function useUser(){
 
         const response = await request.json();
 
-        console.log("Assistencia favoritada:", response);
+        if(request.ok){
+            console.log("assistencia favoritada:", response)
+            location.reload();
+        }
     }
 
     // define validaçao do user
@@ -335,6 +339,20 @@ export function useUser(){
         })
     }
 
+    // remove assistencia da lista de favoritos
+    const removerAssistenciaDeFavoritos = async (id) =>{
+        const request = await fetch(`${url}/assistencia_Fav_Solicitante/${id}`,{
+            method: "DELETE",
+        });
+
+        const response = await request.json();
+
+        if(request.ok){
+            console.log("Assistencia removida de favoritos:", response);
+            location.reload();
+        }
+    }
+
     const verificaSenhaInformada = async (senha) => {
         const user = userType || localStorage.getItem("userType");
         const id = userId || localStorage.getItem("userId");
@@ -354,6 +372,7 @@ export function useUser(){
         favoritarAssistencia,
         inserirPerguntaResposta,
         inserirValidacao,
+        removerAssistenciaDeFavoritos,
         verificaSenhaInformada
     };
 }

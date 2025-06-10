@@ -1,6 +1,5 @@
 // componente card para mostrar infos da assistencia para o solicitante
 
-
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -13,42 +12,68 @@ import { useEffect, useState } from 'react';
 
 const VisualizarAssistencia = (props) => {
 
-    const {favoritarAssistencia} = useUser();
+    // descontrutores
+    const {buscaEnderecoById} = useEndereco();
+    const {favoritarAssistencia, removerAssistenciaDeFavoritos} = useUser();
 
+    // IDs
     const idAssistencia = props.idAssistencia;
+    const idUsuario = localStorage.getItem("userId");
+    const idEndereco = props.idEndereco;
 
-    // busca endereco da assitencia por id
+    // lista de id de assistencias favoritas do user
+    const listaIdAssistenciasFavs = [];
+
+    // states
+    // state para receber endereco  
     const [endereco, setEndereco] = useState({});
+    // state iniciado como false onde verifica se a assistencia está favoritada pelo user    
+    const [assistenciaIsFav, setAssistenciaIsFav] = useState(false);
+    // id do match
+    const [matchId, setMatchId] = useState("");
 
-    const url = import.meta.env.VITE_API_URL;
+    // busca endereco by id
     useEffect(()=>{
-        async function buscaEnderecoById(){
-           try{
-                const reqBuscaEnderecoById = await fetch(`${url}/endereco/${props.idEndereco}`);
-                const resBuscaEnderecoById = await reqBuscaEnderecoById.json();
-                setEndereco(resBuscaEnderecoById);
-            }
-            catch(error){
+        async function fetchData(){
+            try{   
+                const dadosEndereco = await buscaEnderecoById(idEndereco);
+                setEndereco(dadosEndereco);
+            } catch (error){
                 console.log(error);
-            } 
+            }
         }
-        buscaEnderecoById();
+        fetchData();
     },[]);
 
-    //TODO: verificar se assistencia ja esta favoritada pelo user
+
+    const url = import.meta.env.VITE_API_URL;
+    // busca todos os registros de matchs e verifica se o match pertence ao cliente e a assistencia renderizada
     useEffect(()=>{
         async function fetchData() {
             try {
+                // busca por matchs
                 const reqBuscaMatchs = await fetch(`${url}/assistencia_Fav_Solicitante`)
                 const resBuscaMatchs = await reqBuscaMatchs.json();
                 
+                // mapeia lista de matchs e verifica qual match está vinculado ao solicitante e a assistencia renderizada
                 resBuscaMatchs.map((match)=>{
-                    const isAssistenciaFav = match.id_assistencia === idAssistencia && match.id_solicitante === localStorage.getItem("userId");
-                    if(isAssistenciaFav){
-                        console.log(match.id_assistencia,":",isAssistenciaFav)
+                    // verifica se match pertence ao solicitante
+                    const isMatchClienteAtual = match.id_solicitante === idUsuario;
+                    // verifica se match pertence a assistencia rendetizada
+                    const isAssistenciaFav = match.id_assistencia === idAssistencia;
+                    // assistencia pertence ao favoritos do solicitante
+                    if(isMatchClienteAtual && isAssistenciaFav){
+                        // insere id de assistencia no match na lista de assistencias favoritas do solicitantef
+                        listaIdAssistenciasFavs.push(match.id_assistencia);
                     }
+                    // registra o id do match para posssível remoção/exclusao de match
+                    setMatchId(match.id);
                 })
-
+                // procura na lista de assistencias favoritas do user o id igual ao id da assistencia renderizada
+                listaIdAssistenciasFavs.find((id)=>{
+                    (id === idAssistencia) &&
+                        setAssistenciaIsFav(true)
+                })
             } catch (error) {
                 console.log(error)
             }
@@ -58,16 +83,18 @@ const VisualizarAssistencia = (props) => {
 
     // funcao chamada pelo botao de favoritar assistencia
     const favoritar = async() =>{
-        const idUsuario = localStorage.getItem("userId");
-        const idAssistencia = props.idAssistencia;
-
+        // dados do match
         const identificadores = {
             "id_solicitante": idUsuario,
-            "id_assistencia": idAssistencia,
-            "isAtivo": true
+            "id_assistencia": idAssistencia
         }
         // funcao do hook
         favoritarAssistencia(identificadores);
+    }
+
+    //  funcao chamada pelo botao remover match
+    const removerMatch = async() =>{
+        removerAssistenciaDeFavoritos(matchId);
     }
 
   return (
@@ -126,18 +153,25 @@ const VisualizarAssistencia = (props) => {
                 </Card.Body>
                 <Card.Footer>
                     {/* colocar icone de favoritar */}
-                    {/* 
-                        Fazer uma verificação de assistencia está favoritada ou nao
-                        caso não esteja favoritada mostrar botão de favoritar, 
-                        caso esteja favoritada mostrar botao de desfavoritar 
-                    */}
-                    <Button
-                        type="submit"
-                        value="Favoritar"
-                        as="input"
-                        variant='danger'
-                        onClick={favoritar}
-                    />
+                    {
+                        (assistenciaIsFav)
+                            ?
+                                <Button 
+                                    type='submit'
+                                    value='Remover Match'
+                                    as='input'
+                                    variant='warning'
+                                    onClick={removerMatch}
+                                />                            
+                            :
+                                <Button
+                                    type="submit"
+                                    value="Favoritar"
+                                    as="input"
+                                    variant='danger'
+                                    onClick={favoritar}
+                                />
+                    }
                 </Card.Footer>
             </Card>
         </Container>
