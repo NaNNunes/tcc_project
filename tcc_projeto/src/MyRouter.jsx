@@ -3,21 +3,22 @@ import { createBrowserRouter } from "react-router-dom";
 //import pages
   // POR FAVOR DEIXE EM ORDEM ALFABÉTICA
 import App from "./App.jsx";
-import Assistencias from "./pages/Assistencias.jsx";
-import Assistencia_info from "./pages/assistencia_info/Assistencia_info.jsx";
+import Assistencias from "./pages/assistencia/Assistencias.jsx";
+import Assistencia_info from "./pages/assistencia/Assistencia_info.jsx";
 import CadastroAssistencia from "./pages/cadastro-user/CadastroAssistencia.jsx";
 import CadastroEndereco from "./pages/cadastro-user/CadastroEndereco.jsx";
 import CadastroPagamento from "./pages/cadastro-user/CadastroPagamento.jsx";
 import CadastroUser from "./pages/cadastro-user/CadastroUser.jsx";
 import Conta from "./pages/conta_perfil/Conta.jsx";
-import CriarDemanda from "./pages/criar_demanda/Criar_demanda.jsx";
+import CriarDemanda from "./pages/demanda/Criar_demanda.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import Home from "./pages/home/Home.jsx";
 import Inicial from "./pages/inicial/Inicial.jsx";
 import Login from "./pages/login/Login.jsx";
+import MinhasDemandas from "./pages/demanda/MinhasDemandas.jsx";
 import PerguntaSeguranca from "./pages/cadastro-user/PerguntaSeguranca.jsx";
 import Politicas from "./pages/termos/Politicas.jsx";
-import ProcurarDemandas from "./pages/procurar-demandas/ProcurarDemandas.jsx";
+import ProcurarDemandas from "./pages/demanda/ProcurarDemandas.jsx";
 import SelecaoUsuario from "./pages/selecao_usuario/SelecaoUsuario.jsx";
 import Sobre from "./pages/sobre/Sobre.jsx";
 import Termos from "./pages/termos/Termos.jsx";
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />
+      },
+      {
+        path: "/minhas-demandas",
+        element: <MinhasDemandas/>
       },
       {
         path: "/pergunta-seguranca",

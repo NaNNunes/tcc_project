@@ -4,6 +4,7 @@ import CardDemanda from '../../componentes/card-demanda/CardDemanda';
 // Importação do react-bootstrap.
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col'
 
 // Importação do styles.
 import styles from './ProcurarDemandas.module.css'
@@ -22,9 +23,7 @@ const ProcurarDemandas = () => {
       try {
         const request = await fetch(`${url}/demanda`);
         const response = await request.json();
-        console.log("demandas", response);
         setDemandas(response);
-
       } catch (error) {
         console.log(error)
       }
@@ -43,22 +42,19 @@ const ProcurarDemandas = () => {
   };
 
   return (
+    // parou de carregar kkk
     <div style={{paddingTop: '80px', paddingBottom: '80px'}}>
       <Container className={styles.caixa}>
         {
-          demandasParaMostrar.map(demanda => (
-            (demanda.asssitencia === "Público") &&
-              <CardDemanda 
-                key={demanda.id}
-                id={demanda.id}
-                categoria={'Celular'}
-                marca={'Samsung'}
-                modelo={'S24+'}
-                cidade={'Xique-Xique'}
-                estado={'Bahia'}
-                dataDeEmissao={'03/06/2025'}
-                status={'Pendente'}
-              />
+          demandasParaMostrar.map((demanda) => (
+            (demanda.assistencia === "Público") &&
+                <CardDemanda
+                      key={demanda.id}
+                      id={demanda.id}
+                      idDispostivo={demanda.idDispostivo}
+                      solicitanteId={demanda.solicitante_id}
+                      dataEmissao={demanda.dataEmissao}
+                />
           ))
         }
       </Container>

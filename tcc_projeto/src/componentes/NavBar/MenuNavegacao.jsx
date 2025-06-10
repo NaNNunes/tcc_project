@@ -68,7 +68,7 @@ const MenuNavegacao = () => {
                     {/* Consultar pedidos */}
                     <NavDropdown.Item 
                         as={Link}
-                        to='#'
+                        to='/minhas-demandas'
                         className={styles.dropdownItem}
                     >
                         <Image className={styles.icone} src='/icons/Icon_consultar.svg'/>Consultar pedidos
@@ -92,7 +92,7 @@ const MenuNavegacao = () => {
                     }
                 >
                     {/* Items que estarão dentro do navdropdown */}
-                    {/* Buscas assistencias */}
+                    {/* Encontrar Assistências */}
                     <NavDropdown.Item 
                         as={Link} 
                         to='/buscar-assistencias' 
@@ -101,10 +101,17 @@ const MenuNavegacao = () => {
                         <Image className={styles.icone} src='#' />Encontrar Assistências
                     </NavDropdown.Item>
                     
-                    {/* Consultar pedidos */}
+                    {
+                        /* 
+                            ACREDITO QUE NÃO HÁ NECESSIDADE DE TER ESSE LINK 
+                            POIS PARA VER ASSITENCIAS FAVS BASTA UM FILTRO, bem simples, 
+                            NA PAGINAS DE ENCONTRAR ASSISTENCIAS
+                        */
+                    }
+                    {/* Consultar assistencias favoritas */}
                     <NavDropdown.Item 
                         as={Link}
-                        to='#'
+                        to='/minhas-demandas'
                         className={styles.dropdownItem}
                     >
                         <Image className={styles.icone} src='#'/>Assistências Favoritas

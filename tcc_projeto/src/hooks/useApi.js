@@ -688,6 +688,8 @@ export function useDemada(){
         
         // define id emissor da demanda
         defineIdSolicitante("demanda", response.id);
+        // define data e hora da emissao da demanda
+        defineDataEmissao(response.id);
     }
 
     // define o id do solicitante 
@@ -702,8 +704,40 @@ export function useDemada(){
             method: "PATCH",
             body: JSON.stringify(solicitante)
         })
+    }
 
-        location.reload();
+    // define data e hora emissao
+    const defineDataEmissao = async (id) =>{
+        const dataHoraAtual = new Date();
+
+        const dia = dataHoraAtual.getDate();
+        const mes = dataHoraAtual.getMonth() + 1; // Adicionar 1 porque Janeiro é 0
+        const ano = dataHoraAtual.getFullYear();
+        const hora = dataHoraAtual.getHours();
+        const minutos = dataHoraAtual.getMinutes();
+        const segundos = dataHoraAtual.getSeconds();
+
+        // mudar formatacao da data para MM-DD-AAAA
+        const dataFormatada = `${dia.toString().padStart(2, '0')}/${mes.toString().padStart(2, '0')}/${ano}`;
+        const horaFormatada = `${hora.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+
+        console.log(`Data Emissão: ${dataFormatada}`);
+        console.log(`Hora Emissão: ${horaFormatada}`);
+
+        // objeto que será incrementado
+        const dataHoraEmissao ={
+            "dataEmissao": dataFormatada,
+            "horaEmissao": horaFormatada
+        }
+
+        const request = await fetch(`${url}/demanda/${id}`,{
+            method: "PATCH",
+            body: JSON.stringify(dataHoraEmissao)
+        });
+        if(request.ok){
+            // recarrega pagina quando finalizado o cadastro
+            location.reload();
+        }
     }
 
     return {cadastrarDispositivo, cadastrarDemanda};
