@@ -2,14 +2,9 @@
 import CardDemanda from "../../componentes/card-demanda/CardDemanda";
 
 // Importação do react-bootstrap.
-<<<<<<< HEAD:tcc_projeto/src/pages/procurar-demandas/ProcurarDemandas.jsx
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-=======
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col'
->>>>>>> 967d6d4418b87de8f1278f3b70556ef9ed2bcfb9:tcc_projeto/src/pages/demanda/ProcurarDemandas.jsx
 
 // Importação do styles.
 import styles from "./ProcurarDemandas.module.css";
@@ -46,26 +41,6 @@ const ProcurarDemandas = () => {
   };
 
   return (
-<<<<<<< HEAD:tcc_projeto/src/pages/procurar-demandas/ProcurarDemandas.jsx
-    <div style={{ paddingTop: "80px", paddingBottom: "80px" }}>
-      <Container className={styles.caixa}>
-        {demandasParaMostrar.map(
-          (demanda) =>
-            demanda.asssitencia === "Público" && (
-              <CardDemanda
-                key={demanda.id}
-                id={demanda.id}
-                categoria={"Celular"}
-                marca={"Samsung"}
-                modelo={"S24+"}
-                cidade={"Xique-Xique"}
-                estado={"Bahia"}
-                dataDeEmissao={"03/06/2025"}
-                status={"Pendente"}
-              />
-            )
-        )}
-=======
     // parou de carregar kkk
     <div style={{paddingTop: '80px', paddingBottom: '80px'}}>
       <Container className={styles.caixa}>
@@ -81,7 +56,6 @@ const ProcurarDemandas = () => {
                 />
           ))
         }
->>>>>>> 967d6d4418b87de8f1278f3b70556ef9ed2bcfb9:tcc_projeto/src/pages/demanda/ProcurarDemandas.jsx
       </Container>
 
       {cardsVisiveis < demandas.length && (
