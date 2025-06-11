@@ -5,6 +5,15 @@
   font-family: "Segoe UI", sans-serif;
 }
 
+h4 {
+  font-size: 1.8rem;
+  color: var(--primary);
+  font-weight: 500;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+
 .section {
   min-width: 100%;
   display: flex;
@@ -15,12 +24,9 @@
 
 .demandaSection {
   /* background-image: url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"); */
- background: linear-gradient(
-      rgba(144, 183, 216, 0.75),
-      rgba(144, 183, 216, 0.55)
-    ),
-    url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
-      center/cover no-repeat;
+  background: linear-gradient(rgba(144, 183, 216, 0.75),
+      rgba(144, 183, 216, 0.55)),
+    url("https://images.pexels.com/photos/4705635/pexels-photo-4705635.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") center/cover no-repeat;
   min-height: 100vh;
   min-width: 100%;
   display: flex;
@@ -30,12 +36,24 @@
 }
 
 .operadorSection {
-   background: linear-gradient(
-      rgba(121, 121, 121, 0.75),
-      rgba(144, 183, 216, 0.55)
-    ),
-    url("https://images.pexels.com/photos/4705635/pexels-photo-4705635.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
-      center/cover no-repeat;
+  background: linear-gradient(rgba(121, 121, 121, 0.75),
+      rgba(144, 183, 216, 0.55)),
+    url("https://images.pexels.com/photos/12741849/pexels-photo-12741849.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") center/cover no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.assistenciaSection {
+  background: linear-gradient(rgba(121, 121, 121, 0.75),
+      rgba(144, 183, 216, 0.55)),
+    url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") center/cover no-repeat;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -13,12 +13,11 @@ import styles from "./login.module.css";
 import { useVerificaLogin } from "../../hooks/useApi";
 
 import { AuthContext } from "../../context/userContext";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const Login = () => {
-  const userTipo = localStorage.getItem("userType");
-  if (userTipo !== "Visitante")
-    return <Navigate to={userTipo === "solicitante" ? "/inicio" : "/inicio"} />;
+  const [userTipo, setUserTipo] = useState(null);
+  const [verificando, setVerificando] = useState(true);
 
   const {
     register,
@@ -30,8 +29,17 @@ const Login = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const tipo = localStorage.getItem("userType");
+    setUserTipo(tipo);
+    setVerificando(false);
+
+    if (tipo && tipo !== "Visitante") {
+      navigate("/inicio", { replace: true });
+    }
+  }, [navigate]);
+
   const onSubmit = (data) => {
-    // console.log("dados: ", data);
     const respVerificacao = verificaLogin(data);
 
     if (respVerificacao === "Login efetuado com sucesso") {
@@ -45,6 +53,15 @@ const Login = () => {
   const onError = (errors) => {
     console.log("Error: ", errors);
   };
+
+  if (verificando) {
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <h5>Carregando...</h5>
+      </div>
+    );
+  }
+
 
   return (
     <div className="pageWrapper">

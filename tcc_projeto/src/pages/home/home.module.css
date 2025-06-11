@@ -1,6 +1,7 @@
 :root {
   --primary: #034c8c;
-  --primary-soft: #0a67aa; /* Cor suave derivada do azul principal */
+  --primary-soft: #0a67aa;
+  /* Cor suave derivada do azul principal */
   --black: #000000;
   --white: #ffffff;
   --highlight-blue: #9bd0ff;
@@ -39,12 +40,9 @@ h3::after {
 
 /* ===== Hero Section ===== */
 .heroSection {
-  background: linear-gradient(
-      rgba(144, 183, 216, 0.75),
-      rgba(144, 183, 216, 0.75)
-    ),
-    url("https://images.pexels.com/photos/955395/pexels-photo-955395.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2")
-      center/cover no-repeat;
+  background: linear-gradient(rgba(144, 183, 216, 0.75),
+      rgba(144, 183, 216, 0.75)),
+    url("https://images.pexels.com/photos/955395/pexels-photo-955395.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2") center/cover no-repeat;
   min-height: 95vh;
   display: flex;
   align-items: center;
@@ -96,6 +94,7 @@ h3::after {
   background-color: var(--highlight-yellow);
   color: var(--black);
   border: none;
+  font-size: 1.3rem;
 }
 
 .primaryButton:hover {
