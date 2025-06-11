@@ -16,29 +16,28 @@ import { AuthContext } from "../../context/userContext";
 import { useContext, useEffect } from "react";
 
 const Login = () => {
-
   const userTipo = localStorage.getItem("userType");
-  if( userTipo !== "Visitante")return <Navigate to={userTipo === "solicitante" ? "/criar-demanda" : "/conta"}/>
+  if (userTipo !== "Visitante")
+    return <Navigate to={userTipo === "solicitante" ? "/inicio" : "/inicio"} />;
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
-  const {verificaLogin} = useVerificaLogin();
-  
+
+  const { verificaLogin } = useVerificaLogin();
+
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
     // console.log("dados: ", data);
     const respVerificacao = verificaLogin(data);
 
-    if(respVerificacao === "Login efetuado com sucesso"){
+    if (respVerificacao === "Login efetuado com sucesso") {
       alert(respVerificacao);
       navigate("/inicio");
-    }
-    else{
+    } else {
       alert(respVerificacao);
     }
   };
@@ -55,7 +54,6 @@ const Login = () => {
             className={styles.loginForm}
             onSubmit={handleSubmit(onSubmit, onError)}
           >
-            
             <Image
               className={styles.Image}
               src="/logos/connectfix_logo.svg"
@@ -66,7 +64,11 @@ const Login = () => {
             </div>
             <hr className="mb-4 mx-5 text-white border-2" />
             {/* Campo acesso cpf ou email */}
-            <FloatingLabel id="fuserCpfInput" className="mb-3 mx-5" label="CPF ou Email">
+            <FloatingLabel
+              id="fuserCpfInput"
+              className="mb-3 mx-5"
+              label="CPF ou Email"
+            >
               <Form.Control
                 type="text"
                 placeholder=""
