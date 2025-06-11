@@ -59,7 +59,7 @@ const MenuNavegacao = () => {
                   {/* Cadastro pedido */}
                   <NavDropdown.Item 
                       as={Link} 
-                      to='/criar-Demanda' 
+                      to='/criar-pedido' 
                       className={styles.dropdownItem}
                   >
                       <Image className={styles.icone} src='/icons/Icon_pedido.svg' />Cadastro pedido
@@ -87,7 +87,7 @@ const MenuNavegacao = () => {
                   title={
                       <span className={styles.dropDownTitle}>
                           {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
-                          Assitências{openDropdown === 'assistencias-solicitante' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+                          Assistências{openDropdown === 'assistencias-solicitante' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
                       </span>
                   }
               >
@@ -172,6 +172,15 @@ const MenuNavegacao = () => {
           >
             <Image className={styles.icone} src="/icons/zoom_in.svg" />
             Procurar demandas
+          </NavDropdown.Item>
+
+          {/* Cadastro pedido */}
+          <NavDropdown.Item 
+              as={Link} 
+              to='/criar-pedido' 
+              className={styles.dropdownItem}
+          >
+              <Image className={styles.icone} src='/icons/Icon_pedido.svg' />Cadastro pedido
           </NavDropdown.Item>
 
           {/* Demandas abertas */}
