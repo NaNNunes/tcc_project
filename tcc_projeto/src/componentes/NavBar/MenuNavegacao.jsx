@@ -87,7 +87,7 @@ const MenuNavegacao = () => {
                   title={
                       <span className={styles.dropDownTitle}>
                           {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
-                          Assitências{openDropdown === 'assistencias-solicitante' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+                          Assistências{openDropdown === 'assistencias-solicitante' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
                       </span>
                   }
               >

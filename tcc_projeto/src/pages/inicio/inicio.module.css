@@ -2,14 +2,74 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
 }
 
-.icone {
-  padding-right: 10px;
-  width: 3rem;
+.section {
+  min-height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 800px; /* limite para telas grandes */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border: none;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.botoesWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 0 auto;
+  width: max-content;
 }
 
 .botaoTexto {
+  flex: 0 0 150px;
+  min-height: 140px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  gap: 0.25rem;
+  overflow: hidden;
+  padding: 0.5rem;
   font-size: 1.5rem;
-  margin: auto 1rem 1rem;
+}
+
+.iconeWrapper {
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 0.3rem;
+}
+
+.icone {
+  width: 2rem;
+  height: 2rem;
+}
+
+.textoWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0.15rem;
+  font-size: 1.4rem;
 }

@@ -36,7 +36,7 @@ const Login = () => {
 
     if(respVerificacao === "Login efetuado com sucesso"){
       alert(respVerificacao);
-      navigate("/criar-demanda");
+      navigate("/inicio");
     }
     else{
       alert(respVerificacao);
