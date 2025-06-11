@@ -6,7 +6,41 @@
 }
 
 .section {
-  min-height: 40vh;
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.demandaSection {
+  /* background-image: url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"); */
+ background: linear-gradient(
+      rgba(144, 183, 216, 0.75),
+      rgba(144, 183, 216, 0.55)
+    ),
+    url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+      center/cover no-repeat;
+  min-height: 100vh;
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.operadorSection {
+   background: linear-gradient(
+      rgba(121, 121, 121, 0.75),
+      rgba(144, 183, 216, 0.55)
+    ),
+    url("https://images.pexels.com/photos/4705635/pexels-photo-4705635.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+      center/cover no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  min-width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,7 +53,7 @@
   align-items: center;
   border-radius: 16px;
   width: 100%;
-  max-width: 800px; /* limite para telas grandes */
+  max-width: 800px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
   border: none;

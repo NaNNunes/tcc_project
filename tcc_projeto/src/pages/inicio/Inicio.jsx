@@ -9,7 +9,7 @@ const Inicio = () => {
   return (
     // Demandas
     <div className="d-flex flex-column justify-content-center align-items-center">
-      <section className={styles.section}>
+      <section className={styles.demandaSection}>
         <Container fluid>
           <Card className={styles.card}>
             <Row className="justify-content-center text-center mb-4">
@@ -71,7 +71,7 @@ const Inicio = () => {
       </section>
 
       {/* Operadores */}
-      <section className={styles.section}>
+      <section className={styles.operadorSection}>
         <Container fluid>
           <Card className={styles.card}>
             <Row className="justify-content-center text-center mb-4">
@@ -109,47 +109,49 @@ const Inicio = () => {
             </Row>
           </Card>
         </Container>
-
-        {/* Assistências */}
-        <Container fluid>
-          <Card className={styles.card}>
-            <Row className="justify-content-center text-center mb-4">
-              <Col xs="auto">
-                <h4>Gerencie sua(s) Assistência(s)</h4>
-              </Col>
-            </Row>
-
-            <Row className="justify-content-center">
-              <div className={styles.botoesWrapper}>
-                <Button className={styles.botaoTexto} href="#">
-                  <div className={styles.iconeWrapper}>
-                    <Image
-                      className={styles.icone}
-                      src="/icons/add_location_alt.svg"
-                      href="#"
-                    />
-                  </div>
-                  <div className={styles.textoWrapper}>Cadastrar local</div>
-                </Button>
-
-                <Button className={styles.botaoTexto}>
-                  <div className={styles.iconeWrapper}>
-                    <Image
-                      className={styles.icone}
-                      src="/icons/location_on.svg"
-                      href="#"
-                    />
-                  </div>
-                  <div className={styles.textoWrapper}>
-                    Consultar locais
-                  </div>
-                </Button>
-              </div>
-            </Row>
-          </Card>
-        </Container>
       </section>
-    </div>
+
+      {/* Assistências */}
+      <section >
+      <Container fluid>
+        <Card className={styles.card}>
+          <Row className="justify-content-center text-center mb-4">
+            <Col xs="auto">
+              <h4>Gerencie sua(s) Assistência(s)</h4>
+            </Col>
+          </Row>
+
+          <Row className="justify-content-center">
+            <div className={styles.botoesWrapper}>
+              <Button className={styles.botaoTexto} href="#">
+                <div className={styles.iconeWrapper}>
+                  <Image
+                    className={styles.icone}
+                    src="/icons/add_location_alt.svg"
+                    href="#"
+                  />
+                </div>
+                <div className={styles.textoWrapper}>Cadastrar local</div>
+              </Button>
+
+              <Button className={styles.botaoTexto}>
+                <div className={styles.iconeWrapper}>
+                  <Image
+                    className={styles.icone}
+                    src="/icons/location_on.svg"
+                    href="#"
+                  />
+                </div>
+                <div className={styles.textoWrapper}>
+                  Consultar locais
+                </div>
+              </Button>
+            </div>
+          </Row>
+        </Card>
+      </Container>
+    </section>
+    </div >
   );
 };
 
