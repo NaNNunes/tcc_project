@@ -311,8 +311,9 @@ export function useUser(){
         const response = await request.json();
 
         if(request.ok){
-            console.log("assistencia favoritada:", response)
+            console.log("assistencia favoritada:", response);
             location.reload();
+            return response.id;
         }
     }
 

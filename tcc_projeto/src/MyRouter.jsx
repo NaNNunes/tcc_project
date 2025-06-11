@@ -38,8 +38,8 @@ const router = createBrowserRouter([
         element: <Assistencia_info />,
       },
       {
-        path: "/buscar-assistencias",
-        element: <Assistencias />,
+        path: "/buscar-assistencias/:tipoAssistencia",
+        element: <Assistencias />
       },
       {
         path: "/cadastro",
@@ -64,6 +64,10 @@ const router = createBrowserRouter([
       {
         path: "/criar-demanda",
         element: <CriarDemanda />,
+      },
+      {
+        path: "/erro",
+        element: <errorElement />
       },
       {
         path: "/home",

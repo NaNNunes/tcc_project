@@ -26,8 +26,8 @@ const VisualizarAssistencia = (props) => {
     const [endereco, setEndereco] = useState({});
     // state iniciado como false onde verifica se a assistencia está favoritada pelo user    
     const [assistenciaIsFav, setAssistenciaIsFav] = useState(false);
-    // id do match
-    const [matchId, setMatchId] = useState("");
+    // state de lista de matchs --- utilizado em remover match 
+    const [matchs, setMatchs] = useState();
 
     // busca endereco by id
     useEffect(()=>{
@@ -42,7 +42,6 @@ const VisualizarAssistencia = (props) => {
         fetchData();
     },[]);
 
-
     const url = import.meta.env.VITE_API_URL;
     // busca todos os registros de matchs e verifica se o match pertence ao cliente e a assistencia renderizada
     useEffect(()=>{
@@ -51,29 +50,29 @@ const VisualizarAssistencia = (props) => {
                 // busca por matchs
                 const reqBuscaMatchs = await fetch(`${url}/assistencia_Fav_Solicitante`)
                 const resBuscaMatchs = await reqBuscaMatchs.json();
+                setMatchs(resBuscaMatchs);
                 
-                // lista para armaenar id de assistencias favoritas do user
+                // lista para armazenar id de assistencias favoritas do user
                 const listaIdAssistenciasFavs = [];
 
                 // mapeia lista de matchs e verifica qual match está vinculado ao solicitante e a assistencia renderizada
                 resBuscaMatchs.map((match)=>{
                     // verifica se match pertence ao solicitante
-                    const isMatchSolicitante = match.id_solicitante === idUsuario;
+                    const isMatchSolicitante = (match.id_solicitante === idUsuario);
                     // verifica se match pertence a assistencia renderizada
                     const isAssistenciaFav = match.id_assistencia === idAssistencia;
                     // assistencia pertence ao favoritos do solicitante
                     if(isMatchSolicitante && isAssistenciaFav){
-                        // insere id de assistencia no match na lista de assistencias favoritas do solicitantef
+                        // insere id de assistencia do match na lista de assistencias favoritas do solicitante
                         listaIdAssistenciasFavs.push(match.id_assistencia);
                     }
-                    // registra o id do match para posssível remoção/exclusao de match
-                    setMatchId(match.id);
                 })
                 // procura na lista de assistencias favoritas do user o id igual ao id da assistencia renderizada
                 listaIdAssistenciasFavs.find((id)=>{
-                    (id === idAssistencia) &&
-                        setAssistenciaIsFav(true)
-                })
+                    (id === idAssistencia) 
+                        ? setAssistenciaIsFav(true)
+                        : setAssistenciaIsFav(false)
+                });
             } catch (error) {
                 console.log(error)
             }
@@ -89,12 +88,18 @@ const VisualizarAssistencia = (props) => {
             "id_assistencia": idAssistencia
         }
         // funcao do hook
-        favoritarAssistencia(identificadores);
+        const idMatch = await favoritarAssistencia(identificadores);
     }
 
     //  funcao chamada pelo botao remover match
     const removerMatch = async() =>{
-        removerAssistenciaDeFavoritos(matchId);
+        // retorna o match vinculado ao id do solicitante e id da assistencia renderizada
+        const match = matchs.find((match)=>{
+            const isMatchSolicitante = (match.id_solicitante === idUsuario);
+            const isAssistenciaFav = match.id_assistencia === idAssistencia;
+            if (isAssistenciaFav && isMatchSolicitante) return match;
+        });
+        removerAssistenciaDeFavoritos(match.id);
     }
 
   return (

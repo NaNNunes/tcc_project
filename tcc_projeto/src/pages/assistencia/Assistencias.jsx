@@ -1,9 +1,5 @@
 // utilizado para mostrar todas as assistencias cadastradas
-    // TODO aplicar filtro de asssitencias próximas, assitencia favorita
 
-// acredito eu que não há necessidade de criação de um componente para mostrar a assitencia ao user mas tudo bem
-
-import Form from "react-bootstrap/Form";
 import Row  from "react-bootstrap/Row";
 import Col  from "react-bootstrap/Col";
 
@@ -12,8 +8,12 @@ import { useEffect, useState } from "react"
 import VisualizarAssistencia from "../../componentes/assistencia_info/VisualizarAssistencia";
 
 import { useCadastroAssistencia } from "../../hooks/useApi";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Assistencias = () => {
+
+    const {tipoAssistencia} = useParams();
+    const navigate = useNavigate();
 
     // busca todas as assistencias cadastradas e lista-as
     const [assistencias, setAssistencias] = useState([]);
@@ -26,12 +26,12 @@ const Assistencias = () => {
     useEffect(()=>{
         async function fetchData() {
             try {
+                // lista de assistencias
                 const reqBuscaAssistencias = await fetch(`${url}/assistencia`);
                 const resBuscaAssistencias = await reqBuscaAssistencias.json();
-                setAssistencias(resBuscaAssistencias);
-                console.log("Todas assistencias:", resBuscaAssistencias);
 
-                if(userType === "administrador"){
+                // caso user seja adm lista apenas assistencias pertencentes a ele
+                if(tipoAssistencia === "administrador" && userType === "administrador"){
                     // lista para armazenar assistencias do adm
                     const listaAssitenciasAdministrador = [];
 
@@ -40,8 +40,44 @@ const Assistencias = () => {
                         (assistencia.administradorId === userId) &&
                             listaAssitenciasAdministrador.push(assistencia);
                     })
-                    setAssistencias(listaAssitenciasAdministrador);
+
+                    return setAssistencias(listaAssitenciasAdministrador);
                 }
+
+                // caso user seja solicitante
+                if(userType === "solicitante"){
+
+                    // filtro definido pela url para mostrar todas assistencias
+                    if(tipoAssistencia === "todas"){
+                        return setAssistencias(resBuscaAssistencias);
+                    }
+
+                    // filtro definido pela url para mostrar assistencias favoritas
+                    if(tipoAssistencia === "favoritas"){
+                        const reqBuscaMatchs = await fetch(`${url}/assistencia_Fav_Solicitante`);
+                        const resBuscaMatchs = await reqBuscaMatchs.json();
+
+                        const assistenciaFavoritasDoSolicitante = [];
+
+                        // mapeia lista de demandas e mapeia lista de assistencias
+                        // verificando se o match pertence ao solicitante e a assistencia pertence ao match
+                        // inserindo toda instancia encontrada na lista de assistencias favoritas do solicitante
+                        resBuscaMatchs.map((match)=>{
+                            resBuscaAssistencias.map((assistencia)=>{
+                                const isMatchSolicitante = match.id_solicitante === userId;
+                                const isAssistenciaFav = match.id_assistencia === assistencia.id;
+
+                                (isMatchSolicitante && isAssistenciaFav) &&
+                                    assistenciaFavoritasDoSolicitante.push(assistencia);
+                            });
+                        });
+                        return setAssistencias(assistenciaFavoritasDoSolicitante);
+                    }
+                }
+
+                // caso nenhuma das ocasioes carregar 404
+                navigate("/erro");
+
             } catch (error) {
                 console.log(error)
             }

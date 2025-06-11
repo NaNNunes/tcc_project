@@ -14,6 +14,21 @@
       "pergunta": "1",
       "resposta": "Blu",
       "id_endereco": "3364"
+    },
+    {
+      "id": "88f2",
+      "email": "raul_dasilva@poli.ufrj.br",
+      "cpf": "509.669.390-26",
+      "userTelefone": "40028922",
+      "nome": "Raul Edson Roberto ",
+      "sobrenome": "da Silva",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "3",
+      "resposta": "Cariacica",
+      "id_endereco": "7f67"
     }
   ],
   "administrador": [
@@ -136,6 +151,24 @@
       "gia": "",
       "ddd": "27",
       "siafi": "5703"
+    },
+    {
+      "id": "7f67",
+      "zipcode": "78555-070",
+      "localidade": "Sinop",
+      "bairro": "Jardim Imperial",
+      "logradouro": "Rua dos Eucaliptos",
+      "uf": "MT",
+      "number": "123",
+      "complemento": "de 1325/1326 ao fim",
+      "cep": "78555-070",
+      "unidade": "",
+      "estado": "Mato Grosso",
+      "regiao": "Centro-Oeste",
+      "ibge": "5107909",
+      "gia": "",
+      "ddd": "66",
+      "siafi": "8985"
     }
   ],
   "dispositivo": [
@@ -186,6 +219,18 @@
       "amperagem": "",
       "cor": "preto",
       "solicitante_id": "d150"
+    },
+    {
+      "id": "3fc2",
+      "categoria": "Notebook",
+      "marca": "Lenovo",
+      "fabricante": "",
+      "modelo": "IdeaPad 1 15IAU7",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "solicitante_id": "88f2"
     }
   ],
   "demanda": [
@@ -228,7 +273,28 @@
       "solicitante_id": "d150",
       "dataEmissao": "09/06/2025",
       "horaEmissao": "19:45:57"
+    },
+    {
+      "id": "f76b",
+      "idDispostivo": "3fc2",
+      "descProblema": "tem um problema dsajfldjsafjosdfodshafiosdhfudsuh",
+      "observacoes": "",
+      "assistencia": "28fd",
+      "solicitante_id": "88f2",
+      "dataEmissao": "10/06/2025",
+      "horaEmissao": "20:06:53"
     }
   ],
-  "assistencia_Fav_Solicitante": []
+  "assistencia_Fav_Solicitante": [
+    {
+      "id": "b547",
+      "id_solicitante": "d150",
+      "id_assistencia": "28fd"
+    },
+    {
+      "id": "df39",
+      "id_solicitante": "d150",
+      "id_assistencia": "1331"
+    }
+  ]
 }

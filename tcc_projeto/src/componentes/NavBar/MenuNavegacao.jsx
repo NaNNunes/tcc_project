@@ -95,8 +95,13 @@ const MenuNavegacao = () => {
                   {/* Encontrar Assistências */}
                   <NavDropdown.Item 
                       as={Link} 
-                      to='/buscar-assistencias' 
+                      to={`/buscar-assistencias/todas`} 
                       className={styles.dropdownItem}
+                      onClick={()=>{
+                        setTimeout(() => {
+                          location.reload();
+                        }, 1);
+                      }}
                   >
                       <Image className={styles.icone} src='#' />Encontrar Assistências
                   </NavDropdown.Item>
@@ -111,8 +116,14 @@ const MenuNavegacao = () => {
                   {/* Consultar assistencias favoritas */}
                   <NavDropdown.Item 
                       as={Link}
-                      to='/buscar-assistencias'
+                      to={`/buscar-assistencias/favoritas`} 
                       className={styles.dropdownItem}
+
+                      onClick={()=>{
+                        setTimeout(() => {
+                          location.reload();
+                        }, 1);
+                      }}
                   >
                       <Image className={styles.icone} src='#'/>Assistências Favoritas
                   </NavDropdown.Item>
@@ -254,7 +265,7 @@ const MenuNavegacao = () => {
           {/* Consultar locais */}
           <NavDropdown.Item 
             as={Link} 
-            to="/buscar-assistencias" 
+            to={`/buscar-assistencias/administrador`}  
             className={styles.dropdownItem}
             // espera a tela carregar para atualizar a tela e ocorrer a renderização e assistencias
             onClick={()=>{
