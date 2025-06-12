@@ -1,6 +1,6 @@
-import Encerrar from "../../componentes/assistencia_info/Encerrar"
+import Encerrar from "../../componentes/assistencia/Encerrar"
 import Endereco from "../../componentes/Endereco"
-import MinhaAssistencia from "../../componentes/assistencia_info/MinhaAssistencia"
+import MinhaAssistencia from "../../componentes/assistencia/MinhaAssistencia"
 
 const Assistencia_info = () => {
   return (

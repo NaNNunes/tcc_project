@@ -1,4 +1,9 @@
-import {Form, FloatingLabel, Row, Col, Button} from 'react-bootstrap';
+// Importação de componentes do react-bootstrap
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Button';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col'
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';

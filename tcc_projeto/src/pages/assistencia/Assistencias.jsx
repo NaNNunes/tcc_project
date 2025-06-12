@@ -5,10 +5,10 @@ import Col  from "react-bootstrap/Col";
 
 import { useEffect, useState } from "react"
 
-import VisualizarAssistencia from "../../componentes/assistencia_info/VisualizarAssistencia";
-
 import { useCadastroAssistencia } from "../../hooks/useApi";
 import { useNavigate, useParams } from "react-router-dom";
+
+import VisualizarAssistencia from "../../componentes/assistencia/CardAssistencia";
 
 const Assistencias = () => {
 

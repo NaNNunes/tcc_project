@@ -6,18 +6,23 @@ import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import styles from "./login.module.css";
+
 import { useVerificaLogin } from "../../hooks/useApi";
 
-import { AuthContext } from "../../context/userContext";
-import { useContext, useEffect, useState } from "react";
-
 const Login = () => {
-  const [userTipo, setUserTipo] = useState(null);
-  const [verificando, setVerificando] = useState(true);
+
+  const navigate = useNavigate();
+  
+  // caso user logado impede o memsmo de acessar a tela de login;
+  const userType = localStorage.getItem("userType");
+  if (userType !== "Visitante") {
+    console.log("User logado, acesso negado");
+    return navigate("/inicio");
+  }
 
   const {
     register,
@@ -26,18 +31,6 @@ const Login = () => {
   } = useForm();
 
   const { verificaLogin } = useVerificaLogin();
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const tipo = localStorage.getItem("userType");
-    setUserTipo(tipo);
-    setVerificando(false);
-
-    if (tipo && tipo !== "Visitante") {
-      navigate("/inicio", { replace: true });
-    }
-  }, [navigate]);
 
   const onSubmit = (data) => {
     const respVerificacao = verificaLogin(data);
@@ -53,15 +46,6 @@ const Login = () => {
   const onError = (errors) => {
     console.log("Error: ", errors);
   };
-
-  if (verificando) {
-    return (
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <h5>Carregando...</h5>
-      </div>
-    );
-  }
-
 
   return (
     <div className="pageWrapper">

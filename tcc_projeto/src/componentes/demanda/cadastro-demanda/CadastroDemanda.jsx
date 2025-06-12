@@ -29,7 +29,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 // hooks json-server
-import { useDemada, useCadastroAssistencia} from '../../hooks/useApi';
+import { useDemada, useCadastroAssistencia} from '../../../hooks/useApi';
 
 const categoriaDispositivo = () => {
     const {

@@ -285,16 +285,5 @@
       "horaEmissao": "20:06:53"
     }
   ],
-  "assistencia_Fav_Solicitante": [
-    {
-      "id": "b547",
-      "id_solicitante": "d150",
-      "id_assistencia": "28fd"
-    },
-    {
-      "id": "df39",
-      "id_solicitante": "d150",
-      "id_assistencia": "1331"
-    }
-  ]
+  "assistencia_Fav_Solicitante": []
 }

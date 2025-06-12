@@ -1,5 +1,5 @@
 // Importação do card de demanda.
-import CardDemanda from "../../componentes/card-demanda/CardDemanda";
+import CardDemanda from "../../componentes/demanda/card-demanda/CardDemanda";
 
 // Importação do react-bootstrap.
 import Container from 'react-bootstrap/Container';

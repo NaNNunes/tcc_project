@@ -10,7 +10,7 @@ import Button from 'react-bootstrap/Button';
 import { useEndereco, useUser } from '../../hooks/useApi';
 import { useEffect, useState } from 'react';
 
-const VisualizarAssistencia = (props) => {
+const CardAssistencia = (props) => {
 
     // descontrutores
     const {buscaEnderecoById} = useEndereco();
@@ -189,4 +189,4 @@ const VisualizarAssistencia = (props) => {
   )
 }
 
-export default VisualizarAssistencia
+export default CardAssistencia;

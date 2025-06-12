@@ -1,4 +1,8 @@
-import {Form, FloatingLabel, Row, Col, Button} from 'react-bootstrap';
+
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 
 const Encerrar = () => {
   return (
@@ -12,10 +16,10 @@ const Encerrar = () => {
             <Row className='m-1'>
                 <Col>
                     <p className='mx-2 '>
-                    Encerre sua assistência, 
-                    incluindo todas as informações atreladas a ela. 
-                    A exclusão permanente da sua assistência
-                    ocorrerá imediatamente depois da confirmação.
+                        Encerre sua assistência, 
+                        incluindo todas as informações atreladas a ela. 
+                        A exclusão permanente da sua assistência
+                        ocorrerá imediatamente depois da confirmação.
                     </p>
                 </Col>
             </Row>

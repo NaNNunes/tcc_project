@@ -1,13 +1,28 @@
-import { Container, Row, Col, Button, Image, Card } from "react-bootstrap";
+// importação de componentes do react-bootstrap
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Card from "react-bootstrap/Card";
+import Image from "react-bootstrap/Image";
+
 import styles from "./inicio.module.css";
+
 import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
 
 const Inicio = () => {
-  const { usuarioNome } = useContext(AuthContext);
   const navigate = useNavigate();
-
+  
+  // verifica se user está deslogado
+  const userType = localStorage.getItem("userType");
+  if (userType !== "solicitante" && userType !== "administrador") {
+    console.log("Acesso negado");
+    return navigate("/login")
+  };
+  
+  const { usuarioNome } = useContext(AuthContext);
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center">

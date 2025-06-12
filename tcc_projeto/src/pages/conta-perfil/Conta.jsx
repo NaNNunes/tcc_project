@@ -1,6 +1,6 @@
 import Encerrar from "../../componentes/conta_perfil/Encerrar"
 import Endereco from "../../componentes/Endereco"
-import MinhaAssistencia from "../../componentes/assistencia_info/MinhaAssistencia"
+import MinhaAssistencia from "../../componentes/assistencia/MinhaAssistencia"
 import MinhasInfos from "../../componentes/conta_perfil/MinhasInfos"
 import Seguranca from "../../componentes/conta_perfil/Seguranca"
 
