@@ -68,7 +68,7 @@ const MenuNavegacao = () => {
                   {/* Consultar pedidos */}
                   <NavDropdown.Item 
                       as={Link}
-                      to={`/procurar-demandas/${false}`}
+                      to={`/procurar-demandas/minhas-demandas`}
                       className={styles.dropdownItem}
                   >
                       <Image className={styles.icone} src='/icons/Icon_consultar.svg'/>Consultar pedidos
@@ -161,7 +161,7 @@ const MenuNavegacao = () => {
           {/* Procurar demandas */}
           <NavDropdown.Item
             as={Link}
-            to={`/procurar-demandas/${false}`}
+            to={`/procurar-demandas/abertas`}
             className={styles.dropdownItem}
             // espera a tela carregar para atualizar a tela e ocorrer a renderização das demandas
             onClick={()=>{
@@ -186,7 +186,7 @@ const MenuNavegacao = () => {
           {/* Demandas abertas */}
           <NavDropdown.Item 
             as={Link} 
-            to={`/procurar-demandas/${true}`} 
+            to={`/procurar-demandas/aceitas`} 
             className={styles.dropdownItem}
             // espera a tela carregar para atualizar a tela e ocorrer a renderização das demandas
             onClick={()=>{
@@ -200,7 +200,11 @@ const MenuNavegacao = () => {
           </NavDropdown.Item>
 
           {/* Histórico de demandas */}
-          <NavDropdown.Item as={Link} to="#" className={styles.dropdownItem}>
+          <NavDropdown.Item 
+            as={Link} 
+            to="/procurar-demandas/historico" 
+            className={styles.dropdownItem}
+          >
             <Image className={styles.icone} src="/icons/history.svg" />
               Histórico de demandas
             </NavDropdown.Item>

@@ -67,7 +67,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/erro",
-        element: <errorElement />
+        element: <ErrorPage />
       },
       {
         path: "/home",
@@ -90,7 +90,7 @@ const router = createBrowserRouter([
         element: <Politicas />,
       },
       {
-        path: "/procurar-demandas/:isApenasPrivadas",
+        path: "/procurar-demandas/:tipoDemanda",
         element: <ProcurarDemandas />,
       },
       {
