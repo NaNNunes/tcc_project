@@ -173,117 +173,59 @@
   ],
   "dispositivo": [
     {
-      "id": "c68b",
+      "id": "0d8e",
       "categoria": "Celular",
       "marca": "Apple",
-      "fabricante": "Samsung",
+      "fabricante": "",
       "modelo": "iPhone 16",
-      "numSerie": "",
-      "tensao": "",
-      "amperagem": "",
-      "cor": "Cinza",
-      "solicitante_id": "d150"
-    },
-    {
-      "id": "9edd",
-      "categoria": "Celular",
-      "marca": "Motorola",
-      "fabricante": "Apple",
-      "modelo": "Edge 60 Fusion",
-      "numSerie": "",
-      "tensao": "",
-      "amperagem": "",
-      "cor": "",
-      "solicitante_id": "d150"
-    },
-    {
-      "id": "90d3",
-      "categoria": "Celular",
-      "marca": "Apple",
-      "fabricante": "",
-      "modelo": "iPhone 13",
-      "numSerie": "",
-      "tensao": "",
-      "amperagem": "",
-      "cor": "",
-      "solicitante_id": "d150"
-    },
-    {
-      "id": "1f56",
-      "categoria": "Outros",
-      "marca": "LG",
-      "fabricante": "LG",
-      "modelo": "LG UltraGear",
-      "numSerie": "sim",
-      "tensao": "",
-      "amperagem": "",
-      "cor": "preto",
-      "solicitante_id": "d150"
-    },
-    {
-      "id": "3fc2",
-      "categoria": "Notebook",
-      "marca": "Lenovo",
-      "fabricante": "",
-      "modelo": "IdeaPad 1 15IAU7",
       "numSerie": "",
       "tensao": "",
       "amperagem": "",
       "cor": "",
       "solicitante_id": "88f2"
+    },
+    {
+      "id": "c613",
+      "categoria": "Celular",
+      "marca": "Samsung",
+      "fabricante": "",
+      "modelo": "Galaxy S24 FE",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "solicitante_id": "176d"
     }
   ],
   "demanda": [
     {
-      "id": "5027",
-      "idDispostivo": "c68b",
-      "descProblema": "Probremas problematicos que problematizam problemas",
-      "observacoes": "Observe",
-      "assistencia": "Público",
-      "solicitante_id": "d150",
-      "dataEmissao": "09/06/2025",
-      "horaEmissao": "19:45:57"
-    },
-    {
-      "id": "62df",
-      "idDispostivo": "9edd",
-      "descProblema": "Probremas problematicos que problematizam problemas",
-      "observacoes": "Observavel que há um problema na descrição",
-      "assistencia": "28fd",
-      "solicitante_id": "d150",
-      "dataEmissao": "09/06/2025",
-      "horaEmissao": "19:45:57"
-    },
-    {
-      "id": "1df4",
-      "idDispostivo": "90d3",
-      "descProblema": "dsssssssssssssssssssssssssssss",
-      "observacoes": "ssssssssssssssssss",
-      "assistencia": "3418",
-      "solicitante_id": "d150",
-      "dataEmissao": "09/06/2025",
-      "horaEmissao": "19:45:57"
-    },
-    {
-      "id": "fbdb",
-      "idDispostivo": "1f56",
-      "descProblema": "Ta top demais ter um monitor de 1k em casa e não ter tempo de usar pois preciso trabalhar para pagar por ele",
-      "observacoes": "24'",
-      "assistencia": "28fd",
-      "solicitante_id": "d150",
-      "dataEmissao": "09/06/2025",
-      "horaEmissao": "19:45:57"
-    },
-    {
-      "id": "f76b",
-      "idDispostivo": "3fc2",
-      "descProblema": "tem um problema dsajfldjsafjosdfodshafiosdhfudsuh",
+      "id": "0993",
+      "idDispostivo": "0d8e",
+      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
       "observacoes": "",
-      "assistencia": "28fd",
+      "status": "aberto",
+      "assistencia": "Público",
       "solicitante_id": "88f2",
-      "dataEmissao": "10/06/2025",
-      "horaEmissao": "20:06:53"
+      "dataEmissao": "13/06/2025",
+      "horaEmissao": "21:28:14"
+    },
+    {
+      "id": "ff31",
+      "idDispostivo": "c613",
+      "descProblema": "SIIIIIIIIIIum 2",
+      "observacoes": "",
+      "status": "Em andamento",
+      "assistencia": "28fd",
+      "solicitante_id": "176d",
+      "dataEmissao": "13/06/2025",
+      "horaEmissao": "21:29:11"
     }
   ],
-  "assistencia_Fav_Solicitante": []
+  "assistencia_Fav_Solicitante": [
+    {
+      "id": "b61d",
+      "id_solicitante": "88f2",
+      "id_assistencia": "3418"
+    }
+  ]
 }

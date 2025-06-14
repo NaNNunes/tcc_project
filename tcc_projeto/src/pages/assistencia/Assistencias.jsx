@@ -5,7 +5,7 @@ import Col  from "react-bootstrap/Col";
 
 import { useEffect, useState } from "react"
 
-import { useCadastroAssistencia } from "../../hooks/useApi";
+import { useCadastroAssistencia } from "../../hooks/useApi";''
 import { useNavigate, useParams } from "react-router-dom";
 
 import VisualizarAssistencia from "../../componentes/assistencia/CardAssistencia";

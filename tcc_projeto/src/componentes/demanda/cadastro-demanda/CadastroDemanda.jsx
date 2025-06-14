@@ -26,12 +26,19 @@ import { useState } from 'react';
 import { useEffect } from "react";
 
 // Importação do useForm para mexer com o formulário.
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 
 // hooks json-server
 import { useDemada, useCadastroAssistencia} from '../../../hooks/useApi';
+import { useNavigate } from 'react-router-dom';
 
 const categoriaDispositivo = () => {
+    const navigate = useNavigate();
+
+    const userId = localStorage.getItem("userId");
+    const userType = localStorage.getItem("userType");
+    if(userType != "administrador" && userType != "solicitante") return navigate("/login");
+    
     const {
         register,
         handleSubmit,
@@ -43,13 +50,16 @@ const categoriaDispositivo = () => {
     // lista de matchs de assistencias favoritas
     const {buscaAssistenciaById} = useCadastroAssistencia();
     const [assistencias, setAssistencias] = useState([]);
+
+    // lista para receber assistencias vinculadas ao user, pelo match caso solicitante ou que possuam o id do adm, caso adm
     const listaAssistencias = [];
+
+    const url = import.meta.env.VITE_API_URL;
     const buscaMatchs = async() =>{
-        const url = import.meta.env.VITE_API_URL;
         const request = await fetch(`${url}/assistencia_Fav_Solicitante`);
         const response = await request.json();
         // console.log("Matchs:",response);
-        
+
         // mapeia todas os matchs e retorna nome da assistencia pelo id encontrado no match
         // pegar assitencias apenas com que seja favoritadas pelo user, verificando o id do solicitante no match
         response.map(async (res)=>{
@@ -59,8 +69,24 @@ const categoriaDispositivo = () => {
             }
         })
         setAssistencias(listaAssistencias);
+        
     }
-    
+
+    // busca todas assistencias
+    const buscaAssistenciasDoAdministrador = async()=>{
+        const request = await fetch(`${url}/assistencia`);
+        const response = await request.json();
+
+        // verifica quais assistencias pertencem ao administrador
+        response.map((assistencia)=>{
+            if(assistencia.administradorId === userId){
+                listaAssistencias.push(assistencia);
+            }
+        })
+
+        setAssistencias(listaAssistencias);
+    }
+
     const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
 
     const {cadastrarDispositivo, cadastrarDemanda} = useDemada();
@@ -237,6 +263,48 @@ const categoriaDispositivo = () => {
         </Form.Select>
     ));
 
+    // Menu de dropdown que aparecera no modal para o solicitante
+    const menuDropModalSolicitante = (
+        <Dropdown.Menu className={stylesCad.dropdownMenu}>
+
+            <Dropdown.Item className={stylesCad.dropdownItem} onClick={() => setAtSelecionada("Público")}>
+                Enviar como público
+            </Dropdown.Item>
+
+            <Dropdown.Divider className={stylesCad.divisor}/>
+            {/* map de lista de assistencias favoritadas de acordo com matchs com id do solicitante */}
+            {
+                assistencias.map((assistencia) => (
+                    <Dropdown.Item 
+                        key={assistencia.id} 
+                        className={stylesCad.dropdownItem} 
+                        onClick={() => setAtSelecionada(assistencia)}
+                    >
+                        {assistencia.nomeFantasia}
+                    </Dropdown.Item>
+                ))
+            }
+        </Dropdown.Menu>
+    );
+
+    const menuDropDownModalAdministrador = (
+        <Dropdown.Menu className={stylesCad.dropdownMenu}>
+
+            {/* map de lista de assistencias favoritadas de acordo com matchs com id do solicitante */}
+            {
+                assistencias.map((assistencia) => (
+                    <Dropdown.Item 
+                        key={assistencia.id} 
+                        className={stylesCad.dropdownItem} 
+                        onClick={() => setAtSelecionada(assistencia)}
+                    >
+                        {assistencia.nomeFantasia}
+                    </Dropdown.Item>
+                ))
+            }
+        </Dropdown.Menu>
+    );
+
     // Quando o usuário mudar a categoria, reseta os campos de marca de modelo.
     useEffect(() => {
         setMarcaSelecionada("");
@@ -247,12 +315,16 @@ const categoriaDispositivo = () => {
     const onSubmit = async (dados) => {
         setDadosTemporarios(dados);
 
-        buscaMatchs();
-
-        // Mostrando o Modal para ser selecionada a assistência.
+        if(userType === "solicitante") {
+            buscaMatchs();
+        }
+        else if(userType === "administrador"){
+            buscaAssistenciasDoAdministrador();
+        }
+        
+        // Mostrando o Modal para ser selecionada a assistência
         setMostrarModal(true);
     }
-
 
     const enviarDemandaCompleta = async (assistenciaId) => {
         setMostrarModal(false);
@@ -275,11 +347,14 @@ const categoriaDispositivo = () => {
         // cadastrar dispositivo
         const idDispostivo = await cadastrarDispositivo(dispositivo);
 
+        const statusPadrao = (userType === "solicitante") ? "aberto" : "Em andamento"
+
         // separando dados de demanda
         const infosDemanda = {
             "idDispostivo" : idDispostivo,
             "descProblema" : dados.descProblema,
             "observacoes": dados.observacoes,
+            "status": statusPadrao,
             "assistencia": assistenciaId || "Público"
         };
 
@@ -580,14 +655,14 @@ const categoriaDispositivo = () => {
                     </Row>
 
                     <Row>
-                        {/* Botão para prosseguir */}
+                        {/* Botão para prosseguir ou enviar demanda*/}
                         <Col style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                             <Button
                                 as='input'
                                 value='Avançar'
                                 type='submit'
                                 className={stylesCad.botaoSubmit}
-                            ></Button>
+                            />
                         </Col>
                     </Row>
                 </Container>
@@ -615,36 +690,23 @@ const categoriaDispositivo = () => {
                     >
                         {atSelecionada.nomeFantasia || "Público"} {openDropdown === 'selecaoAt' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
                     </Dropdown.Toggle>
+                    {
+                        (userType === "solicitante")
+                            ?menuDropModalSolicitante
+                            :menuDropDownModalAdministrador
+                    }
 
-                    <Dropdown.Menu className={stylesCad.dropdownMenu}>
-                        <Dropdown.Item className={stylesCad.dropdownItem} onClick={() => setAtSelecionada("Público")}>
-                            Enviar como público
-                        </Dropdown.Item>
-
-                        <Dropdown.Divider className={stylesCad.divisor}/>
-                        {/* map de lista de assistencias favoritadas de acordo com matchs com id do solicitante */}
-                        {
-                            assistencias.map((assistencia) => (
-                                <Dropdown.Item 
-                                    key={assistencia.id} 
-                                    className={stylesCad.dropdownItem} 
-                                    onClick={() => setAtSelecionada(assistencia)}
-                                >
-                                    {assistencia.nomeFantasia}
-                                </Dropdown.Item>
-                            ))
-                        }
-                    </Dropdown.Menu>
                 </Dropdown>
             </Modal.Body>
 
             <Modal.Footer className={stylesCad.footerModal}>
                 <Button
+                    as='input'
+                    type='submit'
+                    value="Enviar"
                     onClick={() => enviarDemandaCompleta(atSelecionada.id || null)}
                     className={stylesCad.botaoModal}
-                >
-                    Enviar
-                </Button>
+                />
             </Modal.Footer>
         </Modal>
     </div> 
