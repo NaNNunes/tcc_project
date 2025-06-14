@@ -24,6 +24,21 @@ import { useEffect, useState } from 'react';
 import CardFooter from 'react-bootstrap/esm/CardFooter';
 
 const CardDemanda = (props) => {
+    const tela = "procurar_demandas";
+
+    const botaoAceitarDemanda = (
+        <>
+            <Button className={styles.botaoModal}>
+                Aceitar
+            </Button>
+        </>
+    )
+
+    const botoes = {
+        procurar_demandas: botaoAceitarDemanda,
+    }
+
+    const mainBotao = botoes[tela]
 
     // Estados do modal.
     const [mostrarModal, setMostrarModal] = useState(false);
@@ -110,13 +125,20 @@ const CardDemanda = (props) => {
         </div>
 
         <div>
-            <Modal show={mostrarModal} onHide={() => setMostrarModal(false)} centered >
-                <Modal.Header closeButton style={{width: 'fit-content'}}>
-                    <Modal.Title>Visualização de informações da demanda</Modal.Title>
+            <Modal 
+                show={mostrarModal} 
+                onHide={() => setMostrarModal(false)} 
+                contentClassName={styles.modalContent} 
+                dialogClassName={styles.modalInfo}
+                centered
+            >
+                <Modal.Header closeButton style={{padding: "0", paddingBottom: "5px", border: "0"}}>
                 </Modal.Header>
 
-                <Modal.Body>
-                    <h3>Dispositivo</h3>
+                <Modal.Body style={{padding: "0", border: "0"}}>
+                    <Modal.Title className={styles.tituloModal}>Visualização de informações da demanda</Modal.Title>
+                    <hr className={styles.divisao}/>
+                    <h3 className={styles.tituloInfoModal}>Dispositivo</h3>
                     <Row>
                         {/* Categoria */}
                         <Col>
@@ -188,12 +210,33 @@ const CardDemanda = (props) => {
                             </span>
                         </Col>
                     </Row>
-                    
 
-                    <span>
-                        <strong>Tensão</strong>
-                    </span>
+                    <hr className={styles.divisao}/>
+
+                    <h3 className={styles.tituloInfoModal}>Contexto</h3>
+                    
+                    <Row>
+                        <Col>
+                            <span>
+                                <strong>Descrição do problema: </strong>
+                                DESCRIÇÃO DO PROBLEMA:
+                            </span>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col>
+                            <span>
+                                <strong>Observações: </strong>
+                                OBSERVAÇÕES
+                            </span>
+                        </Col>
+                    </Row> 
                 </Modal.Body>
+
+                <Modal.Footer style={{padding: "0", border: "0"}}>
+                    {mainBotao}
+                </Modal.Footer>
             </Modal>
         </div>
     </div>
