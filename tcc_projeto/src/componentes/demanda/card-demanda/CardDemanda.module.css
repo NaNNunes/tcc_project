@@ -13,3 +13,38 @@
     padding-left: 8px;
     color: #757575;
 }
+
+/* AQUI COMEÇA A ESTILIZAÇÃO DO MODAL */
+.modalInfo {
+    max-width: fit-content !important; 
+    margin: aut o;
+}
+
+.modalContent {
+    padding: 20px;
+}
+
+.tituloModal {
+    font-size: 2rem;
+    padding-right: 10px;
+    font-weight: bold;
+}
+
+.tituloInfoModal {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.divisao {
+    border: none;
+    border-top: 2px solid #cacaca;
+    margin: 1rem 0;              
+    width: 100%;                  
+    opacity: 1;       
+}
+
+.botaoModal {
+    width: fit-content;
+    align-self: center;
+    align-items: ce;
+}
