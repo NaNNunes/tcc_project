@@ -286,15 +286,27 @@ export function useUser(){
             body: JSON.stringify(data)
         });
         const response = await request.json();
-        const id = await response.id;
+        const id = response.id;
 
-        // nao funciona
-            // alternativa definir id no localstorage
+        // alternativa definir id no localstorage
         setId(id);
-        localStorage.setItem('userId', response.id)
         setType(user);
+
         // user invalido pois falta endereco e/ou pergunta de segurança
         inserirValidacao(false);
+    }
+
+    const cadastrarPseudoUser = async (data) =>{
+
+        const request = await fetch(`${url}/solicitante`,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(data)
+        });
+        const response = await request.json();
+        return response.id;
     }
 
     // favorita assistencia
@@ -370,6 +382,7 @@ export function useUser(){
         atualizaInfosUser,
         alteraSenhaUser,
         cadastrarInfosUser,
+        cadastrarPseudoUser,
         favoritarAssistencia,
         inserirPerguntaResposta,
         inserirValidacao,
@@ -673,7 +686,7 @@ export function useCadastroAssistencia(){
 
 export function useDemanda(){
     
-    const {userId} = useContext(AuthContext);
+    const userType = localStorage.getItem("userType");
 
     // cadastra dispositivo no sistema
     const cadastrarDispositivo = async (data) =>{
@@ -687,8 +700,12 @@ export function useDemanda(){
         })
         const response =  await request.json();
 
-        //definir dono do dispositivo
-        defineIdSolicitante("dispositivo", response.id);
+        // Define id de solicitante no dispositivo somente quando o mesmo emite a demanda com sua própria conta
+        // caso adm estja emitindo demanda, id do solicitante presencial no dispositivo será definido em CadastroDemanda
+        if(userType === "solicitante"){
+            //definir dono do dispositivo
+            defineIdSolicitante("dispositivo", response.id);
+        }
         // retorna id Dispositivo para cadastrar em demanda
         return response.id;
     }
