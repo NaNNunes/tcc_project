@@ -26,7 +26,7 @@
 /* Personalização do "dialogClassName", basicamente o espaço do modal. */
 .modalInfo {
     max-width: fit-content !important; 
-    margin: aut o;
+    margin: auto;
 }
 
 /* Personalização do "contentClassName", todo o conteúdo que está dentro do modal. */
