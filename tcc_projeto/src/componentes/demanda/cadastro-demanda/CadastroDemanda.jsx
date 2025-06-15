@@ -35,6 +35,8 @@ import { set, useForm } from "react-hook-form";
 import { useDemada, useCadastroAssistencia} from '../../../hooks/useApi';
 import { useNavigate } from 'react-router-dom';
 
+import MinhasInfos from '../../conta_perfil/MinhasInfos.jsx'
+
 const categoriaDispositivo = () => {
     const navigate = useNavigate();
 
@@ -350,7 +352,7 @@ const categoriaDispositivo = () => {
         // cadastrar dispositivo
         const idDispostivo = await cadastrarDispositivo(dispositivo);
 
-        const statusPadrao = (userType === "solicitante") ? "aberto" : "Em andamento"
+        const statusPadrao = (userType === "solicitante") ? "aberto" : "Em atendimento"
 
         // separando dados de demanda
         const infosDemanda = {
@@ -421,6 +423,63 @@ const categoriaDispositivo = () => {
                         </Col>
                     </Row>
                 </Container>
+
+                {/* Informações do solicitante */}
+                <Container fluid className={stylesCad.parteFormulario} style={{marginBottom: '20px'}}>
+                    {/* Título do container */}
+                    <Row style={{paddingBottom: '1%'}}>
+                        <Col md={12} xs={12}>
+                            <h3>Informações do solicitante</h3>
+                        </Col>
+                    </Row>
+                    
+                    {/* Informações do solicitante */}
+                    <Row>
+                        {/* Coluna de nome */}
+                        <Col md={4} xs={12} className={stylesCad.campo}>
+                            
+                        </Col>
+
+                        {/* Coluna de CPF */}
+                        <Col md={4} xs={12} className={stylesCad.campo}>
+                            
+                        </Col>
+
+                        {/* Coluna de telefone */}
+                        <Col md={4} xs={12} className={stylesCad.campo}>
+                        
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        {/* Coluna de e-mail */}
+                        <Col md={4} xs={12} className={stylesCad.campo}>
+                            <FloatingLabel 
+                                controlId='EmailInput'
+                                label='E-mail'
+                            >
+                                <Form.Control
+                                name="email"
+                                size="sm"
+                                type="email"
+                                placeholder=""
+                                {...register("email", {
+                                    required: "O email é obrigatório",
+                                    pattern: {
+                                    value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                                    message: "Email inválido",
+                                    },
+                                    validate: (value) => value.includes("@") || "Email inválido",
+                                })}
+                                />
+                                {errors.email && (
+                                    <span className='error'>{errors.email.message}</span>
+                                )}
+                            </FloatingLabel>
+                        </Col>
+                    </Row>
+                </Container>
+                
                 {/* Informações do dispositivo */}
                 <Container fluid className={stylesCad.parteFormulario} style={{marginBottom: '20px'}}>
                     {/* Título do container */}

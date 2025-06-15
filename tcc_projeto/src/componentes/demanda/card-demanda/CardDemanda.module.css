@@ -15,26 +15,45 @@
 }
 
 /* AQUI COMEÇA A ESTILIZAÇÃO DO MODAL */
+
+/* Container contendo tudo que vai aparecer no modal. */
+.ContainerModalInfo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0px;
+}
+
+/* Personalização do "dialogClassName", basicamente o espaço do modal. */
 .modalInfo {
     max-width: fit-content !important; 
     margin: aut o;
 }
 
+/* Personalização do "contentClassName", todo o conteúdo que está dentro do modal. */
 .modalContent {
     padding: 20px;
 }
 
+/* Modal.Title */
 .tituloModal {
     font-size: 2rem;
     padding-right: 10px;
     font-weight: bold;
 }
 
+/* Título da informação que será apresentada. */
 .tituloInfoModal {
     font-size: 2rem;
     margin-bottom: 10px;
 }
 
+/* Texto com as informações que serão mostradas. */
+.textoInfoModal {
+    font-size: 1.1rem;
+    padding-bottom: 10px;
+}
+
+/* hr fazendo a divisão entre topicos. */
 .divisao {
     border: none;
     border-top: 2px solid #cacaca;
@@ -43,8 +62,66 @@
     opacity: 1;       
 }
 
+/* Botão com a funcionalidade especifica para cada card. */
 .botaoModal {
     width: fit-content;
     align-self: center;
-    align-items: ce;
+    background-color: #0061B7;
+    width: 12rem;
+    border: 0;
+    height: 50px;
+    font-weight: bold;
+    margin: 0px;
+    margin-top: 20px;
+}
+
+.botaoModal:hover {
+    background-color: #0069C6;
+}
+
+@media screen and (max-width: 560px) {
+    .ContainerModalInfo {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media screen and (max-width: 270px) {
+    .tituloModal {
+        font-size: 1.5rem;
+    }
+
+    .tituloInfoModal {
+        font-size: 1.5rem;
+    }
+
+    .botaoModal {
+        width: 5rem;
+        padding: 0px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+@media screen and (max-width: 220px) {
+    .tituloModal {
+        font-size: 1rem;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .tituloInfoModal {
+        font-size: 1rem;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .textoInfoModal {
+        font-size: 1rem;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .modalContent {
+        padding: 10px;
+    }
 }
