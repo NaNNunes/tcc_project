@@ -1,3 +1,6 @@
+// verificar se o useEffect é o causador do impedimento de atualização do campo quando regex é ativado
+// encontrar nova forma de carregar dados de user uma unica vez.
+
 import Encerrar from "../../componentes/conta_perfil/Encerrar"
 import Endereco from "../../componentes/Endereco"
 import MinhaAssistencia from "../../componentes/assistencia/MinhaAssistencia"
@@ -8,6 +11,9 @@ import Seguranca from "../../componentes/conta_perfil/Seguranca"
 import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../../context/userContext"
 import { Navigate } from "react-router-dom"
+
+// Importação dos estilos.
+import styles from './Conta.module.css';
 
 const Conta = () => {
   const {userType, userId} = useContext(AuthContext);
@@ -61,30 +67,32 @@ const Conta = () => {
   },[])
 
   return (
-    <>
-      
-      {/* infos do user */}
-      <MinhasInfos 
-        nome={userInfos.nome}
-        sobrenome={userInfos.sobrenome}
-        email={userInfos.email}
-        userTelefone={userInfos.userTelefone}
-      />
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      <div className={styles.formulario}>
+        {/* infos do user */}
+        <MinhasInfos 
+          nome={userInfos.nome}
+          sobrenome={userInfos.sobrenome}
+          cpf={userInfos.cpf}
+          email={userInfos.email}
+          userTelefone={userInfos.userTelefone}
+        />
 
-      {/* infos da assistencia ou endereco do solicitante */}
-      {
-        (localStorage.getItem("userType") === "administrador")
-          ?
-            // verificacao de assistencia pertencente ao user por id, apenas no componente
-            <MinhaAssistencia assistencias={listaAssistencias} admId={userInfos.id} />
-          :
-            <Endereco endereco={userEndereco}/>
-      }
-      <Seguranca/>
+        {/* infos da assistencia ou endereco do solicitante */}
+        {
+          (localStorage.getItem("userType") === "administrador")
+            ?
+              // verificacao de assistencia pertencente ao user por id, apenas no componente
+              <MinhaAssistencia assistencias={listaAssistencias} admId={userInfos.id} />
+            :
+              <Endereco endereco={userEndereco}/>
+        }
+        <Seguranca/>
 
-      {/*  verificação de certeza e definir registro de user como falso */}
-      <Encerrar/>
-    </>
+        {/*  verificação de certeza e definir registro de user como falso */}
+        <Encerrar/>
+      </div>
+    </div>
   )
 }
 
