@@ -13,6 +13,9 @@ import { MdDevices } from "react-icons/md";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { BsClipboardCheck } from "react-icons/bs";
 import { HiOutlineUsers } from "react-icons/hi";
+import { MdOutlineTimelapse } from "react-icons/md";
+import { LuClipboardCheck } from "react-icons/lu";
+import { LuClipboardCopy } from "react-icons/lu";
 
 const Inicio = () => {
   const navigate = useNavigate();
@@ -44,7 +47,7 @@ const Inicio = () => {
             </Card>
 
             <Card className={styles.card}>
-              <Row className="justify-content-center text-center mb-4">
+              <Row className="justify-content-center text-center mb-1">
                 <Col xs="auto">
                   <h3>Relatórios</h3>
                 </Col>
@@ -52,22 +55,9 @@ const Inicio = () => {
 
               <Row className={styles.wrapperRelatoriosNovo}>
                 <div className={styles.cardRelatorioNovo}>
-                  <img
-                    className={styles.icone}
-                    src="/icons/email.svg"
-                    alt="Emails"
-                  />
+                  <HiOutlineUsers className={styles.icone} color="#ffffff" size="2rem" />
                   <div className={styles.info}>
-                    <div className={styles.valor}>12.361</div>
-                    <div className={styles.descricao}>Emails Enviados</div>
-                  </div>
-                  <div className={styles.percentual}>+14%</div>
-                </div>
-
-                <div className={styles.cardRelatorioNovo}>
-                  <HiOutlineUsers color="#ffffff" size="2rem" />
-                  <div className={styles.info}>
-                    <div className={styles.valor}>431.225</div>
+                    <div className={styles.valor}>225</div>
                     <div className={styles.descricao}>Total de Clientes</div>
                   </div>
                   <div className={styles.percentual}>+21%</div>
@@ -80,18 +70,14 @@ const Inicio = () => {
                     alt="Clientes"
                   />
                   <div className={styles.info}>
-                    <div className={styles.valor}>32.441</div>
+                    <div className={styles.valor}>41</div>
                     <div className={styles.descricao}>Novos Clientes</div>
                   </div>
-                  <div className={styles.percentual}>+5%</div>
+                  <div className={styles.percentual}>+19%</div>
                 </div>
 
                 <div className={styles.cardRelatorioNovo}>
-                  <img
-                    className={styles.icone}
-                    src="/icons/pending_actions.svg"
-                    alt="Aceitas"
-                  />
+                  <LuClipboardCopy className={styles.icone} color="#ffffff" size="2rem" />
                   <div className={styles.info}>
                     <div className={styles.valor}>243</div>
                     <div className={styles.descricao}>Demandas Aceitas</div>
@@ -100,7 +86,7 @@ const Inicio = () => {
                 </div>
 
                 <div className={styles.cardRelatorioNovo}>
-                  <BsClipboardCheck color="#ffffff" size="2rem" />
+                  <LuClipboardCheck className={styles.icone} color="#ffffff" size="2rem" />
                   <div className={styles.info}>
                     <div className={styles.valor}>189</div>
                     <div className={styles.descricao}>Demandas Concluídas</div>
@@ -109,7 +95,18 @@ const Inicio = () => {
                 </div>
 
                 <div className={styles.cardRelatorioNovo}>
-                  <MdDevices color="#ffffff" size="2.5rem" />
+                  <MdOutlineTimelapse className={styles.icone} color="#ffffff" size="2.2rem" />
+                  <div className={styles.info}>
+                    <div className={styles.valor}>2h 15min</div>
+                    <div className={styles.descricao}>
+                      Tempo Médio de Resposta
+                    </div>
+                  </div>
+                  <div className={styles.percentual}>+14%</div>
+                </div>
+
+                <div className={styles.cardRelatorioNovo}>
+                  <MdDevices className={styles.icone} color="#ffffff" size="2rem" />
                   <div className={styles.info}>
                     <div className={styles.valor}>Cel. e Notebooks</div>
                     <div className={styles.descricao}>Mais Requisitados</div>
@@ -118,7 +115,7 @@ const Inicio = () => {
                 </div>
 
                 <div className={styles.cardRelatorioNovo}>
-                  <FaRegStarHalfStroke color="#ffffff" size="2.5rem" />
+                  <FaRegStarHalfStroke className={styles.icone} color="#ffffff" size="2rem" />
                   <div className={styles.info}>
                     <div className={styles.valor}>4.6 / 5.0</div>
                     <div className={styles.descricao}>Média de Avaliação</div>
@@ -134,7 +131,9 @@ const Inicio = () => {
                   />
                   <div className={styles.info}>
                     <div className={styles.valor}>SP, RJ, MG</div>
-                    <div className={styles.descricao}>Maiores Solicitações</div>
+                    <div className={styles.descricao}>
+                      Principais Localidades
+                    </div>
                   </div>
                   <div className={styles.percentual}>+18%</div>
                 </div>
