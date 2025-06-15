@@ -174,7 +174,7 @@ const MinhaAssistencia = (props) => {
         
         
         <Endereco  endereco={enderecoAssistencia}/>
-        <EditarPag id_assistencia={idAssistencia}/>
+        {/* <EditarPag id_assistencia={idAssistencia}/> */}
     </>
   )
 }

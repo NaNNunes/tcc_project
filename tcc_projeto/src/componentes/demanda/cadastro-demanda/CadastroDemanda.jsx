@@ -1,3 +1,6 @@
+// definir a demanda o id do solicitante criado durante atendimento presencial
+    // um user não valido será criado como solicitante e será definido como emissor da demanda.
+
 // Importação do react-boostrap.
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -338,7 +341,7 @@ const categoriaDispositivo = () => {
             "marca": dados.marca,
             "fabricante": dados.fabricante,
             "modelo": dados.modelo,
-            "numSerie": dados.numSerie,
+            "numSerie": dados.numSerie, 
             "tensao": dados.tensao,
             "amperagem": dados.amperagem,
             "cor": dados.cor
@@ -418,7 +421,6 @@ const categoriaDispositivo = () => {
                         </Col>
                     </Row>
                 </Container>
-                
                 {/* Informações do dispositivo */}
                 <Container fluid className={stylesCad.parteFormulario} style={{marginBottom: '20px'}}>
                     {/* Título do container */}

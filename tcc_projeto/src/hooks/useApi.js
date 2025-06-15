@@ -712,6 +712,9 @@ export function useDemada(){
         defineDataEmissao(response.id);
     }
 
+    // TODO ASSIM QUE KEVIN TERMINAR DE CRIAR O COMPONENTE PARA CRIAÇÃO DE DEMANDA COM SOLICITAÇÃO PRESENCIAL. demanda "emitida" pelo adm
+    // VERIFICAR SE DEMADA É EMITIDA PELA ASSITENCIA EM ATENDIMENTO PRESENCIAL E DEFINIR ID DO SOLICITANTE NA LOJA, 
+    // CRIADO NO ATO DA EMISSAO DA DEMDANDA COMO EMISSOR, E NÃO O ADM QUE CADASTRA
     // define o id do solicitante 
     const defineIdSolicitante = async (tabelaDestino, id) =>{
         // tabela Destino = dispositivo || demanda

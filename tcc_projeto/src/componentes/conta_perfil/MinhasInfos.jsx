@@ -44,7 +44,7 @@ const MinhasInfos = (props) => {
                 <Row className="my-2">
                     {/* Titulo */}
                     <Col xs={5}>
-                        <h3>Minhas informações</h3>
+                        <h3>Meus Dados</h3>
                     </Col>
                 </Row>
                 <Row className="m-1">
@@ -76,6 +76,22 @@ const MinhasInfos = (props) => {
                                 disabled={!inputFieldEnable}
                                 {
                                     ...register("sobrenome")
+                                }
+                            />
+                        </FloatingLabel>
+                    </Col>
+                    <Col>
+                        <FloatingLabel
+                            controlId="cpfUser"
+                            label="CPF"
+                            className="mb-3"
+                        >
+                            <Form.Control 
+                                type="text"
+                                placeholder=""
+                                disabled
+                                {
+                                    ...register("cpf")
                                 }
                             />
                         </FloatingLabel>

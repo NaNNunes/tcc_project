@@ -134,8 +134,6 @@ const ProcurarDemandas = () => {
     fetchData();
   }, []);
 
-
-
   const [numLinhas, setNumLinhas] = useState(2);
   const cardsPorLinha = 3;
   const cardsVisiveis = numLinhas * cardsPorLinha;
@@ -154,10 +152,10 @@ const ProcurarDemandas = () => {
           demandasParaMostrar.map((demanda) => (
             // passar props informando qual é o user que está acessando a page, para request no componente de card demanda
             <CardDemanda
-                  key={demanda.id}
+                  key={demanda.id} 
                   id={demanda.id}
+                  idResponsavel={demanda.solicitante_id} // id do emissor da demanda
                   idDispostivo={demanda.idDispostivo}
-                  solicitanteId={demanda.solicitante_id}
                   dataEmissao={demanda.dataEmissao}
                   dominioDemanda={demanda.assistencia} // mostrar em algum lugar do card
             />
