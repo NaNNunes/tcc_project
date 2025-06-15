@@ -26,9 +26,12 @@ import CardFooter from 'react-bootstrap/esm/CardFooter';
 const CardDemanda = (props) => {
     const tela = "procurar_demandas";
 
+    // SÓ FAZER O CÓDIGO DE "HANDLEACEITAR" E ATRIBUIR AO BOTÃO
     const botaoAceitarDemanda = (
         <>
-            <Button className={styles.botaoModal}>
+            <Button 
+                className={styles.botaoModal}
+            >
                 Aceitar
             </Button>
         </>
@@ -124,6 +127,7 @@ const CardDemanda = (props) => {
             </Container>
         </div>
 
+        {/* Modal para visualizar informações da demanda. */}
         <div>
             <Modal 
                 show={mostrarModal} 
@@ -132,109 +136,84 @@ const CardDemanda = (props) => {
                 dialogClassName={styles.modalInfo}
                 centered
             >
+                {/* Só a opção de sair da página isolada em cima de tudo. */}
                 <Modal.Header closeButton style={{padding: "0", paddingBottom: "5px", border: "0"}}>
                 </Modal.Header>
 
+                {/* Corpo do modal com todas as informações */}
                 <Modal.Body style={{padding: "0", border: "0"}}>
                     <Modal.Title className={styles.tituloModal}>Visualização de informações da demanda</Modal.Title>
                     <hr className={styles.divisao}/>
-                    <h3 className={styles.tituloInfoModal}>Dispositivo</h3>
-                    <Row>
-                        {/* Categoria */}
-                        <Col>
-                            <span>
+                    {/* Informações do dispositivo */}
+                    <div>
+                        <h3 className={styles.tituloInfoModal}>Dispositivo</h3>
+                        <Container className={styles.ContainerModalInfo}>
+                            {/* Categoria */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Categoria: </strong>
                                 CATEGORIA
                             </span>
-                        </Col>
 
-                        {/* Marca */}
-                        <Col>
-                            <span>
+                            {/* Marca */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Marca: </strong>
                                 MARCA
                             </span>
-                        </Col>
-                    </Row>
 
-                    <Row>
-                        {/* Fabricante */}
-                        <Col>
-                            <span>
+                            {/* Fabricante */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Fabricante: </strong>
                                 FABRICANTE
                             </span>
-                        </Col>
 
-                        {/* Modelo */}
-                        <Col>
-                            <span>
+                            {/* Modelo */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Modelo: </strong>
                                 MODELO
                             </span>
-                        </Col>
-                    </Row>
 
-                    <Row>
-                        {/* Tensão */}
-                        <Col>
-                            <span>
+                            {/* Tensão */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Tensão: </strong>
                                 TENSAO
                             </span>
-                        </Col>
 
-                        {/* Amperagem */}
-                        <Col>
-                            <span>
+                            {/* Amperagem */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Amperagem: </strong>
                                 AMPERAGEM
                             </span>
-                        </Col>
-                    </Row>
 
-                    <Row>
-                        {/* Cor */}
-                        <Col>
-                            <span>
+                            {/* Cor */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Cor: </strong>
                                 COR
                             </span>
-                        </Col>
 
-                        {/* A */}
-                        <Col>
-                            <span>
-                                <strong>Amperagem: </strong>
-                                AMPERAGEM
-                            </span>
-                        </Col>
-                    </Row>
-
+                        </Container>
+                    </div>
                     <hr className={styles.divisao}/>
 
-                    <h3 className={styles.tituloInfoModal}>Contexto</h3>
-                    
-                    <Row>
-                        <Col>
-                            <span>
+                    {/* Informações do contexto */}
+                    <div>
+                        <h3 className={styles.tituloInfoModal}>Contexto</h3>
+                        <Container style={{display: "grid", gridTemplateColumns: "repeat(1, 1fr)"}}>
+                            <span className={styles.textoInfoModal}>
                                 <strong>Descrição do problema: </strong>
                                 DESCRIÇÃO DO PROBLEMA:
                             </span>
-                        </Col>
-                    </Row>
 
-                    <Row>
-                        <Col>
-                            <span>
+
+                            <span className={styles.textoInfoModal} >
                                 <strong>Observações: </strong>
                                 OBSERVAÇÕES
                             </span>
-                        </Col>
-                    </Row> 
+                        </Container>
+                    </div>
                 </Modal.Body>
 
-                <Modal.Footer style={{padding: "0", border: "0"}}>
+                {/* Footer com o botão com a funcionalidade passada dentro do mainBotao */}
+                <Modal.Footer style={{padding: "0", border: "0", display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     {mainBotao}
                 </Modal.Footer>
             </Modal>
