@@ -509,7 +509,7 @@ const categoriaDispositivo = () => {
 
                         {/* Coluna de CPF */}
                         <Col md={4} xs={12} className={stylesCad.campo}>
-                            <FloatingLabel id="userCpfInput" className="mb-3" label="CPF">
+                            <FloatingLabel id="userCpfInput" label="CPF">
                                 <Form.Control
                                 type="text"
                                 placeholder="000.000.000-00"
@@ -551,7 +551,6 @@ const categoriaDispositivo = () => {
                             >
                                 <Form.Control
                                 name="email"
-                                size="sm"
                                 type="email"
                                 placeholder=""
                                 {...register("email", {
@@ -573,7 +572,6 @@ const categoriaDispositivo = () => {
                         <Col md={4} xs={12} className={stylesCad.campo}>
                             <FloatingLabel
                                 id="userTelInput"
-                                className="mb-3"
                                 label="Telefone"
                             >
                                 <Form.Control
