@@ -1,3 +1,6 @@
+// definir a demanda o id do solicitante criado durante atendimento presencial
+    // um user não valido será criado como solicitante e será definido como emissor da demanda.
+
 // Importação do react-boostrap.
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -26,16 +29,16 @@ import { useState } from 'react';
 import { useEffect } from "react";
 
 // Importação do useForm para mexer com o formulário.
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 // hooks json-server
-import { useDemada, useCadastroAssistencia} from '../../../hooks/useApi';
+import { useDemanda, useCadastroAssistencia, useVerificadorDeCpf, useUser} from '../../../hooks/useApi';
+
 import { useNavigate } from 'react-router-dom';
 
-// Importação do verificador de CPF.
-import { useVerificadorDeCpf } from "../../../hooks/useApi.js";
 
 const categoriaDispositivo = () => {
+    
     const navigate = useNavigate();
 
     const userId = localStorage.getItem("userId");
@@ -50,8 +53,8 @@ const categoriaDispositivo = () => {
         formState: {errors},
     } = useForm();
 
-    // lista de matchs de assistencias favoritas
     const {buscaAssistenciaById} = useCadastroAssistencia();
+    const {cadastrarPseudoUser} = useUser();
     const [assistencias, setAssistencias] = useState([]);
 
     // lista para receber assistencias vinculadas ao user, pelo match caso solicitante ou que possuam o id do adm, caso adm
@@ -72,7 +75,6 @@ const categoriaDispositivo = () => {
             }
         })
         setAssistencias(listaAssistencias);
-        
     }
 
     // busca todas assistencias
@@ -90,21 +92,21 @@ const categoriaDispositivo = () => {
         setAssistencias(listaAssistencias);
     }
 
-    const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
-
-    const {cadastrarDispositivo, cadastrarDemanda} = useDemada();
+    const {cadastrarDispositivo, cadastrarDemanda} = useDemanda();
     // Categoria e marca selecionada no ListGroup.
     const categoriaSelecionada = watch("categoria");
     const [marcaSelecionada, setMarcaSelecionada] = useState("");
 
     // Estados do modal.
     const [mostrarModal, setMostrarModal] = useState(false);
+    // temporario 
+    (mostrarModal === true) && buscaAssistenciasDoAdministrador();
 
     // Dados do Form temporários.
     const [dadosTemporarios, setDadosTemporarios] = useState(null);
 
     // Assistência pre-selecionada como público.
-    const [atSelecionada, setAtSelecionada] = useState({});
+    const [atSelecionada, setAtSelecionada] = useState("");
 
     // Formato do CPF.
     const formatarCPF = (cpf) => {
@@ -277,49 +279,7 @@ const categoriaDispositivo = () => {
             ))}
         </Form.Select>
     ));
-
-    // Menu de dropdown que aparecera no modal para o solicitante
-    const menuDropModalSolicitante = (
-        <Dropdown.Menu className={stylesCad.dropdownMenu}>
-
-            <Dropdown.Item className={stylesCad.dropdownItem} onClick={() => setAtSelecionada("Público")}>
-                Enviar como público
-            </Dropdown.Item>
-
-            <Dropdown.Divider className={stylesCad.divisor}/>
-            {/* map de lista de assistencias favoritadas de acordo com matchs com id do solicitante */}
-            {
-                assistencias.map((assistencia) => (
-                    <Dropdown.Item 
-                        key={assistencia.id} 
-                        className={stylesCad.dropdownItem} 
-                        onClick={() => setAtSelecionada(assistencia)}
-                    >
-                        {assistencia.nomeFantasia}
-                    </Dropdown.Item>
-                ))
-            }
-        </Dropdown.Menu>
-    );
-
-    const menuDropDownModalAdministrador = (
-        <Dropdown.Menu className={stylesCad.dropdownMenu}>
-
-            {/* map de lista de assistencias favoritadas de acordo com matchs com id do solicitante */}
-            {
-                assistencias.map((assistencia) => (
-                    <Dropdown.Item 
-                        key={assistencia.id} 
-                        className={stylesCad.dropdownItem} 
-                        onClick={() => setAtSelecionada(assistencia)}
-                    >
-                        {assistencia.nomeFantasia}
-                    </Dropdown.Item>
-                ))
-            }
-        </Dropdown.Menu>
-    );
-
+    
     // Quando o usuário mudar a categoria, reseta os campos de marca de modelo.
     useEffect(() => {
         setMarcaSelecionada("");
@@ -341,40 +301,57 @@ const categoriaDispositivo = () => {
         setMostrarModal(true);
     }
 
-    const enviarDemandaCompleta = async (assistenciaId) => {
-        setMostrarModal(false);
-        // defineDataEmissao();
+    const enviarDemandaCompleta = async (responsavelDemanda) => {
+        
+        // console.log("id assistencia:",assistenciaId);
 
         const dados = dadosTemporarios;
-        // nao consegui fazer a tempo de forma eficiente e mais segura
+        // separando dados de solicitante presencial
+        const dadosPseudoUser = {
+        //     "email": dadosTemporarios.email,
+        //     "cpf": dadosTemporarios.cpf,
+        //     "userTelefone": dadosTemporarios.userTelefone,
+        //     "nome": dadosTemporarios.nome,
+        //     "sobrenome": dadosTemporarios.sobrenome,
+        //     "isValido": false
+        }
+
+        // cadastrar pseudo user, solicitante presencial
+        const idPseudoUser = await cadastrarPseudoUser(dadosPseudoUser);
+        
         // separando dados de dispositivo
         const dispositivo = {
             "categoria": dados.categoria,
             "marca": dados.marca,
             "fabricante": dados.fabricante,
             "modelo": dados.modelo,
-            "numSerie": dados.numSerie,
+            "numSerie": dados.numSerie, 
             "tensao": dados.tensao,
             "amperagem": dados.amperagem,
-            "cor": dados.cor
+            "cor": dados.cor,
+            "solicitante_id": idPseudoUser
         };
 
         // cadastrar dispositivo
         const idDispostivo = await cadastrarDispositivo(dispositivo);
-
+        
         const statusPadrao = (userType === "solicitante") ? "aberto" : "Em atendimento"
-
+        
         // separando dados de demanda
         const infosDemanda = {
             "idDispostivo" : idDispostivo,
             "descProblema" : dados.descProblema,
             "observacoes": dados.observacoes,
             "status": statusPadrao,
-            "assistencia": assistenciaId || "Público"
+            "assistencia": responsavelDemanda,
+            "solicitante_id": idPseudoUser
         };
-
+        
         // cadastrar demanda
+        console.log("Demanda cadastrada:",infosDemanda)
         cadastrarDemanda(infosDemanda);
+
+        setMostrarModal(false);
     }
 
     const onError = (errors) => {
@@ -828,7 +805,7 @@ const categoriaDispositivo = () => {
                         </Col>
                     </Row>
 
-                    {/* Botão para prosseguir ou enviar demanda*/}
+                    {/* Botão para prosseguir*/}
                     <Row>
                         <Col style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                             <Button
@@ -852,39 +829,82 @@ const categoriaDispositivo = () => {
             dialogClassName={stylesCad.modalInfo}
         >
             {/* Título */}
-            <Modal.Header closeButton style={{padding: "0", paddingBottom: "5px", border: "0"}}>
-            </Modal.Header> 
-            
+            <Modal.Header closeButton style={{padding: "0", paddingBottom: "5px", border: "0"}}/>
+ 
             {/* Corpo com a seleção de assistência técnica. */}
             <Modal.Body style={{padding: "0", border: "0"}}>
                 <Modal.Title className={stylesCad.tituloModal}>Direcionar demanda</Modal.Title>
                 <Container>
                     <span className={stylesCad.textSpan}>
-                        Se tiver uma assistência técnica de preferência, escolha uma. Caso contrário, deixe como público.
+                        {
+                            (userType === "solicitante")
+                                ?"Escolha uma de suas assistências técnicas favoritas para envio ou deixe 'Público' para surpreender-se com novas possibilidades."
+                                :"Escolha uma de suas assistências para resolver este serviço."
+                        }
+                        
                     </span>
                 </Container>
                 
                 <Row style={{paddingTop: '20px', margin: '0px'}}>
+
                     <FloatingLabel
                         controlId='AssistenciaInput'
                         label='Enviar'
                         style={{padding: '0px'}}
                     >
                         <Form.Select
-                            value={atSelecionada === "Público" ? "Público" : atSelecionada?.id}
+                            // so atribui assitencia se mudar a opção
+                            // necessário forçar o user a realizar a mudança da opção
+                            onChange={(e)=>{
+                                console.log("Responsavel selecionado:",e.target.value);
+                                setAtSelecionada(e.target.value)}
+                            }
                         >
-                            <option value="Público">Enviar como público</option>
-                            {assistencias.map((assistencia) => (
-                                <option 
-                                    key={assistencia.id} 
-                                    value={assistencia.id}
-                                    onClick={() => setAtSelecionada(assistencia)}
-                                >
-                                    {assistencia.nomeFantasia}
-                                </option> 
-                            ))}
+                            {
+                                (userType === "solicitante")
+                                    ?
+                                        <>
+                                            <option value="Público" selected>
+                                                Enviar como público
+                                            </option>
+
+                                            {/* 
+                                                map de lista de assistencias favoritadas de 
+                                                acordo com matchs com id do solicitante  
+                                            */}
+                                            
+                                            {
+                                                assistencias.map((assistencia) => (
+                                                    <option 
+                                                        value={assistencia.id}
+                                                        key={assistencia.id} 
+                                                    >
+                                                        {assistencia.nomeFantasia}
+                                                    </option>
+                                                ))
+                                            }
+                                        </>
+                                    :  
+                                        <>   
+                                            {/* selected utilizado para forçar user a mudar a opção e com isso ocorrer a mudança */}
+                                            <option value="">
+                                                Selecione uma opção
+                                            </option>        
+                                            {
+                                                assistencias.map((assistencia) => (
+                                                    <option 
+                                                        key={assistencia.id} 
+                                                        value={assistencia.id}
+                                                    >
+                                                        {assistencia.nomeFantasia}
+                                                    </option>
+                                                ))
+                                            }
+                                        </> 
+                            }    
                         </Form.Select>
-                    </FloatingLabel>
+                    </FloatingLabel>   
+
                 </Row>   
             </Modal.Body>
 
@@ -893,7 +913,10 @@ const categoriaDispositivo = () => {
                     as='input'
                     type='submit'
                     value="Enviar"
-                    onClick={() => enviarDemandaCompleta(atSelecionada.id || null)}
+                    disabled={(atSelecionada === "")}
+                    onClick={() => {
+                        enviarDemandaCompleta(atSelecionada)
+                    }}
                     className={stylesCad.botaoModal}
                 />
             </Modal.Footer>

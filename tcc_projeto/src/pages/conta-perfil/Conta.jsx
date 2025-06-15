@@ -1,3 +1,6 @@
+// verificar se o useEffect é o causador do impedimento de atualização do campo quando regex é ativado
+// encontrar nova forma de carregar dados de user uma unica vez.
+
 import Encerrar from "../../componentes/conta_perfil/Encerrar"
 import Endereco from "../../componentes/Endereco"
 import MinhaAssistencia from "../../componentes/assistencia/MinhaAssistencia"

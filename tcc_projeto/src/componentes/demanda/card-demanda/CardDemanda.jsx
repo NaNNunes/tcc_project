@@ -21,16 +21,38 @@ import { MdOutlineCalendarMonth } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 
 import { useEffect, useState } from 'react';
-import CardFooter from 'react-bootstrap/esm/CardFooter';
+import {useDemanda} from "../../../hooks/useApi.js";
 
 const CardDemanda = (props) => {
-    const tela = "procurar_demandas";
 
+    const {defineIdAssistencia} = useDemanda();
+
+    const userBuscador = props.userBuscador;
+    
+    const idResponsavel = props.idResponsavel;
+    const idDispostivo = props.idDispostivo;
+    
+    const idAssistencia = props.dominioDemanda;
+
+    const url = import.meta.env.VITE_API_URL;
+
+    const tela = "procurar_demandas";
+    
+    // Estados do modal.
+    const [mostrarModal, setMostrarModal] = useState(false);
+
+    // assistencia que será responsável pela demanda, definido pelo adm
+    const [assistenciaSelecionada, setAssistenciaSelecionada] = useState(undefined);
     // SÓ FAZER O CÓDIGO DE "HANDLEACEITAR" E ATRIBUIR AO BOTÃO
     const botaoAceitarDemanda = (
         <>
             <Button 
                 className={styles.botaoModal}
+                onClick={()=>{
+                    if(mostrarModal != undefined){
+                        defineIdAssistencia(props.id, /*id da assistencias selecionada */);
+                    }
+                }}
             >
                 Aceitar
             </Button>
@@ -43,28 +65,21 @@ const CardDemanda = (props) => {
 
     const mainBotao = botoes[tela]
 
-    // Estados do modal.
-    const [mostrarModal, setMostrarModal] = useState(false);
-
-    const url = import.meta.env.VITE_API_URL;
-    const idSolicitante = props.solicitanteId;
-    const idDispostivo = props.idDispostivo;
     const [endereco, setEndereco] = useState({});
     const [dispositivo, setDispositivo] = useState({});
+
+    // busca dados de solicitante, endereco e dispositivo
     useEffect(()=>{
         async function fetchData() {
             try {
-                // busca user by id
-                const reqBuscaSolicitanteById = await fetch(`${url}/solicitante/${idSolicitante}`);
+                // busca de dados do solicitante
+                // busca solicitante by id
+                const reqBuscaSolicitanteById = await fetch(`${url}/solicitante/${idResponsavel}`);
                 const resBuscaSolicitanteById = await reqBuscaSolicitanteById.json();
+
                 // id do endereco
                 const idEndereco = resBuscaSolicitanteById.id_endereco;
-
-                //buscar dispositivo do user by id
-                const reqBuscaDispositivoSolicitanteById = await fetch(`${url}/dispositivo/${idDispostivo}`);
-                const resBuscaDispositivoSolicitanteById = await reqBuscaDispositivoSolicitanteById.json();
-                setDispositivo(resBuscaDispositivoSolicitanteById);
-
+                
                 // buscar endereco do user by id
                 if(idEndereco != undefined){
                     const reqBuscaEnderecoSolicitanteById = await fetch(`${url}/endereco/${idEndereco}`);
@@ -72,13 +87,17 @@ const CardDemanda = (props) => {
                     setEndereco(resBuscaEnderecoSolicitanteById);
                 }
 
+                //buscar dispositivo do user by id
+                const reqBuscaDispositivoSolicitanteById = await fetch(`${url}/dispositivo/${idDispostivo}`);
+                const resBuscaDispositivoSolicitanteById = await reqBuscaDispositivoSolicitanteById.json();
+                setDispositivo(resBuscaDispositivoSolicitanteById);
+
             } catch (error) {
                 console.log(error)
             }
         };
         fetchData();
     },[])
-
 
   return (
     // deixar responsivo
@@ -113,7 +132,7 @@ const CardDemanda = (props) => {
                         </Card.Text>
                     </Card.Body>
 
-                    <CardFooter className='text-center'>
+                    <Card.Footer className='text-center'>
 
                         <Button
                             as='input'
@@ -122,7 +141,7 @@ const CardDemanda = (props) => {
                             size='lg'
                             onClick={() => setMostrarModal(true)}
                         />
-                    </CardFooter>
+                    </Card.Footer>
                 </Card>
             </Container>
         </div>
@@ -151,62 +170,63 @@ const CardDemanda = (props) => {
                             {/* Categoria */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Categoria: </strong>
-                                CATEGORIA
+                                {dispositivo.categoria}
                             </span>
 
                             {/* Marca */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Marca: </strong>
-                                MARCA
+                                {dispositivo.marca}
                             </span>
 
                             {/* Fabricante */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Fabricante: </strong>
-                                FABRICANTE
+                                {dispositivo.fabricante}
                             </span>
 
                             {/* Modelo */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Modelo: </strong>
-                                MODELO
+                                {dispositivo.modelo}
                             </span>
 
                             {/* Tensão */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Tensão: </strong>
-                                TENSAO
+                                {dispositivo.tensao}
                             </span>
 
                             {/* Amperagem */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Amperagem: </strong>
-                                AMPERAGEM
+                                {dispositivo.amperagem}
                             </span>
 
                             {/* Cor */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Cor: </strong>
-                                COR
+                                {dispositivo.cor}
                             </span>
 
                         </Container>
                     </div>
                     <hr className={styles.divisao}/>
 
+                    {/* Colocar container para texto do modal ficar ajustado à esquerda */}
                     {/* Informações do contexto */}
                     <div>
                         <h3 className={styles.tituloInfoModal}>Contexto</h3>
                         <Container style={{display: "grid", gridTemplateColumns: "repeat(1, 1fr)"}}>
                             <span className={styles.textoInfoModal}>
                                 <strong>Descrição do problema: </strong>
-                                DESCRIÇÃO DO PROBLEMA:
+                                {props.descricao}
                             </span>
 
 
                             <span className={styles.textoInfoModal} >
                                 <strong>Observações: </strong>
-                                OBSERVAÇÕES
+                                {props.observacoes}
                             </span>
                         </Container>
                     </div>
