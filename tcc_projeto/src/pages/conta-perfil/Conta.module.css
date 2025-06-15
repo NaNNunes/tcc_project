@@ -1,0 +1,30 @@
+/* Tamanho total do formulário. */
+.formulario {
+    width: 60%;
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+@media screen and (max-width: 1465px) {
+    .formulario {
+        width: 75%;
+    }
+}
+
+@media screen and (max-width: 1260px) {
+    .formulario {
+        width: 80%;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .formulario {
+        width: 83%;
+    }
+}
+
+@media screen and (max-width: 448px) {
+    .formulario {
+        width: 90%
+    }
+}
