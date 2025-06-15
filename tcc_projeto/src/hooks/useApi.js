@@ -671,7 +671,7 @@ export function useCadastroAssistencia(){
     };
 }
 
-export function useDemada(){
+export function useDemanda(){
     
     const {userId} = useContext(AuthContext);
 
@@ -712,6 +712,19 @@ export function useDemada(){
         defineDataEmissao(response.id);
     }
 
+    // define id de assistencia como responsavel pela demanda quando adm aceita demanda atribuinda-a à uma de suas assistencias
+    const defineIdAssistencia = async(idDemanda, idAssistencia)=>{
+        
+        const assistenciaResponsavel = {
+            "assistencia": idAssistencia
+        }
+
+        fetch(`${url}/demanda/${idDemanda}`,{
+            method: "PATCH",
+            body: JSON.stringify(assistenciaResponsavel)
+        })
+    }
+    
     // TODO ASSIM QUE KEVIN TERMINAR DE CRIAR O COMPONENTE PARA CRIAÇÃO DE DEMANDA COM SOLICITAÇÃO PRESENCIAL. demanda "emitida" pelo adm
     // VERIFICAR SE DEMADA É EMITIDA PELA ASSITENCIA EM ATENDIMENTO PRESENCIAL E DEFINIR ID DO SOLICITANTE NA LOJA, 
     // CRIADO NO ATO DA EMISSAO DA DEMDANDA COMO EMISSOR, E NÃO O ADM QUE CADASTRA
@@ -763,5 +776,5 @@ export function useDemada(){
         }
     }
 
-    return {cadastrarDispositivo, cadastrarDemanda};
+    return {cadastrarDispositivo, cadastrarDemanda, defineIdAssistencia};
 }

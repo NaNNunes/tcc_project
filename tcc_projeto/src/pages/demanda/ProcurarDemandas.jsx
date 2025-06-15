@@ -74,7 +74,7 @@ const ProcurarDemandas = () => {
     
             // mapeamento de demandas para encontrar apenas demandas publicas e definí-las
             resBuscaDemandas.map((demanda)=>{
-              if(demanda.assistencia === "Público"){
+              if(demanda.assistencia === "Público" && demanda.status != "Cancelada"){
                 listaDemandasPublicas.push(demanda)
               }
             })
@@ -87,40 +87,46 @@ const ProcurarDemandas = () => {
           const request = await fetch(`${url}/assistencia`);
           const response = await request.json();
           // lista para armazenar id de assistencias do adm
-          const listaIdAssistencia = [];
+          const listaIdAssistencias = [];
 
           // mapeamento de lista de todas assistencias para filtragem e insersao à lista de id assistencias
           // apenas assistencias que possuam id do adm
           response.map((assistencia) =>{
             (assistencia.administradorId === userId) &&
-              listaIdAssistencia.push(assistencia.id);
+              listaIdAssistencias.push(assistencia.id);
           })
           // console.log("Assistencias do adm:", listaIdAssistencia);
           
-          // caso seja uma consulta apenas por demandas das assistencias do adm
+          // lista para armazenar apenas demandas que estejam atribuidas a assistencias do adm
+          const listaDemandasAssistenciasDoAdministrador = [];
+
+          // mostrar todas as demandas que ja foram atribuidas as assistencias independente de status
+          if(tipoDemanda === "historico"){
+            resBuscaDemandas.map((demanda)=>{
+              listaIdAssistencias.map((idAssistencia)=>{
+                (demanda.assistencia === idAssistencia)&&
+                  listaDemandasAssistenciasDoAdministrador.push(demanda);
+              })
+            })
+            return setDemandas(listaDemandasAssistenciasDoAdministrador);
+          }
+          
+          // consulta por demandas atuais da assistencia
           if(tipoDemanda === "aceitas"){
-            // lista para armazenar apenas demandas que estejam atribuidas a assistencias do adm
-            const listaDemandasAssistenciasDoAdministrador = [];
-            
             // mapeia demandas e verifica quais demandas estão vinculadas as assistencias do adm 
             // que estejam em andamento ou apenas aceitas 
             resBuscaDemandas.map((demanda) =>{
-              listaIdAssistencia.map((idAssistencia)=>{
+              listaIdAssistencias.map((idAssistencia)=>{
                 const isDemandaVinculada = demanda.assistencia === idAssistencia;
                 const statusAberto = demanda.status === "Aberto";
-                const statusEmAndamento = demanda.status === "Em andamento";
+                const statusEmAndamento = demanda.status === "Em atendimento";
                 (isDemandaVinculada && (statusAberto || statusEmAndamento)) &&
-                  listaDemandasAssistenciasDoAdministrador.push(demanda);
+                listaDemandasAssistenciasDoAdministrador.push(demanda);
               })
             });
             console.log(listaDemandasAssistenciasDoAdministrador);
             return setDemandas(listaDemandasAssistenciasDoAdministrador);
             // console.log("demandas atribuidas:",listaIdDemandasAssistenciasDoAdministrador);
-          }
-
-          // mostrar todas as demandas que ja foram atribuidas as assistencias
-          if(tipoDemanda === "historico"){
-            
           }
         }
 
@@ -156,7 +162,10 @@ const ProcurarDemandas = () => {
                   id={demanda.id}
                   idResponsavel={demanda.solicitante_id} // id do emissor da demanda
                   idDispostivo={demanda.idDispostivo}
+                  descricao={demanda.descProblema}
+                  observacoes={demanda.observacoes}
                   dataEmissao={demanda.dataEmissao}
+                  status={demanda.status}
                   dominioDemanda={demanda.assistencia} // mostrar em algum lugar do card
             />
           ))

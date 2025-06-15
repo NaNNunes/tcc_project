@@ -32,10 +32,8 @@ import { useEffect } from "react";
 import { set, useForm } from "react-hook-form";
 
 // hooks json-server
-import { useDemada, useCadastroAssistencia} from '../../../hooks/useApi';
+import { useDemanda, useCadastroAssistencia} from '../../../hooks/useApi';
 import { useNavigate } from 'react-router-dom';
-
-import MinhasInfos from '../../conta_perfil/MinhasInfos.jsx'
 
 const categoriaDispositivo = () => {
     const navigate = useNavigate();

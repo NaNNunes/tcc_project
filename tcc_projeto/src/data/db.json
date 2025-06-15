@@ -214,9 +214,31 @@
       "idDispostivo": "c613",
       "descProblema": "SIIIIIIIIIIum 2",
       "observacoes": "",
-      "status": "Em andamento",
+      "status": "Em atendimento",
       "assistencia": "28fd",
-      "solicitante_id": "176d",
+      "solicitante_id": "d150",
+      "dataEmissao": "13/06/2025",
+      "horaEmissao": "21:29:11"
+    },
+    {
+      "id": "ff31",
+      "idDispostivo": "c613",
+      "descProblema": "SIIIIIIIIIIum 2",
+      "observacoes": "",
+      "status": "Cancelada",
+      "assistencia": "28fd",
+      "solicitante_id": "d150",
+      "dataEmissao": "13/06/2025",
+      "horaEmissao": "21:29:11"
+    },
+    {
+      "id": "ff32",
+      "idDispostivo": "0d8e",
+      "descProblema": "SIIIIIIIIIIum 3",
+      "observacoes": "",
+      "status": "Aberto",
+      "assistencia": "28fd",
+      "solicitante_id": "d150",
       "dataEmissao": "13/06/2025",
       "horaEmissao": "21:29:11"
     }

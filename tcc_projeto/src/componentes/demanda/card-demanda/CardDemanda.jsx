@@ -21,9 +21,11 @@ import { MdOutlineCalendarMonth } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 
 import { useEffect, useState } from 'react';
-import CardFooter from 'react-bootstrap/esm/CardFooter';
+import {useDemanda} from "../../../hooks/useApi.js";
 
 const CardDemanda = (props) => {
+
+    const {defineIdAssistencia} = useDemanda();
 
     const userBuscador = props.userBuscador;
     
@@ -39,11 +41,18 @@ const CardDemanda = (props) => {
     // Estados do modal.
     const [mostrarModal, setMostrarModal] = useState(false);
 
+    // assistencia que será responsável pela demanda, definido pelo adm
+    const [assistenciaSelecionada, setAssistenciaSelecionada] = useState(undefined);
     // SÓ FAZER O CÓDIGO DE "HANDLEACEITAR" E ATRIBUIR AO BOTÃO
     const botaoAceitarDemanda = (
         <>
             <Button 
                 className={styles.botaoModal}
+                onClick={()=>{
+                    if(mostrarModal != undefined){
+                        defineIdAssistencia(props.id, /*id da assistencias selecionada */);
+                    }
+                }}
             >
                 Aceitar
             </Button>
@@ -90,7 +99,6 @@ const CardDemanda = (props) => {
         fetchData();
     },[])
 
-
   return (
     // deixar responsivo
     <div style={{minWidth: '100%', maxWidth: '100%'}}>
@@ -124,7 +132,7 @@ const CardDemanda = (props) => {
                         </Card.Text>
                     </Card.Body>
 
-                    <CardFooter className='text-center'>
+                    <Card.Footer className='text-center'>
 
                         <Button
                             as='input'
@@ -133,7 +141,7 @@ const CardDemanda = (props) => {
                             size='lg'
                             onClick={() => setMostrarModal(true)}
                         />
-                    </CardFooter>
+                    </Card.Footer>
                 </Card>
             </Container>
         </div>
@@ -162,62 +170,63 @@ const CardDemanda = (props) => {
                             {/* Categoria */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Categoria: </strong>
-                                CATEGORIA
+                                {dispositivo.categoria}
                             </span>
 
                             {/* Marca */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Marca: </strong>
-                                MARCA
+                                {dispositivo.marca}
                             </span>
 
                             {/* Fabricante */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Fabricante: </strong>
-                                FABRICANTE
+                                {dispositivo.fabricante}
                             </span>
 
                             {/* Modelo */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Modelo: </strong>
-                                MODELO
+                                {dispositivo.modelo}
                             </span>
 
                             {/* Tensão */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Tensão: </strong>
-                                TENSAO
+                                {dispositivo.tensao}
                             </span>
 
                             {/* Amperagem */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Amperagem: </strong>
-                                AMPERAGEM
+                                {dispositivo.amperagem}
                             </span>
 
                             {/* Cor */}
                             <span className={styles.textoInfoModal}>
                                 <strong>Cor: </strong>
-                                COR
+                                {dispositivo.cor}
                             </span>
 
                         </Container>
                     </div>
                     <hr className={styles.divisao}/>
 
+                    {/* Colocar container para texto do modal ficar ajustado à esquerda */}
                     {/* Informações do contexto */}
                     <div>
                         <h3 className={styles.tituloInfoModal}>Contexto</h3>
                         <Container style={{display: "grid", gridTemplateColumns: "repeat(1, 1fr)"}}>
                             <span className={styles.textoInfoModal}>
                                 <strong>Descrição do problema: </strong>
-                                DESCRIÇÃO DO PROBLEMA:
+                                {props.descricao}
                             </span>
 
 
                             <span className={styles.textoInfoModal} >
                                 <strong>Observações: </strong>
-                                OBSERVAÇÕES
+                                {props.observacoes}
                             </span>
                         </Container>
                     </div>
