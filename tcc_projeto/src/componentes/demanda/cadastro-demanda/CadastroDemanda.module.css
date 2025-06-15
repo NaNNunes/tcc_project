@@ -78,27 +78,30 @@
 
 /* --- AQUI COMEÇA A ESTILIZAÇÃO DO MODAL --- */
 
-/* Título modal */
-.modalTitle {
-    font-size: 1.3rem;
+/* Personalização do "dialogClassName", basicamente o espaço do modal. */
+.modalInfo {
+    max-width: 376px; 
+    margin: auto;
+}
+
+/* Personalização do "contentClassName", todo o conteúdo que está dentro do modal. */
+.modalContent {
+    padding: 20px;
+}
+
+/* Modal.Title */
+.tituloModal {
+    font-size: 2rem;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
 }
 
 /* Texto com informações */
 .textSpan {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: bold;
     color: #757575;
-}
-
-.dropdownAt {
-    padding-top: 16px;
-}
-
-.dropdownMenu {
-    background-color: #005DB1;
-    border-radius: 8px;
-    padding: 0;
-    width: fit-content;
 }
 
 /* Divisor de público para assistências. */
@@ -108,42 +111,24 @@
     border: 1px solid white;
 }
 
-/* Itens dentro do menu. */
-.dropdownItem {
-    display: flex;
-    align-items: center;
-    color: white !important;
-    font-size: 1rem;
-    font-weight: bold;
-    padding: 10px 16px;
-    text-decoration: none;
-    background-color: #005DB1 !important;
-    border-radius: inherit;
-    transition: background-color 0.3s ease, color 0.3s ease;
+/* Footer com o botão para enviar. */
+.footerModal {
+    border: 0px;
+    padding: 0px;
+    align-self: center !important;
 }
 
-.dropdownItem:hover {
-    background-color: #0069C6 !important;
-    border-radius: inherit;
-    color: white;
-}
-
-.headerModal {
-    border: 0;
-    padding-bottom: 0;
-}
-
+/* Botão para enviar a demanda. */
 .botaoModal {
+    width: fit-content;
+    align-self: center;
     background-color: #0061B7;
     width: 12rem;
     border: 0;
     height: 50px;
-    margin: 0;
-}
-
-.footerModal {
-    border: 0px;
-    align-self: center !important;
+    font-weight: bold;
+    margin: 0px;
+    margin-top: 20px;
 }
 
 @media screen and (max-width: 1465px) {
@@ -205,7 +190,7 @@
     }
 
     .botaoModal {
-        width: 6rem;
+        width: 5rem;
     }
 
     .titleh3 {
@@ -226,5 +211,17 @@
     .titleh3 {
         word-break: break-word;
         overflow-wrap: break-word;
+    }
+}
+
+@media screen and (max-width: 220px) {
+    .tituloModal {
+        font-size: 1.2rem;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .modalContent {
+        padding: 10px;
     }
 }

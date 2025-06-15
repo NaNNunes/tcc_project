@@ -32,7 +32,8 @@ import { set, useForm } from "react-hook-form";
 import { useDemada, useCadastroAssistencia} from '../../../hooks/useApi';
 import { useNavigate } from 'react-router-dom';
 
-import MinhasInfos from '../../conta_perfil/MinhasInfos.jsx'
+// Importação do verificador de CPF.
+import { useVerificadorDeCpf } from "../../../hooks/useApi.js";
 
 const categoriaDispositivo = () => {
     const navigate = useNavigate();
@@ -104,6 +105,18 @@ const categoriaDispositivo = () => {
 
     // Assistência pre-selecionada como público.
     const [atSelecionada, setAtSelecionada] = useState({});
+
+    // Formato do CPF.
+    const formatarCPF = (cpf) => {
+        const numeros = cpf.replace(/\D/g, "").slice(0, 11);
+        return numeros
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    };
+
+    // Verificar de CPF.
+    const {verificador} = useVerificadorDeCpf();
 
     // Marcas e modelos para cada categoria.
     const dadosDispositivos = {
@@ -432,25 +445,106 @@ const categoriaDispositivo = () => {
                     
                     {/* Informações do solicitante */}
                     <Row>
-                        {/* Coluna de nome */}
+                        {/* Coluna do nome */}
                         <Col md={4} xs={12} className={stylesCad.campo}>
-                            
+                            <FloatingLabel 
+                                id="userNomeInput" 
+                                label="Nome"
+                            >
+                                <Form.Control
+                                    type="text"
+                                    placeholder=""
+                                    {...register("nome", {
+                                        required: "O nome é obrigatório",
+                                        minLength: {
+                                        value: 2,
+                                        message: "O nome deve ter pelo menos 2 caracteres",
+                                        },
+                                        maxLength: {
+                                        value: 20,
+                                        message: "O nome deve ter ate 20 caracteres",
+                                        },
+                                        pattern: {
+                                        value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/i,
+                                        message: "O nome só pode conter letras e espaços",
+                                        },
+                                    })}
+                                />
+                                {errors.nome && (
+                                    <span className='error'>{errors.nome.message}</span>
+                                )}
+                            </FloatingLabel>
+                        </Col>
+                        
+                        {/* Coluna do sobrenome */}
+                        <Col md={4} xs={12} className={stylesCad.campo}>
+                            <FloatingLabel
+                                id="userSobrenomeInput"
+                                label="Sobrenome"
+                            >
+                                <Form.Control
+                                    type="text"
+                                    placeholder=""
+                                    {...register("sobrenome", {
+                                        required: "O sobrenome é obrigatório",
+                                        minLength: {
+                                        value: 2,
+                                        message: "O sobrenome deve ter pelo menos 2 caracteres",
+                                        },
+                                        maxLength: {
+                                        value: 20,
+                                        message: "O sobrenome deve ter ate 20 caracteres",
+                                        },
+                                        pattern: {
+                                        value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/i,
+                                        message: "O sobrenome só pode conter letras e espaços",
+                                        },
+                                    })}
+                                />
+                                {errors.sobrenome && (
+                                    <span className='error'>{errors.sobrenome.message}</span>
+                                )}
+                            </FloatingLabel>
                         </Col>
 
                         {/* Coluna de CPF */}
                         <Col md={4} xs={12} className={stylesCad.campo}>
-                            
-                        </Col>
-
-                        {/* Coluna de telefone */}
-                        <Col md={4} xs={12} className={stylesCad.campo}>
-                        
+                            <FloatingLabel id="userCpfInput" className="mb-3" label="CPF">
+                                <Form.Control
+                                type="text"
+                                placeholder="000.000.000-00"
+                                value={formatarCPF(watch("cpf") || "")}
+                                isInvalid={!!errors.userCpf}
+                                onChange={(e) => {
+                                    const apenasNumeros = e.target.value.replace(/\D/g, "");
+                                    if (apenasNumeros.length <= 11) {
+                                    setValue("userCpf", apenasNumeros);
+                                    }
+                                }}
+                                {...register("cpf", {
+                                    required: "CPF é obrigatório",
+                                    validate: (value) => {
+                                    const somenteNumeros = value.replace(/\D/g, ""); // remove tudo que não é número
+                                    if (somenteNumeros.length !== 11) {
+                                        return "Necessário 11 dígitos";
+                                    }
+                                    if (!verificador(somenteNumeros)) {
+                                        return "CPF inválido";
+                                    }
+                                    return true;
+                                    },
+                                })}
+                                />
+                                {errors.cpf && (
+                                    <span className='error'>{errors.cpf.message}</span>
+                                )}
+                            </FloatingLabel>
                         </Col>
                     </Row>
 
                     <Row>
                         {/* Coluna de e-mail */}
-                        <Col md={4} xs={12} className={stylesCad.campo}>
+                        <Col md={8} xs={12} className={stylesCad.campo}>
                             <FloatingLabel 
                                 controlId='EmailInput'
                                 label='E-mail'
@@ -474,13 +568,33 @@ const categoriaDispositivo = () => {
                                 )}
                             </FloatingLabel>
                         </Col>
+
+                        {/* Coluna de telefone */}
+                        <Col md={4} xs={12} className={stylesCad.campo}>
+                            <FloatingLabel
+                                id="userTelInput"
+                                className="mb-3"
+                                label="Telefone"
+                            >
+                                <Form.Control
+                                type="text"
+                                placeholder="(00) 00000-0000"
+                                {...register("userTelefone", {
+                                    required: "Telefone é obrigatório",
+                                    pattern: {
+                                    value: /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
+                                    message: "Telefone inválido",
+                                    },
+                                })}
+                                />
+                                {errors.userTelefone && (
+                                    <span className='error'>{errors.userTelefone.message}</span>
+                                )}
+                            </FloatingLabel>
+                        </Col>
                     </Row>
                 </Container>
 
-                <MinhasInfos 
-                    botao={false}
-                />
-                
                 {/* Informações do dispositivo */}
                 <Container fluid className={stylesCad.parteFormulario} style={{marginBottom: '20px'}}>
                     {/* Título do container */}
@@ -656,7 +770,7 @@ const categoriaDispositivo = () => {
                                     as='textarea'
                                     style={{height: "100px", resize: "none"}}
                                     {...register("descProblema", {
-                                        required: "A descrição do problema é obrigatória",
+                                        required: "A descrição do problema é obrigatório",
                                         minLength: {
                                             value: 15,
                                             message: "A descrição deve conter pelo menos 15 caracteres"
@@ -716,8 +830,8 @@ const categoriaDispositivo = () => {
                         </Col>
                     </Row>
 
+                    {/* Botão para prosseguir ou enviar demanda*/}
                     <Row>
-                        {/* Botão para prosseguir ou enviar demanda*/}
                         <Col style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                             <Button
                                 as='input'
@@ -732,33 +846,48 @@ const categoriaDispositivo = () => {
         </div>
 
         {/* Modal para escolher a assistência e fazer o envio da demanda. */}
-        <Modal show={mostrarModal} onHide={() => setMostrarModal(false)} centered>
+        <Modal 
+            show={mostrarModal} 
+            onHide={() => setMostrarModal(false)} 
+            centered
+            contentClassName={stylesCad.modalContent} 
+            dialogClassName={stylesCad.modalInfo}
+        >
             {/* Título */}
-            <Modal.Header closeButton className={stylesCad.headerModal}>
-                <Modal.Title className={stylesCad.modalTitle}>Direcionar demanda</Modal.Title>
+            <Modal.Header closeButton style={{padding: "0", paddingBottom: "5px", border: "0"}}>
             </Modal.Header> 
             
             {/* Corpo com a seleção de assistência técnica. */}
-            <Modal.Body style={{padding: '24px', paddingTop: '0px'}}>
-                <span className={stylesCad.textSpan}>
-                    Se tiver uma assistência técnica de preferência, escolha uma. Caso contrário, deixe como público.
-                </span>
-                <Dropdown 
-                    onToggle={(isOpen) => setOpenDropdown(isOpen ? 'selecaoAt' : null)}
-                    className={stylesCad.dropdownAt}
-                >
-                    <Dropdown.Toggle
-                        id="dropdown-assistencia" 
+            <Modal.Body style={{padding: "0", border: "0"}}>
+                <Modal.Title className={stylesCad.tituloModal}>Direcionar demanda</Modal.Title>
+                <Container>
+                    <span className={stylesCad.textSpan}>
+                        Se tiver uma assistência técnica de preferência, escolha uma. Caso contrário, deixe como público.
+                    </span>
+                </Container>
+                
+                <Row style={{paddingTop: '20px', margin: '0px'}}>
+                    <FloatingLabel
+                        controlId='AssistenciaInput'
+                        label='Enviar'
+                        style={{padding: '0px'}}
                     >
-                        {atSelecionada.nomeFantasia || "Público"} {openDropdown === 'selecaoAt' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
-                    </Dropdown.Toggle>
-                    {
-                        (userType === "solicitante")
-                            ?menuDropModalSolicitante
-                            :menuDropDownModalAdministrador
-                    }
-
-                </Dropdown>
+                        <Form.Select
+                            value={atSelecionada === "Público" ? "Público" : atSelecionada?.id}
+                        >
+                            <option value="Público">Enviar como público</option>
+                            {assistencias.map((assistencia) => (
+                                <option 
+                                    key={assistencia.id} 
+                                    value={assistencia.id}
+                                    onClick={() => setAtSelecionada(assistencia)}
+                                >
+                                    {assistencia.nomeFantasia}
+                                </option> 
+                            ))}
+                        </Form.Select>
+                    </FloatingLabel>
+                </Row>   
             </Modal.Body>
 
             <Modal.Footer className={stylesCad.footerModal}>
