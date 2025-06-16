@@ -32,7 +32,7 @@ const Inicio = () => {
   return (
     <div className="d-flex flex-column justify-content-center align-items-center">
       {/* Demandas */}
-      <section className={styles.demandaSection}>
+      <section className={styles.relatoriosSection}>
         <Container fluid>
           <div className={styles.cardContainer}>
             {/* Card de boas-vindas */}
@@ -143,7 +143,7 @@ const Inicio = () => {
         </Container>
       </section>
 
-      <section className={styles.operadorSection}>
+      <section className={styles.demandaSection}>
         <Container fluid>
           {/* Card de gerenciamento de demandas */}
           <div className={styles.cardWrapperCenter}>

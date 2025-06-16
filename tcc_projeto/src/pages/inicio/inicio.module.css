@@ -92,14 +92,11 @@ h4 {
   padding: 1rem;
 } */
 
-.demandaSection {
+.relatoriosSection {
   /* background-image: url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"); */
-  background: linear-gradient(
-      rgba(144, 183, 216, 0.75),
-      rgba(144, 183, 216, 0.55)
-    ),
-    url("https://images.pexels.com/photos/4705635/pexels-photo-4705635.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
-      center/cover no-repeat;
+  background: linear-gradient(rgba(144, 183, 216, 0.75),
+      rgba(144, 183, 216, 0.55)),
+    url("https://images.pexels.com/photos/4705635/pexels-photo-4705635.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") center/cover no-repeat;
   min-height: 100vh;
   min-width: 100%;
   display: flex;
@@ -108,13 +105,10 @@ h4 {
   padding: 1rem;
 }
 
-.operadorSection {
-  background: linear-gradient(
-      rgba(255, 255, 255, 0.75),
-      rgba(197, 201, 204, 0.55)
-    ),
-    url("https://images.pexels.com/photos/12741849/pexels-photo-12741849.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
-      center/cover no-repeat;
+.demandaSection {
+  background: linear-gradient(rgba(255, 255, 255, 0.75),
+      rgba(197, 201, 204, 0.55)),
+    url("https://images.pexels.com/photos/9242901/pexels-photo-9242901.jpeg") center/cover no-repeat;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -127,12 +121,9 @@ h4 {
 }
 
 .assistenciaSection {
-  background: linear-gradient(
-      rgba(121, 121, 121, 0.75),
-      rgba(144, 183, 216, 0.55)
-    ),
-    url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
-      center/cover no-repeat;
+  background: linear-gradient(rgba(121, 121, 121, 0.75),
+      rgba(144, 183, 216, 0.55)),
+    url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") center/cover no-repeat;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -186,7 +177,8 @@ h4 {
   background-color: #0a67aa;
   border-radius: 12px;
   padding: 1rem;
-  width: calc(25% - 1rem); /* 4 por linha */
+  width: calc(25% - 1rem);
+  /* 4 por linha */
   min-width: 220px;
   max-width: 280px;
   min-height: 130px;
