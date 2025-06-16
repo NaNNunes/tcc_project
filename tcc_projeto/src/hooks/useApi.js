@@ -286,15 +286,27 @@ export function useUser(){
             body: JSON.stringify(data)
         });
         const response = await request.json();
-        const id = await response.id;
+        const id = response.id;
 
-        // nao funciona
-            // alternativa definir id no localstorage
+        // alternativa definir id no localstorage
         setId(id);
-        localStorage.setItem('userId', response.id)
         setType(user);
+
         // user invalido pois falta endereco e/ou pergunta de segurança
         inserirValidacao(false);
+    }
+
+    const cadastrarPseudoUser = async (data) =>{
+
+        const request = await fetch(`${url}/solicitante`,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify(data)
+        });
+        const response = await request.json();
+        return response.id;
     }
 
     // favorita assistencia
@@ -370,6 +382,7 @@ export function useUser(){
         atualizaInfosUser,
         alteraSenhaUser,
         cadastrarInfosUser,
+        cadastrarPseudoUser,
         favoritarAssistencia,
         inserirPerguntaResposta,
         inserirValidacao,
@@ -671,9 +684,9 @@ export function useCadastroAssistencia(){
     };
 }
 
-export function useDemada(){
+export function useDemanda(){
     
-    const {userId} = useContext(AuthContext);
+    const userType = localStorage.getItem("userType");
 
     // cadastra dispositivo no sistema
     const cadastrarDispositivo = async (data) =>{
@@ -687,8 +700,12 @@ export function useDemada(){
         })
         const response =  await request.json();
 
-        //definir dono do dispositivo
-        defineIdSolicitante("dispositivo", response.id);
+        // Define id de solicitante no dispositivo somente quando o mesmo emite a demanda com sua própria conta
+        // caso adm estja emitindo demanda, id do solicitante presencial no dispositivo será definido em CadastroDemanda
+        if(userType === "solicitante"){
+            //definir dono do dispositivo
+            defineIdSolicitante("dispositivo", response.id);
+        }
         // retorna id Dispositivo para cadastrar em demanda
         return response.id;
     }
@@ -712,6 +729,22 @@ export function useDemada(){
         defineDataEmissao(response.id);
     }
 
+    // define id de assistencia como responsavel pela demanda quando adm aceita demanda atribuinda-a à uma de suas assistencias
+    const defineIdAssistencia = async(idDemanda, idAssistencia)=>{
+        
+        const assistenciaResponsavel = {
+            "assistencia": idAssistencia
+        }
+
+        fetch(`${url}/demanda/${idDemanda}`,{
+            method: "PATCH",
+            body: JSON.stringify(assistenciaResponsavel)
+        })
+    }
+    
+    // TODO ASSIM QUE KEVIN TERMINAR DE CRIAR O COMPONENTE PARA CRIAÇÃO DE DEMANDA COM SOLICITAÇÃO PRESENCIAL. demanda "emitida" pelo adm
+    // VERIFICAR SE DEMADA É EMITIDA PELA ASSITENCIA EM ATENDIMENTO PRESENCIAL E DEFINIR ID DO SOLICITANTE NA LOJA, 
+    // CRIADO NO ATO DA EMISSAO DA DEMDANDA COMO EMISSOR, E NÃO O ADM QUE CADASTRA
     // define o id do solicitante 
     const defineIdSolicitante = async (tabelaDestino, id) =>{
         // tabela Destino = dispositivo || demanda
@@ -760,5 +793,5 @@ export function useDemada(){
         }
     }
 
-    return {cadastrarDispositivo, cadastrarDemanda};
+    return {cadastrarDispositivo, cadastrarDemanda, defineIdAssistencia};
 }

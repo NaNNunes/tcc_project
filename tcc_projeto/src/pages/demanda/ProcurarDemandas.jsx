@@ -9,16 +9,33 @@ import Button from 'react-bootstrap/Button';
 import styles from "./ProcurarDemandas.module.css";
 
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ProcurarDemandas = () => {
-  const {isApenasPrivadas} = useParams();
+  const navigate = useNavigate();
+  const {tipoDemanda} = useParams();
+  // parametros
+    // ADM
+      // aceitas -> vinculada a assistencia de status 
+      //              em atendimento ou aberta, vinculada a assistencia
+
+      // abertas -> todas demandas não atribuidas a assistencias
+
+    // SOLICITANTE
+      // minhas-demandas -> emitidas pelo user independente de status
+
+  // status
+    // aberta -> emitida pelo user
+    // em atendimento -> vinculada a assistencia
+    // concluida -> resolvida 
+    // cancelada -> cancelada pelo user
+
+  const userType = localStorage.getItem("userType");
+  const userId = localStorage.getItem("userId");
+  if(userType !== "solicitante" && userType !== "administrador") return navigate("/login"); 
 
   //todas as demandas
   const [demandas, setDemandas] = useState([]);
-
-  const userId = localStorage.getItem("userId");
-  const userType = localStorage.getItem("userType");
 
   const url = import.meta.env.VITE_API_URL;
 
@@ -31,74 +48,97 @@ const ProcurarDemandas = () => {
         const resBuscaDemandas = await reqBuscaDemandas.json();
 
         // caso user seja solicitante
-        // lista apenas demandas emitidas por ele
-        if(userType == "solicitante"){
+        // lista apenas demandas emitidas por ele independente de status
+        if(userType === "solicitante" && tipoDemanda === "minhas-demandas"){
 
-          // lista para armazenas demandas emitidas pelo solicitante
+          // lista para armazenas demandas 
           const listaDemandasDoSolicitante = [];
 
           // mapeia demandas identificando e saperando demandas do solicitante pelo id
           resBuscaDemandas.map((demanda)=>{
-            (demanda.solicitante_id === userId) && listaDemandasDoSolicitante.push(demanda);
+            (demanda.solicitante_id === userId) && 
+              listaDemandasDoSolicitante.push(demanda);
           });
 
           // return para finalizar o script
           return setDemandas(listaDemandasDoSolicitante);
         }
 
-        // caso solicitante seja adm
-        
-        // lista para armazenas apenas demandas públicas
-        const listaDemandasPublicas = [];
+        if(userType === "administrador"){
 
-        // mapeamento de demandas para encontrar apenas demandas publicas e definí-las
-        resBuscaDemandas.map((demanda)=>{
-          if(demanda.assistencia === "Público"){
-            listaDemandasPublicas.push(demanda)
-          }
-        })
-        setDemandas(listaDemandasPublicas);
-        // console.log("Todas as demandas publicas:", listaDemandasPublicas);
-
-        // caso seja uma consulta apenas por demandas das assistencias do adm
-        if(isApenasPrivadas === "true"){
-            // Busca por assitencias vinculadas ao adm
-            const request = await fetch(`${url}/assistencia`);
-            const response = await request.json();
-            
-            // pegar resposta e verificar quais assistencias da lista possuem o id do adm
-            // lista para armazenar id de assistencias do adm
-            const listaIdAssistencia = [];
-
-            // mapeamento de lista de todas assistencias para filtragem e insersao à lista de id assistencias
-            // apenas assistencias que possuam id do adm
-            response.map((assistencia) =>{
-              (assistencia.administradorId === userId) &&
-                listaIdAssistencia.push(assistencia.id);
+          // Para adm procurando novas demandas 
+          if(tipoDemanda === "abertas"){
+            // caso solicitante seja adm
+            // lista para armazenas apenas demandas públicas
+            const listaDemandasPublicas = [];
+    
+            // mapeamento de demandas para encontrar apenas demandas publicas e definí-las
+            resBuscaDemandas.map((demanda)=>{
+              if(demanda.assistencia === "Público" && demanda.status != "Cancelada"){
+                listaDemandasPublicas.push(demanda)
+              }
             })
-            // console.log("Assistencias do adm:", listaIdAssistencia);
+  
+            // console.log("Todas as demandas publicas:", listaDemandasPublicas);
+            return setDemandas(listaDemandasPublicas);
+          }
 
-            // lista para armazenar apenas demandas que estejam atribuidas a assistencias do adm
-            const listaDemandasAssistenciasDoAdministrador = [];
-            
-            // mapeia demandas e verifica quais demandas estão vinculadas as assistencias do adm
-            resBuscaDemandas.map((demanda) =>{
-              listaIdAssistencia.map((idAssistencia)=>{
-                (demanda.assistencia === idAssistencia) &&
+          // Busca por assitencias
+          const request = await fetch(`${url}/assistencia`);
+          const response = await request.json();
+          // lista para armazenar id de assistencias do adm
+          const listaIdAssistencias = [];
+
+          // mapeamento de lista de todas assistencias para filtragem e insersao à lista de id assistencias
+          // apenas assistencias que possuam id do adm
+          response.map((assistencia) =>{
+            (assistencia.administradorId === userId) &&
+              listaIdAssistencias.push(assistencia.id);
+          })
+          // console.log("Assistencias do adm:", listaIdAssistencia);
+          
+          // lista para armazenar apenas demandas que estejam atribuidas a assistencias do adm
+          const listaDemandasAssistenciasDoAdministrador = [];
+
+          // mostrar todas as demandas que ja foram atribuidas as assistencias independente de status
+          if(tipoDemanda === "historico"){
+            resBuscaDemandas.map((demanda)=>{
+              listaIdAssistencias.map((idAssistencia)=>{
+                (demanda.assistencia === idAssistencia)&&
                   listaDemandasAssistenciasDoAdministrador.push(demanda);
               })
             })
-            setDemandas(listaDemandasAssistenciasDoAdministrador);
+            return setDemandas(listaDemandasAssistenciasDoAdministrador);
+          }
+          
+          // consulta por demandas atuais da assistencia
+          if(tipoDemanda === "aceitas"){
+            // mapeia demandas e verifica quais demandas estão vinculadas as assistencias do adm 
+            // que estejam em andamento ou apenas aceitas 
+            resBuscaDemandas.map((demanda) =>{
+              listaIdAssistencias.map((idAssistencia)=>{
+                const isDemandaVinculada = demanda.assistencia === idAssistencia;
+                const statusAberto = demanda.status === "Aberto";
+                const statusEmAndamento = demanda.status === "Em atendimento";
+                (isDemandaVinculada && (statusAberto || statusEmAndamento)) &&
+                listaDemandasAssistenciasDoAdministrador.push(demanda);
+              })
+            });
+            console.log(listaDemandasAssistenciasDoAdministrador);
+            return setDemandas(listaDemandasAssistenciasDoAdministrador);
             // console.log("demandas atribuidas:",listaIdDemandasAssistenciasDoAdministrador);
+          }
         }
+
+        //caso nenhuma opção aceita
+        navigate("/erro");
+
       } catch (error) {
         console.log(error);
       }
     }
     fetchData();
   }, []);
-
-
 
   const [numLinhas, setNumLinhas] = useState(2);
   const cardsPorLinha = 3;
@@ -116,12 +156,16 @@ const ProcurarDemandas = () => {
       <Container className={styles.caixa}>
         {
           demandasParaMostrar.map((demanda) => (
+            // passar props informando qual é o user que está acessando a page, para request no componente de card demanda
             <CardDemanda
-                  key={demanda.id}
+                  key={demanda.id} 
                   id={demanda.id}
+                  idResponsavel={demanda.solicitante_id} // id do emissor da demanda
                   idDispostivo={demanda.idDispostivo}
-                  solicitanteId={demanda.solicitante_id}
+                  descricao={demanda.descProblema}
+                  observacoes={demanda.observacoes}
                   dataEmissao={demanda.dataEmissao}
+                  status={demanda.status}
                   dominioDemanda={demanda.assistencia} // mostrar em algum lugar do card
             />
           ))

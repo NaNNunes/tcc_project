@@ -19,40 +19,115 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import { TiArrowSortedUp } from "react-icons/ti";   
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
+import { FaUser } from "react-icons/fa";
+
+// Importação das imagems
+import ImgCelular from '/icons/img_card_celular.png';
+import ImgNotebook from '/icons/img_card_notebook.png';
+import ImgPerifericos from '/icons/img_card_perifericos.png';
 
 import { useEffect, useState } from 'react';
-import CardFooter from 'react-bootstrap/esm/CardFooter';
+import {useDemanda} from "../../../hooks/useApi.js";
 
 const CardDemanda = (props) => {
 
+    const {defineIdAssistencia} = useDemanda();
+
+    const userBuscador = props.userBuscador;
+    
+    const idResponsavel = props.idResponsavel;
+    const idDispostivo = props.idDispostivo;
+    
+    const idAssistencia = props.dominioDemanda;
+
+    const url = import.meta.env.VITE_API_URL;
+
+    const tela = "procurar_demandas";
+    
     // Estados do modal.
     const [mostrarModal, setMostrarModal] = useState(false);
 
-    const url = import.meta.env.VITE_API_URL;
-    const idSolicitante = props.solicitanteId;
-    const idDispostivo = props.idDispostivo;
+    // assistencia que será responsável pela demanda, definido pelo adm
+    const [assistenciaSelecionada, setAssistenciaSelecionada] = useState(undefined);
+    // SÓ FAZER O CÓDIGO DE "HANDLEACEITAR" E ATRIBUIR AO BOTÃO
+    const botaoAceitarDemanda = (
+        <>
+            <Button 
+                className={styles.botaoModal}
+                onClick={()=>{
+                    if(mostrarModal != undefined){
+                        defineIdAssistencia(props.id, /*id da assistencias selecionada */);
+                    }
+                }}
+            >
+                Aceitar
+            </Button>
+        </>
+    )
+
+    const botoes = {
+        procurar_demandas: botaoAceitarDemanda,
+    }
+
+    const mainBotao = botoes[tela]
+
+    const imgCategoria = (categoria) => {
+        switch ((categoria || '').toLowerCase()) {
+            case 'celular':
+                return <img src={ImgCelular} alt="Celular" style={{ width: '50px', height: '50px' }}></img>;
+            case 'notebook':
+                return <img src={ImgNotebook} alt="Celular" style={{ width: '50px', height: '50px' }}></img>;
+            case 'tablet':
+                return <img></img>;
+            case 'desktop':
+                return <img></img>;
+            case 'perifericos':
+                return <img src={ImgPerifericos} alt="Celular" style={{ width: '50px', height: '50px' }}></img>;
+            case 'outros':
+                return <img></img>
+        }
+    }
+
+    // Cor do status.
+    const statusDemanda = (status) => {
+        switch ((status || '').toLowerCase()) {
+            case 'aberto':
+                return '#B1B1B1'; // se estiver aberto, retorna cinza.
+            case 'em atendimento':
+                return '#FFCA68'; // se estiver em atendimento, retorna amarelo
+            case 'concluido':
+                return '#00C400'; // se estiver em concluido, retorna verde
+            case 'cancelada':
+                return '#FF3B30'; // se estiver em cancelado, retorna vermelho
+        }
+    }
+
     const [endereco, setEndereco] = useState({});
     const [dispositivo, setDispositivo] = useState({});
+
+    // busca dados de solicitante, endereco e dispositivo
     useEffect(()=>{
         async function fetchData() {
             try {
-                // busca user by id
-                const reqBuscaSolicitanteById = await fetch(`${url}/solicitante/${idSolicitante}`);
+                // busca de dados do solicitante
+                // busca solicitante by id
+                const reqBuscaSolicitanteById = await fetch(`${url}/solicitante/${idResponsavel}`);
                 const resBuscaSolicitanteById = await reqBuscaSolicitanteById.json();
+
                 // id do endereco
                 const idEndereco = resBuscaSolicitanteById.id_endereco;
-
-                //buscar dispositivo do user by id
-                const reqBuscaDispositivoSolicitanteById = await fetch(`${url}/dispositivo/${idDispostivo}`);
-                const resBuscaDispositivoSolicitanteById = await reqBuscaDispositivoSolicitanteById.json();
-                setDispositivo(resBuscaDispositivoSolicitanteById);
-
+                
                 // buscar endereco do user by id
                 if(idEndereco != undefined){
                     const reqBuscaEnderecoSolicitanteById = await fetch(`${url}/endereco/${idEndereco}`);
                     const resBuscaEnderecoSolicitanteById = await reqBuscaEnderecoSolicitanteById.json();
                     setEndereco(resBuscaEnderecoSolicitanteById);
                 }
+
+                //buscar dispositivo do user by id
+                const reqBuscaDispositivoSolicitanteById = await fetch(`${url}/dispositivo/${idDispostivo}`);
+                const resBuscaDispositivoSolicitanteById = await reqBuscaDispositivoSolicitanteById.json();
+                setDispositivo(resBuscaDispositivoSolicitanteById);
 
             } catch (error) {
                 console.log(error)
@@ -61,139 +136,166 @@ const CardDemanda = (props) => {
         fetchData();
     },[])
 
-
   return (
-    // deixar responsivo
+    // Div com todo o card.
     <div style={{minWidth: '100%', maxWidth: '100%'}}>
         <div style={{margin: '0', padding: '0', marginTop:"1rem"}}>
+            {/* Card com as informações. */}
             <Container className={styles.caixaCard}>
-                <Card style={{width: "100%", height: "25rem", display: "flex", flexDirection: "column"}}>
-                    <Card.Body>
-                            <div style={{display: "flex", alignItems: "center", gap: "0.9rem", marginBottom: '16px'}}>
-                                <MdOutlineSmartphone size={50}/>
-                                <div>
-                                    <Card.Text className={styles.textoCard}>
-                                        {dispositivo.categoria}
-                                    </Card.Text>
-
-                                    <Card.Text className={styles.textoCard}>
-                                        {dispositivo.marca} - {dispositivo.modelo}
-                                    </Card.Text>
+                <Card style={{width: "100%", height: "28.5rem", display: "flex", flexDirection: "column"}}>
+                    <Card.Body style={{padding: '20px'}}>
+                        <Container fluid style={{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: '16px', padding: '0'}}>
+                            {/* Perfil do solicitante */}
+                            <div style={{display: 'flex', flexDirection: 'column'}}>
+                                <div className={styles.circuloPerfil}>
+                                    <FaUser size={40}/>  
                                 </div>
+                                <span className={styles.textoCard}>{props.body}NOME</span>
                             </div>
 
-                        <Card.Text className={styles.textoCard}>
-                            <IoLocationOutline color='black' size={30}/> {endereco.localidade} - {endereco.uf}
-                        </Card.Text>
+                            {/* Categoria da demanda */}
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                                {imgCategoria(dispositivo.categoria)}
+                                <Card.Text className={styles.textoCard}>
+                                    
+                                    {dispositivo.categoria}
+                                </Card.Text>
+                            </div>
+                        </Container>
 
-                        <Card.Text className={styles.textoCard}>
-                            <MdOutlineCalendarMonth color='black' size={30}/> {props.dataEmissao}
-                        </Card.Text>
+                        <Container style={{padding: '0'}}>
+                            <Card.Text className={styles.textoCardPrincipal}>
+                                {dispositivo.marca} - {dispositivo.modelo}
+                            </Card.Text>
 
-                        <Card.Text className={styles.textoCard}>
-                            {props.status}
-                        </Card.Text>
+                            {/* Localidade */}
+                            <Card.Text className={styles.textoCard} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <IoLocationOutline color='black' size={35}/> {endereco.localidade} - {endereco.uf}
+                            </Card.Text>
+
+                            {/* Data de emissão */}
+                            <Card.Text className={styles.textoCard} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                <MdOutlineCalendarMonth color='black' size={35}/> {props.dataEmissao}
+                            </Card.Text>
+                            
+                            {/* Status da demanda */}
+                            <Card.Text className={styles.textoCard} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '16px', paddingLeft: '3px'}}>
+                                <span
+                                    style={{
+                                        width: '30px',
+                                        height: '30px',
+                                        borderRadius: '50%',
+                                        backgroundColor: statusDemanda(props.status),
+                                        display: 'inline-block'
+                                    }}
+                                ></span>{props.status}
+                            </Card.Text>
+                        </Container>
+
+                        <Container className={styles.containerBotao} style={{padding: '0'}}>
+                            <Button
+                                type='submit'
+                                onClick={() => setMostrarModal(true)}
+                                className={styles.botaoCard}
+                            >
+                                Visualizar
+                            </Button>
+                        </Container>
                     </Card.Body>
-
-                    <CardFooter className='text-center'>
-
-                        <Button
-                            as='input'
-                            type='submit'
-                            value="ver"
-                            size='lg'
-                            onClick={() => setMostrarModal(true)}
-                        />
-                    </CardFooter>
                 </Card>
             </Container>
         </div>
 
+        {/* Modal para visualizar informações da demanda. */}
         <div>
-            <Modal show={mostrarModal} onHide={() => setMostrarModal(false)} centered >
-                <Modal.Header closeButton style={{width: 'fit-content'}}>
-                    <Modal.Title>Visualização de informações da demanda</Modal.Title>
+            <Modal 
+                show={mostrarModal} 
+                onHide={() => setMostrarModal(false)} 
+                contentClassName={styles.modalContent} 
+                dialogClassName={styles.modalInfo}
+                centered
+            >
+                {/* Só a opção de sair da página isolada em cima de tudo. */}
+                <Modal.Header closeButton style={{padding: "0", paddingBottom: "5px", border: "0"}}>
                 </Modal.Header>
 
-                <Modal.Body>
-                    <h3>Dispositivo</h3>
-                    <Row>
-                        {/* Categoria */}
-                        <Col>
-                            <span>
+                {/* Corpo do modal com todas as informações */}
+                <Modal.Body style={{padding: "0", border: "0"}}>
+                    <Modal.Title className={styles.tituloModal}>Visualização de informações da demanda</Modal.Title>
+                    <hr className={styles.divisao}/>
+                    {/* Informações do dispositivo */}
+                    <div>
+                        <h3 className={styles.tituloInfoModal}>Dispositivo</h3>
+                        <Container className={styles.ContainerModalInfo}>
+                            {/* Categoria */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Categoria: </strong>
-                                CATEGORIA
+                                {dispositivo.categoria}
                             </span>
-                        </Col>
 
-                        {/* Marca */}
-                        <Col>
-                            <span>
+                            {/* Marca */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Marca: </strong>
-                                MARCA
+                                {dispositivo.marca}
                             </span>
-                        </Col>
-                    </Row>
 
-                    <Row>
-                        {/* Fabricante */}
-                        <Col>
-                            <span>
+                            {/* Fabricante */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Fabricante: </strong>
-                                FABRICANTE
+                                {dispositivo.fabricante}
                             </span>
-                        </Col>
 
-                        {/* Modelo */}
-                        <Col>
-                            <span>
+                            {/* Modelo */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Modelo: </strong>
-                                MODELO
+                                {dispositivo.modelo}
                             </span>
-                        </Col>
-                    </Row>
 
-                    <Row>
-                        {/* Tensão */}
-                        <Col>
-                            <span>
+                            {/* Tensão */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Tensão: </strong>
-                                TENSAO
+                                {dispositivo.tensao}
                             </span>
-                        </Col>
 
-                        {/* Amperagem */}
-                        <Col>
-                            <span>
+                            {/* Amperagem */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Amperagem: </strong>
-                                AMPERAGEM
+                                {dispositivo.amperagem}
                             </span>
-                        </Col>
-                    </Row>
 
-                    <Row>
-                        {/* Cor */}
-                        <Col>
-                            <span>
+                            {/* Cor */}
+                            <span className={styles.textoInfoModal}>
                                 <strong>Cor: </strong>
-                                COR
+                                {dispositivo.cor}
                             </span>
-                        </Col>
 
-                        {/* A */}
-                        <Col>
-                            <span>
-                                <strong>Amperagem: </strong>
-                                AMPERAGEM
+                        </Container>
+                    </div>
+                    <hr className={styles.divisao}/>
+
+                    {/* Colocar container para texto do modal ficar ajustado à esquerda */}
+                    {/* Informações do contexto */}
+                    <div>
+                        <h3 className={styles.tituloInfoModal}>Contexto</h3>
+                        <Container style={{display: "grid", gridTemplateColumns: "repeat(1, 1fr)"}}>
+                            <span className={styles.textoInfoModal}>
+                                <strong>Descrição do problema: </strong>
+                                {props.descricao}
                             </span>
-                        </Col>
-                    </Row>
-                    
 
-                    <span>
-                        <strong>Tensão</strong>
-                    </span>
+
+                            <span className={styles.textoInfoModal} >
+                                <strong>Observações: </strong>
+                                {props.observacoes}
+                            </span>
+                        </Container>
+                    </div>
                 </Modal.Body>
+
+                {/* Footer com o botão com a funcionalidade passada dentro do mainBotao */}
+                <Modal.Footer style={{padding: "0", border: "0", display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    {mainBotao}
+                </Modal.Footer>
             </Modal>
         </div>
     </div>
