@@ -13,6 +13,7 @@ import Conta from "./pages/conta-perfil/Conta.jsx";
 import CriarDemanda from "./pages/demanda/CriarDemanda.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import Home from "./pages/home/Home.jsx";
+import Inicio from "./pages/inicio/Inicio.jsx";
 import Login from "./pages/login/Login.jsx";
 import PerguntaSeguranca from "./pages/cadastro-user/PerguntaSeguranca.jsx";
 import Politicas from "./pages/termos/Politicas.jsx";
@@ -20,7 +21,7 @@ import ProcurarDemandas from "./pages/demanda/ProcurarDemandas.jsx";
 import SelecaoUsuario from "./pages/selecao-usuario/SelecaoUsuario.jsx";
 import Sobre from "./pages/sobre/Sobre.jsx";
 import Termos from "./pages/termos/Termos.jsx";
-import Inicio from "./pages/inicio/Inicio.jsx";
+
 
 const router = createBrowserRouter([
   {

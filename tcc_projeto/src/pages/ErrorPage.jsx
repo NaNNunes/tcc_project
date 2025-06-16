@@ -15,7 +15,7 @@ const ErrorPage = () => {
           </h1>
           <h2 className="mb-3">Página não encontrada</h2>
           <p className="mb-4">
-            A página que você está tentando acessar não existe.
+            A página que você está tentando acessar não existe <br /> ou você não possui permissão para visualizá-la.
           </p>
           <Button
             as={Link}
