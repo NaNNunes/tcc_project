@@ -21,6 +21,11 @@ import { MdOutlineCalendarMonth } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 
+// Importação das imagems
+import ImgCelular from '/icons/img_card_celular.png';
+import ImgNotebook from '/icons/img_card_notebook.png';
+import ImgPerifericos from '/icons/img_card_perifericos.png';
+
 import { useEffect, useState } from 'react';
 import {useDemanda} from "../../../hooks/useApi.js";
 
@@ -65,6 +70,23 @@ const CardDemanda = (props) => {
     }
 
     const mainBotao = botoes[tela]
+
+    const imgCategoria = (categoria) => {
+        switch ((categoria || '').toLowerCase()) {
+            case 'celular':
+                return <img src={ImgCelular} alt="Celular" style={{ width: '50px', height: '50px' }}></img>;
+            case 'notebook':
+                return <img src={ImgNotebook} alt="Celular" style={{ width: '50px', height: '50px' }}></img>;
+            case 'tablet':
+                return <img></img>;
+            case 'desktop':
+                return <img></img>;
+            case 'perifericos':
+                return <img src={ImgPerifericos} alt="Celular" style={{ width: '50px', height: '50px' }}></img>;
+            case 'outros':
+                return <img></img>
+        }
+    }
 
     // Cor do status.
     const statusDemanda = (status) => {
@@ -115,11 +137,12 @@ const CardDemanda = (props) => {
     },[])
 
   return (
-    // deixar responsivo
+    // Div com todo o card.
     <div style={{minWidth: '100%', maxWidth: '100%'}}>
         <div style={{margin: '0', padding: '0', marginTop:"1rem"}}>
+            {/* Card com as informações. */}
             <Container className={styles.caixaCard}>
-                <Card style={{width: "100%", height: "27rem", display: "flex", flexDirection: "column"}}>
+                <Card style={{width: "100%", height: "28.5rem", display: "flex", flexDirection: "column"}}>
                     <Card.Body style={{padding: '20px'}}>
                         <Container fluid style={{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: '16px', padding: '0'}}>
                             {/* Perfil do solicitante */}
@@ -127,12 +150,14 @@ const CardDemanda = (props) => {
                                 <div className={styles.circuloPerfil}>
                                     <FaUser size={40}/>  
                                 </div>
-                                <span style={{alignSelf: 'center'}}>NOME DO USUARIO</span>
+                                <span className={styles.textoCard}>{props.body}NOME</span>
                             </div>
 
-                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                                <MdOutlineSmartphone size={50}/>
+                            {/* Categoria da demanda */}
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                                {imgCategoria(dispositivo.categoria)}
                                 <Card.Text className={styles.textoCard}>
+                                    
                                     {dispositivo.categoria}
                                 </Card.Text>
                             </div>

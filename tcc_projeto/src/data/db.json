@@ -186,7 +186,7 @@
     },
     {
       "id": "c613",
-      "categoria": "Celular",
+      "categoria": "Notebook",
       "marca": "Samsung",
       "fabricante": "",
       "modelo": "Galaxy S24 FE",
@@ -211,7 +211,7 @@
     },
     {
       "id": "0993",
-      "idDispostivo": "0d8e",
+      "idDispostivo": "c613",
       "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
       "observacoes": "",
       "status": "aberto",
@@ -223,6 +223,61 @@
     {
       "id": "0993",
       "idDispostivo": "0d8e",
+      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
+      "observacoes": "",
+      "status": "aberto",
+      "assistencia": "Público",
+      "solicitante_id": "88f2",
+      "dataEmissao": "13/06/2025",
+      "horaEmissao": "21:28:14"
+    },
+    {
+      "id": "0993",
+      "idDispostivo": "c613",
+      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
+      "observacoes": "",
+      "status": "aberto",
+      "assistencia": "Público",
+      "solicitante_id": "88f2",
+      "dataEmissao": "13/06/2025",
+      "horaEmissao": "21:28:14"
+    },
+    {
+      "id": "0993",
+      "idDispostivo": "0d8e",
+      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
+      "observacoes": "",
+      "status": "aberto",
+      "assistencia": "Público",
+      "solicitante_id": "88f2",
+      "dataEmissao": "13/06/2025",
+      "horaEmissao": "21:28:14"
+    },
+    {
+      "id": "0993",
+      "idDispostivo": "c613",
+      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
+      "observacoes": "",
+      "status": "aberto",
+      "assistencia": "Público",
+      "solicitante_id": "88f2",
+      "dataEmissao": "13/06/2025",
+      "horaEmissao": "21:28:14"
+    },
+    {
+      "id": "0993",
+      "idDispostivo": "0d8e",
+      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
+      "observacoes": "",
+      "status": "aberto",
+      "assistencia": "Público",
+      "solicitante_id": "88f2",
+      "dataEmissao": "13/06/2025",
+      "horaEmissao": "21:28:14"
+    },
+    {
+      "id": "0993",
+      "idDispostivo": "c613",
       "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
       "observacoes": "",
       "status": "aberto",
@@ -263,12 +318,28 @@
       "solicitante_id": "d150",
       "dataEmissao": "13/06/2025",
       "horaEmissao": "21:29:11"
+    },
+    {
+      "id": "8fca",
+      "idDispostivo": "c8a4",
+      "descProblema": "dssssssssssssssssssssssssssssssssssss",
+      "observacoes": "",
+      "status": "aberto",
+      "assistencia": "",
+      "solicitante_id": "2136",
+      "dataEmissao": "16/06/2025",
+      "horaEmissao": "01:35:44"
     }
   ],
   "assistencia_Fav_Solicitante": [
     {
       "id": "b61d",
       "id_solicitante": "88f2",
+      "id_assistencia": "3418"
+    },
+    {
+      "id": "780d",
+      "id_solicitante": "0adb",
       "id_assistencia": "3418"
     }
   ]

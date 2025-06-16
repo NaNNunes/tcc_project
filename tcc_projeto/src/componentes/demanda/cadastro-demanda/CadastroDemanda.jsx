@@ -412,163 +412,166 @@ const categoriaDispositivo = () => {
                 </Container>
 
                 {/* Informações do solicitante */}
-                <Container fluid className={stylesCad.parteFormulario} style={{marginBottom: '20px'}}>
-                    {/* Título do container */}
-                    <Row style={{paddingBottom: '1%'}}>
-                        <Col md={12} xs={12}>
-                            <h3>Informações do solicitante</h3>
-                        </Col>
-                    </Row>
-                    
-                    {/* Informações do solicitante */}
-                    <Row>
-                        {/* Coluna do nome */}
-                        <Col md={4} xs={12} className={stylesCad.campo}>
-                            <FloatingLabel 
-                                id="userNomeInput" 
-                                label="Nome"
-                            >
-                                <Form.Control
-                                    type="text"
-                                    placeholder=""
-                                    {...register("nome", {
-                                        required: "O nome é obrigatório",
-                                        minLength: {
-                                        value: 2,
-                                        message: "O nome deve ter pelo menos 2 caracteres",
-                                        },
-                                        maxLength: {
-                                        value: 20,
-                                        message: "O nome deve ter ate 20 caracteres",
-                                        },
-                                        pattern: {
-                                        value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/i,
-                                        message: "O nome só pode conter letras e espaços",
-                                        },
-                                    })}
-                                />
-                                {errors.nome && (
-                                    <span className='error'>{errors.nome.message}</span>
-                                )}
-                            </FloatingLabel>
-                        </Col>
+                {userType === "administrador" && (
+                    <Container fluid className={stylesCad.parteFormulario} style={{marginBottom: '20px'}}>
+                        {/* Título do container */}
+                        <Row style={{paddingBottom: '1%'}}>
+                            <Col md={12} xs={12}>
+                                <h3>Informações do solicitante</h3>
+                            </Col>
+                        </Row>
                         
-                        {/* Coluna do sobrenome */}
-                        <Col md={4} xs={12} className={stylesCad.campo}>
-                            <FloatingLabel
-                                id="userSobrenomeInput"
-                                label="Sobrenome"
-                            >
-                                <Form.Control
+                        {/* Informações do solicitante */}
+                        <Row>
+                            {/* Coluna do nome */}
+                            <Col md={4} xs={12} className={stylesCad.campo}>
+                                <FloatingLabel 
+                                    id="userNomeInput" 
+                                    label="Nome"
+                                >
+                                    <Form.Control
+                                        type="text"
+                                        placeholder=""
+                                        {...register("nome", {
+                                            required: "O nome é obrigatório",
+                                            minLength: {
+                                            value: 2,
+                                            message: "O nome deve ter pelo menos 2 caracteres",
+                                            },
+                                            maxLength: {
+                                            value: 20,
+                                            message: "O nome deve ter ate 20 caracteres",
+                                            },
+                                            pattern: {
+                                            value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/i,
+                                            message: "O nome só pode conter letras e espaços",
+                                            },
+                                        })}
+                                    />
+                                    {errors.nome && (
+                                        <span className='error'>{errors.nome.message}</span>
+                                    )}
+                                </FloatingLabel>
+                            </Col>
+                            
+                            {/* Coluna do sobrenome */}
+                            <Col md={4} xs={12} className={stylesCad.campo}>
+                                <FloatingLabel
+                                    id="userSobrenomeInput"
+                                    label="Sobrenome"
+                                >
+                                    <Form.Control
+                                        type="text"
+                                        placeholder=""
+                                        {...register("sobrenome", {
+                                            required: "O sobrenome é obrigatório",
+                                            minLength: {
+                                            value: 2,
+                                            message: "O sobrenome deve ter pelo menos 2 caracteres",
+                                            },
+                                            maxLength: {
+                                            value: 20,
+                                            message: "O sobrenome deve ter ate 20 caracteres",
+                                            },
+                                            pattern: {
+                                            value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/i,
+                                            message: "O sobrenome só pode conter letras e espaços",
+                                            },
+                                        })}
+                                    />
+                                    {errors.sobrenome && (
+                                        <span className='error'>{errors.sobrenome.message}</span>
+                                    )}
+                                </FloatingLabel>
+                            </Col>
+
+                            {/* Coluna de CPF */}
+                            <Col md={4} xs={12} className={stylesCad.campo}>
+                                <FloatingLabel id="userCpfInput" label="CPF">
+                                    <Form.Control
                                     type="text"
-                                    placeholder=""
-                                    {...register("sobrenome", {
-                                        required: "O sobrenome é obrigatório",
-                                        minLength: {
-                                        value: 2,
-                                        message: "O sobrenome deve ter pelo menos 2 caracteres",
-                                        },
-                                        maxLength: {
-                                        value: 20,
-                                        message: "O sobrenome deve ter ate 20 caracteres",
-                                        },
-                                        pattern: {
-                                        value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/i,
-                                        message: "O sobrenome só pode conter letras e espaços",
+                                    placeholder="000.000.000-00"
+                                    value={formatarCPF(watch("cpf") || "")}
+                                    isInvalid={!!errors.userCpf}
+                                    onChange={(e) => {
+                                        const apenasNumeros = e.target.value.replace(/\D/g, "");
+                                        if (apenasNumeros.length <= 11) {
+                                        setValue("userCpf", apenasNumeros);
+                                        }
+                                    }}
+                                    {...register("cpf", {
+                                        required: "CPF é obrigatório",
+                                        validate: (value) => {
+                                        const somenteNumeros = value.replace(/\D/g, ""); // remove tudo que não é número
+                                        if (somenteNumeros.length !== 11) {
+                                            return "Necessário 11 dígitos";
+                                        }
+                                        if (!verificador(somenteNumeros)) {
+                                            return "CPF inválido";
+                                        }
+                                        return true;
                                         },
                                     })}
-                                />
-                                {errors.sobrenome && (
-                                    <span className='error'>{errors.sobrenome.message}</span>
-                                )}
-                            </FloatingLabel>
-                        </Col>
+                                    />
+                                    {errors.cpf && (
+                                        <span className='error'>{errors.cpf.message}</span>
+                                    )}
+                                </FloatingLabel>
+                            </Col>
+                        </Row>
 
-                        {/* Coluna de CPF */}
-                        <Col md={4} xs={12} className={stylesCad.campo}>
-                            <FloatingLabel id="userCpfInput" label="CPF">
-                                <Form.Control
-                                type="text"
-                                placeholder="000.000.000-00"
-                                value={formatarCPF(watch("cpf") || "")}
-                                isInvalid={!!errors.userCpf}
-                                onChange={(e) => {
-                                    const apenasNumeros = e.target.value.replace(/\D/g, "");
-                                    if (apenasNumeros.length <= 11) {
-                                    setValue("userCpf", apenasNumeros);
-                                    }
-                                }}
-                                {...register("cpf", {
-                                    required: "CPF é obrigatório",
-                                    validate: (value) => {
-                                    const somenteNumeros = value.replace(/\D/g, ""); // remove tudo que não é número
-                                    if (somenteNumeros.length !== 11) {
-                                        return "Necessário 11 dígitos";
-                                    }
-                                    if (!verificador(somenteNumeros)) {
-                                        return "CPF inválido";
-                                    }
-                                    return true;
-                                    },
-                                })}
-                                />
-                                {errors.cpf && (
-                                    <span className='error'>{errors.cpf.message}</span>
-                                )}
-                            </FloatingLabel>
-                        </Col>
-                    </Row>
+                        <Row>
+                            {/* Coluna de e-mail */}
+                            <Col md={8} xs={12} className={stylesCad.campo}>
+                                <FloatingLabel 
+                                    controlId='EmailInput'
+                                    label='E-mail'
+                                >
+                                    <Form.Control
+                                    name="email"
+                                    type="email"
+                                    placeholder=""
+                                    {...register("email", {
+                                        required: "O email é obrigatório",
+                                        pattern: {
+                                        value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                                        message: "Email inválido",
+                                        },
+                                        validate: (value) => value.includes("@") || "Email inválido",
+                                    })}
+                                    />
+                                    {errors.email && (
+                                        <span className='error'>{errors.email.message}</span>
+                                    )}
+                                </FloatingLabel>
+                            </Col>
 
-                    <Row>
-                        {/* Coluna de e-mail */}
-                        <Col md={8} xs={12} className={stylesCad.campo}>
-                            <FloatingLabel 
-                                controlId='EmailInput'
-                                label='E-mail'
-                            >
-                                <Form.Control
-                                name="email"
-                                type="email"
-                                placeholder=""
-                                {...register("email", {
-                                    required: "O email é obrigatório",
-                                    pattern: {
-                                    value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-                                    message: "Email inválido",
-                                    },
-                                    validate: (value) => value.includes("@") || "Email inválido",
-                                })}
-                                />
-                                {errors.email && (
-                                    <span className='error'>{errors.email.message}</span>
-                                )}
-                            </FloatingLabel>
-                        </Col>
-
-                        {/* Coluna de telefone */}
-                        <Col md={4} xs={12} className={stylesCad.campo}>
-                            <FloatingLabel
-                                id="userTelInput"
-                                label="Telefone"
-                            >
-                                <Form.Control
-                                type="text"
-                                placeholder="(00) 00000-0000"
-                                {...register("userTelefone", {
-                                    required: "Telefone é obrigatório",
-                                    pattern: {
-                                    value: /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
-                                    message: "Telefone inválido",
-                                    },
-                                })}
-                                />
-                                {errors.userTelefone && (
-                                    <span className='error'>{errors.userTelefone.message}</span>
-                                )}
-                            </FloatingLabel>
-                        </Col>
-                    </Row>
-                </Container>
+                            {/* Coluna de telefone */}
+                            <Col md={4} xs={12} className={stylesCad.campo}>
+                                <FloatingLabel
+                                    id="userTelInput"
+                                    label="Telefone"
+                                >
+                                    <Form.Control
+                                    type="text"
+                                    placeholder="(00) 00000-0000"
+                                    {...register("userTelefone", {
+                                        required: "Telefone é obrigatório",
+                                        pattern: {
+                                        value: /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
+                                        message: "Telefone inválido",
+                                        },
+                                    })}
+                                    />
+                                    {errors.userTelefone && (
+                                        <span className='error'>{errors.userTelefone.message}</span>
+                                    )}
+                                </FloatingLabel>
+                            </Col>
+                        </Row>
+                    </Container>
+                )}
+                
 
                 {/* Informações do dispositivo */}
                 <Container fluid className={stylesCad.parteFormulario} style={{marginBottom: '20px'}}>
@@ -913,6 +916,7 @@ const categoriaDispositivo = () => {
                     as='input'
                     type='submit'
                     value="Enviar"
+                    // NÃO ESTÁ FUNCIONANDO.
                     disabled={(atSelecionada === "")}
                     onClick={() => {
                         enviarDemandaCompleta(atSelecionada)
