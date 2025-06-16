@@ -8,3 +8,34 @@
     padding-right: 8%;
     max-width: none;
 }
+
+@media screen and (max-width: 1200px) {
+    .caixa {
+        grid-template-columns: repeat(2, 1fr);
+        padding-left: 8%;
+        padding-right: 8%;
+    }  
+}
+
+@media screen and (max-width: 1100px) {
+    .caixa {
+        padding-left: 4%;
+        padding-right: 4%;
+    } 
+}
+
+@media screen and (max-width: 750px) {
+    .caixa {
+        grid-template-columns: repeat(1, 1fr);
+        padding-left: 16%;
+        padding-right: 16%;
+    }  
+}
+
+@media screen and (max-width: 500px) {
+    .caixa {
+        grid-template-columns: repeat(1, 1fr);
+        padding-left: 8%;
+        padding-right: 8%;
+    }  
+}

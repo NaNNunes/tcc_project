@@ -19,6 +19,7 @@ import { TiArrowSortedDown } from "react-icons/ti";
 import { TiArrowSortedUp } from "react-icons/ti";   
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
+import { FaUser } from "react-icons/fa";
 
 import { useEffect, useState } from 'react';
 import {useDemanda} from "../../../hooks/useApi.js";
@@ -65,6 +66,20 @@ const CardDemanda = (props) => {
 
     const mainBotao = botoes[tela]
 
+    // Cor do status.
+    const statusDemanda = (status) => {
+        switch ((status || '').toLowerCase()) {
+            case 'aberto':
+                return '#B1B1B1'; // se estiver aberto, retorna cinza.
+            case 'em atendimento':
+                return '#FFCA68'; // se estiver em atendimento, retorna amarelo
+            case 'concluido':
+                return '#00C400'; // se estiver em concluido, retorna verde
+            case 'cancelada':
+                return '#FF3B30'; // se estiver em cancelado, retorna vermelho
+        }
+    }
+
     const [endereco, setEndereco] = useState({});
     const [dispositivo, setDispositivo] = useState({});
 
@@ -104,44 +119,64 @@ const CardDemanda = (props) => {
     <div style={{minWidth: '100%', maxWidth: '100%'}}>
         <div style={{margin: '0', padding: '0', marginTop:"1rem"}}>
             <Container className={styles.caixaCard}>
-                <Card style={{width: "100%", height: "25rem", display: "flex", flexDirection: "column"}}>
-                    <Card.Body>
-                            <div style={{display: "flex", alignItems: "center", gap: "0.9rem", marginBottom: '16px'}}>
-                                <MdOutlineSmartphone size={50}/>
-                                <div>
-                                    <Card.Text className={styles.textoCard}>
-                                        {dispositivo.categoria}
-                                    </Card.Text>
-
-                                    <Card.Text className={styles.textoCard}>
-                                        {dispositivo.marca} - {dispositivo.modelo}
-                                    </Card.Text>
+                <Card style={{width: "100%", height: "27rem", display: "flex", flexDirection: "column"}}>
+                    <Card.Body style={{padding: '20px'}}>
+                        <Container fluid style={{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: '16px', padding: '0'}}>
+                            {/* Perfil do solicitante */}
+                            <div style={{display: 'flex', flexDirection: 'column'}}>
+                                <div className={styles.circuloPerfil}>
+                                    <FaUser size={40}/>  
                                 </div>
+                                <span style={{alignSelf: 'center'}}>NOME DO USUARIO</span>
                             </div>
 
-                        <Card.Text className={styles.textoCard}>
-                            <IoLocationOutline color='black' size={30}/> {endereco.localidade} - {endereco.uf}
-                        </Card.Text>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                                <MdOutlineSmartphone size={50}/>
+                                <Card.Text className={styles.textoCard}>
+                                    {dispositivo.categoria}
+                                </Card.Text>
+                            </div>
+                        </Container>
 
-                        <Card.Text className={styles.textoCard}>
-                            <MdOutlineCalendarMonth color='black' size={30}/> {props.dataEmissao}
-                        </Card.Text>
+                        <Container style={{padding: '0'}}>
+                            <Card.Text className={styles.textoCardPrincipal}>
+                                {dispositivo.marca} - {dispositivo.modelo}
+                            </Card.Text>
 
-                        <Card.Text className={styles.textoCard}>
-                            {props.status}
-                        </Card.Text>
+                            {/* Localidade */}
+                            <Card.Text className={styles.textoCard} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <IoLocationOutline color='black' size={35}/> {endereco.localidade} - {endereco.uf}
+                            </Card.Text>
+
+                            {/* Data de emissão */}
+                            <Card.Text className={styles.textoCard} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
+                                <MdOutlineCalendarMonth color='black' size={35}/> {props.dataEmissao}
+                            </Card.Text>
+                            
+                            {/* Status da demanda */}
+                            <Card.Text className={styles.textoCard} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '16px', paddingLeft: '3px'}}>
+                                <span
+                                    style={{
+                                        width: '30px',
+                                        height: '30px',
+                                        borderRadius: '50%',
+                                        backgroundColor: statusDemanda(props.status),
+                                        display: 'inline-block'
+                                    }}
+                                ></span>{props.status}
+                            </Card.Text>
+                        </Container>
+
+                        <Container className={styles.containerBotao} style={{padding: '0'}}>
+                            <Button
+                                type='submit'
+                                onClick={() => setMostrarModal(true)}
+                                className={styles.botaoCard}
+                            >
+                                Visualizar
+                            </Button>
+                        </Container>
                     </Card.Body>
-
-                    <Card.Footer className='text-center'>
-
-                        <Button
-                            as='input'
-                            type='submit'
-                            value="ver"
-                            size='lg'
-                            onClick={() => setMostrarModal(true)}
-                        />
-                    </Card.Footer>
                 </Card>
             </Container>
         </div>

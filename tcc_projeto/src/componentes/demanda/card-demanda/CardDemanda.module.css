@@ -7,11 +7,46 @@
     padding-bottom: 8%;
 }
 
-.textoCard {
+.textoCardPrincipal {
     font-size: 1.3rem;
     font-weight: bold;
     padding-left: 8px;
     color: #757575;
+    border: 3px solid #757575;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.textoCard {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #757575;
+}
+
+.circuloPerfil {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #cecece;
+    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+}
+
+.containerBotao {
+    text-align: center;
+}
+
+.botaoCard {
+    width: fit-content;
+    align-self: center;
+    background-color: #0061B7;
+    width: 12rem;
+    border: 0;
+    height: 50px;
+    font-weight: bold;
+    margin: 0px;
+    margin-top: 20px;
 }
 
 /* AQUI COMEÇA A ESTILIZAÇÃO DO MODAL */
@@ -77,6 +112,12 @@
 
 .botaoModal:hover {
     background-color: #0069C6;
+}
+
+@media screen and (max-width: 750px) {
+    .caixaCard {
+        padding: 0;
+    }
 }
 
 @media screen and (max-width: 560px) {
