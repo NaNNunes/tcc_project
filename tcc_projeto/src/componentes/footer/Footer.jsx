@@ -66,7 +66,7 @@ const Footer = () => {
             sm={12}
             xs={12}
           >
-            <h4 className={styles.tituloFooter}>Funcionalidades</h4>
+            <h4 className={styles.tituloFooter}>Sobre o Site</h4>
             <a className={styles.linkFooter} href="/termos-de-uso">
               Termos de Uso
             </a>
