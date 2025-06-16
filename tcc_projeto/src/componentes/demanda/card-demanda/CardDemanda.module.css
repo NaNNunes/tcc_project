@@ -1,3 +1,4 @@
+/* Container com o card da demanda. */
 .caixaCard {
     max-width: 100%;
     margin: 0; 
@@ -7,6 +8,22 @@
     padding-bottom: 8%;
 }
 
+/* Corpo do card */
+.cardBody {
+    height: 27.5rem;
+    padding: 20px;
+}
+
+.ContPerfCat {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 0;
+}
+
+/* Texto com um cortono para marca e modelo. */
 .textoCardPrincipal {
     font-size: 1.3rem;
     font-weight: bold;
@@ -17,12 +34,17 @@
     padding: 10px;
 }
 
+/* Texto com as informações da demanda. */
 .textoCard {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-size: 1.3rem;
     font-weight: bold;
     color: #757575;
 }
 
+/* Perfil do usuário. */
 .circuloPerfil {
     display: flex;
     justify-content: center;
@@ -33,12 +55,13 @@
     height: 60px;
 }
 
+/* Container com o botão para visualizar demanda. */
 .containerBotao {
     text-align: center;
 }
 
+/* Botão para visualizar demanda. */
 .botaoCard {
-    width: fit-content;
     align-self: center;
     background-color: #0061B7;
     width: 12rem;
@@ -47,6 +70,10 @@
     font-weight: bold;
     margin: 0px;
     margin-top: 20px;
+}
+
+.botaoCard:hover {
+    background-color: #0069C6;
 }
 
 /* AQUI COMEÇA A ESTILIZAÇÃO DO MODAL */
@@ -114,6 +141,12 @@
     background-color: #0069C6;
 }
 
+@media screen and (max-width: 1350px) {
+    .cardBody {
+        height: fit-content;
+    }
+}
+
 @media screen and (max-width: 750px) {
     .caixaCard {
         padding: 0;
@@ -123,6 +156,31 @@
 @media screen and (max-width: 560px) {
     .ContainerModalInfo {
         grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media screen and (max-width: 330px) {
+    .botaoCard {
+        width: 9rem;
+        align-self: center;
+        background-color: #0061B7;
+        border: 0;
+        height: 50px;
+        font-weight: bold;
+        margin: 0px;
+        margin-top: 20px;
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .ContPerfCat {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .cardBody {
+        padding: 10px;
     }
 }
 
@@ -140,6 +198,16 @@
         padding: 0px;
         padding-left: 5px;
         padding-right: 5px;
+    }
+
+    .textoCard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #757575;
     }
 }
 
@@ -164,5 +232,18 @@
 
     .modalContent {
         padding: 10px;
+    }
+
+    .botaoCard {
+        width: fit-content;
+        align-self: center;
+        background-color: #0061B7;
+        border: 0;
+        height: 50px;
+        font-weight: bold;
+        margin: 0px;
+        margin-top: 20px;
+        font-size: 1rem;
+        padding: 0px 5px 0px 5px;
     }
 }

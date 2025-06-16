@@ -1,10 +1,11 @@
 .container {
-  margin: 20px auto;
+  margin: 80px auto;
   padding: 1rem;
   width: 570px;
   /* height: 730px; */
   box-sizing: border-box;
   background: linear-gradient(to bottom, #034c8c, #001b32);
+  border: none;
   border-radius: 20px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
   overflow: hidden;
@@ -23,17 +24,18 @@
 }
 
 .containerPergunta {
-  margin: auto;
+  margin: 80px auto;
   padding: 1rem;
   width: 570px;
   /* height: 490px; */
   background: linear-gradient(to bottom, #034c8c, #001b32);
+  border: none;
   border-radius: 20px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .containerAssistencia {
-  margin: 3rem auto;
+  margin: 80px auto;
   padding: 1rem;
   width: 570px;
   /* height: 630px; */
@@ -43,7 +45,7 @@
 }
 
 .containerEndereco {
-  margin: 3rem auto;
+  margin: 80px auto;
   padding: 1rem;
   width: 570px;
   /* height: 550px; */

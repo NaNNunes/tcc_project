@@ -138,13 +138,30 @@ const CardDemanda = (props) => {
 
   return (
     // Div com todo o card.
-    <div style={{minWidth: '100%', maxWidth: '100%'}}>
-        <div style={{margin: '0', padding: '0', marginTop:"1rem"}}>
+    <div 
+        style={{
+            minWidth: '100%', maxWidth: '100%'
+        }}
+    >
+        <div 
+            style={{
+                margin: '0', padding: '0', marginTop:"1rem"
+            }}
+        >
             {/* Card com as informações. */}
             <Container className={styles.caixaCard}>
-                <Card style={{width: "100%", height: "28.5rem", display: "flex", flexDirection: "column"}}>
-                    <Card.Body style={{padding: '20px'}}>
-                        <Container fluid style={{display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginBottom: '16px', padding: '0'}}>
+                <Card 
+                    style={{
+                        width: "100%", display: "flex", flexDirection: "column"
+                    }}
+                >
+                    <Card.Body 
+                        className={styles.cardBody} 
+                    >
+                        <Container 
+                            fluid 
+                            className={styles.ContPerfCat}
+                        >
                             {/* Perfil do solicitante */}
                             <div style={{display: 'flex', flexDirection: 'column'}}>
                                 <div className={styles.circuloPerfil}>
@@ -169,7 +186,7 @@ const CardDemanda = (props) => {
                             </Card.Text>
 
                             {/* Localidade */}
-                            <Card.Text className={styles.textoCard} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <Card.Text className={styles.textoCard}>
                                 <IoLocationOutline color='black' size={35}/> {endereco.localidade} - {endereco.uf}
                             </Card.Text>
 
