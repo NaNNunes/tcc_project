@@ -155,9 +155,10 @@ const ProcurarDemandas = () => {
     <div style={{paddingTop: '80px', paddingBottom: '80px'}}>
       <Container className={styles.caixa}>
         {
-          demandasParaMostrar.map((demanda) => (
-            // passar props informando qual é o user que está acessando a page, para request no componente de card demanda
-            <CardDemanda
+          (demandasParaMostrar ? (
+              demandasParaMostrar.map((demanda) => (
+                // passar props informando qual é o user que está acessando a page, para request no componente de card demanda
+                <CardDemanda
                   key={demanda.id} 
                   id={demanda.id}
                   idResponsavel={demanda.solicitante_id} // id do emissor da demanda
@@ -167,8 +168,13 @@ const ProcurarDemandas = () => {
                   dataEmissao={demanda.dataEmissao}
                   status={demanda.status}
                   dominioDemanda={demanda.assistencia} // mostrar em algum lugar do card
-            />
-          ))
+                />
+              ))
+          ) :
+         (
+          <span>Não há demandas a serem carregadas.</span>
+         )
+        )
         }
       </Container>
 

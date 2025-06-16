@@ -100,7 +100,7 @@ const CadastroEndereco = () => {
   const onSubmit = (data) => {
     cadastrarEndereco(data)
     inserirValidacao(true);
-    navigate("/login");
+    navigate("/inicio");
   };
 
   const formatarCEP = (cep) => {

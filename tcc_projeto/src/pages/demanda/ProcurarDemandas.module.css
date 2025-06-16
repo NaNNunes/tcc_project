@@ -9,7 +9,14 @@
     max-width: none;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1400px) {
+    .caixa {
+        padding-left: 4%;
+        padding-right: 4%;
+    }  
+}
+
+@media screen and (max-width: 1230px) {
     .caixa {
         grid-template-columns: repeat(2, 1fr);
         padding-left: 8%;
@@ -35,7 +42,7 @@
 @media screen and (max-width: 500px) {
     .caixa {
         grid-template-columns: repeat(1, 1fr);
-        padding-left: 8%;
-        padding-right: 8%;
+        padding-left: 6%;
+        padding-right: 6%;
     }  
 }
