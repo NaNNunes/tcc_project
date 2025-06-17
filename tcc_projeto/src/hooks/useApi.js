@@ -23,14 +23,14 @@ export function useVerificaLogin(){
             try {
                 for(let i = 0; i < 2; i++){
 
-                    const userType = (i == 0)
+                    const userType = (i === 0)
                         ? "solicitante"
                         : "administrador"
 
                     const request = await fetch(`${url}/${userType}`);
                     const response = await request.json();
                     
-                    (i == 0) 
+                    (i === 0) 
                         ? setSolicitantes(response)
                         : setAdministradores(response)
                 }

@@ -97,7 +97,7 @@ const Assistencias = () => {
 
 
     return (
-        <div className="p-3">
+        <div style={{marginTop: '80px', marginBottom: '80px'}} className="p-3">
             <Row>
                 {
                     assistenciasParaMostrar.map((assistencia) =>(

@@ -12,17 +12,32 @@ import { useForm } from "react-hook-form";
 import styles from "./login.module.css";
 
 import { useVerificaLogin } from "../../hooks/useApi";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const Login = () => {
 
   const navigate = useNavigate();
+
+  const [verificando, setVerificando] = useState(true);
+
+  useEffect(() => {
+    let userType = localStorage.getItem("userType");
+
+    if (!userType) {
+      userType = "Visitante";
+      localStorage.setItem("userType", userType);
+    }
+
+    if (userType !== "Visitante") {
+      console.log("User logado, acesso negado");
+      navigate("/inicio");
+    }
+    else {
+      setVerificando(false);
+    }
+  }, [navigate])
   
-  // caso user logado impede o memsmo de acessar a tela de login;
-  const userType = localStorage.getItem("userType");
-  if (userType !== "Visitante") {
-    console.log("User logado, acesso negado");
-    return navigate("/inicio");
-  }
 
   const {
     register,
