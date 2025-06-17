@@ -321,17 +321,17 @@ const categoriaDispositivo = () => {
 
         const dados = dadosTemporarios;
         // separando dados de solicitante presencial
-        const dadosPseudoUser = {
+        // const dadosPseudoUser = {
         //     "email": dadosTemporarios.email,
         //     "cpf": dadosTemporarios.cpf,
         //     "userTelefone": dadosTemporarios.userTelefone,
         //     "nome": dadosTemporarios.nome,
         //     "sobrenome": dadosTemporarios.sobrenome,
         //     "isValido": false
-        }
+        // }
 
         // cadastrar pseudo user, solicitante presencial
-        const idPseudoUser = await cadastrarPseudoUser(dadosPseudoUser);
+        // const idPseudoUser = await cadastrarPseudoUser(dadosPseudoUser);
         
         // separando dados de dispositivo
         const dispositivo = {
@@ -343,7 +343,8 @@ const categoriaDispositivo = () => {
             "tensao": dados.tensao,
             "amperagem": dados.amperagem,
             "cor": dados.cor,
-            "solicitante_id": idPseudoUser
+            "solicitante_id": userId
+            // "solicitante_id": idPseudoUser
         };
 
         // cadastrar dispositivo
@@ -358,7 +359,8 @@ const categoriaDispositivo = () => {
             "observacoes": dados.observacoes,
             "status": statusPadrao,
             "assistencia": responsavelDemanda,
-            "solicitante_id": idPseudoUser
+            "solicitante_id": userId
+            // "solicitante_id": idPseudoUser
         };
         
         // cadastrar demanda
