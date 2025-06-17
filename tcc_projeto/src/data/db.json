@@ -59,6 +59,20 @@
       "isValido": true,
       "pergunta": "3",
       "resposta": "Cachoeiro de Itapemirim"
+    },
+    {
+      "id": "f83e",
+      "email": "isaacpietro@gmail.com",
+      "cpf": "930.426.712-91",
+      "userTelefone": "(63) 3774-7041",
+      "nome": "ADM",
+      "sobrenome": "ADM",
+      "senha": "12345678",
+      "confirmarSenha": "12345678",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "1",
+      "resposta": "Bolota"
     }
   ],
   "assistencia": [
@@ -95,6 +109,18 @@
       "assistenciaTermos": "true",
       "administradorId": "0d6b",
       "id_endereco": "8f04"
+    },
+    {
+      "id": "c720",
+      "assistenciaEmail": "isaacpietroempresa@gmail.com",
+      "nomeFantasia": "Adeus",
+      "razaoSocial": "Adeus",
+      "cnpj": "97.332.462/0001-48",
+      "assistenciaTelefone": "(68) 2982-6062",
+      "assistenciaTermos": "true",
+      "administradorId": "f83e",
+      "isValido": true,
+      "id_endereco": "da45"
     }
   ],
   "endereco": [
@@ -169,6 +195,24 @@
       "gia": "",
       "ddd": "66",
       "siafi": "8985"
+    },
+    {
+      "id": "da45",
+      "zipcode": "69919-817",
+      "localidade": "Rio Branco",
+      "bairro": "Conjunto Tucumã",
+      "logradouro": "Rua N2",
+      "uf": "AC",
+      "number": "167",
+      "complemento": "CASA",
+      "cep": "69919-817",
+      "unidade": "",
+      "estado": "Acre",
+      "regiao": "Norte",
+      "ibge": "1200401",
+      "gia": "",
+      "ddd": "68",
+      "siafi": "0139"
     }
   ],
   "dispositivo": [
