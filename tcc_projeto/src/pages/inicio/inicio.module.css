@@ -5,6 +5,306 @@
   font-family: "Segoe UI", sans-serif;
 }
 
+:root {
+  --primary: #034c8c;
+  --primary-soft: #0a67aa;
+  /* Cor suave derivada do azul principal */
+  --black: #000000;
+  --white: #ffffff;
+  --highlight-blue: #9bd0ff;
+  --highlight-yellow: #fce63d;
+  --gray-light: #f5f5f5;
+}
+
+/* ===== Estrutura geral ===== */
+.pageWrapper {
+  background-color: var(--white);
+  color: var(--black);
+  font-family: "Segoe UI", sans-serif;
+}
+
+h3 {
+  font-size: 2.2rem;
+  color: var(--primary);
+  font-weight: 700;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+h3::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--highlight-yellow);
+  margin-top: 8px;
+  border-radius: 2px;
+}
+
+.sectionTitle {
+  text-align: center;
+}
+
+/* ===== Hero Section ===== */
+.heroSection {
+  background: linear-gradient(
+      rgba(144, 183, 216, 0.75),
+      rgba(144, 183, 216, 0.75)
+    ),
+    url("https://images.pexels.com/photos/955395/pexels-photo-955395.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2")
+      center/cover no-repeat;
+  min-height: 95vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px 0;
+}
+
+.heroContent {
+  position: relative;
+  color: var(--primary);
+}
+
+.heroContent h2 {
+  position: relative;
+}
+
+.heroContent h2::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 4px;
+  background-color: var(--highlight-yellow);
+  border-radius: 2px;
+}
+
+.heroContent p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.imgConnect {
+  width: 550px;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.primaryButton {
+  background-color: var(--highlight-yellow);
+  color: var(--black);
+  border: none;
+  font-size: 1.3rem;
+}
+
+.primaryButton:hover {
+  background-color: #e6d434;
+}
+
+.secondaryButton {
+  background-color: var(--highlight-blue);
+  color: var(--black);
+  border: none;
+}
+
+.secondaryButton:hover {
+  background-color: #7ec0f9;
+}
+
+.imagePlaceholder {
+  background-image: url("https://images.pexels.com/photos/9242887/pexels-photo-9242887.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 250px;
+  background-color: #9bd0ff;
+  border-radius: 16px;
+}
+
+/* ===== About Section ===== */
+.aboutSection {
+  background-image: url("/backgrounds/image.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 95vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px 0;
+
+  color: var(--black);
+}
+
+.aboutSection .row {
+  align-items: stretch;
+}
+
+.aboutSectionContent {
+  background-color: rgba(255, 255, 255, 0.65);
+  border-radius: 12px;
+  padding: 23px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+}
+
+.aboutSection p {
+  font-size: 1.2rem;
+  max-width: 500px;
+}
+
+.rowWithGap {
+  gap: 20px;
+}
+
+.card {
+  background-color: var(--white);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+}
+
+.card h4 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.benefitsList {
+  list-style: none;
+  padding: 0;
+}
+
+.benefitsList li {
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.benefitsList li::before {
+  position: absolute;
+  left: 0;
+}
+
+/* ===== How It Works Section ===== */
+.howItWorks {
+  background-color: var(--gray-light);
+  padding: 30px 0;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px 0;
+  font-size: 1.2rem;
+}
+
+.howItWorks .card {
+  text-align: center;
+  gap: 20px;
+}
+
+.rowWithGap {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+/* ===== Why Section ===== */
+.why {
+  background-color: var(--white);
+  padding: 30px 0;
+}
+
+.benefits {
+  list-style: none;
+  padding: 0;
+}
+
+.benefits li {
+  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+/* ===== Testimonials ===== */
+.testimonials {
+  background-image: url("/backgrounds/image.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 30px 0;
+  text-align: center;
+}
+
+.sectionTitleTestimonials {
+  font-size: 2.2rem;
+  color: var(--white);
+  font-weight: 700;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.sectionTitleTestimonials::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--highlight-yellow);
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+.testimonialCard {
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 16px;
+  background-color: var(--white);
+  padding: 30px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.testimonialText {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--black);
+}
+
+.testimonialAuthor {
+  margin-top: 1rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
 h4 {
   font-size: 1.8rem;
   color: var(--primary);
@@ -94,9 +394,12 @@ h4 {
 
 .relatoriosSection {
   /* background-image: url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"); */
-  background: linear-gradient(rgba(144, 183, 216, 0.75),
-      rgba(144, 183, 216, 0.55)),
-    url("https://images.pexels.com/photos/4705635/pexels-photo-4705635.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") center/cover no-repeat;
+  background: linear-gradient(
+      rgba(144, 183, 216, 0.75),
+      rgba(144, 183, 216, 0.55)
+    ),
+    url("https://images.pexels.com/photos/4705635/pexels-photo-4705635.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+      center/cover no-repeat;
   min-height: 100vh;
   min-width: 100%;
   display: flex;
@@ -106,9 +409,12 @@ h4 {
 }
 
 .demandaSection {
-  background: linear-gradient(rgba(255, 255, 255, 0.75),
-      rgba(197, 201, 204, 0.55)),
-    url("https://images.pexels.com/photos/9242901/pexels-photo-9242901.jpeg") center/cover no-repeat;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.75),
+      rgba(197, 201, 204, 0.55)
+    ),
+    url("https://images.pexels.com/photos/9242901/pexels-photo-9242901.jpeg")
+      center/cover no-repeat;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -121,9 +427,12 @@ h4 {
 }
 
 .assistenciaSection {
-  background: linear-gradient(rgba(121, 121, 121, 0.75),
-      rgba(144, 183, 216, 0.55)),
-    url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") center/cover no-repeat;
+  background: linear-gradient(
+      rgba(121, 121, 121, 0.75),
+      rgba(144, 183, 216, 0.55)
+    ),
+    url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+      center/cover no-repeat;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

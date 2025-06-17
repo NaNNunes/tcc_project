@@ -1,4 +1,3 @@
-
 import {
   Container,
   Card,
@@ -8,11 +7,11 @@ import {
   Image,
   Carousel,
 } from "react-bootstrap";
-import styles from "./home.module.css";
+import styles from "./inicio.module.css";
 
 import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const InicioDeslog = () => {
   const navigate = useNavigate();
 
   const goEscolha = () => {
@@ -36,10 +35,7 @@ const Home = () => {
                 rápida, segura e prática.
               </p>
               <div className={styles.buttons}>
-                <Button
-                  className={styles.primaryButton}
-                  onClick={goEscolha}
-                >
+                <Button className={styles.primaryButton} onClick={goEscolha}>
                   Veja aqui as melhores opções para você
                 </Button>
               </div>
@@ -170,9 +166,8 @@ const Home = () => {
       </section>
 
       {/* Footer */}
-      
     </div>
   );
 };
 
-export default Home;
+export default InicioDeslog;
