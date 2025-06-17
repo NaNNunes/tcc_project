@@ -39,7 +39,8 @@ const PerguntaSeguranca = () => {
     inserirPerguntaResposta(data);
 
     // casos user solicitante, abre tela de endereco, senao tela de cadastro de assistencia
-    const userType = localStorage.getItem("userType") ;
+    // TROQUEI de "userType" PARA "tipoUsuario"
+    const userType = localStorage.getItem("tipoUsuario") ;
     if(userType === "solicitante"){
       navigate("/cadastro-endereco")
     }

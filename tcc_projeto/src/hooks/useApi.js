@@ -276,7 +276,8 @@ export function useUser(){
     // cadastra user
     const cadastrarInfosUser = async (data) => {
         // define o tipo de user
-        const user = localStorage.getItem("userType");
+        // TROQUE DE "userType" para "tipoUsuario".
+        const user = localStorage.getItem("tipoUsuario");
 
         const request = await fetch(`${url}/${user}`,{
             method:"POST",

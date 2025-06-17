@@ -18,15 +18,18 @@ const SelecaoUsuario = () => {
 
   const handleCardClick = (type) => {
     // nao funciona 
-    (
-      (type === "solicitante")
-      ? setSelectedUserType("solicitante")
-      : setSelectedUserType("administrador")
-    )
+    // (
+    //   (type === "solicitante")
+    //   ? setSelectedUserType("solicitante")
+    //   : setSelectedUserType("administrador")
+    // )
     
     // funciona
     // coloca tipo de user no localstorage pelo context
-    setType(type);
+    // setType(type);
+
+    // Coloquei em um localStorage diferente para não dar conflito com o userType.
+    localStorage.setItem("tipoUsuario", type);
 
     navigate("/cadastro");
   };

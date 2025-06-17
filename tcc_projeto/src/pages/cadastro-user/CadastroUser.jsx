@@ -44,7 +44,9 @@ const CadastroUser = () => {
   const onSubmit = async(data) => {
     
     // há maneira melhor de definir essa limitação
-    const userType = localStorage.getItem("userType");
+    
+    // TROQUEI de "userType" PARA "tipoUsuario"
+    const userType = localStorage.getItem("tipoUsuario");
     if (userType !== "solicitante" && userType !== "administrador") {
       alert("Defina um tipo de user");
       return false;

@@ -43,6 +43,7 @@ const categoriaDispositivo = () => {
 
     const userId = localStorage.getItem("userId");
     const userType = localStorage.getItem("userType");
+
     if(userType != "administrador" && userType != "solicitante") return navigate("/login");
     
     const {
@@ -57,6 +58,8 @@ const categoriaDispositivo = () => {
     const {cadastrarPseudoUser} = useUser();
     const [assistencias, setAssistencias] = useState([]);
 
+    console.log(assistencias)
+
     // lista para receber assistencias vinculadas ao user, pelo match caso solicitante ou que possuam o id do adm, caso adm
     const listaAssistencias = [];
 
@@ -68,16 +71,26 @@ const categoriaDispositivo = () => {
 
         // mapeia todas os matchs e retorna nome da assistencia pelo id encontrado no match
         // pegar assitencias apenas com que seja favoritadas pelo user, verificando o id do solicitante no match
-        response.map(async (res)=>{
-            if(res.id_solicitante === localStorage.getItem("userId")){
-                const assistencia = await buscaAssistenciaById(res.id_assistencia);
-                listaAssistencias.push(assistencia);
-            }
-        })
-        setAssistencias(listaAssistencias);
+
+        // Não funciona
+        // response.map(async (res)=>{
+        //     if(res.id_solicitante === localStorage.getItem("userId")){
+        //         const assistencia = await buscaAssistenciaById(res.id_assistencia);
+        //         listaAssistencias.push(assistencia);
+        //     }
+        // })
+        
+        const assistenciasFavoritadas = await Promise.all(
+            response
+                .filter(res => res.id_solicitante === userId)
+                .map(res => buscaAssistenciaById(res.id_assistencia))
+        );
+        // setAssistencias(listaAssistencias);
+        setAssistencias(assistenciasFavoritadas);
     }
 
-    // busca todas assistencias
+    // busca todas assistencias do administrador
+
     const buscaAssistenciasDoAdministrador = async()=>{
         const request = await fetch(`${url}/assistencia`);
         const response = await request.json();
@@ -90,6 +103,7 @@ const categoriaDispositivo = () => {
         })
 
         setAssistencias(listaAssistencias);
+        console.log("Assistências carregadas:", listaAssistencias);
     }
 
     const {cadastrarDispositivo, cadastrarDemanda} = useDemanda();
@@ -100,13 +114,13 @@ const categoriaDispositivo = () => {
     // Estados do modal.
     const [mostrarModal, setMostrarModal] = useState(false);
     // temporario 
-    (mostrarModal === true) && buscaAssistenciasDoAdministrador();
+    // (mostrarModal === true) && buscaAssistenciasDoAdministrador();
 
     // Dados do Form temporários.
     const [dadosTemporarios, setDadosTemporarios] = useState(null);
 
     // Assistência pre-selecionada como público.
-    const [atSelecionada, setAtSelecionada] = useState("");
+    const [atSelecionada, setAtSelecionada] = useState("Público");
 
     // Formato do CPF.
     const formatarCPF = (cpf) => {
@@ -849,7 +863,6 @@ const categoriaDispositivo = () => {
                 </Container>
                 
                 <Row style={{paddingTop: '20px', margin: '0px'}}>
-
                     <FloatingLabel
                         controlId='AssistenciaInput'
                         label='Enviar'
@@ -867,7 +880,7 @@ const categoriaDispositivo = () => {
                                 (userType === "solicitante")
                                     ?
                                         <>
-                                            <option value="Público" selected>
+                                            <option value="Público">
                                                 Enviar como público
                                             </option>
 
