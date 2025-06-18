@@ -16,6 +16,7 @@ import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { BsClipboardCheck } from "react-icons/bs";
 import { HiOutlineUsers } from "react-icons/hi";
 import { LuClipboardCheck, LuClipboardCopy } from "react-icons/lu";
+import { GrFavorite } from "react-icons/gr";
 import styles from "./inicio.module.css";
 
 const InicioSolic = () => {
@@ -119,118 +120,87 @@ const InicioSolic = () => {
               </Row>
 
               <Row className="justify-content-center">
-                {/* Dropdown de Demandas */}
-                <div className={styles.divNavdropdown}>
-                  <NavDropdown
-                    id="dropdown-demandas-solicitante"
-                    show={openDropdown === "demandas-solicitante"}
-                    onToggle={(isOpen) =>
-                      setOpenDropdown(isOpen ? "demandas-solicitante" : null)
-                    }
-                    className={`${
-                      openDropdown === "demandas-solicitante"
-                        ? styles.dropDownActive
-                        : ""
-                    }`}
-                    title={
-                      <span className={styles.dropDownTitle}>
-                        Demandas{" "}
-                        {openDropdown === "demandas-solicitante" ? (
-                          <TiArrowSortedUp />
-                        ) : (
-                          <TiArrowSortedDown />
-                        )}
-                      </span>
-                    }
-                  >
-                    <NavDropdown.Item
-                      as={Button}
+                <Col xs="auto">
+                  <div className={styles.botoesWrapper}>
+                    {/* Demandas */}
+                    <Button
+                      className={styles.botaoTexto}
                       onClick={() => navigate("/criar-pedido")}
-                      className={styles.dropdownItem}
                     >
-                      <Image
-                        className={styles.icone}
-                        src="/icons/Icon_pedido.svg"
-                      />
-                      Criar Novo Pedido
-                    </NavDropdown.Item>
+                      <div className={styles.iconeWrapper}>
+                        <Image
+                          className={styles.icone}
+                          src="/icons/Icon_pedido.svg"
+                        />
+                      </div>
+                      <div className={styles.textoWrapper}>
+                        Criar Novo Pedido
+                      </div>
+                    </Button>
 
-                    <NavDropdown.Item
-                      as={Button}
+                    <Button
+                      className={styles.botaoTexto}
                       onClick={() =>
                         navigate("/procurar-demandas/minhas-demandas")
                       }
-                      className={styles.dropdownItem}
                     >
-                      <Image
-                        className={styles.icone}
-                        src="/icons/Icon_consultar.svg"
-                      />
-                      Minhas Demandas
-                    </NavDropdown.Item>
+                      <div className={styles.iconeWrapper}>
+                        <Image
+                          className={styles.icone}
+                          src="/icons/Icon_consultar.svg"
+                        />
+                      </div>
+                      <div className={styles.textoWrapper}>Minhas Demandas</div>
+                    </Button>
 
-                    <NavDropdown.Item
-                      as={Button}
+                    <Button
+                      className={styles.botaoTexto}
                       onClick={() => navigate("/procurar-demandas/historico")}
-                      className={styles.dropdownItem}
                     >
-                      <Image
-                        className={styles.icone}
-                        src="/icons/history.svg"
-                      />
-                      Histórico Completo
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </div>
+                      <div className={styles.iconeWrapper}>
+                        <Image
+                          className={styles.icone}
+                          src="/icons/history.svg"
+                        />
+                      </div>
+                      <div className={styles.textoWrapper}>
+                        Histórico Completo
+                      </div>
+                    </Button>
 
-                {/* Dropdown de Assistências */}
-                <div className={styles.divNavdropdown}>
-                  <NavDropdown
-                    id="dropdown-assistencias-solicitante"
-                    show={openDropdown === "assistencias-solicitante"}
-                    onToggle={(isOpen) =>
-                      setOpenDropdown(
-                        isOpen ? "assistencias-solicitante" : null
-                      )
-                    }
-                    className={`${
-                      openDropdown === "assistencias-solicitante"
-                        ? styles.dropDownActive
-                        : ""
-                    }`}
-                    title={
-                      <span className={styles.dropDownTitle}>
-                        Assistências
-                        {openDropdown === "assistencias-solicitante" ? (
-                          <TiArrowSortedUp />
-                        ) : (
-                          <TiArrowSortedDown />
-                        )}
-                      </span>
-                    }
-                  >
-                    <NavDropdown.Item
-                      as={Button}
+                    {/* Assistências */}
+                    <Button
+                      className={styles.botaoTexto}
                       onClick={() => navigate("/buscar-assistencias/todas")}
-                      className={styles.dropdownItem}
                     >
-                      <Image
-                        className={styles.icone}
-                        src="/icons/location_on.svg"
-                      />
-                      Encontrar Assistências
-                    </NavDropdown.Item>
+                      <div className={styles.iconeWrapper}>
+                        <Image
+                          className={styles.icone}
+                          src="/icons/location_on.svg"
+                        />
+                      </div>
+                      <div className={styles.textoWrapper}>
+                        Encontrar Assistências
+                      </div>
+                    </Button>
 
-                    <NavDropdown.Item
-                      as={Button}
+                    <Button
+                      className={styles.botaoTexto}
                       onClick={() => navigate("/buscar-assistencias/favoritas")}
-                      className={styles.dropdownItem}
                     >
-                      <Image className={styles.icone} src="/icons/star.svg" />
-                      Minhas Favoritas
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </div>
+                      <div className={styles.iconeWrapper}>
+                        <GrFavorite
+                          className={styles.icone}
+                          color="#ffffff"
+                          size="2rem"
+                        />
+                      </div>
+                      <div className={styles.textoWrapper}>
+                        Minhas Favoritas
+                      </div>
+                    </Button>
+                  </div>
+                </Col>
               </Row>
             </Card>
           </div>
