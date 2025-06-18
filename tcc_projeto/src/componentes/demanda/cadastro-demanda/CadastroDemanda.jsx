@@ -350,7 +350,7 @@ const categoriaDispositivo = () => {
         // cadastrar dispositivo
         const idDispostivo = await cadastrarDispositivo(dispositivo);
         
-        const statusPadrao = (userType === "solicitante") ? "aberto" : "Em atendimento"
+        const statusPadrao = (userType === "solicitante") ? "Aberto" : "Em atendimento"
         
         // separando dados de demanda
         const infosDemanda = {

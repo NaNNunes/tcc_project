@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom";
 const ProcurarDemandas = () => {
   const navigate = useNavigate();
   const {tipoDemanda} = useParams();
+  console.log(tipoDemanda)
   // parametros
     // ADM
       // aceitas -> vinculada a assistencia de status 
@@ -47,6 +48,8 @@ const ProcurarDemandas = () => {
         const reqBuscaDemandas = await fetch(`${url}/demanda`);
         const resBuscaDemandas = await reqBuscaDemandas.json();
 
+        console.log(resBuscaDemandas);
+
         // caso user seja solicitante
         // lista apenas demandas emitidas por ele independente de status
         if(userType === "solicitante" && tipoDemanda === "minhas-demandas"){
@@ -74,7 +77,7 @@ const ProcurarDemandas = () => {
     
             // mapeamento de demandas para encontrar apenas demandas publicas e definí-las
             resBuscaDemandas.map((demanda)=>{
-              if(demanda.assistencia === "Público" && demanda.status != "Cancelada"){
+              if(demanda.assistencia === "Público" && demanda.status === "Aberto"){
                 listaDemandasPublicas.push(demanda)
               }
             })
@@ -102,12 +105,17 @@ const ProcurarDemandas = () => {
 
           // mostrar todas as demandas que ja foram atribuidas as assistencias independente de status
           if(tipoDemanda === "historico"){
-            resBuscaDemandas.map((demanda)=>{
+            resBuscaDemandas.map((demanda) =>{
               listaIdAssistencias.map((idAssistencia)=>{
-                (demanda.assistencia === idAssistencia)&&
-                  listaDemandasAssistenciasDoAdministrador.push(demanda);
+                const isDemandaVinculada = demanda.assistencia === idAssistencia;
+                // const statusAberto = demanda.status === "Aberto";
+                const statusEmAndamento = demanda.status === "Cancelada" || demanda.status === "Concluido";
+                // Removi statusAberto ||
+                (isDemandaVinculada && statusEmAndamento) &&
+                listaDemandasAssistenciasDoAdministrador.push(demanda);
               })
-            })
+            });
+            // console.log(listaDemandasAssistenciasDoAdministrador);
             return setDemandas(listaDemandasAssistenciasDoAdministrador);
           }
           
@@ -118,13 +126,14 @@ const ProcurarDemandas = () => {
             resBuscaDemandas.map((demanda) =>{
               listaIdAssistencias.map((idAssistencia)=>{
                 const isDemandaVinculada = demanda.assistencia === idAssistencia;
-                const statusAberto = demanda.status === "Aberto";
+                // const statusAberto = demanda.status === "Aberto";
                 const statusEmAndamento = demanda.status === "Em atendimento";
-                (isDemandaVinculada && (statusAberto || statusEmAndamento)) &&
+                // Removi statusAberto ||
+                (isDemandaVinculada && statusEmAndamento) &&
                 listaDemandasAssistenciasDoAdministrador.push(demanda);
               })
             });
-            console.log(listaDemandasAssistenciasDoAdministrador);
+            // console.log(listaDemandasAssistenciasDoAdministrador);
             return setDemandas(listaDemandasAssistenciasDoAdministrador);
             // console.log("demandas atribuidas:",listaIdDemandasAssistenciasDoAdministrador);
           }
