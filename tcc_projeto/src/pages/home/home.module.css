@@ -97,7 +97,11 @@ h3::after {
   background-color: var(--highlight-yellow);
   color: var(--black);
   border: none;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+  width: 30rem;
+  border: 0;
+  height: 50px;
+  font-weight: bold;
 }
 
 .primaryButton:hover {
