@@ -8,13 +8,13 @@ import Col from 'react-bootstrap/Col'
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useUser, useCadastroAssistencia } from '../../hooks/useApi';
+import { useUser, useAssistencia } from '../../hooks/useApi';
 
 const EditarPag = (props) => {
     const idAssistencia = props.id_assistencia;
 
     const {register, handleSubmit, formState:{error}} = useForm();
-    const {inserirValidacaoAssistencia} = useCadastroAssistencia();
+    const {inserirValidacaoAssistencia} = useAssistencia();
     const {inserirValidacao, verificaSenhaInformada} = useUser();
     const [liberaCampoSenha, setLiberaCampoSenha] = useState(false);
 

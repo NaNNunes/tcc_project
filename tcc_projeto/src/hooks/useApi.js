@@ -629,8 +629,17 @@ export function useEndereco(){
 }
 
 // cadastra assistencia
-export function useCadastroAssistencia(){
+export function useAssistencia(){
 
+    // Lista todas as assistencias
+    const buscaAssistencias = async() =>{
+        const request = await fetch(`${url}/assistencia`);
+        const response = await request.json();
+
+        return response;
+    }
+
+    // Busca assistencia pelo id
     const buscaAssistenciaById = async (id) =>{
         const request = await fetch(`${url}/assistencia/${id}`);
         const response = await request.json();
@@ -679,6 +688,7 @@ export function useCadastroAssistencia(){
     }
 
     return {
+        buscaAssistencias,
         buscaAssistenciaById,
         inserirAssistencia,
         inserirValidacaoAssistencia

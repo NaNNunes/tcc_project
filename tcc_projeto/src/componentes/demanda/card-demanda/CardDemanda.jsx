@@ -3,6 +3,8 @@ import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Form from 'react-bootstrap/Form';
 
 // Importação de styles.
 import styles from './CardDemanda.module.css';
@@ -24,37 +26,120 @@ import ImgCelular from '/icons/img_card_celular.png';
 import ImgNotebook from '/icons/img_card_notebook.png';
 import ImgPerifericos from '/icons/img_card_perifericos.png';
 
-import { useEffect, useState } from 'react';
-import {useDemanda} from "../../../hooks/useApi.js";
+import { use, useEffect, useState } from 'react';
+import { useDemanda, useAssistencia } from "../../../hooks/useApi.js";
+import { useParams } from 'react-router-dom';
 
 const CardDemanda = (props) => {
 
-    const {defineIdAssistencia} = useDemanda();
+    // pega informação passada na url sobre o tipo da demanda procurada
+    const {tipoDemanda} = useParams();
+    // funcao que busca assistencia responsavel pela demanda como o id registrado da mesma na demanda
+    const { defineIdAssistencia } = useDemanda();
+    const { buscaAssistencias } = useAssistencia()
 
+    // declarando variaveis de acordo com props
+    // infos do buscador
     const userBuscador = props.userBuscador;
-    
+    const idBuscador = props.idBuscador
+
     const idResponsavel = props.idResponsavel;
     const idDispostivo = props.idDispostivo;
-    
-    const idAssistencia = props.dominioDemanda;
-
-    const url = import.meta.env.VITE_API_URL;
-
-    const tela = "procurar_demandas";
+    const idAssistencia = props.idAssistenciaResponsavel;
     
     // Estados do modal.
     const [mostrarModal, setMostrarModal] = useState(false);
-
     // assistencia que será responsável pela demanda, definido pelo adm
-    const [assistenciaSelecionada, setAssistenciaSelecionada] = useState(undefined);
-    // SÓ FAZER O CÓDIGO DE "HANDLEACEITAR" E ATRIBUIR AO BOTÃO
-    const botaoAceitarDemanda = (
-        <>
+    const [assistenciaSelecionada, setAssistenciaSelecionada] = useState("");
+    // lista de assistencias do adm
+    const [assistenciasDoAdministrador, setAssistenciasDoAdministrador] = useState([]);
+    // endereco do solicitante emissor da demanda
+    const [endereco, setEndereco] = useState({});
+    // dispositivo que a demanda se refere
+    const [dispositivo, setDispositivo] = useState({});
+
+    // url para consulta no banco
+    const url = import.meta.env.VITE_API_URL;
+
+    // busca dados de solicitante, endereco e dispositivo
+    useEffect(()=>{
+        async function fetchData() {
+            try {
+                // caso buscador seja adm, salvará todas as assistencias do mesmo
+                // para que selecione qual assistencia será responsável pela demanda
+                if(userBuscador === "administrador"){
+                    const listaAssistenciasAdministrador = [];
+
+                    const assistencias = await buscaAssistencias();
+                    assistencias.map((assistencia)=>{
+                        if(assistencia.administradorId === idBuscador){
+                            listaAssistenciasAdministrador.push(assistencia);
+                        }
+                    });
+                    setAssistenciasDoAdministrador(listaAssistenciasAdministrador);
+                }
+
+                // busca de dados do solicitante
+                // busca solicitante by id
+                const reqBuscaSolicitanteById = await fetch(`${url}/solicitante/${idResponsavel}`);
+                const resBuscaSolicitanteById = await reqBuscaSolicitanteById.json();
+
+                // id do endereco
+                const idEndereco = resBuscaSolicitanteById.id_endereco;
+                
+                // buscar endereco do user by id
+                if(idEndereco != undefined){
+                    const reqBuscaEnderecoSolicitanteById = await fetch(`${url}/endereco/${idEndereco}`);
+                    const resBuscaEnderecoSolicitanteById = await reqBuscaEnderecoSolicitanteById.json();
+                    setEndereco(resBuscaEnderecoSolicitanteById);
+                }
+
+                //buscar dispositivo do user by id
+                const reqBuscaDispositivoSolicitanteById = await fetch(`${url}/dispositivo/${idDispostivo}`);
+                const resBuscaDispositivoSolicitanteById = await reqBuscaDispositivoSolicitanteById.json();
+                setDispositivo(resBuscaDispositivoSolicitanteById);
+
+            } catch (error) {
+                console.log(error)
+            }
+        };
+        fetchData();
+    },[]);
+
+    // COMPONENTES
+    // botao para selecionar qual assistencia recebera a demanda
+    const aceitarDemanda = (
+        <> 
+            <FloatingLabel>
+                <Form.Select
+                    onChange={(e)=>{setAssistenciaSelecionada(e.target.value)}}
+                >
+                    <option value="" selected disabled>
+                        Selecione uma opção
+                    </option>
+                    {
+                        // mapear todas as assistencias do adm 
+                        // para que o mesmo defina qual assistencia será responsavel
+                        assistenciasDoAdministrador.map((assistencia)=>(
+                            <>
+                                <option 
+                                    key={assistencia.id}
+                                    value={assistencia.id}
+                                >
+                                    {assistencia.nomeFantasia}
+                                </option>
+                            </>
+                        ))
+                    }
+                </Form.Select>
+            </FloatingLabel>
+
             <Button 
                 className={styles.botaoModal}
+                disabled={assistenciaSelecionada === ""}
                 onClick={()=>{
                     if(mostrarModal != undefined){
-                        defineIdAssistencia(props.id, /*id da assistencias selecionada */);
+                        defineIdAssistencia(props.id, assistenciaSelecionada);
                     }
                 }}
             >
@@ -62,12 +147,25 @@ const CardDemanda = (props) => {
             </Button>
         </>
     )
-
+    // botao para fechar o modal
+    const botaoFecharModalDeInfosDemanda = (
+        <>
+            <Button 
+                className={styles.botaoModal}
+                onClick={()=>{setMostrarModal(false)}}
+            >
+                Fechar
+            </Button>
+        </>
+    )
+    // define como sera a composição do botao do modal
     const botoes = {
-        procurar_demandas: botaoAceitarDemanda,
+        "abertas": aceitarDemanda,
+        "minhas-demandas": botaoFecharModalDeInfosDemanda,
+        "aceitas":"Gerar orçamento"
     }
-
-    const mainBotao = botoes[tela]
+    // O Botão
+    const mainBotao = botoes[tipoDemanda]
 
     const imgCategoria = (categoria) => {
         switch ((categoria || '').toLowerCase()) {
@@ -99,40 +197,6 @@ const CardDemanda = (props) => {
                 return '#FF3B30'; // se estiver em cancelado, retorna vermelho
         }
     }
-
-    const [endereco, setEndereco] = useState({});
-    const [dispositivo, setDispositivo] = useState({});
-
-    // busca dados de solicitante, endereco e dispositivo
-    useEffect(()=>{
-        async function fetchData() {
-            try {
-                // busca de dados do solicitante
-                // busca solicitante by id
-                const reqBuscaSolicitanteById = await fetch(`${url}/solicitante/${idResponsavel}`);
-                const resBuscaSolicitanteById = await reqBuscaSolicitanteById.json();
-
-                // id do endereco
-                const idEndereco = resBuscaSolicitanteById.id_endereco;
-                
-                // buscar endereco do user by id
-                if(idEndereco != undefined){
-                    const reqBuscaEnderecoSolicitanteById = await fetch(`${url}/endereco/${idEndereco}`);
-                    const resBuscaEnderecoSolicitanteById = await reqBuscaEnderecoSolicitanteById.json();
-                    setEndereco(resBuscaEnderecoSolicitanteById);
-                }
-
-                //buscar dispositivo do user by id
-                const reqBuscaDispositivoSolicitanteById = await fetch(`${url}/dispositivo/${idDispostivo}`);
-                const resBuscaDispositivoSolicitanteById = await reqBuscaDispositivoSolicitanteById.json();
-                setDispositivo(resBuscaDispositivoSolicitanteById);
-
-            } catch (error) {
-                console.log(error)
-            }
-        };
-        fetchData();
-    },[])
 
   return (
     // Div com todo o card.

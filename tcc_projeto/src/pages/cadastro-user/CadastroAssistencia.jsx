@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
   useVerificadorDeCnpj,
-  useCadastroAssistencia,
+  useAssistencia,
   useComparaDados,
 } from "../../hooks/useApi";
 
@@ -28,7 +28,7 @@ const CadastroAssistencia = () => {
 
   const navigate = useNavigate();
 
-  const { inserirAssistencia } = useCadastroAssistencia();
+  const { inserirAssistencia } = useAssistencia();
   const { verificador } = useVerificadorDeCnpj();
   const {
     verificaEmailDeAdms,

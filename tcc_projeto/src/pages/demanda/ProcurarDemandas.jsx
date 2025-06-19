@@ -14,7 +14,6 @@ import { useNavigate, useParams } from "react-router-dom";
 const ProcurarDemandas = () => {
   const navigate = useNavigate();
   const {tipoDemanda} = useParams();
-  console.log(tipoDemanda)
   // parametros
     // ADM
       // aceitas -> vinculada a assistencia de status 
@@ -47,8 +46,6 @@ const ProcurarDemandas = () => {
         // busca todas as demandas
         const reqBuscaDemandas = await fetch(`${url}/demanda`);
         const resBuscaDemandas = await reqBuscaDemandas.json();
-
-        console.log(resBuscaDemandas);
 
         // caso user seja solicitante
         // lista apenas demandas emitidas por ele independente de status
@@ -168,15 +165,20 @@ const ProcurarDemandas = () => {
               demandasParaMostrar.map((demanda) => (
                 // passar props informando qual é o user que está acessando a page, para request no componente de card demanda
                 <CardDemanda
-                  key={demanda.id} 
-                  id={demanda.id}
-                  idResponsavel={demanda.solicitante_id} // id do emissor da demanda
-                  idDispostivo={demanda.idDispostivo}
-                  descricao={demanda.descProblema}
-                  observacoes={demanda.observacoes}
-                  dataEmissao={demanda.dataEmissao}
-                  status={demanda.status}
-                  dominioDemanda={demanda.assistencia} // mostrar em algum lugar do card
+                  key = {demanda.id}
+                  // ids 
+                  id = {demanda.id}
+                  idResponsavel = {demanda.solicitante_id} // id do emissor da demanda
+                  idDispostivo = {demanda.idDispostivo} 
+                  idAssistenciaResponsavel = {demanda.assistencia} // id assistencia responsavel pela demanda
+                  // infos da demanda
+                  descricao = {demanda.descProblema}
+                  observacoes = {demanda.observacoes}
+                  dataEmissao = {demanda.dataEmissao}
+                  status = {demanda.status}
+                  // user buscador da demanda
+                  userBuscador = {userType} // tipo de user que está buscando demandas
+                  idBuscador = {userId}
                 />
               ))
           ) :

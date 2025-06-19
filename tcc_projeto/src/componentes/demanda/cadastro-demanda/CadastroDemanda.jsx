@@ -32,7 +32,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 // hooks json-server
-import { useDemanda, useCadastroAssistencia, useVerificadorDeCpf, useUser} from '../../../hooks/useApi';
+import { useDemanda, useAssistencia, useVerificadorDeCpf, useUser} from '../../../hooks/useApi';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -54,7 +54,7 @@ const categoriaDispositivo = () => {
         formState: {errors},
     } = useForm();
 
-    const {buscaAssistenciaById} = useCadastroAssistencia();
+    const {buscaAssistenciaById} = useAssistencia();
     const {cadastrarPseudoUser} = useUser();
     const [assistencias, setAssistencias] = useState([]);
 
