@@ -56,7 +56,8 @@ const CardDemanda = (props) => {
 
     const idResponsavel = props.idResponsavel;
     const idDispostivo = props.idDispostivo;
-    const idAssistencia = props.idAssistenciaResponsavel;
+    // para mostrar qual assistencia está responsável pela demanda
+    const idAssistencia = props.idAssistenciaResponsavel; 
     
     // Estados do modal.
     const [mostrarModal, setMostrarModal] = useState(false);
@@ -64,13 +65,12 @@ const CardDemanda = (props) => {
     const [assistenciaSelecionada, setAssistenciaSelecionada] = useState("");
     // lista de assistencias do adm
     const [assistenciasDoAdministrador, setAssistenciasDoAdministrador] = useState([]);
-    // endereco do solicitante emissor da demanda
-    const [endereco, setEndereco] = useState({});
     // dispositivo que a demanda se refere
     const [dispositivo, setDispositivo] = useState({});
-
-    // url para consulta no banco
-    const url = import.meta.env.VITE_API_URL;
+    // endereco do solicitante emissor da demanda
+    const [endereco, setEndereco] = useState({});
+    // dados do solicitante
+    const [solicitante, setSolicitante] = useState({});
 
     // busca dados de solicitante, endereco e dispositivo
     useEffect(()=>{
@@ -95,6 +95,7 @@ const CardDemanda = (props) => {
                 // Busca de dados do solicitante
                 // busca solicitante by id
                 const resBuscaSolicitanteById = await buscaUserById("solicitante" , idResponsavel);
+                setSolicitante(resBuscaSolicitanteById);
                 // id do endereco do solicitante
                 const idEndereco = resBuscaSolicitanteById.id_endereco;
                 
@@ -234,19 +235,27 @@ const CardDemanda = (props) => {
                             fluid 
                             className={styles.ContPerfCat}
                         >
-                            {/* Perfil do solicitante */}
-                            <div style={{display: 'flex', flexDirection: 'column'}}>
-                                <div className={styles.circuloPerfil}>
-                                    <FaUser size={40}/>  
-                                </div>
-                                <span className={styles.textoCard}>{props.body}NOME</span>
-                            </div>
+                                {
+                                    // Perfil do solicitante
+                                    (userBuscador === "administrador") &&
+                                        <div style={{display: 'flex', flexDirection: 'column'}}>
+                                            <div className={styles.circuloPerfil}>
+                                                <FaUser size={40}/>  
+                                            </div>
+                                            <span className={styles.textoCard}>
+                                                {/* 
+                                                    nao entendi 
+                                                    props.body
+                                                */}
+                                                {solicitante.nome}
+                                            </span>
+                                        </div>
+                                }
 
                             {/* Categoria da demanda */}
                             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
                                 {imgCategoria(dispositivo.categoria)}
                                 <Card.Text className={styles.textoCard}>
-                                    
                                     {dispositivo.categoria}
                                 </Card.Text>
                             </div>

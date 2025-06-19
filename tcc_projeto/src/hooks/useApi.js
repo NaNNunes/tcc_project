@@ -711,6 +711,14 @@ export function useDemanda(){
     
     const userType = localStorage.getItem("userType");
 
+    // lista todas as demandas
+    const buscaDemandas = async() =>{
+        const request = await fetch(`${url}/demanda`);
+        const response = await request.json();
+
+        return response;
+    }
+
     // busca dispositivo pelo id
     const buscaDispositivoById = async(idDispositivo)=>{
         const request = await fetch(`${url}/dispositivo/${idDispositivo}`);
@@ -825,6 +833,7 @@ export function useDemanda(){
     }
 
     return {
+        buscaDemandas,
         buscaDispositivoById,
         cadastrarDemanda, 
         cadastrarDispositivo, 

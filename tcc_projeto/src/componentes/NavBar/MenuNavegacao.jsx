@@ -204,6 +204,12 @@ const MenuNavegacao = () => {
             as={Link}
             to="/procurar-demandas/historico"
             className={styles.dropdownItem}
+            // espera a tela carregar para atualizar a tela e ocorrer a renderização das demandas
+            onClick={() => {
+              setTimeout(() => {
+                location.reload()
+              }, 1);
+            }}
           >
             <Image className={styles.icone} src="/icons/history.svg" />
             Histórico de demandas
