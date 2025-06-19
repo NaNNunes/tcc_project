@@ -126,7 +126,7 @@ const MenuNavegacao = () => {
               }, 1);
             }}
           >
-            <GrFavorite className={styles.icone} /> Assistências Favoritas
+            <GrFavorite size={24} className={styles.icone} /> Assistências Favoritas
           </NavDropdown.Item>
         </NavDropdown>
       </div>
@@ -180,7 +180,7 @@ const MenuNavegacao = () => {
             to='/criar-pedido'
             className={styles.dropdownItem}
           >
-            <Image className={styles.icone} src='/icons/Icon_pedido.svg' />Cadastro pedido
+            <Image className={styles.icone} style={{paddingLeft: '4px'}} src='/icons/Icon_pedido.svg' />Cadastro pedido
           </NavDropdown.Item>
 
           {/* Demandas abertas */}
@@ -207,41 +207,6 @@ const MenuNavegacao = () => {
           >
             <Image className={styles.icone} src="/icons/history.svg" />
             Histórico de demandas
-          </NavDropdown.Item>
-        </NavDropdown>
-      </div>
-
-      <div className={styles.divNavdropdown}>
-        {/* NavDropdown de "Operador" */}
-        <NavDropdown
-          id="dropdown-operador"
-          show={openDropdown === "operador"}
-          // Verifca se o NavDropdown está ativo ou não.
-          onToggle={(isOpen) => setOpenDropdown(isOpen ? "operador" : null)}
-          className={`${openDropdown === "operador" ? styles.dropDownActive : ""
-            }`}
-          title={
-            <span className={styles.dropDownTitle}>
-              {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
-              Operador{" "}
-              {openDropdown === "operador" ? (
-                <TiArrowSortedUp />
-              ) : (
-                <TiArrowSortedDown />
-              )}
-            </span>
-          }
-        >
-          {/* Adicionar operador */}
-          <NavDropdown.Item as={Link} to="#" className={styles.dropdownItem}>
-            <Image className={styles.icone} src="/icons/person_add_alt.svg" />
-            Adicionar operador
-          </NavDropdown.Item>
-
-          {/* Consultar operadores */}
-          <NavDropdown.Item as={Link} to="#" className={styles.dropdownItem}>
-            <Image className={styles.icone} src="/icons/person_search.svg" />
-            Consultar operadores
           </NavDropdown.Item>
         </NavDropdown>
       </div>
@@ -327,13 +292,20 @@ const MenuNavegacao = () => {
         <NavDropdown
           align="end"
           id="dropdown-perfil-solicitante"
+          show={openDropdown === "perfil-solicitante"}
+          onToggle={(isOpen) => setOpenDropdown(isOpen ? 'perfil-solicitante' : null)}
           title={
-            <Image
-              src="/icons/person.svg"
-              width={29}
-              height={29}
-              alt="Perfil"
-            />
+            <div>
+              <span style={{color: 'white'}}>
+                <Image
+                  src="/icons/person.svg"
+                  width={29}
+                  height={29}
+                  alt="Perfil"
+                />
+                {openDropdown === 'perfil-solicitante' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+              </span>
+            </div>
           }
           className={styles.dropDownActive}
         >
@@ -359,6 +331,7 @@ const MenuNavegacao = () => {
               width={34}
               height={24}
               src="/icons/person.svg"
+              style={{marginRight: '6px'}}
             />
             Meu perfil
           </NavDropdown.Item>
@@ -373,7 +346,7 @@ const MenuNavegacao = () => {
             }}
             className={styles.dropdownItem}
           >
-            <Image className={styles.icone} src="/icons/sair.svg" />
+            <Image className={styles.icone} style={{paddingLeft: '2px'}} src="/icons/sair.svg" />
             Sair
           </NavDropdown.Item>
         </NavDropdown>
@@ -388,14 +361,21 @@ const MenuNavegacao = () => {
         {/* MUDAR O CSS PORQUE ESTÁ FICANDO MUITO COLADO NO MENU. */}
         <NavDropdown
           align="end"
-          id="dropdown-perfil-adm"
+          id="dropdown-perfil-solicitante"
+          show={openDropdown === "perfil-solicitante"}
+          onToggle={(isOpen) => setOpenDropdown(isOpen ? 'perfil-solicitante' : null)}
           title={
-            <Image
-              src="/icons/person.svg"
-              width={29}
-              height={29}
-              alt="Perfil"
-            />
+            <div>
+              <span style={{color: 'white'}}>
+                <Image
+                  src="/icons/person.svg"
+                  width={29}
+                  height={29}
+                  alt="Perfil"
+                />
+                {openDropdown === 'perfil-solicitante' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+              </span>
+            </div>
           }
           className={styles.dropDownActive}
         >
@@ -420,6 +400,7 @@ const MenuNavegacao = () => {
               width={34}
               height={24}
               src="/icons/person.svg"
+              style={{marginRight: '6px'}}
             />
             Meu perfil
           </NavDropdown.Item>
@@ -433,7 +414,7 @@ const MenuNavegacao = () => {
             }}
             className={styles.dropdownItem}
           >
-            <Image className={styles.icone} src="/icons/sair.svg" />
+            <Image className={styles.icone} style={{paddingLeft: '2px'}} src="/icons/sair.svg" />
             Sair
           </NavDropdown.Item>
         </NavDropdown>
@@ -504,7 +485,7 @@ const MenuNavegacao = () => {
             <Nav className={styles.navbarE}>{mainNav}</Nav>
 
             {/* Nav com o dropdown para navegação no perfil. */}
-            <Nav className="ms-auto">{mainPerfil}</Nav>
+            <Nav>{mainPerfil}</Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>

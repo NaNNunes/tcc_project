@@ -2,8 +2,8 @@
 import CardDemanda from "../../componentes/demanda/card-demanda/CardDemanda";
 
 // Importação do react-bootstrap.
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
+import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
 
 // Importação do styles.
 import styles from "./ProcurarDemandas.module.css";
@@ -13,28 +13,27 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const ProcurarDemandas = () => {
   const navigate = useNavigate();
-  const { tipoDemanda } = useParams();
-  console.log(tipoDemanda);
+  const {tipoDemanda} = useParams();
+  console.log(tipoDemanda)
   // parametros
-  // ADM
-  // aceitas -> vinculada a assistencia de status
-  //              em atendimento ou aberta, vinculada a assistencia
+    // ADM
+      // aceitas -> vinculada a assistencia de status 
+      //              em atendimento ou aberta, vinculada a assistencia
 
-  // abertas -> todas demandas não atribuidas a assistencias
+      // abertas -> todas demandas não atribuidas a assistencias
 
-  // SOLICITANTE
-  // minhas-demandas -> emitidas pelo user independente de status
+    // SOLICITANTE
+      // minhas-demandas -> emitidas pelo user independente de status
 
   // status
-  // aberta -> emitida pelo user
-  // em atendimento -> vinculada a assistencia
-  // concluida -> resolvida
-  // cancelada -> cancelada pelo user
+    // aberta -> emitida pelo user
+    // em atendimento -> vinculada a assistencia
+    // concluida -> resolvida 
+    // cancelada -> cancelada pelo user
 
   const userType = localStorage.getItem("userType");
   const userId = localStorage.getItem("userId");
-  if (userType !== "solicitante" && userType !== "administrador")
-    return navigate("/login");
+  if(userType !== "solicitante" && userType !== "administrador") return navigate("/login"); 
 
   //todas as demandas
   const [demandas, setDemandas] = useState([]);
@@ -53,13 +52,14 @@ const ProcurarDemandas = () => {
 
         // caso user seja solicitante
         // lista apenas demandas emitidas por ele independente de status
-        if (userType === "solicitante" && tipoDemanda === "minhas-demandas") {
-          // lista para armazenas demandas
+        if(userType === "solicitante" && tipoDemanda === "minhas-demandas"){
+
+          // lista para armazenas demandas 
           const listaDemandasDoSolicitante = [];
 
           // mapeia demandas identificando e saperando demandas do solicitante pelo id
-          resBuscaDemandas.map((demanda) => {
-            demanda.solicitante_id === userId &&
+          resBuscaDemandas.map((demanda)=>{
+            (demanda.solicitante_id === userId) && 
               listaDemandasDoSolicitante.push(demanda);
           });
 
@@ -67,23 +67,21 @@ const ProcurarDemandas = () => {
           return setDemandas(listaDemandasDoSolicitante);
         }
 
-        if (userType === "administrador") {
-          // Para adm procurando novas demandas
-          if (tipoDemanda === "abertas") {
+        if(userType === "administrador"){
+
+          // Para adm procurando novas demandas 
+          if(tipoDemanda === "abertas"){
             // caso solicitante seja adm
             // lista para armazenas apenas demandas públicas
             const listaDemandasPublicas = [];
-
+    
             // mapeamento de demandas para encontrar apenas demandas publicas e definí-las
-            resBuscaDemandas.map((demanda) => {
-              if (
-                demanda.assistencia === "Público" &&
-                demanda.status === "Aberto"
-              ) {
-                listaDemandasPublicas.push(demanda);
+            resBuscaDemandas.map((demanda)=>{
+              if(demanda.assistencia === "Público" && demanda.status === "Aberto"){
+                listaDemandasPublicas.push(demanda)
               }
-            });
-
+            })
+  
             // console.log("Todas as demandas publicas:", listaDemandasPublicas);
             return setDemandas(listaDemandasPublicas);
           }
@@ -96,50 +94,44 @@ const ProcurarDemandas = () => {
 
           // mapeamento de lista de todas assistencias para filtragem e insersao à lista de id assistencias
           // apenas assistencias que possuam id do adm
-          response.map((assistencia) => {
-            assistencia.administradorId === userId &&
+          response.map((assistencia) =>{
+            (assistencia.administradorId === userId) &&
               listaIdAssistencias.push(assistencia.id);
-          });
+          })
           // console.log("Assistencias do adm:", listaIdAssistencia);
-
+          
           // lista para armazenar apenas demandas que estejam atribuidas a assistencias do adm
           const listaDemandasAssistenciasDoAdministrador = [];
 
           // mostrar todas as demandas que ja foram atribuidas as assistencias independente de status
-          if (tipoDemanda === "historico") {
-            resBuscaDemandas.map((demanda) => {
-              listaIdAssistencias.map((idAssistencia) => {
-                const isDemandaVinculada =
-                  demanda.assistencia === idAssistencia;
+          if(tipoDemanda === "historico"){
+            resBuscaDemandas.map((demanda) =>{
+              listaIdAssistencias.map((idAssistencia)=>{
+                const isDemandaVinculada = demanda.assistencia === idAssistencia;
                 // const statusAberto = demanda.status === "Aberto";
-                const statusEmAndamento =
-                  demanda.status === "Cancelada" ||
-                  demanda.status === "Concluido";
+                const statusEmAndamento = demanda.status === "Cancelada" || demanda.status === "Concluido";
                 // Removi statusAberto ||
-                isDemandaVinculada &&
-                  statusEmAndamento &&
-                  listaDemandasAssistenciasDoAdministrador.push(demanda);
-              });
+                (isDemandaVinculada && statusEmAndamento) &&
+                listaDemandasAssistenciasDoAdministrador.push(demanda);
+              })
             });
             // console.log(listaDemandasAssistenciasDoAdministrador);
             return setDemandas(listaDemandasAssistenciasDoAdministrador);
           }
-
+          
           // consulta por demandas atuais da assistencia
-          if (tipoDemanda === "aceitas") {
-            // mapeia demandas e verifica quais demandas estão vinculadas as assistencias do adm
-            // que estejam em andamento ou apenas aceitas
-            resBuscaDemandas.map((demanda) => {
-              listaIdAssistencias.map((idAssistencia) => {
-                const isDemandaVinculada =
-                  demanda.assistencia === idAssistencia;
+          if(tipoDemanda === "aceitas"){
+            // mapeia demandas e verifica quais demandas estão vinculadas as assistencias do adm 
+            // que estejam em andamento ou apenas aceitas 
+            resBuscaDemandas.map((demanda) =>{
+              listaIdAssistencias.map((idAssistencia)=>{
+                const isDemandaVinculada = demanda.assistencia === idAssistencia;
                 // const statusAberto = demanda.status === "Aberto";
                 const statusEmAndamento = demanda.status === "Em atendimento";
                 // Removi statusAberto ||
-                isDemandaVinculada &&
-                  statusEmAndamento &&
-                  listaDemandasAssistenciasDoAdministrador.push(demanda);
-              });
+                (isDemandaVinculada && statusEmAndamento) &&
+                listaDemandasAssistenciasDoAdministrador.push(demanda);
+              })
             });
             // console.log(listaDemandasAssistenciasDoAdministrador);
             return setDemandas(listaDemandasAssistenciasDoAdministrador);
@@ -149,6 +141,7 @@ const ProcurarDemandas = () => {
 
         //caso nenhuma opção aceita
         navigate("/erro");
+
       } catch (error) {
         console.log(error);
       }
@@ -168,39 +161,35 @@ const ProcurarDemandas = () => {
 
   return (
     // parou de carregar kkk
-    <div style={{ paddingTop: "80px", paddingBottom: "80px" }}>
+    <div style={{paddingTop: '80px', paddingBottom: '80px'}}>
       <Container className={styles.caixa}>
-        {demandasParaMostrar ? (
-          demandasParaMostrar.map((demanda) => (
-            // passar props informando qual é o user que está acessando a page, para request no componente de card demanda
-            <CardDemanda
-              key={demanda.id}
-              id={demanda.id}
-              idResponsavel={demanda.solicitante_id} // id do emissor da demanda
-              idDispostivo={demanda.idDispostivo}
-              descricao={demanda.descProblema}
-              observacoes={demanda.observacoes}
-              dataEmissao={demanda.dataEmissao}
-              status={demanda.status}
-              dominioDemanda={demanda.assistencia} // mostrar em algum lugar do card
-            />
-          ))
-        ) : (
+        {
+          (demandasParaMostrar ? (
+              demandasParaMostrar.map((demanda) => (
+                // passar props informando qual é o user que está acessando a page, para request no componente de card demanda
+                <CardDemanda
+                  key={demanda.id} 
+                  id={demanda.id}
+                  idResponsavel={demanda.solicitante_id} // id do emissor da demanda
+                  idDispostivo={demanda.idDispostivo}
+                  descricao={demanda.descProblema}
+                  observacoes={demanda.observacoes}
+                  dataEmissao={demanda.dataEmissao}
+                  status={demanda.status}
+                  dominioDemanda={demanda.assistencia} // mostrar em algum lugar do card
+                />
+              ))
+          ) :
+         (
           <span>Não há demandas a serem carregadas.</span>
-        )}
+         )
+        )
+        }
       </Container>
 
       {cardsVisiveis < demandas.length && (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "1rem",
-          }}
-        >
-          <Button onClick={handleCarregarMais} className={styles.botaoMais}>
-            Carregar mais
-          </Button>
+        <div>
+          <Button onClick={handleCarregarMais}>Carregar mais</Button>
         </div>
       )}
 

@@ -92,7 +92,7 @@ const CardDemanda = (props) => {
     const statusDemanda = (status) => {
         switch ((status || '').toLowerCase()) {
             case 'aberto':
-                return '#B1B1B1'; // se estiver aberto, retorna cinza.
+                return '#00BFFF'; // se estiver aberto, retorna ciano.
             case 'em atendimento':
                 return '#FFCA68'; // se estiver em atendimento, retorna amarelo
             case 'concluido':
