@@ -22,7 +22,7 @@ const Inicio = () => {
     case "solicitante":
       return <InicioSolic />;
     case "Visitante":
-      return <Home />;
+      return <InicioDeslog />;
     default:
       return null; 
   }
