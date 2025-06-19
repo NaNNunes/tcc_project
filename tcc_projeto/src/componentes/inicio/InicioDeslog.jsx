@@ -21,7 +21,7 @@ const InicioDeslog = () => {
   return (
     <div className={styles.pageWrapper}>
       {/* Hero Section */}
-      <section className={styles.heroSection}>
+      <section className={`${styles.heroSection} snapSection`}>
         <Container>
           <Row>
             <Col md={12} className={styles.heroContent}>
@@ -45,7 +45,7 @@ const InicioDeslog = () => {
       </section>
 
       {/* Sobre */}
-      <section className={styles.aboutSection}>
+      <section className={`${styles.aboutSection} snapSection`}>
         <Container>
           <Row>
             <Col md={6}>
@@ -73,7 +73,7 @@ const InicioDeslog = () => {
       </section>
 
       {/* Como funciona */}
-      <section className={styles.howItWorks}>
+      <section className={`${styles.howItWorks} snapSection`}>
         <Container>
           <h3 className={styles.sectionTitle}>Como Funciona</h3>
           <div className={styles.rowWithGap}>
@@ -96,7 +96,7 @@ const InicioDeslog = () => {
       </section>
 
       {/* Por que usar */}
-      <section className={styles.why}>
+      <section className={`${styles.why} snapSection`}>
         <Container>
           <h3 className={styles.sectionTitle}>Por que usar o ConnectFix?</h3>
           <Row>
@@ -114,7 +114,7 @@ const InicioDeslog = () => {
       </section>
 
       {/* Carousel de testemunhos */}
-      <section className={styles.testimonials}>
+      <section className={`${styles.testimonials} snapSection`}>
         <Container>
           <h3 className={styles.sectionTitleTestimonials}>
             O que dizem nossos clientes

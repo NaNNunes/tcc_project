@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       // POR FAVOR DEIXE EM ORDEM ALFABÉTICA
       {
         path: "/",
-        element: <Home />,
+        element: <Inicio />,
       },
       {
         path: "/assistencia-info",

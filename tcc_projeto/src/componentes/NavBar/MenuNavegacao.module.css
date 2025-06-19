@@ -15,6 +15,7 @@
 .navbarBrand {
     padding: 0;
     height: 45px;
+    margin: 0;
 }
 
 /* Imagem do ConnectFix preenche 100% do navbar.brand. */
@@ -69,7 +70,7 @@
     bottom: -4px;
     width: 100%;
     height: 2px;
-    background-color: white;
+    background-color: #fce63d;
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
@@ -81,7 +82,8 @@
 }
 
 .icone {
-    padding-right: 10px;
+    margin-right: 15px;
+    
 }
 
 /* Fazendo animação para o dropdown. */
@@ -186,7 +188,7 @@
     bottom: 4px;
     width: 100%;
     height: 2px;
-    background-color: white;
+    background-color: #fce63d;
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease; 
@@ -205,6 +207,8 @@
 .navbarE {
     margin-left: auto;
     margin-right: auto;
+    padding-right: 100px;
+    display: flex;  
     gap: 100px;
 }
 

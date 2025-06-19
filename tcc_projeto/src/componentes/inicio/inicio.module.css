@@ -5,12 +5,18 @@
   font-family: "Segoe UI", sans-serif;
 }
 
-h4 {
-  font-size: 1.8rem;
-  color: var(--primary);
-  font-weight: 500;
-  position: relative;
-  margin-bottom: 1rem;
+.pageWrapper {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.snapSection {
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .section {
@@ -19,6 +25,8 @@ h4 {
   justify-content: center;
   align-items: center;
   padding: 1rem;
+  scroll-snap-align: start;
+  height: 100vh;
 }
 
 .cardContainer {
@@ -62,6 +70,23 @@ h4 {
   margin: 1rem;
 }
 
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  justify-items: center;
+  margin: 0px 0px;
+  padding-left: 8%;
+  padding-right: 8%;
+  max-width: none;
+}
+h4 {
+  font-size: 1.8rem;
+  color: var(--primary);
+  font-weight: 500;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
 .botoesWrapper {
   display: flex;
   flex-wrap: wrap;
@@ -94,21 +119,26 @@ h4 {
 
 .relatoriosSection {
   /* background-image: url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"); */
-  background: linear-gradient(rgba(144, 183, 216, 0.75),
-      rgba(144, 183, 216, 0.55)),
-    url("https://images.pexels.com/photos/4705635/pexels-photo-4705635.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") center/cover no-repeat;
+  background: linear-gradient(
+      rgba(144, 183, 216, 0.75),
+      rgba(144, 183, 216, 0.55)
+    ),
+    url("https://images.pexels.com/photos/4705635/pexels-photo-4705635.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+      center/cover no-repeat;
   min-height: 100vh;
   min-width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
 }
 
 .demandaSection {
-  background: linear-gradient(rgba(255, 255, 255, 0.75),
-      rgba(197, 201, 204, 0.55)),
-    url("https://images.pexels.com/photos/9242901/pexels-photo-9242901.jpeg") center/cover no-repeat;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.75),
+      rgba(197, 201, 204, 0.55)
+    ),
+    url("https://images.pexels.com/photos/9242901/pexels-photo-9242901.jpeg")
+      center/cover no-repeat;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -121,9 +151,12 @@ h4 {
 }
 
 .assistenciaSection {
-  background: linear-gradient(rgba(121, 121, 121, 0.75),
-      rgba(144, 183, 216, 0.55)),
-    url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1") center/cover no-repeat;
+  background: linear-gradient(
+      rgba(121, 121, 121, 0.75),
+      rgba(144, 183, 216, 0.55)
+    ),
+    url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+      center/cover no-repeat;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -148,6 +181,8 @@ h4 {
   gap: 0.25rem;
   padding: 0.5rem;
   font-size: 1.2rem;
+  background-color: #0061b7;
+  font-weight: bold;
 }
 
 .iconeWrapper {
@@ -174,7 +209,7 @@ h4 {
 }
 
 .cardRelatorioNovo {
-  background-color: #0a67aa;
+  background-color: #0061b7;
   border-radius: 12px;
   padding: 1rem;
   width: calc(25% - 1rem);

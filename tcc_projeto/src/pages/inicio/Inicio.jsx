@@ -9,7 +9,6 @@ const Inicio = () => {
   const navigate = useNavigate();
   const { userType, usuarioNome } = useContext(AuthContext);
 
-  // Verificação de autenticação com useEffect
   useEffect(() => {
     if (userType === "Visitante") {
       console.log("Acesso negado - redirecionando para login");
@@ -17,17 +16,15 @@ const Inicio = () => {
     }
   }, [userType, navigate]);
 
-  // Renderização condicional
   switch (userType) {
     case "administrador":
       return <InicioADM />;
     case "solicitante":
       return <InicioSolic />;
     case "Visitante":
-      return <InicioDeslog />;
+      return <Home />;
     default:
-      // Enquanto verifica ou estado indefinido
-      return null; // Ou um componente de loading
+      return null; 
   }
 };
 

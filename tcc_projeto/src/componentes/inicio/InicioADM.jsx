@@ -56,116 +56,119 @@ const InicioADM = () => {
                   <h3>Relatórios</h3>
                 </Col>
               </Row>
-
-              <Row className={styles.wrapperRelatoriosNovo}>
-                <div className={styles.cardRelatorioNovo}>
-                  <HiOutlineUsers
-                    className={styles.icone}
-                    color="#ffffff"
-                    size="2rem"
-                  />
-                  <div className={styles.info}>
-                    <div className={styles.valor}>225</div>
-                    <div className={styles.descricao}>Total de Clientes</div>
-                  </div>
-                  <div className={styles.percentual}>+21%</div>
-                </div>
-
-                <div className={styles.cardRelatorioNovo}>
-                  <img
-                    className={styles.icone}
-                    src="/icons/person_add_alt.svg"
-                    alt="Clientes"
-                  />
-                  <div className={styles.info}>
-                    <div className={styles.valor}>41</div>
-                    <div className={styles.descricao}>Novos Clientes</div>
-                  </div>
-                  <div className={styles.percentual}>+19%</div>
-                </div>
-
-                <div className={styles.cardRelatorioNovo}>
-                  <LuClipboardCopy
-                    className={styles.icone}
-                    color="#ffffff"
-                    size="2rem"
-                  />
-                  <div className={styles.info}>
-                    <div className={styles.valor}>243</div>
-                    <div className={styles.descricao}>Demandas Aceitas</div>
-                  </div>
-                  <div className={styles.percentual}>+43%</div>
-                </div>
-
-                <div className={styles.cardRelatorioNovo}>
-                  <LuClipboardCheck
-                    className={styles.icone}
-                    color="#ffffff"
-                    size="2rem"
-                  />
-                  <div className={styles.info}>
-                    <div className={styles.valor}>189</div>
-                    <div className={styles.descricao}>Demandas Concluídas</div>
-                  </div>
-                  <div className={styles.percentual}>+7%</div>
-                </div>
-
-                <div className={styles.cardRelatorioNovo}>
-                  <MdOutlineTimelapse
-                    className={styles.icone}
-                    color="#ffffff"
-                    size="2.2rem"
-                  />
-                  <div className={styles.info}>
-                    <div className={styles.valor}>2h 15min</div>
-                    <div className={styles.descricao}>
-                      Tempo Médio de Resposta
+              <Container className={styles.cardGrid}>
+                <Row className={styles.wrapperRelatoriosNovo}>
+                  <div className={styles.cardRelatorioNovo}>
+                    <HiOutlineUsers
+                      className={styles.icone}
+                      color="#ffffff"
+                      size="2rem"
+                    />
+                    <div className={styles.info}>
+                      <div className={styles.valor}>225</div>
+                      <div className={styles.descricao}>Total de Clientes</div>
                     </div>
+                    <div className={styles.percentual}>+21%</div>
                   </div>
-                  <div className={styles.percentual}>+14%</div>
-                </div>
 
-                <div className={styles.cardRelatorioNovo}>
-                  <MdDevices
-                    className={styles.icone}
-                    color="#ffffff"
-                    size="2rem"
-                  />
-                  <div className={styles.info}>
-                    <div className={styles.valor}>Cel. e Notebooks</div>
-                    <div className={styles.descricao}>Mais Requisitados</div>
-                  </div>
-                  <div className={styles.percentual}>+12%</div>
-                </div>
-
-                <div className={styles.cardRelatorioNovo}>
-                  <FaRegStarHalfStroke
-                    className={styles.icone}
-                    color="#ffffff"
-                    size="2rem"
-                  />
-                  <div className={styles.info}>
-                    <div className={styles.valor}>4.6 / 5.0</div>
-                    <div className={styles.descricao}>Média de Avaliação</div>
-                  </div>
-                  <div className={styles.percentual}>+2%</div>
-                </div>
-
-                <div className={styles.cardRelatorioNovo}>
-                  <img
-                    className={styles.icone}
-                    src="/icons/location_on.svg"
-                    alt="Localidades"
-                  />
-                  <div className={styles.info}>
-                    <div className={styles.valor}>SP, RJ, MG</div>
-                    <div className={styles.descricao}>
-                      Principais Localidades
+                  <div className={styles.cardRelatorioNovo}>
+                    <img
+                      className={styles.icone}
+                      src="/icons/person_add_alt.svg"
+                      alt="Clientes"
+                    />
+                    <div className={styles.info}>
+                      <div className={styles.valor}>41</div>
+                      <div className={styles.descricao}>Novos Clientes</div>
                     </div>
+                    <div className={styles.percentual}>+19%</div>
                   </div>
-                  <div className={styles.percentual}>+18%</div>
-                </div>
-              </Row>
+
+                  <div className={styles.cardRelatorioNovo}>
+                    <LuClipboardCopy
+                      className={styles.icone}
+                      color="#ffffff"
+                      size="2rem"
+                    />
+                    <div className={styles.info}>
+                      <div className={styles.valor}>243</div>
+                      <div className={styles.descricao}>Demandas Aceitas</div>
+                    </div>
+                    <div className={styles.percentual}>+43%</div>
+                  </div>
+
+                  <div className={styles.cardRelatorioNovo}>
+                    <LuClipboardCheck
+                      className={styles.icone}
+                      color="#ffffff"
+                      size="2rem"
+                    />
+                    <div className={styles.info}>
+                      <div className={styles.valor}>189</div>
+                      <div className={styles.descricao}>
+                        Demandas Concluídas
+                      </div>
+                    </div>
+                    <div className={styles.percentual}>+7%</div>
+                  </div>
+
+                  <div className={styles.cardRelatorioNovo}>
+                    <MdOutlineTimelapse
+                      className={styles.icone}
+                      color="#ffffff"
+                      size="2.2rem"
+                    />
+                    <div className={styles.info}>
+                      <div className={styles.valor}>2h 15min</div>
+                      <div className={styles.descricao}>
+                        Tempo Médio de Resposta
+                      </div>
+                    </div>
+                    <div className={styles.percentual}>+14%</div>
+                  </div>
+
+                  <div className={styles.cardRelatorioNovo}>
+                    <MdDevices
+                      className={styles.icone}
+                      color="#ffffff"
+                      size="2rem"
+                    />
+                    <div className={styles.info}>
+                      <div className={styles.valor}>Cel. e Notebooks</div>
+                      <div className={styles.descricao}>Mais Requisitados</div>
+                    </div>
+                    <div className={styles.percentual}>+12%</div>
+                  </div>
+
+                  <div className={styles.cardRelatorioNovo}>
+                    <FaRegStarHalfStroke
+                      className={styles.icone}
+                      color="#ffffff"
+                      size="2rem"
+                    />
+                    <div className={styles.info}>
+                      <div className={styles.valor}>4.6 / 5.0</div>
+                      <div className={styles.descricao}>Média de Avaliação</div>
+                    </div>
+                    <div className={styles.percentual}>+2%</div>
+                  </div>
+
+                  <div className={styles.cardRelatorioNovo}>
+                    <img
+                      className={styles.icone}
+                      src="/icons/location_on.svg"
+                      alt="Localidades"
+                    />
+                    <div className={styles.info}>
+                      <div className={styles.valor}>SP, RJ, MG</div>
+                      <div className={styles.descricao}>
+                        Principais Localidades
+                      </div>
+                    </div>
+                    <div className={styles.percentual}>+18%</div>
+                  </div>
+                </Row>
+              </Container>
             </Card>
           </div>
         </Container>
