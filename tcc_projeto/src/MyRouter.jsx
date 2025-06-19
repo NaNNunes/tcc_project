@@ -63,7 +63,7 @@ const router = createBrowserRouter([
         element: <Conta />,
       },
       {
-        path: "/criar-pedido",
+        path: "/criar-demanda/:idDemanda",
         element: <CriarDemanda />,
       },
       {

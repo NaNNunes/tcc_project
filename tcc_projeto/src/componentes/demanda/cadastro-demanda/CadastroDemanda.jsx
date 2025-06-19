@@ -34,12 +34,12 @@ import { useForm } from "react-hook-form";
 // hooks json-server
 import { useDemanda, useAssistencia, useVerificadorDeCpf, useUser} from '../../../hooks/useApi';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-
-const categoriaDispositivo = () => {
+const CadastroDemanda = () => {
     
     const navigate = useNavigate();
+    const {idDemanda} = useParams();
 
     const userId = localStorage.getItem("userId");
     const userType = localStorage.getItem("userType");
@@ -54,34 +54,57 @@ const categoriaDispositivo = () => {
         formState: {errors},
     } = useForm();
 
-    const {buscaAssistenciaById} = useAssistencia();
-    const {cadastrarPseudoUser} = useUser();
-    const [assistencias, setAssistencias] = useState([]);
+    const { 
+            buscaDemandaById,
+            buscaDispositivoById 
+    } = useDemanda();
+    
+    const { 
+        buscaAssistenciaById,
+        buscaAssistencias
+     } = useAssistencia();
+    
+    const { 
+        cadastrarPseudoUser, // funcao que cadastra solicitante presencial
+        buscaAssistenciasFavoritas 
+    } = useUser();
 
-    console.log(assistencias)
+    const [assistencias, setAssistencias] = useState([]);
+    // dispositivo da demanda, renderizado quando solicitante aperta em editar demanda
+    const [dispositivo, setDispositivo] = useState({});
+
+    useEffect(()=>{
+        async function fetchData() {
+            if(idDemanda != "criar" && idDemanda != false){
+                const resBuscaDemandaById = await buscaDemandaById(idDemanda);
+                const idDispositivo = resBuscaDemandaById.idDispostivo;
+                const resBuscaispositivoById = await buscaDispositivoById(idDispositivo);
+                setDispositivo(resBuscaispositivoById);
+                setMarcaSelecionada(resBuscaispositivoById.marca);
+                
+                for(const [key, value] of Object.entries(resBuscaispositivoById)){
+                    setValue(key, value);
+                }
+
+                for(const [key, value] of Object.entries(resBuscaDemandaById)){
+                    setValue(key, value);
+                }
+
+            } 
+        };
+        fetchData();
+    },[])
 
     // lista para receber assistencias vinculadas ao user, pelo match caso solicitante ou que possuam o id do adm, caso adm
     const listaAssistencias = [];
 
-    const url = import.meta.env.VITE_API_URL;
     const buscaMatchs = async() =>{
-        const request = await fetch(`${url}/assistencia_Fav_Solicitante`);
-        const response = await request.json();
-        // console.log("Matchs:",response);
+        const resBuscaLikes = await buscaAssistenciasFavoritas();
 
         // mapeia todas os matchs e retorna nome da assistencia pelo id encontrado no match
         // pegar assitencias apenas com que seja favoritadas pelo user, verificando o id do solicitante no match
-
-        // Não funciona
-        // response.map(async (res)=>{
-        //     if(res.id_solicitante === localStorage.getItem("userId")){
-        //         const assistencia = await buscaAssistenciaById(res.id_assistencia);
-        //         listaAssistencias.push(assistencia);
-        //     }
-        // })
-        
         const assistenciasFavoritadas = await Promise.all(
-            response
+            resBuscaLikes
                 .filter(res => res.id_solicitante === userId)
                 .map(res => buscaAssistenciaById(res.id_assistencia))
         );
@@ -90,13 +113,11 @@ const categoriaDispositivo = () => {
     }
 
     // busca todas assistencias do administrador
-
     const buscaAssistenciasDoAdministrador = async()=>{
-        const request = await fetch(`${url}/assistencia`);
-        const response = await request.json();
+        const resBuscaAssistencias = await buscaAssistencias();
 
         // verifica quais assistencias pertencem ao administrador
-        response.map((assistencia)=>{
+        resBuscaAssistencias.map((assistencia)=>{
             if(assistencia.administradorId === userId){
                 listaAssistencias.push(assistencia);
             }
@@ -113,8 +134,6 @@ const categoriaDispositivo = () => {
 
     // Estados do modal.
     const [mostrarModal, setMostrarModal] = useState(false);
-    // temporario 
-    // (mostrarModal === true) && buscaAssistenciasDoAdministrador();
 
     // Dados do Form temporários.
     const [dadosTemporarios, setDadosTemporarios] = useState(null);
@@ -182,117 +201,129 @@ const categoriaDispositivo = () => {
     // Se a categoria selecionada for igual a outros troca o campo para o usuário digitar.
     const campoMarca = (categoriaSelecionada === "Outros" 
         ?   (
-            <Form.Control 
-                type='text'
-                placeholder=''
-                {...register("marca", {
-                    required: "A marca é obrigatória",
-                    minLength: {
-                        value: 2,
-                        message: "A marca deve conter pelo menos 2 caracteres."
-                    },
-                    maxLength: {
-                        value: 45,
-                        message: "A marca não pode conter mais do que 45 caracteres"
-                    },
-                    pattern: {
-                    value: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 &+\-\.]+$/,
-                    message:
-                        "Use somente letras, números, espaços e símbolos",
-                    },
-                })}
-            />
+                <Form.Control 
+                    type='text'
+                    placeholder=''
+                    {...register("marca", {
+                        required: "A marca é obrigatória",
+                        minLength: {
+                            value: 2,
+                            message: "A marca deve conter pelo menos 2 caracteres."
+                        },
+                        maxLength: {
+                            value: 45,
+                            message: "A marca não pode conter mais do que 45 caracteres"
+                        },
+                        pattern: {
+                        value: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 &+\-\.]+$/,
+                        message:
+                            "Use somente letras, números, espaços e símbolos",
+                        },
+                    })}
+                />
             ) 
-        : (
-            <Form.Select
-                type='select'
-                placeholder=''
-                {...register("marca", {
-                    required: "A marca é obrigatória",
-                    minLength: {
-                        value: 2,
-                        message: "A marca deve conter pelo menos 2 caractere."
-                    },
-                    maxLength: {
-                        value: 45,
-                        message: "A marca não pode conter mais do que 45 caracteres"
-                    },
-                    pattern: {
-                    value: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 &+\-\.]+$/,
-                    message:
-                        "Use somente letras, números, espaços e símbolos",
-                    },
-                })}
-                onChange={(e) => {
-                    setMarcaSelecionada(e.target.value); // Atualiza a marca selecionada.
-                    setValue("marca", e.target.value, { shouldValidate: true }); // Pegando o valor selecionado
-                    setValue("modelo", ""); // Limpa o modelo ao trocar de marca.
-                }}
-            >   
-                <option value="">Selecione uma opção</option>
-                {/* Mostra as opções de acordo com a categoria. */}
-                {categoriaSelecionada && 
-                    Object.keys(dadosDispositivos[categoriaSelecionada] || {}).map((marca) => (
-                    <option key={marca} value={marca}>
-                        {marca}
-                    </option>
-                ))}
-            </Form.Select>
+        : 
+            (
+                <Form.Select
+                    type='select'
+                    placeholder=''
+                    {...register("marca", {
+                        required: "A marca é obrigatória",
+                    })}
+                    onChange={(e) => {
+                        setMarcaSelecionada(e.target.value); // Atualiza a marca selecionada.
+                        setValue("marca", e.target.value, { shouldValidate: true }); // Pegando o valor selecionado
+                        setValue("modelo", ""); // Limpa o modelo ao trocar de marca.
+                    }}
+                >   
+                    <option value="">Selecione uma opção</option>
+                    {/* Mostra as opções de acordo com a categoria. */}
+                    {categoriaSelecionada && 
+                        Object.keys(dadosDispositivos[categoriaSelecionada] || {}).map((marca) => (
+                            // verificação para carregar marca já do dispositivo quando funcao de edição de damanda for acionada
+                            (marca !== dispositivo.marca)
+                                ? 
+                                    <option key={marca} value={marca}>
+                                        {marca}
+                                    </option>
+                                :
+                                    // define marca de dispositivo como selecionada quando funcao de edicao é usada
+                                    <option 
+                                        key={marca} 
+                                        value={marca} 
+                                        selected
+                                    >
+                                        {dispositivo.marca}
+                                    </option>
+                    ))}
+                </Form.Select>
             )
     );
 
     // Se a categoria selecionada for igual a outros troca o campo para o usuário digitar.
-    const campoModelo = (categoriaSelecionada === "Outros" ? (
-        <Form.Control 
-            type='text'
-            placeholder=''
-            {...register("modelo", {
-                required: "O modelo é obrigatório",
-                minLength: {
-                    value: 2,
-                    message: "A modelo deve conter pelo menos 2 caracteres."
-                },
-                maxLength: {
-                    value: 30,
-                    message: "A modelo não pode conter mais do que 30 caracteres"
-                },
-                pattern: {
-                value: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 &+\-\.]+$/,
-                message:
-                    "Use somente letras, números, espaços e símbolos",
-                },
-            })}
-        />
-    ) : (
-        <Form.Select 
-            type='text'
-            placeholder=''
-            {...register("modelo", {
-                required: 'O modelo é obrigatório',
-                minLength: {
-                    value: 2,
-                    message: "A modelo deve conter pelo menos 2 caracteres."
-                },
-                maxLength: {
-                    value: 30,
-                    message: "A modelo não pode conter mais do que 30 caracteres"
-                },
-                pattern: {
-                value: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 &+\-\.]+$/,
-                message:
-                    "Use somente letras, números, espaços e símbolos",
-                },
-            })}
-        >
-            <option value="">Selecione uma opção</option>
-            {/* Só carrega os modelos se houver uma categoria e marca selecionada. */}
-            {categoriaSelecionada && marcaSelecionada && dadosDispositivos[categoriaSelecionada]?.[marcaSelecionada]?.map((modelo) => (
-                <option key={modelo} value={modelo}>
-                    {modelo}
-                </option>
-            ))}
-        </Form.Select>
-    ));
+    const campoModelo = (
+        categoriaSelecionada === "Outros" 
+            ? 
+                (
+                    <Form.Control 
+                        type='text'
+                        placeholder=''
+                        {...register("modelo", {
+                            required: "O modelo é obrigatório",
+                            minLength: {
+                                value: 2,
+                                message: "A modelo deve conter pelo menos 2 caracteres."
+                            },
+                            maxLength: {
+                                value: 30,
+                                message: "A modelo não pode conter mais do que 30 caracteres"
+                            },
+                            pattern: {
+                            value: /^[A-Za-zÀ-ÖØ-öø-ÿ0-9 &+\-\.]+$/,
+                            message:
+                                "Use somente letras, números, espaços e símbolos",
+                            },
+                        })}
+                    />
+                ) 
+            : 
+                (
+                    <Form.Select 
+                        type='text'
+                        placeholder=''
+                        {...register("modelo", {
+                            required: 'O modelo é obrigatório'
+                        })}
+                    >
+                        <option value="">Selecione uma opção</option>
+                        {/* Só carrega os modelos se houver uma categoria e marca selecionada. */}
+                        {/* 
+                            Obs - Renan: Não consegui fazer o modelo do dispositivo da demanda
+                            carregar quando tela é chamada na funão editar 
+                        */}
+                        {
+                            categoriaSelecionada && marcaSelecionada && dadosDispositivos[categoriaSelecionada]?.[marcaSelecionada]?.map((modelo) => (
+                                (modelo === dispositivo.modelo)
+                                    ? 
+                                        <option 
+                                            key={modelo} 
+                                            value={modelo}
+                                            selected
+                                        >
+                                            {modelo}
+                                        </option>
+                                    :
+                                        <option 
+                                            key={modelo} 
+                                            value={modelo}
+                                        >
+                                            {modelo}
+                                        </option>
+                            ))
+                        }
+                    </Form.Select>
+                )
+    );
     
     // Quando o usuário mudar a categoria, reseta os campos de marca de modelo.
     useEffect(() => {
@@ -408,8 +439,7 @@ const categoriaDispositivo = () => {
                                         value={cat.value}
                                         className={
                                             `${stylesCad.listaBotao} ${categoriaSelecionada === cat.value 
-                                            ? stylesCad.listaBotaoSelecionado 
-                                            : ""}`
+                                            && stylesCad.listaBotaoSelecionado}`
                                         }
 
                                         onClick={() => setValue("categoria", cat.value, { shouldValidate: true })} 
@@ -944,4 +974,4 @@ const categoriaDispositivo = () => {
   )
 }
 
-export default categoriaDispositivo
+export default CadastroDemanda;

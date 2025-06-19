@@ -176,7 +176,7 @@
       "id": "0d8e",
       "categoria": "Celular",
       "marca": "Apple",
-      "fabricante": "",
+      "fabricante": "Apple",
       "modelo": "iPhone 16",
       "numSerie": "",
       "tensao": "",
@@ -218,7 +218,7 @@
       "status": "Aberto",
       "assistencia": "Público",
       "solicitante_id": "88f2",
-      "dataEmissao": "13/06/2025",
+      "dataEmissao": "13/06/202",
       "horaEmissao": "21:28:14"
     },
     {
@@ -388,9 +388,9 @@
       "id_assistencia": "3418"
     },
     {
-      "id": "7f53",
+      "id": "476e",
       "id_solicitante": "d150",
-      "id_assistencia": "1331"
+      "id_assistencia": "28fd"
     }
   ]
 }

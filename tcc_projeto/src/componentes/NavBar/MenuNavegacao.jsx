@@ -60,8 +60,13 @@ const MenuNavegacao = () => {
           {/* Cadastro pedido */}
           <NavDropdown.Item
             as={Link}
-            to='/criar-pedido'
+            to='/criar-demanda/criar'
             className={styles.dropdownItem}
+            onClick={()=>{
+              setTimeout(() => {
+                location.reload();
+              }, 1);
+            }}
           >
             <Image className={styles.icone} src='/icons/Icon_pedido.svg' />Cadastro pedido
           </NavDropdown.Item>
@@ -177,7 +182,7 @@ const MenuNavegacao = () => {
           {/* Cadastro pedido */}
           <NavDropdown.Item
             as={Link}
-            to='/criar-pedido'
+            to='/criar-demanda/criar'
             className={styles.dropdownItem}
           >
             <Image className={styles.icone} style={{paddingLeft: '4px'}} src='/icons/Icon_pedido.svg' />Cadastro pedido

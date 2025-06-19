@@ -1,3 +1,6 @@
+// caso buscador da demanda seja solicitante e demanda esteja em aberto
+// permitir que o mesmo edite a demanda emitida
+
 // Importação de componentes do react-bootstrap
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
@@ -37,17 +40,16 @@ const CardDemanda = (props) => {
     // Hooks
     // hook de demandas
     const { 
-        // funcao que busca dispositivo pelo id
-        buscaDispositivoById, 
-        // funcao que busca assistencia responsavel pela demanda como o id registrado da mesma na demanda
-        defineIdAssistencia 
+        buscaDispositivoById, // funcao que busca dispositivo pelo id 
+        cancelarDemanda,      // cancelar demanda pelo id
+        defineIdAssistencia   // funcao que busca assistencia responsavel pela demanda como o id registrado da mesma na demanda
     } = useDemanda();
     // funcao que busca lista de assistencias
     const { buscaAssistencias } = useAssistencia()
-    // funcao que busca solicitante pelo id
-    const { buscaUserById } = useUser();
     // funcao que busca endereco pelo id
     const { buscaEnderecoById } = useEndereco();
+    // funcao que busca solicitante pelo id
+    const { buscaUserById } = useUser();
 
     // declarando variaveis de acordo com props
     // infos do buscador
@@ -176,7 +178,47 @@ const CardDemanda = (props) => {
         "aceitas":"Gerar orçamento"
     }
     // O Botão
-    const mainBotao = botoes[tipoDemanda]
+    const mainBotao = botoes[tipoDemanda];
+
+    // botao direcionado a cancelar demanda, exclusivo para solicitante no momento
+    const botaoCancelarDemanda = (
+        <>
+            <Button 
+                as="input"
+                type="button"
+                value="Cancelar" 
+                onClick={()=>{cancelarDemanda(props.id)}}
+                variant='danger'
+            />
+        </>
+    )   
+
+    // botao direcionado a edição da demanda
+    const botaoEditarDemanda = (
+        <>
+            <Button href={`/criar-demanda/${props.id}`}>
+                Editar
+            </Button>
+        </>
+    )
+
+    // botao direcionado a visualizar mais infos da demanda, abrir modal
+    const botaoVisualizarDemada = (
+        <>
+            <Button 
+                as="input"
+                type="button"
+                value="Visualizar" 
+                onClick={()=>{setMostrarModal(true)}}
+                className={styles.botaoCard}
+            />
+        </>
+    )
+
+    const botaoDoCard = {
+        "solicitante": botaoEditarDemanda,
+        "administrador": botaoVisualizarDemada
+    }
 
     const imgCategoria = (categoria) => {
         switch ((categoria || '').toLowerCase()) {
@@ -291,13 +333,17 @@ const CardDemanda = (props) => {
                         </Container>
 
                         <Container className={styles.containerBotao} style={{padding: '0'}}>
-                            <Button
-                                type='submit'
-                                onClick={() => setMostrarModal(true)}
-                                className={styles.botaoCard}
-                            >
-                                Visualizar
-                            </Button>
+                            {
+                                // permite edição de demada para o solicitante apenas se demanda estiver em aberto
+                                (props.status !== "Aberto")
+                                    ? botaoVisualizarDemada
+                                    : botaoDoCard[userBuscador]
+                            }
+
+                            {
+                                (userBuscador === "solicitante" && props.status === "Aberto") && 
+                                    botaoCancelarDemanda
+                            }
                         </Container>
                     </Card.Body>
                 </Card>

@@ -242,7 +242,6 @@ export function useVerificadorDeCnpj(){
 
 // cadastro de user
 export function useUser(){
-
     // funçoes do context para salvar id e tipo de user
     const {setId, userId, setType, userType} = useContext(AuthContext);
 
@@ -274,6 +273,14 @@ export function useUser(){
         location.reload();
     }
     
+    // lista todos os likes
+    const buscaAssistenciasFavoritas = async() =>{
+        const request = await fetch(`${url}/assistencia_Fav_Solicitante`);
+        const response = await request.json();
+
+        return response;
+    }
+
     // busca user pelo id e o tipo de usuario
     const buscaUserById = async (tipoUser ,idUser) =>{
         const request = await fetch(`${url}/${tipoUser}/${idUser}`);
@@ -377,6 +384,7 @@ export function useUser(){
         }
     }
 
+    // verificar senha informada pelo user
     const verificaSenhaInformada = async (senha) => {
         const user = userType || localStorage.getItem("userType");
         const id = userId || localStorage.getItem("userId");
@@ -388,10 +396,10 @@ export function useUser(){
         return (senha === response.senha);
     }
 
-
     return {
         atualizaInfosUser,
         alteraSenhaUser,
+        buscaAssistenciasFavoritas,
         buscaUserById,
         cadastrarInfosUser,
         cadastrarPseudoUser,
@@ -719,6 +727,14 @@ export function useDemanda(){
         return response;
     }
 
+    // busca demanda específica pelo id
+    const buscaDemandaById = async(idDemanda) => {
+        const request = await fetch(`${url}/demanda/${idDemanda}`);
+        const response = await request.json();
+
+        return response;
+    }
+
     // busca dispositivo pelo id
     const buscaDispositivoById = async(idDispositivo)=>{
         const request = await fetch(`${url}/dispositivo/${idDispositivo}`);
@@ -766,6 +782,23 @@ export function useDemanda(){
         defineIdSolicitante("demanda", response.id);
         // define data e hora da emissao da demanda
         defineDataEmissao(response.id);
+    }
+
+    // definir status da demanda como 'Cancelada'
+    const cancelarDemanda = async (idDemanda) =>{
+        const status = {
+            "status":"Cancelada"
+        }
+        
+        const request = await fetch(`${url}/demanda/${idDemanda}`,{
+            method: "PATCH",
+            body: JSON.stringify(status)
+        });
+
+        if(request.ok){
+            alert("Demanda cancelada");
+            location.reload();
+        }
     }
 
     // define id de assistencia como responsavel pela demanda quando adm aceita demanda atribuinda-a à uma de suas assistencias
@@ -834,9 +867,11 @@ export function useDemanda(){
 
     return {
         buscaDemandas,
+        buscaDemandaById,
         buscaDispositivoById,
         cadastrarDemanda, 
         cadastrarDispositivo, 
+        cancelarDemanda,
         defineIdAssistencia
     };
 }

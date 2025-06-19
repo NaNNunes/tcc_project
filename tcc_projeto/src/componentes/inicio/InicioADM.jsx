@@ -237,7 +237,7 @@ const InicioADM = () => {
 
                     <Button
                       className={styles.botaoTexto}
-                      onClick={() => navigate("/criar-pedido")}
+                      onClick={() => navigate("/criar-demanda/criar")}
                     >
                       <div className={styles.iconeWrapper}>
                         <Image

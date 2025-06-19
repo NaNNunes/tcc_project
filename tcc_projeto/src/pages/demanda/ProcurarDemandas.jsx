@@ -2,6 +2,7 @@
 import CardDemanda from "../../componentes/demanda/card-demanda/CardDemanda";
 
 // Importação do react-bootstrap.
+import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
@@ -172,35 +173,37 @@ const ProcurarDemandas = () => {
   };
 
   return (
-    // parou de carregar kkk
     <div style={{paddingTop: '80px', paddingBottom: '80px'}}>
       <Container className={styles.caixa}>
         {
-          (demandasParaMostrar ? (
-              demandasParaMostrar.map((demanda) => (
-                // passar props informando qual é o user que está acessando a page, para request no componente de card demanda
-                <CardDemanda
-                  key = {demanda.id}
-                  // ids 
-                  id = {demanda.id}
-                  idResponsavel = {demanda.solicitante_id} // id do emissor da demanda
-                  idDispostivo = {demanda.idDispostivo} 
-                  idAssistenciaResponsavel = {demanda.assistencia} // id assistencia responsavel pela demanda
-                  // infos da demanda
-                  descricao = {demanda.descProblema}
-                  observacoes = {demanda.observacoes}
-                  dataEmissao = {demanda.dataEmissao}
-                  status = {demanda.status}
-                  // user buscador da demanda
-                  userBuscador = {userType} // tipo de user que está buscando demandas
-                  idBuscador = {userId}
-                />
-              ))
-          ) :
-         (
-          <span>Não há demandas a serem carregadas.</span>
-         )
-        )
+          // verifica se há demandas
+          (demandasParaMostrar.length > 0) 
+            ? 
+                demandasParaMostrar.map((demanda) => (
+                  // passar props informando qual é o user que está acessando a page, para request no componente de card demanda
+                  <CardDemanda
+                    key = {demanda.id}
+                    // ids 
+                    id = {demanda.id}
+                    idResponsavel = {demanda.solicitante_id} // id do emissor da demanda
+                    idDispostivo = {demanda.idDispostivo} 
+                    idAssistenciaResponsavel = {demanda.assistencia} // id assistencia responsavel pela demanda
+                    // infos da demanda
+                    descricao = {demanda.descProblema}
+                    observacoes = {demanda.observacoes}
+                    dataEmissao = {demanda.dataEmissao}
+                    status = {demanda.status}
+                    // user buscador da demanda
+                    userBuscador = {userType} // tipo de user que está buscando demandas
+                    idBuscador = {userId}
+                  />
+                ))
+            :
+              <Card>
+                <Card.Text>
+                  <span>Não há demandas a serem carregadas.</span>
+                </Card.Text>
+              </Card> 
         }
       </Container>
 
