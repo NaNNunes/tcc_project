@@ -26,17 +26,28 @@ import ImgCelular from '/icons/img_card_celular.png';
 import ImgNotebook from '/icons/img_card_notebook.png';
 import ImgPerifericos from '/icons/img_card_perifericos.png';
 
-import { use, useEffect, useState } from 'react';
-import { useDemanda, useAssistencia } from "../../../hooks/useApi.js";
+import { useEffect, useState } from 'react';
+import { useDemanda, useAssistencia, useUser, useEndereco } from "../../../hooks/useApi.js";
 import { useParams } from 'react-router-dom';
 
 const CardDemanda = (props) => {
 
     // pega informação passada na url sobre o tipo da demanda procurada
     const {tipoDemanda} = useParams();
-    // funcao que busca assistencia responsavel pela demanda como o id registrado da mesma na demanda
-    const { defineIdAssistencia } = useDemanda();
+    // Hooks
+    // hook de demandas
+    const { 
+        // funcao que busca dispositivo pelo id
+        buscaDispositivoById, 
+        // funcao que busca assistencia responsavel pela demanda como o id registrado da mesma na demanda
+        defineIdAssistencia 
+    } = useDemanda();
+    // funcao que busca lista de assistencias
     const { buscaAssistencias } = useAssistencia()
+    // funcao que busca solicitante pelo id
+    const { buscaUserById } = useUser();
+    // funcao que busca endereco pelo id
+    const { buscaEnderecoById } = useEndereco();
 
     // declarando variaveis de acordo com props
     // infos do buscador
@@ -68,9 +79,11 @@ const CardDemanda = (props) => {
                 // caso buscador seja adm, salvará todas as assistencias do mesmo
                 // para que selecione qual assistencia será responsável pela demanda
                 if(userBuscador === "administrador"){
+                    // lista para receber assistencias do adm
                     const listaAssistenciasAdministrador = [];
-
+                    // busca lista de todas assistencias
                     const assistencias = await buscaAssistencias();
+                    // mapeia lista de assistencias filtrando assistencias pertencentes ao adm pelo id 
                     assistencias.map((assistencia)=>{
                         if(assistencia.administradorId === idBuscador){
                             listaAssistenciasAdministrador.push(assistencia);
@@ -79,24 +92,21 @@ const CardDemanda = (props) => {
                     setAssistenciasDoAdministrador(listaAssistenciasAdministrador);
                 }
 
-                // busca de dados do solicitante
+                // Busca de dados do solicitante
                 // busca solicitante by id
-                const reqBuscaSolicitanteById = await fetch(`${url}/solicitante/${idResponsavel}`);
-                const resBuscaSolicitanteById = await reqBuscaSolicitanteById.json();
-
-                // id do endereco
+                const resBuscaSolicitanteById = await buscaUserById("solicitante" , idResponsavel);
+                // id do endereco do solicitante
                 const idEndereco = resBuscaSolicitanteById.id_endereco;
                 
+                // Caso id tenha algum registro
                 // buscar endereco do user by id
-                if(idEndereco != undefined){
-                    const reqBuscaEnderecoSolicitanteById = await fetch(`${url}/endereco/${idEndereco}`);
-                    const resBuscaEnderecoSolicitanteById = await reqBuscaEnderecoSolicitanteById.json();
+                if(idEndereco != ""){
+                    const resBuscaEnderecoSolicitanteById = await buscaEnderecoById(idEndereco);
                     setEndereco(resBuscaEnderecoSolicitanteById);
                 }
 
                 //buscar dispositivo do user by id
-                const reqBuscaDispositivoSolicitanteById = await fetch(`${url}/dispositivo/${idDispostivo}`);
-                const resBuscaDispositivoSolicitanteById = await reqBuscaDispositivoSolicitanteById.json();
+                const resBuscaDispositivoSolicitanteById = await buscaDispositivoById(idDispostivo);
                 setDispositivo(resBuscaDispositivoSolicitanteById);
 
             } catch (error) {

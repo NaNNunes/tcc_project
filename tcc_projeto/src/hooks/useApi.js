@@ -261,6 +261,7 @@ export function useUser(){
         location.reload();
     }
 
+    // atualiza infos do user
     const atualizaInfosUser = async (data) => {
 
         const user = localStorage.getItem("userType");
@@ -273,6 +274,14 @@ export function useUser(){
         location.reload();
     }
     
+    // busca user pelo id e o tipo de usuario
+    const buscaUserById = async (tipoUser ,idUser) =>{
+        const request = await fetch(`${url}/${tipoUser}/${idUser}`);
+        const response = await request.json();
+
+        return response;
+    }
+
     // cadastra user
     const cadastrarInfosUser = async (data) => {
         // define o tipo de user
@@ -297,6 +306,7 @@ export function useUser(){
         inserirValidacao(false);
     }
 
+    // cadastra solicitante presencial
     const cadastrarPseudoUser = async (data) =>{
 
         const request = await fetch(`${url}/solicitante`,{
@@ -382,6 +392,7 @@ export function useUser(){
     return {
         atualizaInfosUser,
         alteraSenhaUser,
+        buscaUserById,
         cadastrarInfosUser,
         cadastrarPseudoUser,
         favoritarAssistencia,
@@ -553,6 +564,31 @@ export function useComparaDados (){
 // por enquato apenas insere endereco
 export function useEndereco(){
 
+    // atualiza endereco do user
+    const atualizarEndereco = async (idEndereco, data) =>{
+
+        const request = await fetch(`${url}/endereco/${idEndereco}`,{
+            method: "PATCH",
+            body: JSON.stringify(data)
+        })
+        
+        const response = await request.json();
+        const endereco_id = response.id; 
+        setaIdEmUser(endereco_id);
+
+        location.reload();
+
+        return response;
+    }
+
+    // busca Endereco By Id
+    const buscaEnderecoById = async (idEndereco) =>{
+        const request = await fetch(`${url}/endereco/${idEndereco}`);
+        const response = await request.json();
+
+        return response;
+    }
+
     // cadastra endereco
     const cadastrarEndereco = async (data) =>{
 
@@ -600,32 +636,8 @@ export function useEndereco(){
         })
 
     }
-
-    // atualiza endereco do user
-    const atualizarEndereco = async (idEndereco, data) =>{
-
-        const request = await fetch(`${url}/endereco/${idEndereco}`,{
-            method: "PATCH",
-            body: JSON.stringify(data)
-        })
-        
-        const response = await request.json();
-        const endereco_id = response.id; 
-        setaIdEmUser(endereco_id);
-
-        location.reload();
-
-        return response;
-    }
-
-    const buscaEnderecoById = async (idEndereco) =>{
-        const request = await fetch(`${url}/endereco/${idEndereco}`);
-        const response = await request.json();
-
-        return response;
-    }
-    
-    return {cadastrarEndereco, atualizarEndereco, buscaEnderecoById};
+   
+    return {atualizarEndereco, buscaEnderecoById, cadastrarEndereco };
 }
 
 // cadastra assistencia
@@ -699,6 +711,14 @@ export function useDemanda(){
     
     const userType = localStorage.getItem("userType");
 
+    // busca dispositivo pelo id
+    const buscaDispositivoById = async(idDispositivo)=>{
+        const request = await fetch(`${url}/dispositivo/${idDispositivo}`);
+        const response = await request.json();
+
+        return response;
+    }
+    
     // cadastra dispositivo no sistema
     const cadastrarDispositivo = async (data) =>{
         
@@ -804,5 +824,10 @@ export function useDemanda(){
         }
     }
 
-    return {cadastrarDispositivo, cadastrarDemanda, defineIdAssistencia};
+    return {
+        buscaDispositivoById,
+        cadastrarDemanda, 
+        cadastrarDispositivo, 
+        defineIdAssistencia
+    };
 }
