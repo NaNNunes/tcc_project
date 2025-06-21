@@ -18,8 +18,7 @@ import { LuClipboardCheck } from "react-icons/lu";
 import { LuClipboardCopy } from "react-icons/lu";
 
 const tipoUser = localStorage.getItem("userType");
-const perfilUsuario =
-  tipoUser !== "Visitante" && localStorage.getItem("userType");
+const perfilUsuario = (tipoUser !== "Visitante") && localStorage.getItem("userType");
 
 const InicioADM = () => {
   const navigate = useNavigate();
