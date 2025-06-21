@@ -719,6 +719,20 @@ export function useDemanda(){
     
     const userType = localStorage.getItem("userType");
 
+    // atualiza status de demanda
+    const atualizarStatusDemanda = async(idDemanda, novoStatus) =>{
+        const status = {
+            "status": novoStatus
+        }
+
+        const request = await fetch(`${url}/demanda/${idDemanda}`,{
+            method: "PATCH",
+            body: JSON.stringify(status)
+        });
+
+        return request.ok;
+    }
+
     // lista todas as demandas
     const buscaDemandas = async() =>{
         const request = await fetch(`${url}/demanda`);
@@ -808,10 +822,12 @@ export function useDemanda(){
             "assistencia": idAssistencia
         }
 
-        fetch(`${url}/demanda/${idDemanda}`,{
+        const request = await fetch(`${url}/demanda/${idDemanda}`,{
             method: "PATCH",
             body: JSON.stringify(assistenciaResponsavel)
         })
+
+        return request.ok
     }
     
     // TODO ASSIM QUE KEVIN TERMINAR DE CRIAR O COMPONENTE PARA CRIAÇÃO DE DEMANDA COM SOLICITAÇÃO PRESENCIAL. demanda "emitida" pelo adm
@@ -866,6 +882,7 @@ export function useDemanda(){
     }
 
     return {
+        atualizarStatusDemanda,
         buscaDemandas,
         buscaDemandaById,
         buscaDispositivoById,

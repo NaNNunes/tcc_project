@@ -40,6 +40,7 @@ const CardDemanda = (props) => {
     // Hooks
     // hook de demandas
     const { 
+        atualizarStatusDemanda,
         buscaDispositivoById, // funcao que busca dispositivo pelo id 
         cancelarDemanda,      // cancelar demanda pelo id
         defineIdAssistencia   // funcao que busca assistencia responsavel pela demanda como o id registrado da mesma na demanda
@@ -73,6 +74,26 @@ const CardDemanda = (props) => {
     const [endereco, setEndereco] = useState({});
     // dados do solicitante
     const [solicitante, setSolicitante] = useState({});
+
+    const handleAceitaDemanda = async() =>{
+        const idDemanda = props.id;
+        const isDemandaAtribuida = await defineIdAssistencia(idDemanda, assistenciaSelecionada);
+
+        // caso não ocorra sucesso na atribuição da demanda
+        if(isDemandaAtribuida != true){
+            return alert(`Demanda ${idDemanda} não atribuida a sua Assistência ${assistenciaSelecionada}`);
+        }
+
+        const isStatusDemandaAtualizado = await atualizarStatusDemanda(idDemanda, "Em atendimento");
+        // caso erro ao atualizar status da demanda
+        if(isStatusDemandaAtualizado != true){
+            // retorna demanda como aberto
+            defineIdAssistencia(idDemanda, "Aberto");
+            return alert("Status de demanda não modificado");    
+        }
+
+        location.reload();
+    }
 
     // busca dados de solicitante, endereco e dispositivo
     useEffect(()=>{
@@ -150,11 +171,7 @@ const CardDemanda = (props) => {
             <Button 
                 className={styles.botaoModal}
                 disabled={assistenciaSelecionada === ""}
-                onClick={()=>{
-                    if(mostrarModal != undefined){
-                        defineIdAssistencia(props.id, assistenciaSelecionada);
-                    }
-                }}
+                onClick={()=>{handleAceitaDemanda()}}
             >
                 Aceitar
             </Button>
@@ -215,6 +232,7 @@ const CardDemanda = (props) => {
         </>
     )
 
+    // tipo de botão que aparecerá de acordo com user
     const botaoDoCard = {
         "solicitante": botaoEditarDemanda,
         "administrador": botaoVisualizarDemada
