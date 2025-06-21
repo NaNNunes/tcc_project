@@ -396,9 +396,8 @@ const CadastroDemanda = () => {
         };
         
         // cadastrar demanda
-        console.log("Demanda cadastrada:",infosDemanda)
+        // console.log("Demanda cadastrada:",infosDemanda)
         cadastrarDemanda(infosDemanda);
-
         setMostrarModal(false);
     }
 

@@ -779,9 +779,14 @@ export function useDemanda(){
         const response = await request.json();
         
         // define id emissor da demanda
-        defineIdSolicitante("demanda", response.id);
+        const isIdSolicitanteDefinido = await defineIdSolicitante("demanda", response.id);
         // define data e hora da emissao da demanda
-        defineDataEmissao(response.id);
+        const isDataEmissaoDefinida = await defineDataEmissao(response.id);
+
+        if(isIdSolicitanteDefinido && isDataEmissaoDefinida && request.ok){
+            alert("Demanda cadastrada");
+            return request.ok;
+        }
     }
 
     // definir status da demanda como 'Cancelada'
@@ -825,10 +830,12 @@ export function useDemanda(){
             "solicitante_id": userId || localStorage.getItem("userId")
         }
 
-        fetch(`${url}/${tabelaDestino}/${id}`,{
+        const request = await fetch(`${url}/${tabelaDestino}/${id}`,{
             method: "PATCH",
             body: JSON.stringify(solicitante)
         })
+
+        return request.ok;
     }
 
     // define data e hora emissao
@@ -859,10 +866,8 @@ export function useDemanda(){
             method: "PATCH",
             body: JSON.stringify(dataHoraEmissao)
         });
-        if(request.ok){
-            // recarrega pagina quando finalizado o cadastro
-            location.reload();
-        }
+
+        return request.ok;
     }
 
     return {

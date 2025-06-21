@@ -173,35 +173,23 @@
   ],
   "dispositivo": [
     {
-      "id": "0d8e",
+      "id": "8510",
       "categoria": "Celular",
       "marca": "Apple",
-      "fabricante": "Apple",
+      "fabricante": "",
       "modelo": "iPhone 16",
       "numSerie": "",
       "tensao": "",
       "amperagem": "",
       "cor": "",
-      "solicitante_id": "88f2"
+      "solicitante_id": "d150"
     },
     {
-      "id": "c613",
-      "categoria": "Notebook",
+      "id": "19e1",
+      "categoria": "Tablet",
       "marca": "Samsung",
       "fabricante": "",
-      "modelo": "Galaxy S24 FE",
-      "numSerie": "",
-      "tensao": "",
-      "amperagem": "",
-      "cor": "",
-      "solicitante_id": "176d"
-    },
-    {
-      "id": "82be",
-      "categoria": "Celular",
-      "marca": "Nokia",
-      "fabricante": "",
-      "modelo": "Nokia 6300",
+      "modelo": "Tab S10 FE+",
       "numSerie": "",
       "tensao": "",
       "amperagem": "",
@@ -211,169 +199,26 @@
   ],
   "demanda": [
     {
-      "id": "0993",
-      "idDispostivo": "0d8e",
-      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
+      "id": "df51",
+      "idDispostivo": "8510",
+      "descProblema": "Siiiiiiiiiiiiiiiummmmmm",
       "observacoes": "",
       "status": "Aberto",
       "assistencia": "Público",
-      "solicitante_id": "88f2",
-      "dataEmissao": "13/06/202",
-      "horaEmissao": "21:28:14"
+      "solicitante_id": "d150",
+      "dataEmissao": "21/06/2025",
+      "horaEmissao": "19:36:14"
     },
     {
-      "id": "0922",
-      "idDispostivo": "c613",
-      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
-      "observacoes": "",
-      "status": "Aberto",
-      "assistencia": "Público",
-      "solicitante_id": "88f2",
-      "dataEmissao": "13/06/2025",
-      "horaEmissao": "21:28:14"
-    },
-    {
-      "id": "0193",
-      "idDispostivo": "0d8e",
-      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
-      "observacoes": "",
-      "status": "Aberto",
-      "assistencia": "Público",
-      "solicitante_id": "88f2",
-      "dataEmissao": "13/06/2025",
-      "horaEmissao": "21:28:14"
-    },
-    {
-      "id": "0793",
-      "idDispostivo": "c613",
-      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
-      "observacoes": "",
-      "status": "Aberto",
-      "assistencia": "Público",
-      "solicitante_id": "88f2",
-      "dataEmissao": "13/06/2025",
-      "horaEmissao": "21:28:14"
-    },
-    {
-      "id": "0293",
-      "idDispostivo": "0d8e",
-      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
-      "observacoes": "",
-      "status": "Aberto",
-      "assistencia": "Público",
-      "solicitante_id": "88f2",
-      "dataEmissao": "13/06/2025",
-      "horaEmissao": "21:28:14"
-    },
-    {
-      "id": "0972",
-      "idDispostivo": "c613",
-      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
-      "observacoes": "",
-      "status": "Aberto",
-      "assistencia": "Público",
-      "solicitante_id": "88f2",
-      "dataEmissao": "13/06/2025",
-      "horaEmissao": "21:28:14"
-    },
-    {
-      "id": "0623",
-      "idDispostivo": "0d8e",
-      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
-      "observacoes": "",
-      "status": "Aberto",
-      "assistencia": "Público",
-      "solicitante_id": "88f2",
-      "dataEmissao": "13/06/2025",
-      "horaEmissao": "21:28:14"
-    },
-    {
-      "id": "0924",
-      "idDispostivo": "c613",
-      "descProblema": "SIIIIIIIIIIIIIIIIUUUUUUUUM",
-      "observacoes": "",
-      "status": "Em atendimento",
-      "assistencia": "28fd",
-      "solicitante_id": "88f2",
-      "dataEmissao": "13/06/2025",
-      "horaEmissao": "21:28:14"
-    },
-    {
-      "id": "ff31",
-      "idDispostivo": "c613",
-      "descProblema": "SIIIIIIIIIIum 2",
-      "observacoes": "",
-      "status": "Em atendimento",
-      "assistencia": "28fd",
-      "solicitante_id": "88f2",
-      "dataEmissao": "13/06/2025",
-      "horaEmissao": "21:29:11"
-    },
-    {
-      "id": "ff33",
-      "idDispostivo": "c613",
-      "descProblema": "SIIIIIIIIIIum 2",
+      "id": "26d5",
+      "idDispostivo": "19e1",
+      "descProblema": "Siiiiiiiiiiiiiiiiuuuuuuummmmmm 2",
       "observacoes": "",
       "status": "Cancelada",
       "assistencia": "28fd",
       "solicitante_id": "d150",
-      "dataEmissao": "13/06/2025",
-      "horaEmissao": "21:29:11"
-    },
-    {
-      "id": "ff32",
-      "idDispostivo": "0d8e",
-      "descProblema": "SIIIIIIIIIIum 3",
-      "observacoes": "",
-      "status": "Aberto",
-      "assistencia": "28fd",
-      "solicitante_id": "d150",
-      "dataEmissao": "13/06/2025",
-      "horaEmissao": "21:29:11"
-    },
-    {
-      "id": "147b",
-      "idDispostivo": "004e",
-      "descProblema": "AAAAAAAAAAAAAAAAAAAAAAAAAA",
-      "observacoes": "",
-      "status": "Aberto",
-      "assistencia": "",
-      "solicitante_id": "3b09",
-      "dataEmissao": "16/06/2025",
-      "horaEmissao": "14:55:30"
-    },
-    {
-      "id": "05d2",
-      "idDispostivo": "2845",
-      "descProblema": "LDKANDLKSANLDKNSAKLDA",
-      "observacoes": "",
-      "status": "Aberto",
-      "assistencia": "",
-      "solicitante_id": "9e5c",
-      "dataEmissao": "16/06/2025",
-      "horaEmissao": "14:57:40"
-    },
-    {
-      "id": "ff23",
-      "idDispostivo": "c613",
-      "descProblema": "SIIIISASDADASDASIIIIum 2",
-      "observacoes": "",
-      "status": "Concluido",
-      "assistencia": "28fd",
-      "solicitante_id": "d150",
-      "dataEmissao": "13/06/2025",
-      "horaEmissao": "21:29:11"
-    },
-    {
-      "id": "f133",
-      "idDispostivo": "c613",
-      "descProblema": "SIIIIIIIIIIum 2",
-      "observacoes": "",
-      "status": "Concluido",
-      "assistencia": "28fd",
-      "solicitante_id": "d150",
-      "dataEmissao": "13/06/2025",
-      "horaEmissao": "21:29:11"
+      "dataEmissao": "21/06/2025",
+      "horaEmissao": "19:36:45"
     }
   ],
   "assistencia_Fav_Solicitante": [
