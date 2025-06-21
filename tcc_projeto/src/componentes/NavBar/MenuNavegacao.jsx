@@ -76,6 +76,11 @@ const MenuNavegacao = () => {
             as={Link}
             to={`/procurar-demandas/minhas-demandas`}
             className={styles.dropdownItem}
+            onClick={()=>{
+              setTimeout(() => {
+                location.reload();
+              }, 1);
+            }}
           >
             <Image className={styles.icone} src='/icons/Icon_consultar.svg' />Consultar pedidos
           </NavDropdown.Item>

@@ -80,7 +80,7 @@ const CadastroDemanda = () => {
     useEffect(()=>{
         async function fetchData() {
             
-            // carregar infos de assistencia do  user adm
+            // carrega infos de assistencias do user adm
             if(userType === "administrador"){
                 const resBuscaAssistencias = await buscaAssistencias();
                 
@@ -94,6 +94,7 @@ const CadastroDemanda = () => {
                 setAssistencias(listaAssistencias);
             }
 
+            // carrega assistencias favoritas do solicitante
             if(userType === "solicitante"){
                 const resBuscaLikes = await buscaAssistenciasFavoritas();
                 

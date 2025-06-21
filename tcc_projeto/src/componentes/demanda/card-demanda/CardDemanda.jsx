@@ -44,7 +44,10 @@ const CardDemanda = (props) => {
         defineIdAssistencia   // funcao que busca assistencia responsavel pela demanda como o id registrado da mesma na demanda
     } = useDemanda();
     // funcao que busca lista de assistencias
-    const { buscaAssistencias } = useAssistencia()
+    const { 
+        buscaAssistencias,
+        buscaAssistenciaById
+     } = useAssistencia();
     // funcao que busca endereco pelo id
     const { buscaEnderecoById } = useEndereco();
     // funcao que busca solicitante pelo id
@@ -57,7 +60,7 @@ const CardDemanda = (props) => {
 
     const idResponsavel = props.idResponsavel;
     const idDispostivo = props.idDispostivo;
-    // para mostrar qual assistencia está responsável pela demanda
+    // para mostrar qual assistencia está responsável pela demanda/ buscar nome fantasia da assistencia
     const idAssistencia = props.idAssistenciaResponsavel; 
     
     // Estados do modal.
@@ -66,6 +69,8 @@ const CardDemanda = (props) => {
     const [assistenciaSelecionada, setAssistenciaSelecionada] = useState("");
     // lista de assistencias do adm
     const [assistenciasDoAdministrador, setAssistenciasDoAdministrador] = useState([]);
+    // assistencia responsável pela demanda (Domínio)
+    const [assistenciaResponsavel, setAssistenciaResponsavel] = useState("Público");
     // dispositivo que a demanda se refere
     const [dispositivo, setDispositivo] = useState({});
     // endereco do solicitante emissor da demanda
@@ -89,7 +94,6 @@ const CardDemanda = (props) => {
             defineIdAssistencia(idDemanda, "Aberto");
             return alert("Status de demanda não modificado");    
         }
-
         location.reload();
     }
 
@@ -111,6 +115,12 @@ const CardDemanda = (props) => {
                         }
                     });
                     setAssistenciasDoAdministrador(listaAssistenciasAdministrador);
+                }
+
+                // Busca nome da assistencia responsavel pela demanda
+                if(idAssistencia != "Público"){
+                    const resBuscaAssistenciaById = await buscaAssistenciaById(idAssistencia);
+                    setAssistenciaResponsavel(resBuscaAssistenciaById.nomeFantasia);
                 }
 
                 // Busca de dados do solicitante
@@ -286,6 +296,13 @@ const CardDemanda = (props) => {
                         width: "100%", display: "flex", flexDirection: "column"
                     }}
                 >
+                    {/* mude o design front enzo */}
+                    {
+                        (props.status !== "Cancelada") &&
+                            <Card.Header>
+                                {assistenciaResponsavel}
+                            </Card.Header>
+                    }
                     <Card.Body 
                         className={styles.cardBody} 
                     >
