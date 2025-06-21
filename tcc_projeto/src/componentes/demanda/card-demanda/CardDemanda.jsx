@@ -1,5 +1,3 @@
-// caso buscador da demanda seja solicitante e demanda esteja em aberto
-// permitir que o mesmo edite a demanda emitida
 
 // Importação de componentes do react-bootstrap
 import Container from 'react-bootstrap/Container';

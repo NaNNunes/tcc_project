@@ -39,11 +39,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 const CadastroDemanda = () => {
     
     const navigate = useNavigate();
+    // recebe id da demada ou 'criar' da url para definir a pagina carregada será para edição ou criação de demanda
     const {idDemanda} = useParams();
 
     const userId = localStorage.getItem("userId");
     const userType = localStorage.getItem("userType");
 
+    // caso user não seja válido
     if(userType != "administrador" && userType != "solicitante") return navigate("/login");
     
     const {
@@ -55,8 +57,8 @@ const CadastroDemanda = () => {
     } = useForm();
 
     const { 
-            buscaDemandaById,
-            buscaDispositivoById 
+        buscaDemandaById,
+        buscaDispositivoById 
     } = useDemanda();
     
     const { 
@@ -69,63 +71,72 @@ const CadastroDemanda = () => {
         buscaAssistenciasFavoritas 
     } = useUser();
 
+    // state para receber lista de assistencias
     const [assistencias, setAssistencias] = useState([]);
     // dispositivo da demanda, renderizado quando solicitante aperta em editar demanda
     const [dispositivo, setDispositivo] = useState({});
 
+    // carrega todas as infos 
     useEffect(()=>{
         async function fetchData() {
+            
+            // carregar infos de assistencia do  user adm
+            if(userType === "administrador"){
+                const resBuscaAssistencias = await buscaAssistencias();
+                
+                // verifica quais assistencias pertencem ao administrador
+                resBuscaAssistencias.map((assistencia)=>{
+                    if(assistencia.administradorId === userId){
+                        listaAssistencias.push(assistencia);
+                    }
+                })
+
+                setAssistencias(listaAssistencias);
+            }
+
+            if(userType === "solicitante"){
+                const resBuscaLikes = await buscaAssistenciasFavoritas();
+                
+                // mapeia todas os matchs e retorna nome da assistencia pelo id encontrado no match
+                // pegar assitencias apenas com que seja favoritadas pelo user, verificando o id do solicitante no match
+                const assistenciasFavoritadas = await Promise.all(
+                    resBuscaLikes
+                        .filter(res => res.id_solicitante === userId)
+                        .map(res => buscaAssistenciaById(res.id_assistencia))
+                );
+                // setAssistencias(listaAssistencias);
+                setAssistencias(assistenciasFavoritadas);
+            }
+
+            // caso pagina seja carregada para editar demanda
             if(idDemanda != "criar" && idDemanda != false){
+                // busca todas as demandas
                 const resBuscaDemandaById = await buscaDemandaById(idDemanda);
+                
+                // busca dados do dispositivo da demanda
                 const idDispositivo = resBuscaDemandaById.idDispostivo;
                 const resBuscaispositivoById = await buscaDispositivoById(idDispositivo);
+
+                //salva dados de dispositivo no state
                 setDispositivo(resBuscaispositivoById);
                 setMarcaSelecionada(resBuscaispositivoById.marca);
                 
+                // registra dados do dispositivo nos respectivos campos
                 for(const [key, value] of Object.entries(resBuscaispositivoById)){
                     setValue(key, value);
                 }
 
+                // registra dados da demanda no respectivos campos
                 for(const [key, value] of Object.entries(resBuscaDemandaById)){
                     setValue(key, value);
                 }
-
             } 
         };
         fetchData();
-    },[])
+    },[]);
 
     // lista para receber assistencias vinculadas ao user, pelo match caso solicitante ou que possuam o id do adm, caso adm
     const listaAssistencias = [];
-
-    const buscaMatchs = async() =>{
-        const resBuscaLikes = await buscaAssistenciasFavoritas();
-
-        // mapeia todas os matchs e retorna nome da assistencia pelo id encontrado no match
-        // pegar assitencias apenas com que seja favoritadas pelo user, verificando o id do solicitante no match
-        const assistenciasFavoritadas = await Promise.all(
-            resBuscaLikes
-                .filter(res => res.id_solicitante === userId)
-                .map(res => buscaAssistenciaById(res.id_assistencia))
-        );
-        // setAssistencias(listaAssistencias);
-        setAssistencias(assistenciasFavoritadas);
-    }
-
-    // busca todas assistencias do administrador
-    const buscaAssistenciasDoAdministrador = async()=>{
-        const resBuscaAssistencias = await buscaAssistencias();
-
-        // verifica quais assistencias pertencem ao administrador
-        resBuscaAssistencias.map((assistencia)=>{
-            if(assistencia.administradorId === userId){
-                listaAssistencias.push(assistencia);
-            }
-        })
-
-        setAssistencias(listaAssistencias);
-        console.log("Assistências carregadas:", listaAssistencias);
-    }
 
     const {cadastrarDispositivo, cadastrarDemanda} = useDemanda();
     // Categoria e marca selecionada no ListGroup.
@@ -134,10 +145,8 @@ const CadastroDemanda = () => {
 
     // Estados do modal.
     const [mostrarModal, setMostrarModal] = useState(false);
-
     // Dados do Form temporários.
     const [dadosTemporarios, setDadosTemporarios] = useState(null);
-
     // Assistência pre-selecionada como público.
     const [atSelecionada, setAtSelecionada] = useState("Público");
 
@@ -253,7 +262,7 @@ const CadastroDemanda = () => {
                                         value={marca} 
                                         selected
                                     >
-                                        {dispositivo.marca}
+                                        {marca}
                                     </option>
                     ))}
                 </Form.Select>
@@ -334,14 +343,6 @@ const CadastroDemanda = () => {
 
     const onSubmit = async (dados) => {
         setDadosTemporarios(dados);
-
-        if(userType === "solicitante") {
-            buscaMatchs();
-        }
-        else if(userType === "administrador"){
-            buscaAssistenciasDoAdministrador();
-        }
-        
         // Mostrando o Modal para ser selecionada a assistência
         setMostrarModal(true);
     }
