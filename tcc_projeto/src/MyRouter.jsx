@@ -7,6 +7,7 @@ import Assistencias from "./pages/assistencia/Assistencias.jsx";
 import AssistenciaInfo from "./pages/assistencia/AssistenciaInfo.jsx";
 import CadastroAssistencia from "./pages/cadastro-user/CadastroAssistencia.jsx";
 import CadastroEndereco from "./pages/cadastro-user/CadastroEndereco.jsx";
+import CadastroNovaAssistencia from "./pages/assistencia/CadastroNovaAssistencia.jsx";
 import CadastroPagamento from "./pages/cadastro-user/CadastroPagamento.jsx";
 import CadastroUser from "./pages/cadastro-user/CadastroUser.jsx";
 import Conta from "./pages/conta-perfil/Conta.jsx";
@@ -15,13 +16,13 @@ import ErrorPage from "./pages/ErrorPage.jsx";
 import Home from "./pages/home/Home.jsx";
 import Inicio from "./pages/inicio/Inicio.jsx";
 import Login from "./pages/login/Login.jsx";
+import Orcamento from "./pages/orcamento/Orcamento.jsx";
 import PerguntaSeguranca from "./pages/cadastro-user/PerguntaSeguranca.jsx";
 import Politicas from "./pages/termos/Politicas.jsx";
 import ProcurarDemandas from "./pages/demanda/ProcurarDemandas.jsx";
 import SelecaoUsuario from "./pages/selecao-usuario/SelecaoUsuario.jsx";
 import Sobre from "./pages/sobre/Sobre.jsx";
 import Termos from "./pages/termos/Termos.jsx";
-
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/buscar-assistencias/:tipoAssistencia",
-        element: <Assistencias />
+        element: <Assistencias />,
       },
       {
         path: "/cadastro",
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "/cadastro-endereco",
         element: <CadastroEndereco />,
+      },
+      {
+        path: "/cadastro-nova-assistencia",
+        element: <CadastroNovaAssistencia />,
       },
       {
         path: "/cadastro-pagamento",
@@ -68,7 +73,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/erro",
-        element: <ErrorPage />
+        element: <ErrorPage />,
       },
       {
         path: "/home",
@@ -81,6 +86,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/orcamento",
+        element: <Orcamento />,
       },
       {
         path: "/pergunta-seguranca",
