@@ -843,7 +843,7 @@ export function useDemanda(){
         // tabela Destino = dispositivo || demanda
 
         const solicitante = {
-            "solicitante_id": userId || localStorage.getItem("userId")
+            "solicitante_id": localStorage.getItem("userId")
         }
 
         const request = await fetch(`${url}/${tabelaDestino}/${id}`,{

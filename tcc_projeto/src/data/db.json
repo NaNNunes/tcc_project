@@ -59,6 +59,20 @@
       "isValido": true,
       "pergunta": "3",
       "resposta": "Cachoeiro de Itapemirim"
+    },
+    {
+      "id": "6c47",
+      "email": "jmda27@gmail.com",
+      "cpf": "561.195.530-45",
+      "userTelefone": "11 40028922",
+      "nome": "JM",
+      "sobrenome": "MIguel",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "1",
+      "resposta": "Tobi"
     }
   ],
   "assistencia": [
@@ -95,6 +109,18 @@
       "assistenciaTermos": "true",
       "administradorId": "0d6b",
       "id_endereco": "8f04"
+    },
+    {
+      "id": "a2d8",
+      "assistenciaEmail": "assistenicadotaemi@gmail.com",
+      "nomeFantasia": "Taemi tecnologias",
+      "razaoSocial": "Razao Social",
+      "cnpj": "58.096.649/0001-38",
+      "assistenciaTelefone": "1140028922",
+      "assistenciaTermos": "true",
+      "administradorId": "6c47",
+      "isValido": true,
+      "id_endereco": "347a"
     }
   ],
   "endereco": [
@@ -169,6 +195,24 @@
       "gia": "",
       "ddd": "66",
       "siafi": "8985"
+    },
+    {
+      "id": "347a",
+      "zipcode": "29135-617",
+      "localidade": "Viana",
+      "bairro": "Marcílio de Noronha",
+      "logradouro": "Rua Ecoporanga",
+      "uf": "ES",
+      "number": "002",
+      "complemento": "Com elemento",
+      "cep": "29135-617",
+      "unidade": "",
+      "estado": "Espírito Santo",
+      "regiao": "Sudeste",
+      "ibge": "3205101",
+      "gia": "",
+      "ddd": "27",
+      "siafi": "5701"
     }
   ],
   "dispositivo": [
@@ -190,6 +234,18 @@
       "marca": "Samsung",
       "fabricante": "",
       "modelo": "Tab S10 FE+",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "solicitante_id": "d150"
+    },
+    {
+      "id": "b9cf",
+      "categoria": "Celular",
+      "marca": "Apple",
+      "fabricante": "Samsung",
+      "modelo": "iPhone 16",
       "numSerie": "",
       "tensao": "",
       "amperagem": "",
@@ -219,6 +275,15 @@
       "solicitante_id": "d150",
       "dataEmissao": "21/06/2025",
       "horaEmissao": "19:36:45"
+    },
+    {
+      "id": "d457",
+      "idDispostivo": "b9cf",
+      "descProblema": "É observavel que há um problema que problematiza a rotina problemática do meu problema. Dificultando assim minhas problematizações diárias.",
+      "observacoes": "Observe que é observavel nesta observação que há um problema perceptivelmente observavel. Basta apenas observar.",
+      "status": "Aberto",
+      "assistencia": "a2d8",
+      "solicitante_id": "d150"
     }
   ],
   "assistencia_Fav_Solicitante": [
@@ -233,9 +298,19 @@
       "id_assistencia": "3418"
     },
     {
-      "id": "476e",
+      "id": "a432",
       "id_solicitante": "d150",
-      "id_assistencia": "28fd"
+      "id_assistencia": "a2d8"
+    },
+    {
+      "id": "b605",
+      "id_solicitante": "d150",
+      "id_assistencia": "1331"
+    },
+    {
+      "id": "6cb8",
+      "id_solicitante": "d150",
+      "id_assistencia": "3418"
     }
   ]
 }

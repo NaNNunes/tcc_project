@@ -30,6 +30,8 @@ const ProcurarDemandas = () => {
 
       // abertas -> todas demandas não atribuidas a assistencias
 
+      // solicitações -> demandas solicitadas a assistencia
+
     // SOLICITANTE
       // minhas-demandas -> emitidas pelo user independente de status
 
@@ -53,7 +55,7 @@ const ProcurarDemandas = () => {
       try {
         // busca todas as demandas
         const resBuscaDemandas = await buscaDemandas();
-
+        const escopoDemanda = resBuscaDemandas.assistencia;
         // caso user seja solicitante
         // lista apenas demandas emitidas por ele independente de status
         if(userType === "solicitante" && tipoDemanda === "minhas-demandas"){
@@ -72,12 +74,12 @@ const ProcurarDemandas = () => {
           return setDemandas(listaDemandasDoSolicitante);
         }
 
+        // lista para armazenas apenas demandas públicas
+        const listaDemandasPublicas = [];
         if(userType === "administrador"){
           // Para adm procurando novas demandas 
           if(tipoDemanda === "abertas"){
             // caso solicitante seja adm
-            // lista para armazenas apenas demandas públicas
-            const listaDemandasPublicas = [];
             // mapeamento de demandas para encontrar apenas demandas publicas e definí-las
             resBuscaDemandas.map((demanda)=>{
               const demandaPublica = demanda.assistencia === "Público";
@@ -148,6 +150,22 @@ const ProcurarDemandas = () => {
               })
             });
             // console.log("demandas atribuidas:",listaIdDemandasAssistenciasDoAdministrador);
+            return setDemandas(listaDemandasAssistenciasDoAdministrador);
+          }
+
+          // consulta por demandas solicitadas a assistencia
+          if(tipoDemanda === "solicitacoes"){
+            // mapeia demandas e verifica quais demandas estão vinculadas as assistencias do adm 
+            // que estejam em andamento ou apenas aceitas 
+            resBuscaDemandas.map((demanda) =>{
+              listaIdAssistencias.map((idAssistencia)=>{
+                const isDemandaVinculada = demanda.assistencia === idAssistencia;
+                const statusEmAtendimento = demanda.status === "Aberto";
+                if(isDemandaVinculada && statusEmAtendimento){
+                  listaDemandasAssistenciasDoAdministrador.push(demanda);
+                }
+              })
+            });
             return setDemandas(listaDemandasAssistenciasDoAdministrador);
           }
         }

@@ -163,14 +163,14 @@ const CardDemanda = (props) => {
                         // mapear todas as assistencias do adm 
                         // para que o mesmo defina qual assistencia será responsavel
                         assistenciasDoAdministrador.map((assistencia)=>(
-                            <>
+                            
                                 <option 
                                     key={assistencia.id}
                                     value={assistencia.id}
                                 >
                                     {assistencia.nomeFantasia}
                                 </option>
-                            </>
+                            
                         ))
                     }
                 </Form.Select>
@@ -200,7 +200,13 @@ const CardDemanda = (props) => {
     const botoes = {
         "abertas": aceitarDemanda,
         "minhas-demandas": botaoFecharModalDeInfosDemanda,
-        "aceitas":"Gerar orçamento"
+        "historico": botaoFecharModalDeInfosDemanda,
+        "aceitas":"Gerar orçamento",
+        // caso adm defina que outra assistencia receberá a demanda,
+            // não sendo a esperada pelo solicitante,
+            // a solução deverá permitir ao solicitante aceitar ou rejeitar.
+            // (Tenho que parar de me meter nessas roubas);
+        "solicitacoes": aceitarDemanda
     }
     // O Botão
     const mainBotao = botoes[tipoDemanda];

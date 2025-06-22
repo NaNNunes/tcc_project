@@ -5,12 +5,13 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
+import Badge from "react-bootstrap/Badge";
 
 // Importação dos estilos CSS.
 import styles from "./MenuNavegacao.module.css";
 
 // Importação do useState para verificar se o dropdown está aberto.
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 // Importação de contexto
 import { AuthContext } from "../../context/userContext";
@@ -24,18 +25,60 @@ import { TiArrowSortedUp } from "react-icons/ti";
 import { IoMenu } from "react-icons/io5";
 import { GrFavorite } from "react-icons/gr";
 
+import { useDemanda, useAssistencia } from "../../hooks/useApi";
+
 const MenuNavegacao = () => {
+
+  const {buscaDemandas} = useDemanda();
+  const {buscaAssistencias} = useAssistencia();
+
   const navigate = useNavigate();
 
   const { logout, usuarioNome } = useContext(AuthContext);
-
+  const userId = localStorage.getItem("userId");
+  const userType = localStorage.getItem("userType");
   const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
 
-  // AQUI VAI FICAR O CONTEXT PARA DEFINIR O USUÁRIO.
+  const [numeroSolicitacoes, setNumeroSolicitacoes] = useState(0);
+
+  // aqui código sempre segue em execução sempre atualizando de acordo com atualizações da pagina
+  useEffect(()=>{
+    async function fetchData(){
+      // caso user seja adm
+      if(userType === "administrador"){
+        // lista para receber assistencias do adm
+        const listaAssistenciasAdm = [];
+        // busca todas as assistencias 
+        const resBuscaAssistenciasDoAdm = await buscaAssistencias();
+        // mapeia e filtra todas as assistencias do adm
+        resBuscaAssistenciasDoAdm.map((assistencia)=>{
+          (assistencia.administradorId === userId) &&
+            listaAssistenciasAdm.push(assistencia);
+        });
+  
+        // lista para receber todas as demandas solicitadas as assistencias do adm
+        const listaDemandasSolicitadas = [];
+        // busca por todas as demandas
+        const resBuscaDemandas =  await buscaDemandas();
+        // mapeia e filtra todas as demanda que foram solicitadas para as assistencias do adm
+        resBuscaDemandas.map((demanda) =>{
+          listaAssistenciasAdm.map((assistencia)=>{
+            const isDemandaVinculada = demanda.assistencia === assistencia.id;
+            const statusEmAtendimento = demanda.status === "Aberto";
+            if(isDemandaVinculada && statusEmAtendimento){
+              listaDemandasSolicitadas.push(demanda);
+            }
+          });
+        });
+        setNumeroSolicitacoes(listaDemandasSolicitadas.length);
+      };
+    };
+    fetchData();
+  });
+
   // pega info do context por sincronia evitando que ao recarregar page o user seja deslogado
   const tipoUser = localStorage.getItem("userType");
-  const perfilUsuario =
-    tipoUser !== "Visitante" && localStorage.getItem("userType");
+  const perfilUsuario = tipoUser !== "Visitante" && localStorage.getItem("userType");
 
   // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
   const contentNavSolicitante = (
@@ -271,6 +314,32 @@ const MenuNavegacao = () => {
           </NavDropdown.Item>
         </NavDropdown>
       </div>
+
+      <div>
+        {/* 
+          Notificação de novas demandas 
+          estilize front enzo
+        */}
+        <Nav.Link 
+          as={Link}
+          to={"/procurar-demandas/solicitacoes"}
+          className="text-white fw-bold fs-6"
+          onClick={()=>{
+            setTimeout(() => {
+              location.reload();
+            }, 1);
+          }}
+        >
+          Solicitações
+          {
+            (numeroSolicitacoes > 0) &&
+              <Badge className="ms-1" bg="danger">
+                {numeroSolicitacoes}
+              </Badge>
+          }
+          
+        </Nav.Link>
+      </div>
     </>
   );
 
@@ -327,7 +396,11 @@ const MenuNavegacao = () => {
         >
           <NavDropdown.Header className={styles.navHeaderText}>
             {/* SÓ BOTAR O NOME DO CABA AQUI */}
-            {usuarioNome}
+            {
+              (usuarioNome != "Visitante")
+                ? usuarioNome
+                : localStorage.getItem("userName")
+            }
           </NavDropdown.Header>
 
           <NavDropdown.Divider
@@ -396,7 +469,11 @@ const MenuNavegacao = () => {
           className={styles.dropDownActive}
         >
           <NavDropdown.Header className={styles.navHeaderText}>
-            {usuarioNome}
+            {
+              (usuarioNome != "Visitante")
+                ? usuarioNome
+                : localStorage.getItem("userName")
+            }
           </NavDropdown.Header>
 
           <NavDropdown.Divider
@@ -423,7 +500,6 @@ const MenuNavegacao = () => {
 
           <NavDropdown.Item
             as={Button}
-            // AQUI ENTRA O CÓDIGO PARA DESLOGAR
             href="/login"
             onClick={() => {
               logout();
