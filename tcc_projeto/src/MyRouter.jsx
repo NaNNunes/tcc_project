@@ -7,6 +7,7 @@ import Assistencias from "./pages/assistencia/Assistencias.jsx";
 import AssistenciaInfo from "./pages/assistencia/AssistenciaInfo.jsx";
 import CadastroAssistencia from "./pages/cadastro-user/CadastroAssistencia.jsx";
 import CadastroEndereco from "./pages/cadastro-user/CadastroEndereco.jsx";
+import CadastroNovaAssistencia from "./pages/assistencia/CadastroNovaAssistencia.jsx";
 import CadastroPagamento from "./pages/cadastro-user/CadastroPagamento.jsx";
 import CadastroUser from "./pages/cadastro-user/CadastroUser.jsx";
 import Conta from "./pages/conta-perfil/Conta.jsx";
@@ -40,7 +41,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/buscar-assistencias/:tipoAssistencia",
-        element: <Assistencias />
+        element: <Assistencias />,
       },
       {
         path: "/cadastro",
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "/cadastro-endereco",
         element: <CadastroEndereco />,
+      },
+      {
+        path: "/cadastro-nova-assistencia",
+        element: <CadastroNovaAssistencia />,
       },
       {
         path: "/cadastro-pagamento",
@@ -68,7 +73,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/erro",
-        element: <ErrorPage />
+        element: <ErrorPage />,
       },
       {
         path: "/home",
