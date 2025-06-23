@@ -81,6 +81,7 @@ const CardDemanda = (props) => {
     // dados do solicitante
     const [solicitante, setSolicitante] = useState({});
 
+    // funcao de aceitar demanda
     const handleAceitaDemanda = async() =>{
         const idDemanda = props.id;
         const isDemandaAtribuida = await defineIdAssistencia(idDemanda, assistenciaSelecionada);
@@ -100,6 +101,7 @@ const CardDemanda = (props) => {
         location.reload();
     }
 
+    // funcao de rejeitar demanda
     const handleRejeitarDemanda = async() =>{
         const idDemanda = props.id;
         rejeitarDemanda(idDemanda);
@@ -193,29 +195,6 @@ const CardDemanda = (props) => {
                 Aceitar
             </Button>
         </>
-    )
-    // botao para fechar o modal
-    const botaoFecharModalDeInfosDemanda = (
-        <>
-            <Button 
-                className={styles.botaoModal}
-                onClick={()=>{setMostrarModal(false)}}
-            >
-                Fechar
-            </Button>
-        </>
-    )
-    // botao para direcionar user a tela de orçamento
-    const botaoGerarOrcamento = (
-        <>
-            <Button 
-                href='/orcamento'
-                className={styles.botaoModal}
-                onClick={()=>{setMostrarModal(false)}}
-            >
-                Gerar Orçamento
-            </Button>
-        </>
     );
 
     // botao para rejeitar demanda
@@ -227,6 +206,30 @@ const CardDemanda = (props) => {
                 variant="danger"
             >
                 Rejeitar
+            </Button>
+        </>
+    );
+
+    // botao para fechar o modal
+    const botaoFecharModalDeInfosDemanda = (
+        <>
+            <Button 
+                className={styles.botaoModal}
+                onClick={()=>{setMostrarModal(false)}}
+            >
+                Fechar
+            </Button>
+        </>
+    );
+    // botao para direcionar user a tela de orçamento
+    const botaoGerarOrcamento = (
+        <>
+            <Button 
+                href='/orcamento'
+                className={styles.botaoModal}
+                onClick={()=>{setMostrarModal(false)}}
+            >
+                Gerar Orçamento
             </Button>
         </>
     );
@@ -281,12 +284,6 @@ const CardDemanda = (props) => {
         </>
     )
 
-    // tipo de botão que aparecerá de acordo com user
-    const botaoDoCard = {
-        "solicitante": botaoEditarDemanda,
-        "administrador": botaoVisualizarDemada
-    }
-
     const imgCategoria = (categoria) => {
         switch ((categoria || '').toLowerCase()) {
             case 'celular':
@@ -339,7 +336,7 @@ const CardDemanda = (props) => {
                 >
                     {/* mude o design front enzo */}
                     {
-                        (props.status !== "Cancelada") &&
+                        (props.status !== "Cancelada" && idAssistencia != "Público") &&
                             <Card.Header>
                                 {assistenciaResponsavel}
                             </Card.Header>
@@ -419,18 +416,20 @@ const CardDemanda = (props) => {
 
                         <Container className={styles.containerBotao} style={{padding: '0'}}>
 
-                            {/* DEFINIR QUAIS BOTOES APARECERAO PARA USER DE ACORDO COM A DEMANDA E O USER */}
+                            {botaoVisualizarDemada}
                             {
                                 (
                                     userBuscador === "solicitante" && 
                                     props.status === "Aberto" && 
                                     idAssistencia === "Público"
                                 ) &&
-                                    botaoDoCard[userBuscador]
+                                    botaoEditarDemanda
                             }
-
                             {
-                                (userBuscador === "solicitante" && props.status === "Aberto") && 
+                                (
+                                    props.status !== "Cancelada" && 
+                                    userBuscador === "solicitante"
+                                ) && 
                                     botaoCancelarDemanda
                             }
 
