@@ -9,7 +9,7 @@ import {
 
 import styles from "../../componentes/conta_perfil/conta_perfil.module.css";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -103,11 +103,6 @@ const CadastroNovaAssistencia = () => {
   const onSubmit = (data) => {
     if (!verificador(data.cnpj)) {
       alert("CNPJ inválido");
-      return;
-    }
-
-    if (!data.assistenciaTermos) {
-      alert("Você deve aceitar os termos de uso");
       return;
     }
 

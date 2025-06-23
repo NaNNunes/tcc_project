@@ -16,35 +16,37 @@ import { Link, useNavigate } from "react-router-dom";
 
 //hooks
 import { useForm } from "react-hook-form";
-import { 
+import {
   useUser,
   useVerificadorDeCpf,
-  useComparaDados
+  useComparaDados,
 } from "../../hooks/useApi.js";
 
 const CadastroUser = () => {
-  
-  const { register, handleSubmit, watch, formState: { errors }} = useForm();
-  const {cadastrarInfosUser} = useUser();
-  
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const { cadastrarInfosUser } = useUser();
+
   const navigate = useNavigate();
-  const {verificador} = useVerificadorDeCpf();
+  const { verificador } = useVerificadorDeCpf();
 
   const {
     verificaCpfDeSolicitantes,
     verificaCpfDeAdms,
     verificaEmailDeAdms,
     verificaEmailDeSolicitantes,
-    verificaEmailDeAssistencia
-
+    verificaEmailDeAssistencia,
   } = useComparaDados();
 
   const senha = watch("senha");
 
-  const onSubmit = async(data) => {
-    
+  const onSubmit = async (data) => {
     // há maneira melhor de definir essa limitação
-    
+
     // TROQUEI de "userType" PARA "tipoUsuario"
     const userType = localStorage.getItem("tipoUsuario");
     if (userType !== "solicitante" && userType !== "administrador") {
@@ -58,26 +60,18 @@ const CadastroUser = () => {
     console.log("cpfDeSolicitante: ", cpfDeSolicitante);
     console.log("cpfDeAdm: ", cpfDeAdm);
     // caso adm ou solicitante não seja undefined
-    if(cpfDeSolicitante || cpfDeAdm){
+    if (cpfDeSolicitante || cpfDeAdm) {
       alert("CPF já utilizado ");
       return false;
-    } 
+    }
 
     // verifica se email ja foi cadastrado por outrem
     const emailDeAdm = verificaEmailDeAdms(data.email);
     const emailDeSolicitante = verificaEmailDeSolicitantes(data.email);
-    const emailDeAssistencia = verificaEmailDeAssistencia(data.email)
+    const emailDeAssistencia = verificaEmailDeAssistencia(data.email);
 
     // caso adm ou solicitante ou assistencia não seja undefined 2
-    if
-    (
-        emailDeAdm  
-        || 
-        emailDeSolicitante  
-        || 
-        emailDeAssistencia 
-    )
-    {
+    if (emailDeAdm || emailDeSolicitante || emailDeAssistencia) {
       alert("Email em uso");
       return false;
     }
@@ -91,7 +85,6 @@ const CadastroUser = () => {
     console.log("Error: ", errors);
   };
 
-  
   const formatarCPF = (cpf) => {
     const numeros = cpf.replace(/\D/g, "").slice(0, 11);
     return numeros
@@ -104,29 +97,29 @@ const CadastroUser = () => {
     <Container>
       <Card className={styles.container}>
         {/* Parte de cima */}
-        <Row>
-          <Row className="mb-3">
-            <Col>
-              <Image
-                className={styles.Image}
-                src="/logos/connectfix_logo.svg"
-                fluid
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col className="d-flex align-items-center justify-content-center">
-              <h5 className="text-white">
-                Primeiro, queremos saber mais sobre você
-              </h5>
-
-            </Col>
-            <hr className="mb-3 mx-5 text-white border-2 w-75" />
-          </Row>
+        <Row className="mb-3">
+          <Col className="d-flex justify-content-center">
+            <Image
+              className={styles.Image}
+              src="/logos/connectfix_logo.svg"
+              fluid
+            />
+          </Col>
         </Row>
+
+        <Row className="mb-3">
+          <Col className="d-flex flex-column align-items-center justify-content-center">
+            <h5 className="text-white text-center">
+              Primeiro, queremos saber mais sobre você
+            </h5>
+            <hr className={styles.dividerLine} />
+          </Col>
+        </Row>
+
         {/* Formulario */}
-        <Form 
-          action="/user/cadastrar" method="POST"
+        <Form
+          action="/user/cadastrar"
+          method="POST"
           className="px-4"
           onSubmit={handleSubmit(onSubmit, onError)}
         >
@@ -139,13 +132,15 @@ const CadastroUser = () => {
                   size="sm"
                   type="email"
                   placeholder=""
+                  isInvalid={!!errors.email}
                   {...register("email", {
                     required: "O email é obrigatório",
                     pattern: {
                       value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
                       message: "Email inválido",
                     },
-                    validate: (value) => value.includes("@") || "Email inválido",
+                    validate: (value) =>
+                      value.includes("@") || "Email inválido",
                   })}
                 />
                 {errors.email && (
@@ -164,29 +159,26 @@ const CadastroUser = () => {
                   type="text"
                   placeholder="000.000.000-00"
                   value={formatarCPF(watch("cpf") || "")}
-                  isInvalid={!!errors.userCpf}
+                  isInvalid={!!errors.cpf}
                   onChange={(e) => {
                     const apenasNumeros = e.target.value.replace(/\D/g, "");
                     if (apenasNumeros.length <= 11) {
-                      setValue("userCpf", apenasNumeros);
+                      setValue("cpf", apenasNumeros);
                     }
                   }}
                   {...register("cpf", {
                     required: "CPF necessário",
                     validate: (value) => {
-                      const somenteNumeros = value.replace(/\D/g, ""); // remove tudo que não é número
-                      if (somenteNumeros.length !== 11) {
+                      const cpfNumeros = value.replace(/\D/g, "");
+                      if (cpfNumeros.length !== 11)
                         return "Necessário 11 dígitos";
-                      }
-                      if (!verificador(somenteNumeros)) {
-                        return "CPF inválido";
-                      }
+                      if (!verificador(cpfNumeros)) return "CPF inválido";
                       return true;
                     },
                   })}
                 />
                 <Form.Control.Feedback type="invalid">
-                  {errors.userCpf?.message}
+                  {errors.cpf?.message}
                 </Form.Control.Feedback>
               </FloatingLabel>
             </Col>
@@ -201,10 +193,12 @@ const CadastroUser = () => {
                 <Form.Control
                   type="text"
                   placeholder="(00) 00000-0000"
+                  isInvalid={!!errors.userTelefone}
                   {...register("userTelefone", {
                     required: "Telefone necessário",
                     pattern: {
-                      value: /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
+                      value:
+                        /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
                       message: "Telefone inválido",
                     },
                   })}
@@ -225,6 +219,7 @@ const CadastroUser = () => {
                   size="sm"
                   type="text"
                   placeholder=""
+                  isInvalid={!!errors.nome}
                   {...register("nome", {
                     required: "O nome é obrigatório",
                     minLength: {
@@ -241,7 +236,9 @@ const CadastroUser = () => {
                     },
                   })}
                 />
-                {errors.nome && <p className={styles.error}>{errors.nome.message}</p>}
+                {errors.nome && (
+                  <p className={styles.error}>{errors.nome.message}</p>
+                )}
               </FloatingLabel>
             </Col>
 
@@ -256,6 +253,7 @@ const CadastroUser = () => {
                   size="sm"
                   type="text"
                   placeholder=""
+                  isInvalid={!!errors.sobrenome}
                   {...register("sobrenome", {
                     required: "O sobrenome é obrigatório",
                     minLength: {
@@ -272,39 +270,44 @@ const CadastroUser = () => {
                     },
                   })}
                 />
-                {errors.sobrenome && <p className={styles.error}>{errors.sobrenome.message}</p>}
+                {errors.sobrenome && (
+                  <p className={styles.error}>{errors.sobrenome.message}</p>
+                )}
               </FloatingLabel>
             </Col>
           </Row>
-          
+
           {/* senha e confirmar senha */}
           <Row>
             {/* Senha */}
-            <Col>
+            <Col md={6}>
               <FloatingLabel id="userSenhaInput" className="mb-3" label="Senha">
                 <Form.Control
                   type="password"
                   placeholder="Senha"
-
-                  isInvalid={!!errors.senha} // deixa a borda vermelha
+                  isInvalid={!!errors.senha}
                   {...register("senha", {
                     required: "A senha é obrigatória",
                     minLength: {
                       value: 8,
                       message: "A senha deve ter pelo menos 8 caracteres",
                     },
+                    pattern: {
+                      value:
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                      message:
+                        "A senha deve conter maiúsculas, minúsculas, números e caracteres especiais",
+                    },
                   })}
-
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.senha?.message}
                 </Form.Control.Feedback>
-
               </FloatingLabel>
             </Col>
 
             {/* Confirmação */}
-            <Col>
+            <Col md={6}>
               <FloatingLabel
                 id="userConfirmaSenhaInput"
                 className="mb-3"
@@ -317,9 +320,12 @@ const CadastroUser = () => {
                   {...register("confirmarSenha", {
                     required: "A confirmação de senha é obrigatória",
                     validate: (value) =>
-                      value === senha || "As senhas não coincidem",
+                      value === watch("senha") || "As senhas não coincidem",
                   })}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.confirmarSenha?.message}
+                </Form.Control.Feedback>
               </FloatingLabel>
             </Col>
           </Row>
@@ -330,6 +336,7 @@ const CadastroUser = () => {
             type="checkbox"
             id="termsCheck"
             value={true}
+            isInvalid={!!errors.termos}
             {...register("termos", {
               required: "Termos necessários",
             })}
@@ -346,10 +353,10 @@ const CadastroUser = () => {
               </>
             }
           />
-          
+
           {/* Botão */}
           <Row>
-            <Col className="d-flex align-items-center justify-content-center mt-3">
+            <Col className="d-flex align-items-center justify-content-center mt-3 mb-3">
               <Button
                 as="input"
                 value="Avançar"
@@ -360,11 +367,11 @@ const CadastroUser = () => {
             </Col>
           </Row>
 
-          <hr className="mt-3 mx-5 text-white border-2" />
+          <hr className={styles.dividerLine} />
 
           {/* tem conta? */}
           <Row className="mt-3">
-            <Col className="d-flex align-items-center justify-content-center mb-2">
+            <Col className="d-flex align-items-center justify-content-center">
               <h6 className="text-white">
                 Já possui conta?{" "}
                 <Link

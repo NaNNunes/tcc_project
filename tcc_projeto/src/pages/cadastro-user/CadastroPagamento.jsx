@@ -23,9 +23,7 @@ const CadastroUser = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-
-  };
+  const onSubmit = (data) => {};
 
   const onError = (errors) => {
     console.log("Error: ", errors);
@@ -36,23 +34,23 @@ const CadastroUser = () => {
   return (
     <Container className={styles.containerPagamento}>
       {/* Parte de cima */}
-      <Row>
-        <Row className="mb-3">
-          <Col>
-            <Image
-              className={styles.Image}
-              src="/logos/connectfix_logo.svg"
-              fluid
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col className="d-flex flex-column align-items-center">
-            <h5 className="text-white">Cadastre seu cartão de crédito</h5>
-            <hr className="mb-3 text-white border-2 w-75" />
-          </Col>
-        </Row>
+
+      <Row className="mb-3">
+        <Col>
+          <Image
+            className={styles.Image}
+            src="/logos/connectfix_logo.svg"
+            fluid
+          />
+        </Col>
       </Row>
+      <Row>
+        <Col className="d-flex flex-column align-items-center">
+          <h5 className="text-white">Cadastre seu cartão de crédito</h5>
+          <hr className={styles.dividerLine} />
+        </Col>
+      </Row>
+
       <Form className="px-4" onSubmit={handleSubmit(onSubmit, onError)}>
         {/* Cartão */}
         <Row>
@@ -62,7 +60,17 @@ const CadastroUser = () => {
               className="mb-3"
               label="Cartão de crédito"
             >
-              <Form.Control type="text" placeholder="" {...register("text")} />
+              <Form.Control
+                type="text"
+                placeholder=""
+                isInvalid={!!errors.text}
+                {...register("text", {
+                  required: "Número do cartão é obrigatório",
+                })}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.text?.message}
+              </Form.Control.Feedback>
             </FloatingLabel>
           </Col>
         </Row>
@@ -78,8 +86,14 @@ const CadastroUser = () => {
               <Form.Control
                 type="text"
                 placeholder=""
-                {...register("validadeCartao")}
+                isInvalid={!!errors.validadeCartao}
+                {...register("validadeCartao", {
+                  required: "Validade é obrigatória",
+                })}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.validadeCartao?.message}
+              </Form.Control.Feedback>
             </FloatingLabel>
           </Col>
 
@@ -92,13 +106,19 @@ const CadastroUser = () => {
               <Form.Control
                 type="text"
                 placeholder=""
-                {...register("codigoSeguranca")}
+                isInvalid={!!errors.codigoSeguranca}
+                {...register("codigoSeguranca", {
+                  required: "Código de segurança é obrigatório",
+                })}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.codigoSeguranca?.message}
+              </Form.Control.Feedback>
             </FloatingLabel>
           </Col>
         </Row>
 
-        {/* Nome e Sobrenome */}
+        {/* Nome no Cartão */}
         <Row>
           <Col>
             <FloatingLabel
@@ -109,24 +129,37 @@ const CadastroUser = () => {
               <Form.Control
                 type="text"
                 placeholder=""
-                {...register("nomeCartao")}
+                isInvalid={!!errors.nomeCartao}
+                {...register("nomeCartao", {
+                  required: "Nome no cartão é obrigatório",
+                })}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.nomeCartao?.message}
+              </Form.Control.Feedback>
             </FloatingLabel>
           </Col>
         </Row>
 
+        {/* Nome e Sobrenome */}
         <Row className="">
-          <Col className="">
+          <Col>
             <FloatingLabel id="userNomeInput" className="mb-3" label="Nome">
               <Form.Control
                 type="text"
                 placeholder="Nome"
-                {...register("nome")}
+                isInvalid={!!errors.nome}
+                {...register("nome", {
+                  required: "Nome é obrigatório",
+                })}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.nome?.message}
+              </Form.Control.Feedback>
             </FloatingLabel>
           </Col>
 
-          <Col className="">
+          <Col>
             <FloatingLabel
               id="userSobrenomeInput"
               className="mb-3"
@@ -135,14 +168,19 @@ const CadastroUser = () => {
               <Form.Control
                 type="text"
                 placeholder="Sobrenome"
-                {...register("sobrenome")}
+                isInvalid={!!errors.sobrenome}
+                {...register("sobrenome", {
+                  required: "Sobrenome é obrigatório",
+                })}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.sobrenome?.message}
+              </Form.Control.Feedback>
             </FloatingLabel>
           </Col>
         </Row>
-
         <Row>
-          <Col className="d-flex flex-column align-items-center mt-2">
+          <Col className="d-flex flex-column align-items-center mt-2 mb-3">
             <Button
               as="input"
               value="Confirmar"
@@ -150,18 +188,6 @@ const CadastroUser = () => {
               size="lg"
               className={`${styles.Button}`}
             />
-            <hr className="mb-3 text-white border-2 w-100" />
-          </Col>
-        </Row>
-
-        <Row>
-          <Col className="d-flex flex-column align-items-center mt-2">
-            <h6 className="text-white">
-              Já possui conta?{" "}
-              <Link to="/login" className={styles.link}>
-                Login
-              </Link>
-            </h6>
           </Col>
         </Row>
       </Form>

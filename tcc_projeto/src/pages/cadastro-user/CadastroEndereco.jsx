@@ -17,14 +17,19 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import {useUser, useEndereco} from "../../hooks/useApi";
+import { useUser, useEndereco } from "../../hooks/useApi";
 
 const CadastroEndereco = () => {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm();
 
-  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
-
-  const {cadastrarEndereco} = useEndereco();
-  const {inserirValidacao} = useUser();
+  const { cadastrarEndereco } = useEndereco();
+  const { inserirValidacao } = useUser();
   const navigate = useNavigate();
 
   const userCategoria = localStorage.getItem("userCategoria");
@@ -37,27 +42,27 @@ const CadastroEndereco = () => {
     uf: "",
     localidade: "",
     bairro: "",
-    logradouro: ""
-  })
+    logradouro: "",
+  });
 
   // busca o cep informado na api e define valores da instancia do objeto nos campos
-  const handleZipCodeBlur = async (e) =>{
-    const zipCode = e.target.value.replace(/\D/g, "")    //cep informado
-    
+  const handleZipCodeBlur = async (e) => {
+    const zipCode = e.target.value.replace(/\D/g, ""); //cep informado
+
     // caso endereco invalido
     if (zipCode.length !== 8) {
       alert("CEP deve conter exatamente 8 números.");
       // desabilita alteração de campo
       setInputFieldEnable(false);
       //limpa campos
-      for(const[key, value] of Object.entries(endereco)){
-        setValue(key,value)
+      for (const [key, value] of Object.entries(endereco)) {
+        setValue(key, value);
       }
       return false;
     }
 
     // consulta
-  
+
     try {
       // brasilApi
       // const response = await fetch(`https://brasilapi.com.br/api/cep/v2/${zipCode}`);
@@ -66,14 +71,14 @@ const CadastroEndereco = () => {
       const response = await fetch(`https://viacep.com.br/ws/${zipCode}/json/`);
       const data = await response.json();
 
-      if(data.erro){
+      if (data.erro) {
         // alerta de erro
         alert("Endereço não encontrado");
         setInputFieldEnable(true);
 
         //limpa campos
         for (const [key] of Object.entries(endereco)) {
-          setValue(key, "")
+          setValue(key, "");
         }
         return false;
       }
@@ -84,21 +89,19 @@ const CadastroEndereco = () => {
       for (const [key, value] of Object.entries(data)) {
         setValue(key, value);
       }
-
-    }
-    catch (erro) {
+    } catch (erro) {
       // Habilita alteração de campo
       setInputFieldEnable(true);
-      alert("ops, algo deu errado")
+      alert("ops, algo deu errado");
       //limpa campos
       for (const [key] of Object.entries(endereco)) {
-        setValue(key, "")
+        setValue(key, "");
       }
     }
-  }
+  };
 
   const onSubmit = (data) => {
-    cadastrarEndereco(data)
+    cadastrarEndereco(data);
     inserirValidacao(true);
     navigate("/inicio");
   };
@@ -118,31 +121,29 @@ const CadastroEndereco = () => {
   return (
     <Container className={styles.containerEndereco}>
       {/* Parte de cima */}
-      <Row>
-        <Row className="mb-3">
-          <Col>
-            <Image
-              className={styles.Image}
-              src="/logos/connectfix_logo.svg"
-              fluid
-            />
-          </Col>
-        </Row>
 
-        <Row>
-          <Col className="d-flex flex-column align-items-center">
-            {/* modifica o texto de solicitação de endereco de acordo com o user */}
-            <Card.Subtitle className="text-center text-white">
-              Estamos quase lá!
-              <br />
-              {userCategoria == 2 &&
-                <> Pra finalizar, coloque o endereço de seu negócio.</>
-              }
-            </Card.Subtitle>
+      <Row className="mb-3">
+        <Col className="d-flex justify-content-center">
+          <Image
+            className={styles.Image}
+            src="/logos/connectfix_logo.svg"
+            fluid
+          />
+        </Col>
+      </Row>
 
-            <hr className="mb-3 text-white border-2 w-75" />
-          </Col>
-        </Row>
+      <Row className="mb-3">
+        <Col className="d-flex flex-column align-items-center justify-content-center">
+          {/* modifica o texto de solicitação de endereco de acordo com o user */}
+          <Card.Subtitle className="text-center text-white mb-1">
+            Estamos quase lá!
+            <br />
+            {userCategoria == 2 && (
+              <> Pra finalizar, coloque o endereço de seu negócio.</>
+            )}
+          </Card.Subtitle>
+          <hr className={styles.dividerLine} />
+        </Col>
       </Row>
 
       <Form className="px-4" onSubmit={handleSubmit(onSubmit, onError)}>
@@ -153,6 +154,7 @@ const CadastroEndereco = () => {
                 type="text"
                 placeholder="00000-000"
                 maxLength={9}
+                isInvalid={!!errors.zipcode}
                 {...register("zipcode", {
                   validate: (value) => {
                     const numeros = value.replace(/\D/g, "");
@@ -163,42 +165,36 @@ const CadastroEndereco = () => {
                     const formatado = formatarCEP(e.target.value);
                     setValue("zipcode", formatado);
                   },
-                  onBlur: handleZipCodeBlur
+                  onBlur: handleZipCodeBlur,
                 })}
               />
               {errors.zipcode && (
                 <p className={styles.error}>{errors.zipcode.message}</p>
               )}
-
             </FloatingLabel>
           </Col>
 
           <Col>
             <FloatingLabel id="userCityInput" className="mb-3" label="Cidade">
-  
               <Form.Control
                 disabled={!inputFieldEnable}
                 type="text"
                 placeholder=" "
                 {...register("localidade")}
               />
-                  
             </FloatingLabel>
           </Col>
         </Row>
 
         <Row className="">
           <Col className="">
-
             <FloatingLabel id="userBairroInput" className="mb-3" label="Bairro">
-
               <Form.Control
                 disabled={!inputFieldEnable}
                 type="text"
                 placeholder="Bairro"
                 {...register("bairro")}
               />
-
             </FloatingLabel>
           </Col>
 
@@ -214,7 +210,6 @@ const CadastroEndereco = () => {
                 placeholder="Logradouro"
                 {...register("logradouro")}
               />
-
             </FloatingLabel>
           </Col>
         </Row>
@@ -235,16 +230,17 @@ const CadastroEndereco = () => {
               <Form.Control
                 type="text"
                 placeholder=""
+                isInvalid={!!errors.number}
                 {...register("number", {
-                  required: "Necessário número de residência",
+                  required: "Número é obrigatório",
                   minLength: {
                     value: 2,
-                    message: "Número necessário" //melhorar essa msg
+                    message: "Digite pelo menos 2 dígitos",
                   },
                   pattern: {
                     value: /^[0-9]+$/,
-                    message: "Somente números"
-                  }
+                    message: "Somente números",
+                  },
                 })}
               />
             </FloatingLabel>
@@ -252,43 +248,29 @@ const CadastroEndereco = () => {
         </Row>
         <Row>
           <Col>
-              <FloatingLabel
-                controlId="complementoUserInput"
-                label="Complemento"
-                className="mb-3"
-              >
-                <Form.Control
-                  type="text"
-                  placeholder=""
-                  {
-                    ...register("complemento")
-                  }
-                />
-              </FloatingLabel>
+            <FloatingLabel
+              controlId="complementoUserInput"
+              label="Complemento"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                placeholder=""
+                {...register("complemento")}
+              />
+            </FloatingLabel>
           </Col>
         </Row>
 
         <Row>
-          <Col className="d-flex flex-column align-items-center mt-2">
+          <Col className="d-flex flex-column align-items-center mt-3 mb-3">
             <Button
               as="input"
-              value={(userCategoria == 1) ? "Finalizar" : "Seguir"}
+              value={userCategoria == 1 ? "Finalizar" : "Seguir"}
               type="submit"
               size="lg"
               className={`${styles.Button}`}
             />
-            <hr className="mb-3 text-white border-2 w-100" />
-          </Col>
-        </Row>
-
-        <Row>
-          <Col className="d-flex flex-column align-items-center mt-2">
-            <h6 className="text-white">
-              Já possui conta?{" "}
-              <Link to="/login" className={styles.link}>
-                Login
-              </Link>
-            </h6>
           </Col>
         </Row>
       </Form>
