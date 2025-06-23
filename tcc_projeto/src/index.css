@@ -38,3 +38,9 @@ body.background {
   text-align: center;
   margin: 0 auto;
 }
+
+.paragrafo {
+  color: #757575;
+  font-size: 1rem;
+  font-weight: bold;
+}

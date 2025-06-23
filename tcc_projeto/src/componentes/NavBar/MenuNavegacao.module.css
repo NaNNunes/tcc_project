@@ -207,7 +207,6 @@
 .navbarE {
     margin-left: auto;
     margin-right: auto;
-    padding-right: 100px;
     display: flex;  
     gap: 100px;
 }
