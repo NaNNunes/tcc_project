@@ -1,129 +1,135 @@
 /* Tamanho total do formulário. */
 .formulario {
-    width: 60%;
-    margin-top: 80px;
-    margin-bottom: 80px;
+  width: 60%;
+  margin-top: 80px;
+  margin-bottom: 80px;
 }
 
 /* Parte do formulário dentro do formulário */
 .parteFormulario {
-    background-color: #FFFFFF;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 2px rgb(204, 204, 204);
-    padding-left: 1.7rem;
-    padding-right: 1.7rem;
-    padding-top: 1.7rem;
-    padding-bottom: 0;
-    margin: 0;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 2px rgb(204, 204, 204);
+  padding-left: 1.7rem;
+  padding-right: 1.7rem;
+  padding-top: 1.7rem;
+  padding-bottom: 0;
+  margin: 0;
 }
 
 /* Campo do formulário */
 .campo {
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-bottom: 30px;
-    margin: 0px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 30px;
+  margin: 0px;
 }
 
 /* Botão para enviar o formulário */
 .botaoSalvar {
-    background-color: #0061B7;
-    font-weight: bold;
-    width: 100%;
-    border: 0;
-    height: 50px;
-    margin: 0px;
+  background-color: #0061b7;
+  font-weight: bold;
+  width: 100%;
+  border: 0;
+  height: 50px;
+  margin: 0px;
 }
 
 .botaoSalvar:hover {
-    background-color: #0069C6;
+  background-color: #0069c6;
 }
 
 .botaoAdicionarAT {
-    background-color: #0061B7;
-    font-weight: bold;
-    width: 100%;
-    border: 0;
-    height: 50px;
-    margin: 0px;
+  background-color: #0061b7;
+  font-weight: bold;
+  width: 100%;
+  border: 0;
+  height: 50px;
+  margin: 0px;
 }
 
 .botaoAdicionarAT:hover {
-    background-color: #0069C6;
+  background-color: #0069c6;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 4px;
 }
 
 @media screen and (max-width: 1465px) {
-    .formulario {
-        width: 75%;
-    }
+  .formulario {
+    width: 75%;
+  }
 }
 
 @media screen and (max-width: 1260px) {
-    .formulario {
-        width: 80%;
-    }
+  .formulario {
+    width: 80%;
+  }
 }
 
 @media screen and (max-width: 900px) {
-    .formulario {
-        width: 83%;
-    }
+  .formulario {
+    width: 83%;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .parteFormulario {
-        padding: 1.5rem;
-    }
+  .parteFormulario {
+    padding: 1.5rem;
+  }
 
-    .campo {
-        padding-bottom: 30px;
-    }
+  .campo {
+    padding-bottom: 30px;
+  }
 
-    .botaoSalvar {
-        width: 30%;
-    }
+  .botaoSalvar {
+    width: 30%;
+  }
 }
 
 @media screen and (max-width: 610px) {
-    .botaoSalvar {
-        width: 40%;
-    }
+  .botaoSalvar {
+    width: 40%;
+  }
 }
 
 @media screen and (max-width: 448px) {
-    .formulario {
-        width: 90%
-    }
+  .formulario {
+    width: 90%;
+  }
 
-    .botaoSalvar {
-        width: 50%;
-    }
+  .botaoSalvar {
+    width: 50%;
+  }
 }
 
 @media screen and (max-width: 352px) {
-    .titleh3 {
-        font-size: 1.5rem;
-    }
+  .titleh3 {
+    font-size: 1.5rem;
+  }
 
-    .botaoSalvar {
-        width: 60%;
-    }
+  .botaoSalvar {
+    width: 60%;
+  }
 }
 
 @media screen and (max-width: 310px) {
-    .titleh3 {
-        word-break: break-word;
-        overflow-wrap: break-word;
-    }
+  .titleh3 {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
 
-    .botaoSalvar {
-        width: 75%;
-    }
+  .botaoSalvar {
+    width: 75%;
+  }
 }
 
 @media screen and (max-width: 220px) {
-    .botaoSalvar {
-        width: 100%;
-        height: fit-content;
-    }
+  .botaoSalvar {
+    width: 100%;
+    height: fit-content;
+  }
 }

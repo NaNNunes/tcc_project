@@ -11,7 +11,7 @@ import styles from "../conta_perfil/conta_perfil.module.css";
 
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
+import { useNavigate } from "react-router-dom";
 import EditarPag from "../conta_perfil/EditarPag";
 import Endereco from "../Endereco";
 
@@ -31,9 +31,11 @@ const MinhaAssistencia = (props) => {
   const [enderecoAssistencia, setEnderecoAssistencia] = useState({});
 
   const onSubmit = (data) => {};
-
   const onError = (error) => {};
-
+  const navigate = useNavigate();
+  const handleAdicionarClick = () => {
+    navigate("/cadastro-nova-assistencia");
+  };
   const buscaEnderecoById = async (id_endereco) => {
     const buscaEnderecoById = await fetch(
       `http://localhost:5001/endereco/${id_endereco}`
@@ -56,11 +58,15 @@ const MinhaAssistencia = (props) => {
           <Row style={{ paddingBottom: "1%" }}>
             {/* Título */}
             <Col md={10} xs={10}>
-              <h3 className={styles.titleh3}>Minha Assistencia</h3>
+              <h3 className={styles.titleh3}>Minha Assistência</h3>
             </Col>
 
             <Col md={2} xs={2}>
-              <Button type="submit" className={styles.botaoSalvar}>
+              <Button
+                type="button"
+                className={styles.botaoSalvar}
+                onClick={handleAdicionarClick}
+              >
                 Adicionar
               </Button>
             </Col>
