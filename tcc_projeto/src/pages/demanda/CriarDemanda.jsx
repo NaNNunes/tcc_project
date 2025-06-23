@@ -5,11 +5,9 @@ import { Navigate } from 'react-router-dom';
 const CriarDemanda = () => {
 
   const userType = localStorage.getItem("userType");
-  if(userType !== "solicitante" && userType !== "administrador"){ 
-    console.log("Acesso negado");
-    return <Navigate to="/login"/>
-  };
-  
+  // verifica se user é válido
+  if(userType !== "solicitante" && userType !== "administrador") return <Navigate to="/login"/>
+
   return (
     <div>
       <CadastroDemanda />

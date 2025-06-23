@@ -25,12 +25,13 @@ import { TiArrowSortedUp } from "react-icons/ti";
 import { IoMenu } from "react-icons/io5";
 import { GrFavorite } from "react-icons/gr";
 
-import { useDemanda, useAssistencia } from "../../hooks/useApi";
+import { useDemanda, useAssistencia, useUser } from "../../hooks/useApi";
 
 const MenuNavegacao = () => {
 
   const {buscaDemandas} = useDemanda();
   const {buscaAssistencias} = useAssistencia();
+  const {buscaUserById} = useUser();
 
   const navigate = useNavigate();
 
@@ -44,6 +45,15 @@ const MenuNavegacao = () => {
   // aqui código sempre segue em execução sempre atualizando de acordo com atualizações da pagina
   useEffect(()=>{
     async function fetchData(){
+
+      if(userType !== "Visitante"){
+        const resBuscaUserById = await buscaUserById(userType, userId);
+        
+        if(resBuscaUserById.isValido == false){
+          logout();
+        }
+      }
+
       // caso user seja adm
       if(userType === "administrador"){
         // lista para receber assistencias do adm

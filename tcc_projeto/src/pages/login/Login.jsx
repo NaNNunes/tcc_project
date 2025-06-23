@@ -6,49 +6,41 @@ import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 
-import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import styles from "./login.module.css";
 
-import { useVerificaLogin } from "../../hooks/useApi";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useVerificaLogin, useUser } from "../../hooks/useApi";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
-
   const navigate = useNavigate();
-
-  const [verificando, setVerificando] = useState(true);
-
-  useEffect(() => {
-    let userType = localStorage.getItem("userType");
-
-    if (!userType) {
-      userType = "Visitante";
-      localStorage.setItem("userType", userType);
-    }
-
-    if (userType !== "Visitante") {
-      console.log("User logado, acesso negado");
-      navigate("/inicio");
-    }
-    else {
-      setVerificando(false);
-    }
-  }, [navigate])
+  const userType = localStorage.getItem("userType");
   
+  if(userType !== "Visitante") return <Navigate to="/inicio"/>;
 
+  const {        
+    buscaAdministradores,
+    buscaSolicitantes
+  } = useUser();
+
+  const { verificaLogin } = useVerificaLogin();
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  
+  const onSubmit = async (data) => {
 
-  const { verificaLogin } = useVerificaLogin();
+    // lista adms
+    const resBuscaAdministradores = await buscaAdministradores();
+    // lista solicitantes
+    const resBuscaSolicitantes = await buscaSolicitantes();
 
-  const onSubmit = (data) => {
-    const respVerificacao = verificaLogin(data);
+    // verifica qual a resposta da tentativa de acesso
+    const respVerificacao = verificaLogin(data, resBuscaSolicitantes, resBuscaAdministradores);
 
     if (respVerificacao === "Login efetuado com sucesso") {
       alert(respVerificacao);

@@ -7,67 +7,12 @@ const url = import.meta.env.VITE_API_URL;
 
 // verifica credenciais de login
 export function useVerificaLogin(){
-    const [solicitantes, setSolicitantes] = useState([]);
-    const [administradores, setAdministradores] = useState([]);
 
     // funçoes do context para salvar id e tipo de user
     const {login} = useContext(AuthContext);
 
-    // -- ATENCAO --
-    // o codigo a seguir segue o paradigma POG,
-    // Programação Orientada a Gambiarra, não repita isso em casa
-    // isso ocorre devido a assincronia do state
-        // 1º chamada
-    useEffect(()=>{
-    async function fetchData(){
-            try {
-                for(let i = 0; i < 2; i++){
-
-                    const userType = (i === 0)
-                        ? "solicitante"
-                        : "administrador"
-
-                    const request = await fetch(`${url}/${userType}`);
-                    const response = await request.json();
-                    
-                    (i === 0) 
-                        ? setSolicitantes(response)
-                        : setAdministradores(response)
-                }
-            } catch (error) {
-                console.log(error.message);
-            }
-        }
-        fetchData();
-    },[])
-
-    // 2ª consulta atribuindo valores aos states de solicitante e adms
-    const buscaCadastros = async () => {
-       for(let i = 0; i < 2; i++){
-
-            // define onde consultará
-            let userType = (i == 0) 
-                ? "solicitante" 
-                : "administrador"
-    
-            const request = await fetch(`${url}/${userType}`,{
-                method:"GET"
-            });
-
-            const response = await request.json();
-            
-            // atribui a lista encontrada de acordo com o laço
-            (i == 0)
-                ?   setSolicitantes(response)
-                :   setAdministradores(response)
-
-        }
-    }
-
-    const verificaLogin = (data) => {
-        // renderização de lista
-        buscaCadastros();
-        console.log("login")
+    // funcao que verifica o login do user
+    const verificaLogin = (data, solicitantes, administradores) => {
 
         // verifica se email ou senha foi encontrado em solicitantes
         const solicitante2find = solicitantes.find((solicitante) => {
@@ -103,26 +48,25 @@ export function useVerificaLogin(){
         if( solicitante2find !== undefined && solicitante2find.senha === data.senha)
         {
             // verifica se cadastro do solicitante é válido
-            (solicitante2find.isValido !== true)
-                ? alert("user Invalido")
-                :   
-                    login(solicitante2find, "solicitante");
-                    console.log("user logado:", solicitante2find.nome);
-                    console.log("----------------")
-                    return "Login efetuado com sucesso";
+            if(solicitante2find.isValido !== true){
+                return alert("user Inválido");
+            }
+
+            login(solicitante2find, "solicitante");
+            return "Login efetuado com sucesso";
                     
         } 
-        else if // verifica se solcitante foi encontrado e se senha inserida é a mesma do cadastro
-        (administrador2find !== undefined && administrador2find.senha === data.senha)
+        // verifica se solcitante foi encontrado e se senha inserida é a mesma do cadastro
+        else if (administrador2find !== undefined && administrador2find.senha === data.senha)
         {
-             // verifica se cadastro do solicitante é válido            
-            (administrador2find.isValido !== true)
-                ? alert("userInválido")
-                :
-                    login(administrador2find, "administrador");
-                    console.log("user logado:", administrador2find.nome);
-                    console.log("----------------")
-                    return "Login efetuado com sucesso";
+            // verifica se cadastro do solicitante é válido            
+            if(administrador2find.isValido !== true){
+                return alert("user Inválido");
+            }
+            
+            login(administrador2find, "administrador");
+            return "Login efetuado com sucesso";
+            
         } 
         else // caso credenciais não localizada em nenhuma das tabelas
         {
@@ -289,6 +233,22 @@ export function useUser(){
         return response;
     }
 
+    // buscar users
+    const buscaSolicitantes = async () =>{
+        const request = await fetch(`${url}/solicitante`);
+        const response = await request.json();
+
+        return response;
+    }
+
+    // buscar users
+    const buscaAdministradores = async () =>{
+        const request = await fetch(`${url}/administrador`);
+        const response = await request.json();
+
+        return response;
+    }
+
     // cadastra user
     const cadastrarInfosUser = async (data) => {
         // define o tipo de user
@@ -400,6 +360,8 @@ export function useUser(){
         atualizaInfosUser,
         alteraSenhaUser,
         buscaAssistenciasFavoritas,
+        buscaAdministradores,
+        buscaSolicitantes,
         buscaUserById,
         cadastrarInfosUser,
         cadastrarPseudoUser,
