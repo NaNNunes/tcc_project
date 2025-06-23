@@ -835,9 +835,6 @@ export function useDemanda(){
         return request.ok
     }
     
-    // TODO ASSIM QUE KEVIN TERMINAR DE CRIAR O COMPONENTE PARA CRIAÇÃO DE DEMANDA COM SOLICITAÇÃO PRESENCIAL. demanda "emitida" pelo adm
-    // VERIFICAR SE DEMADA É EMITIDA PELA ASSITENCIA EM ATENDIMENTO PRESENCIAL E DEFINIR ID DO SOLICITANTE NA LOJA, 
-    // CRIADO NO ATO DA EMISSAO DA DEMDANDA COMO EMISSOR, E NÃO O ADM QUE CADASTRA
     // define o id do solicitante 
     const defineIdSolicitante = async (tabelaDestino, id) =>{
         // tabela Destino = dispositivo || demanda
@@ -868,9 +865,6 @@ export function useDemanda(){
         // mudar formatacao da data para MM-DD-AAAA
         const dataFormatada = `${dia.toString().padStart(2, '0')}/${mes.toString().padStart(2, '0')}/${ano}`;
         const horaFormatada = `${hora.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-
-        console.log(`Data Emissão: ${dataFormatada}`);
-        console.log(`Hora Emissão: ${horaFormatada}`);
 
         // objeto que será incrementado
         const dataHoraEmissao ={

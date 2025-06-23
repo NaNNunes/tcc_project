@@ -292,9 +292,13 @@ const MenuNavegacao = () => {
           }
         >
           {/* Cadastrar local */}
-          <NavDropdown.Item as={Link} to="#" className={styles.dropdownItem}>
+          <NavDropdown.Item 
+            as={Link} 
+            to="/cadastro-nova-assistencia" 
+            className={styles.dropdownItem}
+          >
             <Image className={styles.icone} src="/icons/add_location_alt.svg" />
-            Cadastrar local
+            Cadastrar Assistência
           </NavDropdown.Item>
 
           {/* Consultar locais */}
@@ -310,7 +314,7 @@ const MenuNavegacao = () => {
             }}
           >
             <Image className={styles.icone} src="/icons/location_on.svg" />
-            Consultar locais
+            Consultar Assistências
           </NavDropdown.Item>
         </NavDropdown>
       </div>

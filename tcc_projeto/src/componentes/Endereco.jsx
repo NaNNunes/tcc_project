@@ -1,4 +1,5 @@
-// alteração nao funciona, complicado viu
+// refatorar codigo, ta dando erro em algum lugar que resolverei em breve
+
 import {Form, FloatingLabel, Row, Col, Button} from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 
@@ -27,9 +28,9 @@ const Endereco = (props) => {
   const endereco = props.endereco;
 
   // preenche campos de endereco // mudar para onload
-  for(const [key, value] of Object.entries(endereco)){
-    setValue(key, value);
-  }
+  // for(const [key, value] of Object.entries(endereco)){
+  //   setValue(key, value);
+  // }
 
   // enable input at the fields
     // !false para fazer teste de alteração
@@ -39,20 +40,6 @@ const Endereco = (props) => {
   const handleZipCodeBlur = async (e) =>{
     
     const zipCode = e.target.value    //cep informado
-    
-    // nao funciona
-    // console.log((zipCode != props.endereco.zipcode))
-    // if(zipCode != props.endereco.zipcode)
-    // {
-    //     for(const [key, value] of Object.entries(props.endereco)){
-    //       if(props.endereco.key != "zipcode"){
-    //         setValue(key, "");
-    //       }
-    //       else{
-    //         setValue(key, zipCode)
-    //       }
-    //     }
-    // }
 
     // caso endereco invalido
     if (zipCode.length !== 8) {
