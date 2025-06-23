@@ -1,5 +1,6 @@
-// alteração nao funciona, complicado viu
+
 import { Form, FloatingLabel, Row, Col, Button } from "react-bootstrap";
+
 import Container from "react-bootstrap/Container";
 
 import { use, useState } from "react";
@@ -26,31 +27,21 @@ const Endereco = (props) => {
   const endereco = props.endereco;
 
   // preenche campos de endereco // mudar para onload
+
   for (const [key, value] of Object.entries(endereco)) {
     setValue(key, value);
   }
+
 
   // enable input at the fields
   // !false para fazer teste de alteração
   const [inputFieldEnable, setInputFieldEnable] = useState(!false);
 
   // busca o cep informado na api e define valores da instancia do objeto nos campos
-  const handleZipCodeBlur = async (e) => {
-    const zipCode = e.target.value; //cep informado
+  const handleZipCodeBlur = async (e) =>{
+    
+    const zipCode = e.target.value    //cep informado
 
-    // nao funciona
-    // console.log((zipCode != props.endereco.zipcode))
-    // if(zipCode != props.endereco.zipcode)
-    // {
-    //     for(const [key, value] of Object.entries(props.endereco)){
-    //       if(props.endereco.key != "zipcode"){
-    //         setValue(key, "");
-    //       }
-    //       else{
-    //         setValue(key, zipCode)
-    //       }
-    //     }
-    // }
 
     // caso endereco invalido
     if (zipCode.length !== 8) {

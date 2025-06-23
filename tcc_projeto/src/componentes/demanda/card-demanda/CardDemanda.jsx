@@ -74,7 +74,7 @@ const CardDemanda = (props) => {
     // dispositivo que a demanda se refere
     const [dispositivo, setDispositivo] = useState({});
     // endereco do solicitante emissor da demanda
-    const [endereco, setEndereco] = useState({});
+    const [endereco, setEndereco] = useState(undefined);
     // dados do solicitante
     const [solicitante, setSolicitante] = useState({});
 
@@ -129,10 +129,11 @@ const CardDemanda = (props) => {
                 setSolicitante(resBuscaSolicitanteById);
                 // id do endereco do solicitante
                 const idEndereco = resBuscaSolicitanteById.id_endereco;
-                
+                console.log(idEndereco)
                 // Caso id tenha algum registro
                 // buscar endereco do user by id
-                if(idEndereco != ""){
+                if(idEndereco != undefined){
+                    console.log(idEndereco);
                     const resBuscaEnderecoSolicitanteById = await buscaEnderecoById(idEndereco);
                     setEndereco(resBuscaEnderecoSolicitanteById);
                 }
@@ -150,7 +151,7 @@ const CardDemanda = (props) => {
 
     // COMPONENTES
     // botao para selecionar qual assistencia recebera a demanda
-    const aceitarDemanda = (
+    const botaoAceitarDemanda = (
         <> 
             <FloatingLabel>
                 <Form.Select
@@ -163,14 +164,14 @@ const CardDemanda = (props) => {
                         // mapear todas as assistencias do adm 
                         // para que o mesmo defina qual assistencia será responsavel
                         assistenciasDoAdministrador.map((assistencia)=>(
-                            <>
-                                <option 
-                                    key={assistencia.id}
-                                    value={assistencia.id}
-                                >
-                                    {assistencia.nomeFantasia}
-                                </option>
-                            </>
+                            
+                            <option 
+                                key={assistencia.id}
+                                value={assistencia.id}
+                            >
+                                {assistencia.nomeFantasia}
+                            </option>
+                            
                         ))
                     }
                 </Form.Select>
@@ -196,11 +197,29 @@ const CardDemanda = (props) => {
             </Button>
         </>
     )
+    // botao para direcionar user a tela de orçamento
+    const botaoGerarOrcamento = (
+        <>
+            <Button 
+                href='/orcamento'
+                className={styles.botaoModal}
+                onClick={()=>{setMostrarModal(false)}}
+            >
+                Gerar Orçamento
+            </Button>
+        </>
+    );
     // define como sera a composição do botao do modal
     const botoes = {
-        "abertas": aceitarDemanda,
+        "abertas": botaoAceitarDemanda,
+        "aceitas": botaoGerarOrcamento,
+        "historico": botaoFecharModalDeInfosDemanda,
         "minhas-demandas": botaoFecharModalDeInfosDemanda,
-        "aceitas":"Gerar orçamento"
+        // caso adm defina que outra assistencia receberá a demanda,
+            // não sendo a esperada pelo solicitante,
+            // a solução deverá permitir ao solicitante aceitar ou rejeitar.
+            // (Tenho que parar de me meter nessas roubas);
+        "solicitacoes": botaoAceitarDemanda
     }
     // O Botão
     const mainBotao = botoes[tipoDemanda];
@@ -343,7 +362,18 @@ const CardDemanda = (props) => {
 
                             {/* Localidade */}
                             <Card.Text className={styles.textoCard}>
-                                <IoLocationOutline color='black' size={35}/> {endereco.localidade} - {endereco.uf}
+                                <IoLocationOutline color='black' size={35}/> 
+                                {
+                                    (endereco != undefined)
+                                        ?
+                                            <>
+                                                {endereco.localidade} - {endereco.uf}
+                                            </>
+                                        :
+                                            <>
+                                                Local
+                                            </>
+                                }
                             </Card.Text>
 
                             {/* Data de emissão */}

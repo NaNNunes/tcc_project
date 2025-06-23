@@ -82,8 +82,11 @@ const CadastroDemanda = () => {
             
             // carrega infos de assistencias do user adm
             if(userType === "administrador"){
+                // lista para receber assistencias vinculadas ao user, pelo match caso solicitante ou que possuam o id do adm, caso adm
+                const listaAssistencias = [];
+
+                // busca todas as assistencias cadastradas
                 const resBuscaAssistencias = await buscaAssistencias();
-                
                 // verifica quais assistencias pertencem ao administrador
                 resBuscaAssistencias.map((assistencia)=>{
                     if(assistencia.administradorId === userId){
@@ -105,7 +108,6 @@ const CadastroDemanda = () => {
                         .filter(res => res.id_solicitante === userId)
                         .map(res => buscaAssistenciaById(res.id_assistencia))
                 );
-                // setAssistencias(listaAssistencias);
                 setAssistencias(assistenciasFavoritadas);
             }
 
@@ -135,9 +137,6 @@ const CadastroDemanda = () => {
         };
         fetchData();
     },[]);
-
-    // lista para receber assistencias vinculadas ao user, pelo match caso solicitante ou que possuam o id do adm, caso adm
-    const listaAssistencias = [];
 
     const {cadastrarDispositivo, cadastrarDemanda} = useDemanda();
     // Categoria e marca selecionada no ListGroup.
@@ -354,17 +353,17 @@ const CadastroDemanda = () => {
 
         const dados = dadosTemporarios;
         // separando dados de solicitante presencial
-        // const dadosPseudoUser = {
-        //     "email": dadosTemporarios.email,
-        //     "cpf": dadosTemporarios.cpf,
-        //     "userTelefone": dadosTemporarios.userTelefone,
-        //     "nome": dadosTemporarios.nome,
-        //     "sobrenome": dadosTemporarios.sobrenome,
-        //     "isValido": false
-        // }
+        const dadosPseudoUser = {
+            "email": dadosTemporarios.email,
+            "cpf": dadosTemporarios.cpf,
+            "userTelefone": dadosTemporarios.userTelefone,
+            "nome": dadosTemporarios.nome,
+            "sobrenome": dadosTemporarios.sobrenome,
+            "isValido": false
+        }
 
         // cadastrar pseudo user, solicitante presencial
-        // const idPseudoUser = await cadastrarPseudoUser(dadosPseudoUser);
+        const idPseudoUser = await cadastrarPseudoUser(dadosPseudoUser);
         
         // separando dados de dispositivo
         const dispositivo = {
@@ -376,8 +375,7 @@ const CadastroDemanda = () => {
             "tensao": dados.tensao,
             "amperagem": dados.amperagem,
             "cor": dados.cor,
-            "solicitante_id": userId
-            // "solicitante_id": idPseudoUser
+            "solicitante_id": idPseudoUser
         };
 
         // cadastrar dispositivo
@@ -392,13 +390,19 @@ const CadastroDemanda = () => {
             "observacoes": dados.observacoes,
             "status": statusPadrao,
             "assistencia": responsavelDemanda,
-            "solicitante_id": userId
-            // "solicitante_id": idPseudoUser
+            "solicitante_id": idPseudoUser
         };
         
         // cadastrar demanda
-        // console.log("Demanda cadastrada:",infosDemanda)
-        cadastrarDemanda(infosDemanda);
+        const isDemandaCadastrada = await cadastrarDemanda(infosDemanda);
+
+        // direciona user para a tela de demandas ou de historico de demandas
+        if(isDemandaCadastrada){
+            navigate(userType === "solicitante"
+                ? '/procurar-demandas/minhas-demandas'
+                : '/procurar-demandas/historico'
+            );
+        }
         setMostrarModal(false);
     }
 
@@ -905,7 +909,6 @@ const CadastroDemanda = () => {
                             // so atribui assitencia se mudar a opção
                             // necessário forçar o user a realizar a mudança da opção
                             onChange={(e)=>{
-                                console.log("Responsavel selecionado:",e.target.value);
                                 setAtSelecionada(e.target.value)}
                             }
                         >
@@ -936,7 +939,7 @@ const CadastroDemanda = () => {
                                     :  
                                         <>   
                                             {/* selected utilizado para forçar user a mudar a opção e com isso ocorrer a mudança */}
-                                            <option value="">
+                                            <option value="" selected disabled>
                                                 Selecione uma opção
                                             </option>        
                                             {
@@ -961,9 +964,8 @@ const CadastroDemanda = () => {
                 <Button
                     as='input'
                     type='submit'
-                    value="Enviar"
-                    // NÃO ESTÁ FUNCIONANDO.
-                    disabled={(atSelecionada === "")}
+                    value={userType === "solicitante" ? "Enviar" : "Cadastrar"}
+                    disabled={(atSelecionada === "Público" && userType === "administrador")}
                     onClick={() => {
                         enviarDemandaCompleta(atSelecionada)
                     }}
