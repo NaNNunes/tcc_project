@@ -78,20 +78,22 @@ const CadastroAssistencia = () => {
   return (
     <Container className={styles.containerAssistencia}>
       {/* Parte de cima */}
-      <Row>
-        <Row className="mb-3">
-          <Col>
-            <Image
-              className={styles.Image}
-              src="/logos/connectfix_logo.svg"
-              fluid
-            />
-          </Col>
-        </Row>
+
+      <Row className="mb-3">
+        <Col>
+          <Image
+            className={styles.Image}
+            src="/logos/connectfix_logo.svg"
+            fluid
+          />
+        </Col>
+      </Row>
+
+      <Row className="mb-3">
         <div className="d-flex align-items-center justify-content-center">
           <h5 className="text-white">Informe-nos sobre sua Assistência</h5>
         </div>
-        <hr className="mb-3 mx-auto text-white border-2 w-75" />
+        <hr className={styles.dividerLine} />
       </Row>
 
       <Form className="px-4" onSubmit={handleSubmit(onSubmit, onError)}>
@@ -106,6 +108,7 @@ const CadastroAssistencia = () => {
               <Form.Control
                 type="email"
                 placeholder=""
+                isInvalid={!!errors.assistenciaEmail}
                 {...register("assistenciaEmail", {
                   required: "O email é obrigatório",
                   pattern: {
@@ -140,19 +143,25 @@ const CadastroAssistencia = () => {
           </Col>
         </Row>
 
+        {/* Razão Social */}
         <Row>
-          {/* Razão social */}
           <Col>
             <FloatingLabel
-              id="RazaoSocialInput"
-              className="mb-3"
+              controlId="razaoSocialInput"
               label="Razão Social"
+              className="mb-3"
             >
               <Form.Control
                 type="text"
                 placeholder=""
-                {...register("razaoSocial")}
+                isInvalid={!!errors.razaoSocial}
+                {...register("razaoSocial", {
+                  required: "Razão Social é obrigatória",
+                })}
               />
+              <Form.Control.Feedback type="invalid">
+                {errors.razaoSocial?.message}
+              </Form.Control.Feedback>
             </FloatingLabel>
           </Col>
         </Row>
@@ -175,7 +184,7 @@ const CadastroAssistencia = () => {
                   }
                 }}
                 {...register("cnpj", {
-                  required: "CNPJ obrigatório",
+                  required: "CNPJ é obrigatório",
                   validate: (value) => {
                     const somenteNumeros = value.replace(/\D/g, "");
                     if (somenteNumeros.length !== 14) {
@@ -194,18 +203,19 @@ const CadastroAssistencia = () => {
             </FloatingLabel>
           </Col>
 
-          {/* telefone */}
+          {/* Telefone */}
           <Col>
             <FloatingLabel
-              id="assistenciaTelInput"
-              className="mb-3"
+              controlId="assistenciaTelInput"
               label="Telefone"
+              className="mb-3"
             >
               <Form.Control
                 type="text"
                 placeholder="(00) 00000-0000"
+                isInvalid={!!errors.assistenciaTelefone}
                 {...register("assistenciaTelefone", {
-                  required: "Telefone necessário",
+                  required: "Telefone é obrigatório",
                   pattern: {
                     value:
                       /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
@@ -228,6 +238,7 @@ const CadastroAssistencia = () => {
           type="checkbox"
           id="termsCheck"
           value={true}
+          isInvalid={!!errors.termos}
           {...register("assistenciaTermos", {
             required: "Termos necessários",
           })}
@@ -246,7 +257,7 @@ const CadastroAssistencia = () => {
         />
 
         <Row>
-          <Col className="d-flex align-items-center justify-content-center mt-3">
+          <Col className="d-flex align-items-center justify-content-center m-3">
             <Button
               as="input"
               value="Avançar"
@@ -254,23 +265,6 @@ const CadastroAssistencia = () => {
               size="lg"
               className={`${styles.Button}`}
             />
-          </Col>
-        </Row>
-
-        <hr className="mb-3 mx-5 text-white border-2" />
-
-        <Row className="mt-3">
-          <Col className="d-flex align-items-center justify-content-center mb-2">
-            <h6 className="text-white">
-              Já possui conta?{" "}
-              <Link
-                to="/login"
-                className={styles.link}
-                style={{ fontSize: "16px" }}
-              >
-                Login
-              </Link>
-            </h6>
           </Col>
         </Row>
       </Form>

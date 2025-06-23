@@ -108,11 +108,6 @@ const CadastroNovaAssistencia = () => {
       return;
     }
 
-    if (!data.assistenciaTermos) {
-      alert("Você deve aceitar os termos de uso");
-      return;
-    }
-
     if (data.zipcode === endereco.zipcode) {
       cadastrarEndereco(data);
     } else {
