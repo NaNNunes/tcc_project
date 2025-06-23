@@ -31,7 +31,7 @@
       "id_endereco": "7f67"
     },
     {
-      "id": "9209",
+      "id": "a0a9",
       "email": "userpseudosolicitante@gmail.com",
       "cpf": "327.352.860-53",
       "userTelefone": "1140028922",
@@ -272,6 +272,18 @@
       "amperagem": "",
       "cor": "",
       "solicitante_id": "9209"
+    },
+    {
+      "id": "202f",
+      "categoria": "Celular",
+      "marca": "LG",
+      "fabricante": "",
+      "modelo": "LG K62+",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "solicitante_id": "a0a9"
     }
   ],
   "demanda": [
@@ -291,8 +303,8 @@
       "idDispostivo": "19e1",
       "descProblema": "Siiiiiiiiiiiiiiiiuuuuuuummmmmm 2",
       "observacoes": "",
-      "status": "Cancelada",
-      "assistencia": "28fd",
+      "status": "Aberto",
+      "assistencia": "Público",
       "solicitante_id": "d150",
       "dataEmissao": "21/06/2025",
       "horaEmissao": "19:36:45"
@@ -318,6 +330,61 @@
       "solicitante_id": "9209",
       "dataEmissao": "22/06/2025",
       "horaEmissao": "04:08:41"
+    },
+    {
+      "id": "70d4",
+      "idDispostivo": "19e1",
+      "descProblema": "hjk g vjnlhkfg vjnklfagdjnkl adfjn klcsfadcjnklfcadjnk l",
+      "observacoes": "",
+      "status": "Cancelada",
+      "assistencia": "a2d8",
+      "solicitante_id": "d150",
+      "dataEmissao": "22/06/2025",
+      "horaEmissao": "23:29:43"
+    },
+    {
+      "id": "70d6",
+      "idDispostivo": "19e1",
+      "descProblema": "hjk g vjnlhkfg vjnklfagdjnkl adfjn klcsfadcjnklfcadjnk l",
+      "observacoes": "",
+      "status": "Em atendimento",
+      "assistencia": "a2d8",
+      "solicitante_id": "d150",
+      "dataEmissao": "22/06/2025",
+      "horaEmissao": "23:29:43"
+    },
+    {
+      "id": "70d5",
+      "idDispostivo": "19e1",
+      "descProblema": "hjk g vjnlhkfg vjnklfagdjnkl adfjn klcsfadcjnklfcadjnk l",
+      "observacoes": "",
+      "status": "Em atendimento",
+      "assistencia": "a2d8",
+      "solicitante_id": "d150",
+      "dataEmissao": "22/06/2025",
+      "horaEmissao": "23:29:43"
+    },
+    {
+      "id": "70d7",
+      "idDispostivo": "19e1",
+      "descProblema": "hjk g vjnlhkfg vjnklfagdjnkl adfjn klcsfadcjnklfcadjnk l",
+      "observacoes": "",
+      "status": "Aberto",
+      "assistencia": "Público",
+      "solicitante_id": "d150",
+      "dataEmissao": "22/06/2025",
+      "horaEmissao": "23:29:43"
+    },
+    {
+      "id": "4f2f",
+      "idDispostivo": "202f",
+      "descProblema": "vfg df cvb cgvb gfdghdfg",
+      "observacoes": "",
+      "status": "Em atendimento",
+      "assistencia": "a2d8",
+      "solicitante_id": "a0a9",
+      "dataEmissao": "23/06/2025",
+      "horaEmissao": "00:20:42"
     }
   ],
   "assistencia_Fav_Solicitante": [

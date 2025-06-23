@@ -1,3 +1,5 @@
+// TODO PERMITIR APENAS EDIÇÃO DE DEMANDA EM ABERTO E DE ESCOPO PÚBLICO
+// TODO PERMITIR AO ADM ENCERRAR DEMANDAS PRESENCIAIS
 
 // Importação de componentes do react-bootstrap
 import Container from 'react-bootstrap/Container';
@@ -41,7 +43,8 @@ const CardDemanda = (props) => {
         atualizarStatusDemanda,
         buscaDispositivoById, // funcao que busca dispositivo pelo id 
         cancelarDemanda,      // cancelar demanda pelo id
-        defineIdAssistencia   // funcao que busca assistencia responsavel pela demanda como o id registrado da mesma na demanda
+        defineIdAssistencia,   // funcao que busca assistencia responsavel pela demanda como o id registrado da mesma na demanda
+        rejeitarDemanda
     } = useDemanda();
     // funcao que busca lista de assistencias
     const { 
@@ -95,6 +98,11 @@ const CardDemanda = (props) => {
             return alert("Status de demanda não modificado");    
         }
         location.reload();
+    }
+
+    const handleRejeitarDemanda = async() =>{
+        const idDemanda = props.id;
+        rejeitarDemanda(idDemanda);
     }
 
     // busca dados de solicitante, endereco e dispositivo
@@ -209,6 +217,20 @@ const CardDemanda = (props) => {
             </Button>
         </>
     );
+
+    // botao para rejeitar demanda
+    const botaoRejeitarDemanda = (
+        <>
+            <Button 
+                // className={styles.botaoModal}
+                onClick={()=>{handleRejeitarDemanda()}}
+                variant="danger"
+            >
+                Rejeitar
+            </Button>
+        </>
+    );
+
     // define como sera a composição do botao do modal
     const botoes = {
         "abertas": botaoAceitarDemanda,
@@ -396,17 +418,22 @@ const CardDemanda = (props) => {
                         </Container>
 
                         <Container className={styles.containerBotao} style={{padding: '0'}}>
+
+                            {/* DEFINIR QUAIS BOTOES APARECERAO PARA USER DE ACORDO COM A DEMANDA E O USER */}
                             {
-                                // permite edição de demada para o solicitante apenas se demanda estiver em aberto
-                                (props.status !== "Aberto")
-                                    ? botaoVisualizarDemada
-                                    : botaoDoCard[userBuscador]
+                                (
+                                    userBuscador === "solicitante" && 
+                                    props.status === "Aberto" && 
+                                    idAssistencia === "Público"
+                                ) &&
+                                    botaoDoCard[userBuscador]
                             }
 
                             {
                                 (userBuscador === "solicitante" && props.status === "Aberto") && 
                                     botaoCancelarDemanda
                             }
+
                         </Container>
                     </Card.Body>
                 </Card>
@@ -502,6 +529,11 @@ const CardDemanda = (props) => {
                 {/* Footer com o botão com a funcionalidade passada dentro do mainBotao */}
                 <Modal.Footer style={{padding: "0", border: "0", display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     {mainBotao}
+                    {
+                        // mostra apenas quando adm acessa pagina de solicitações
+                        (userBuscador === "administrador" && tipoDemanda === "solicitacoes") && 
+                            botaoRejeitarDemanda
+                    }
                 </Modal.Footer>
             </Modal>
         </div>

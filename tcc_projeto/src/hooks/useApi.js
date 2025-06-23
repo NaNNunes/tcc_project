@@ -10,7 +10,7 @@ export function useVerificaLogin(){
   // funçoes do context para salvar id e tipo de user
   const { login } = useContext(AuthContext);
 
-  const verificaLogin = (data) => {
+  const verificaLogin = (data, solicitantes, administradores) => {
     // verifica se email ou senha foi encontrado em solicitantes
     const solicitante2find = solicitantes.find((solicitante) => {
         console.log(
@@ -728,14 +728,28 @@ export function useDemanda() {
         
         const response = await request.json();
         
-        // define id emissor da demanda
-        const isIdSolicitanteDefinido = await defineIdSolicitante("demanda", response.id);
-        // define data e hora da emissao da demanda
-        const isDataEmissaoDefinida = await defineDataEmissao(response.id);
-
-        if(isIdSolicitanteDefinido && isDataEmissaoDefinida && request.ok){
-            alert("Demanda cadastrada");
-            return request.ok;
+        // verifica se demanda ja tem id
+        if(userType === "solicitante"){
+            // define id emissor da demanda
+            const isIdSolicitanteDefinido = await defineIdSolicitante("demanda", response.id);
+            
+            // define data e hora da emissao da demanda
+            const isDataEmissaoDefinida = await defineDataEmissao(response.id);
+    
+            if(isIdSolicitanteDefinido && isDataEmissaoDefinida && request.ok){
+                alert("Demanda cadastrada");
+                return request.ok;
+            }
+        }
+        // verifica se demanda ja tem id
+        if(userType === "administrador"){            
+            // define data e hora da emissao da demanda
+            const isDataEmissaoDefinida = await defineDataEmissao(response.id);
+    
+            if(isDataEmissaoDefinida && request.ok){
+                alert("Demanda cadastrada");
+                return request.ok;
+            }
         }
     }
 
@@ -816,6 +830,23 @@ export function useDemanda() {
         return request.ok;
     }
 
+    // rejeitar demanda solicitada a at
+    const rejeitarDemanda = async (id) => {
+        const data = {
+            "status": "Aberto",
+            "assistencia": "Público",
+        }
+
+        const request = await fetch(`${url}/demanda/${id}`,{
+            method: "PATCH",
+            body: JSON.stringify(data)
+        })
+
+        if(request.ok){
+            location.reload();
+        };
+    }
+
     return {
         atualizarStatusDemanda,
         buscaDemandas,
@@ -824,6 +855,7 @@ export function useDemanda() {
         cadastrarDemanda, 
         cadastrarDispositivo, 
         cancelarDemanda,
-        defineIdAssistencia
+        defineIdAssistencia,
+        rejeitarDemanda
     };
 }
