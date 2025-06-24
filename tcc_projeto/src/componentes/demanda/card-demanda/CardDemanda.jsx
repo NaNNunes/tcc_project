@@ -48,7 +48,8 @@ const CardDemanda = (props) => {
         buscaDispositivoById, // funcao que busca dispositivo pelo id 
         cancelarDemanda,      // cancelar demanda pelo id
         defineIdAssistencia,   // funcao que busca assistencia responsavel pela demanda como o id registrado da mesma na demanda
-        rejeitarDemanda
+        rejeitarDemanda,
+        buscaDemandaById
     } = useDemanda();
     // funcao que busca lista de assistencias
     const { 
@@ -78,6 +79,8 @@ const CardDemanda = (props) => {
     const [assistenciasDoAdministrador, setAssistenciasDoAdministrador] = useState([]);
     // assistencia responsável pela demanda (Domínio)
     const [assistenciaResponsavel, setAssistenciaResponsavel] = useState("Público");
+    // informações da demanda selecionada.
+    const [demandaSelecionada, setDemandaSelecionada] = useState({});
     // dispositivo que a demanda se refere
     const [dispositivo, setDispositivo] = useState({});
     // endereco do solicitante emissor da demanda
@@ -212,6 +215,19 @@ const CardDemanda = (props) => {
         </>
     );
 
+    // --- SOLICITANTE ---
+    // botões para aceitar ou rejeitar o orçamento.
+    const botaoAceitarRejeitarOrcamento = (
+        <>
+            <Button>
+                Recusar
+            </Button>
+            <Button>
+                Aceitar
+            </Button>
+        </>
+    );
+
     // botao para fechar o modal
     const botaoFecharModalDeInfosDemanda = (
         <>
@@ -223,6 +239,53 @@ const CardDemanda = (props) => {
             </Button>
         </>
     );
+
+    // botao para editar a demanda.
+    const botaoEditarDemanda = (
+        <>
+            <Button
+                href={`/criar-demanda/${props.id}`}
+            >
+                Editar
+            </Button>
+        </>
+    );
+
+    // botao para cancelar demanda.
+    const botaoCancelarDemanda = (
+        <>
+            <Button 
+                onClick={()=>{cancelarDemanda(props.id)}}
+                variant='danger'
+            >
+                Cancelar
+            </Button>
+        </>
+    );
+
+    // Botões que apareceram no modal para o solicitante no consultar pedidos.
+    const botaoDentroModal = (
+        <>
+            {
+                (props.status === "Concluido" || props.status === "Cancelada") && (
+                    botaoFecharModalDeInfosDemanda
+                )
+            }
+            {
+                (props.status === "Em atendimento" && (demandaSelecionada.problema_identificado)) &&
+                botaoAceitarRejeitarOrcamento
+            }
+            {
+                (userBuscador === "solicitante" && props.status === "Aberto" && idAssistencia === "Público") &&
+                botaoEditarDemanda
+            }
+            {
+                (props.status === "Aberto" && userBuscador === "solicitante") && 
+                botaoCancelarDemanda
+            }
+        </>
+    );
+
     // botao para direcionar user a tela de orçamento
     const botaoGerarOrcamento = (
         <>
@@ -241,7 +304,7 @@ const CardDemanda = (props) => {
         "abertas": botaoAceitarDemanda,
         "aceitas": botaoGerarOrcamento,
         "historico": botaoFecharModalDeInfosDemanda,
-        "minhas-demandas": botaoFecharModalDeInfosDemanda,
+        "minhas-demandas": botaoDentroModal,
         // caso adm defina que outra assistencia receberá a demanda,
             // não sendo a esperada pelo solicitante,
             // a solução deverá permitir ao solicitante aceitar ou rejeitar.
@@ -251,28 +314,7 @@ const CardDemanda = (props) => {
     // O Botão
     const mainBotao = botoes[tipoDemanda];
 
-    // botao direcionado a cancelar demanda, exclusivo para solicitante no momento
-    const botaoCancelarDemanda = (
-        <>
-            <Button 
-                as="input"
-                type="button"
-                value="Cancelar" 
-                onClick={()=>{cancelarDemanda(props.id)}}
-                variant='danger'
-            />
-        </>
-    )   
-
-    // botao direcionado a edição da demanda
-    const botaoEditarDemanda = (
-        <>
-            <Button href={`/criar-demanda/${props.id}`}>
-                Editar
-            </Button>
-        </>
-    )
-
+    
     // botao direcionado a visualizar mais infos da demanda, abrir modal
     const botaoVisualizarDemada = (
         <>
@@ -280,7 +322,11 @@ const CardDemanda = (props) => {
                 as="input"
                 type="button"
                 value="Visualizar" 
-                onClick={()=>{setMostrarModal(true)}}
+                onClick={async () => {
+                    setMostrarModal(true);
+                    const resultado = await buscaDemandaById(props.id);
+                    setDemandaSelecionada(resultado);
+                }}
                 className={styles.botaoCard}
             />
         </>
@@ -417,24 +463,8 @@ const CardDemanda = (props) => {
                         </Container>
 
                         <Container className={styles.containerBotao} style={{padding: '0'}}>
-
                             {botaoVisualizarDemada}
-                            {
-                                (
-                                    userBuscador === "solicitante" && 
-                                    props.status === "Aberto" && 
-                                    idAssistencia === "Público"
-                                ) &&
-                                    botaoEditarDemanda
-                            }
-                            {
-                                (
-                                    props.status !== "Cancelada" && 
-                                    userBuscador === "solicitante"
-                                ) && 
-                                    botaoCancelarDemanda
-                            }
-
+                            
                         </Container>
                     </Card.Body>
                 </Card>
