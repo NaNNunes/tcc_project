@@ -1,11 +1,9 @@
-import { useState, useContext } from "react";
-
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button"
 
 import styles from "./SelecaoUsuario.module.css";
 
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/userContext";
 
@@ -17,17 +15,7 @@ const SelecaoUsuario = () => {
   const navigate = useNavigate();
 
   const handleCardClick = (type) => {
-    // nao funciona 
-    // (
-    //   (type === "solicitante")
-    //   ? setSelectedUserType("solicitante")
-    //   : setSelectedUserType("administrador")
-    // )
     
-    // funciona
-    // coloca tipo de user no localstorage pelo context
-    // setType(type);
-
     // Coloquei em um localStorage diferente para não dar conflito com o userType.
     localStorage.setItem("tipoUsuario", type);
 

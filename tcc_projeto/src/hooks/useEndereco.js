@@ -18,8 +18,11 @@ export function useEndereco() {
   };
 
   // funcao para buscar endereco pelo cep
-  const buscaEnderecoByCep = async (zipCode) =>{
+  const buscaEnderecoByZipCode = async (zipCode) =>{
+    const request = await fetch(`https://viacep.com.br/ws/${zipCode}/json/`)
+    const response = await request.json();
 
+    return response;
   }
 
   // busca Endereco By Id
@@ -41,13 +44,14 @@ export function useEndereco() {
     });
 
     const response = await request.json();
-
     const endereco_id = response.id;
     // define id do endereco como chave estrangeira
-    setaIdEmUser(endereco_id);
+    const isEnderecoAtribuido = await setaIdEmUser(endereco_id);
 
-    // retorna endereço fora cadastrado e user recebeu o id do endereco
-    return response.ok;
+    if(isEnderecoAtribuido){
+      // retorna endereço fora cadastrado e user recebeu o id do endereco
+      return request.ok;
+    }
   };
 
   // define id de endereco de acordo com o user, solicitante ou pseudo user
@@ -55,7 +59,7 @@ export function useEndereco() {
     // define quem receberá o id do endereco
     const tipo = localStorage.getItem("userType");
     const user =
-      tipo != "Visitante" && tipo === "solicitante"
+      tipo !== "Visitante" && tipo === "solicitante"
         ? "solicitante"
         : "assistencia";
 
@@ -73,7 +77,14 @@ export function useEndereco() {
       method: "PATCH",
       body: JSON.stringify(enderecoId),
     });
+
+    return request.ok;
   };
 
-  return { atualizarEndereco, buscaEnderecoById, cadastrarEndereco };
+  return { 
+    atualizarEndereco,
+    buscaEnderecoById,
+    buscaEnderecoByZipCode,
+    cadastrarEndereco 
+  };
 }

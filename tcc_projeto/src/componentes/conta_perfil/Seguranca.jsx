@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container'
 import { useForm } from "react-hook-form";
 
 // hooks
-import { useUser } from "../../hooks/useApi";
+import { useUser } from "../../hooks/useUser.js";
 
 // Importação do styles.
 import styles from './conta_perfil.module.css';

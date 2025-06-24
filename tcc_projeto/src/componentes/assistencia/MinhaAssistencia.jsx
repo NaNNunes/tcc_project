@@ -9,15 +9,17 @@ import Container from "react-bootstrap/Container";
 // Importação do styles.
 import styles from "../conta_perfil/conta_perfil.module.css";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import EditarPag from "../conta_perfil/EditarPag";
 import Endereco from "../Endereco";
 
-import { useParams } from "react-router-dom";
+import { useEndereco } from "../../hooks/useEndereco.js";
 
 const MinhaAssistencia = (props) => {
+  
+  const {buscaEnderecoById} = useEndereco();
+
   const {
     register,
     handleSubmit,
@@ -25,29 +27,27 @@ const MinhaAssistencia = (props) => {
     formState: { errors },
   } = useForm();
 
-  const listaAssistencias = props.assistencias;
   const admId = props.admId || localStorage.getItem("userId");
+  const listaAssistencias = props.assistencias;
+
   const [idAssistencia, setIdAssistencia] = useState();
   const [enderecoAssistencia, setEnderecoAssistencia] = useState({});
 
   const onSubmit = (data) => {};
   const onError = (error) => {};
   const navigate = useNavigate();
+
   const handleAdicionarClick = () => {
     navigate("/cadastro-nova-assistencia");
   };
-  const buscaEnderecoById = async (id_endereco) => {
-    const buscaEnderecoById = await fetch(
-      `http://localhost:5001/endereco/${id_endereco}`
-    );
-    const respBuscaEnderecoById = await buscaEnderecoById.json();
 
-    console.log(respBuscaEnderecoById);
-    setEnderecoAssistencia(respBuscaEnderecoById);
+  const buscaEndereco = async (id_endereco) => {
+    const resBuscaEnderecoById = await buscaEnderecoById(id_endereco);
+    setEnderecoAssistencia(resBuscaEnderecoById);
   };
 
   return (
-    <>
+    <div>
       <Form onSubmit={handleSubmit(onSubmit, onError)}>
         <Container
           fluid
@@ -99,7 +99,7 @@ const MinhaAssistencia = (props) => {
                   }
 
                   // pega fk id endereco da assistencia
-                  buscaEnderecoById(id_endereco_assistencia);
+                  buscaEndereco(id_endereco_assistencia);
                 }}
               >
                 <option> CNPJ </option>
@@ -185,7 +185,7 @@ const MinhaAssistencia = (props) => {
 
       <Endereco endereco={enderecoAssistencia} />
       {/* <EditarPag id_assistencia={idAssistencia}/> */}
-    </>
+    </div>
   );
 };
 

@@ -39,12 +39,11 @@ export function useAssistencia() {
     if(data.administradorId === undefined){
       const isAdmInserido = await inserirAdministrador(id);
       const isAssistenciaValida = await inserirValidacaoAssistencia(id, true);
-
       return (isAdmInserido && isAssistenciaValida ) && request.ok;
     }
     else{
       const isAssistenciaValida = await inserirValidacaoAssistencia(id, true);
-      return (isAssistenciaValida) && id;
+      return (isAssistenciaValida) && request.ok;
     }
   };
 
@@ -60,10 +59,12 @@ export function useAssistencia() {
   };
 
   const inserirValidacaoAssistencia = async (idAssistencia, isValido) => {
-    fetch(`${url}/assistencia/${idAssistencia}`, {
+    const request = await fetch(`${url}/assistencia/${idAssistencia}`, {
       method: "PATCH",
       body: JSON.stringify({ isValido: isValido }),
     });
+
+    return request.ok;
   };
 
   return {

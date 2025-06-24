@@ -32,7 +32,10 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 // hooks json-server
-import { useDemanda, useAssistencia, useVerificadorDeCpf, useUser} from '../../../hooks/useApi';
+import { useDemanda} from '../../../hooks/useDemanda.js';
+import { useAssistencia} from '../../../hooks/useAssistencia.js';
+import { useVerificadorDeCpf } from '../../../hooks/useApi.js';
+import { useUser} from '../../../hooks/useUser.js';
 
 import { useNavigate, useParams } from 'react-router-dom';
 

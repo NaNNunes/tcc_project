@@ -30,7 +30,12 @@ import ImgNotebook from '/icons/img_card_notebook.png';
 import ImgPerifericos from '/icons/img_card_perifericos.png';
 
 import { useEffect, useState } from 'react';
-import { useDemanda, useAssistencia, useUser, useEndereco } from "../../../hooks/useApi.js";
+
+import { useDemanda } from "../../../hooks/useDemanda.js";
+import { useAssistencia } from "../../../hooks/useAssistencia.js";
+import { useUser } from "../../../hooks/useUser.js";
+import { useEndereco } from "../../../hooks/useEndereco.js";
+
 import { useParams } from 'react-router-dom';
 
 const CardDemanda = (props) => {

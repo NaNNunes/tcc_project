@@ -1,7 +1,9 @@
-import Image from "react-bootstrap/Image";
-import { FaInstagram, FaFacebook, FaArrowUp } from "react-icons/fa";
 import styles from "./footer.module.css";
+
+import { FaInstagram, FaFacebook, FaArrowUp } from "react-icons/fa";
 import { useState, useEffect } from "react";
+
+import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
