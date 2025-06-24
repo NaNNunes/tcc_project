@@ -8,9 +8,10 @@ import InicioDeslog from "../../componentes/inicio/InicioDeslog";
 const Inicio = () => {
   const navigate = useNavigate();
   const { userType, usuarioNome } = useContext(AuthContext);
-
+  console.log(userType);
   useEffect(() => {
     if (userType !== "administrador" && userType !== "solicitante") {
+      alert(userType);
       return navigate("/login");
     }
   }, [userType, navigate]);

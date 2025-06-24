@@ -20,6 +20,9 @@ import { useNavigate } from "react-router-dom";
 import { useEndereco } from "../../hooks/useEndereco.js";
 import { useUser } from "../../hooks/useUser.js";
 
+import { useContext } from "react";
+import { AuthContext } from "../../context/userContext.jsx";
+
 const CadastroEndereco = () => {
   const {
     register,
@@ -29,11 +32,13 @@ const CadastroEndereco = () => {
     formState: { errors },
   } = useForm();
 
+  const {setType} = useContext(AuthContext);
+
+  const user = localStorage.getItem("tipoUsuario");
+  console.log(user);
   const { cadastrarEndereco } = useEndereco();
   const { inserirValidacao } = useUser();
   const navigate = useNavigate();
-
-  const userCategoria = localStorage.getItem("userCategoria");
 
   // enable input at the fields
   const [inputFieldEnable, setInputFieldEnable] = useState(false);
@@ -101,10 +106,13 @@ const CadastroEndereco = () => {
     }
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     cadastrarEndereco(data);
-    inserirValidacao(true);
-    navigate("/inicio");
+    const isUserValido = await inserirValidacao(true);
+    if(isUserValido){
+      setType(user);
+      navigate("/inicio");
+    }
   };
 
   const formatarCEP = (cep) => {
@@ -139,7 +147,7 @@ const CadastroEndereco = () => {
           <Card.Subtitle className="text-center text-white mb-1">
             Estamos quase lá!
             <br />
-            {userCategoria == 2 && (
+            {user == 2 && (
               <> Pra finalizar, coloque o endereço de seu negócio.</>
             )}
           </Card.Subtitle>
@@ -267,7 +275,7 @@ const CadastroEndereco = () => {
           <Col className="d-flex flex-column align-items-center mt-3 mb-3">
             <Button
               as="input"
-              value={userCategoria == 1 ? "Finalizar" : "Seguir"}
+              value="Cadastrar"
               type="submit"
               size="lg"
               className={`${styles.Button}`}

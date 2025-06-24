@@ -57,7 +57,7 @@ export function useEndereco() {
   // define id de endereco de acordo com o user, solicitante ou pseudo user
   const setaIdEmUser = async (endereco_id) => {
     // define quem receberá o id do endereco
-    const tipo = localStorage.getItem("userType");
+    const tipo = localStorage.getItem("tipoUsuario");
     const user =
       tipo !== "Visitante" && tipo === "solicitante"
         ? "solicitante"

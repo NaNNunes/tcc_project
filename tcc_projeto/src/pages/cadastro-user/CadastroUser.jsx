@@ -29,7 +29,6 @@ const CadastroUser = () => {
     formState: { errors },
   } = useForm();
   const { cadastrarInfosUser } = useUser();
-
   const navigate = useNavigate();
   const { verificador } = useVerificadorDeCpf();
 
@@ -43,11 +42,9 @@ const CadastroUser = () => {
 
   const senha = watch("senha");
 
-  const onSubmit = async (data) => {
-    // há maneira melhor de definir essa limitação
+  const userType = localStorage.getItem("tipoUsuario");
 
-    // TROQUEI de "userType" PARA "tipoUsuario"
-    const userType = localStorage.getItem("tipoUsuario");
+  const onSubmit = async (data) => {
     if (userType !== "solicitante" && userType !== "administrador") {
       alert("Defina um tipo de user");
       return false;
@@ -56,8 +53,6 @@ const CadastroUser = () => {
     // verificar se cpf ja foi cadastrado por outrem
     const cpfDeSolicitante = verificaCpfDeSolicitantes(data.cpf);
     const cpfDeAdm = verificaCpfDeAdms(data.cep);
-    console.log("cpfDeSolicitante: ", cpfDeSolicitante);
-    console.log("cpfDeAdm: ", cpfDeAdm);
     // caso adm ou solicitante não seja undefined
     if (cpfDeSolicitante || cpfDeAdm) {
       alert("CPF já utilizado ");
@@ -76,8 +71,10 @@ const CadastroUser = () => {
     }
 
     // cadastra user
-    cadastrarInfosUser(data);
-    navigate("/pergunta-seguranca");
+    const isCadastrado = await cadastrarInfosUser(data, userType);
+    if(isCadastrado){
+      navigate("/pergunta-seguranca");
+    }
   };
 
   const onError = (errors) => {

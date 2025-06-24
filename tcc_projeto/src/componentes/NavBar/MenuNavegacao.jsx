@@ -46,13 +46,6 @@ const MenuNavegacao = () => {
   // aqui código sempre segue em execução sempre atualizando de acordo com atualizações da pagina
   useEffect(() => {
     async function fetchData() {
-      if (userType !== "Visitante") {
-        const resBuscaUserById = await buscaUserById(userType, userId);
-
-        if (resBuscaUserById.isValido == false) {
-          logout();
-        }
-      }
 
       // caso user seja adm
       if (userType === "administrador") {

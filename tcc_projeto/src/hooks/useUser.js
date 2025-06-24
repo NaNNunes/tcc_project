@@ -70,12 +70,9 @@ export function useUser() {
     }
 
     // cadastra user
-    const cadastrarInfosUser = async (data) => {
-        // define o tipo de user
+    const cadastrarInfosUser = async (data, userType) => {
         // TROQUE DE "userType" para "tipoUsuario".
-        const user = localStorage.getItem("tipoUsuario");
-
-        const request = await fetch(`${url}/${user}`,{
+        const request = await fetch(`${url}/${userType}`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
@@ -87,10 +84,13 @@ export function useUser() {
 
         // alternativa definir id no localstorage
         setId(id);
-        setType(user);
 
         // user invalido pois falta endereco e/ou pergunta de segurança
-        inserirValidacao(false);
+        const isValidacaoInserida = await inserirValidacao(false);
+
+        if(isValidacaoInserida){
+            return request.ok;
+        }
     }
 
     // cadastra solicitante presencial
@@ -130,19 +130,21 @@ export function useUser() {
     // define validaçao do user
     const inserirValidacao = async (isValido) =>{
         const id = localStorage.getItem('userId');
-        const user = localStorage.getItem('userType');
+        const user = localStorage.getItem('tipoUsuario');
 
-        fetch(`${url}/${user}/${id}`,{
+        const request = await fetch(`${url}/${user}/${id}`,{
             method:"PATCH",
             body: JSON.stringify({"isValido":isValido})
         })
+
+        return request.ok;
     }
     
     // adiciona pergunta de segurança
     const inserirPerguntaResposta = async (data) => {
 
         const id = localStorage.getItem("userId");
-        const user = localStorage.getItem("userType");
+        const user = localStorage.getItem("tipoUsuario");
 
        await fetch(`${url}/${user}/${id}`,{
             method: "PATCH",

@@ -33,11 +33,11 @@ const router = createBrowserRouter([
       // POR FAVOR DEIXE EM ORDEM ALFABÉTICA
       {
         path: "/",
-        element: <Inicio />,
+        element: <Inicio/>,
       },
       {
         path: "/inicio",
-        element: <Inicio />,
+        element: <Inicio/>,
       },
       {
         path: "/assistencia-info",

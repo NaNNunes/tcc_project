@@ -9,15 +9,15 @@ export const AuthProvider = ({children}) => {
 
     // define id do user
     const setId = (data) =>{
+        console.log('userType',data);
         setUserId(data);
-        // alternativa
         localStorage.setItem('userId',data);
     }
 
     // define tipo do user
     const setType = (data) =>{
+        console.log('userType',data);
         setUserType(data);
-        // alternativa
         localStorage.setItem('userType', data);
     }
 
@@ -26,7 +26,7 @@ export const AuthProvider = ({children}) => {
         const user = localStorage.getItem("userType") || "Visitante"
         setUsuarioNome(nome);
         setUserType(user);
-    }, [])
+    }, []);
 
     const login = (data, tipoUser) => {
         // reset

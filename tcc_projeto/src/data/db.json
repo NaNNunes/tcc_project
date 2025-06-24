@@ -38,6 +38,21 @@
       "nome": "User",
       "sobrenome": "Pseudo",
       "isValido": false
+    },
+    {
+      "id": "f7ff",
+      "email": "user2@gmail.com",
+      "cpf": "785.367.290-07",
+      "userTelefone": "2840028922",
+      "nome": "user",
+      "sobrenome": "Lopes",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "1",
+      "resposta": "Blu",
+      "id_endereco": "52cb"
     }
   ],
   "administrador": [
@@ -222,6 +237,24 @@
       "gia": "",
       "ddd": "27",
       "siafi": "5701"
+    },
+    {
+      "id": "52cb",
+      "zipcode": "29060-290",
+      "localidade": "Vitória",
+      "bairro": "Jardim da Penha",
+      "logradouro": "Rua Francisco Eugênio Mussiello",
+      "uf": "ES",
+      "number": "18",
+      "complemento": "sim",
+      "cep": "29060-290",
+      "unidade": "",
+      "estado": "Espírito Santo",
+      "regiao": "Sudeste",
+      "ibge": "3205309",
+      "gia": "",
+      "ddd": "27",
+      "siafi": "5705"
     }
   ],
   "dispositivo": [
