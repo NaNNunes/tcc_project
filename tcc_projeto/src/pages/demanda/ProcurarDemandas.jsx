@@ -11,7 +11,8 @@ import styles from "./ProcurarDemandas.module.css";
 
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDemanda, useAssistencia } from "../../hooks/useApi";
+import { useAssistencia } from "../../hooks/useAssistencia.js";
+import { useDemanda } from "../../hooks/useDemanda.js";
 
 const ProcurarDemandas = () => {
   // verificação de permissão de acesso do user
@@ -55,7 +56,6 @@ const ProcurarDemandas = () => {
       try {
         // busca todas as demandas
         const resBuscaDemandas = await buscaDemandas();
-        const escopoDemanda = resBuscaDemandas.assistencia;
         // caso user seja solicitante
         // lista apenas demandas emitidas por ele independente de status
         if(userType === "solicitante" && tipoDemanda === "minhas-demandas"){

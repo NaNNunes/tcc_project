@@ -15,8 +15,16 @@ import { Navigate } from "react-router-dom"
 // Importação dos estilos.
 import styles from './Conta.module.css';
 
+import { useUser } from "../../hooks/useUser.js";
+import { useAssistencia } from "../../hooks/useAssistencia.js";
+import { useEndereco } from "../../hooks/useApi"
+
 const Conta = () => {
   const {userType, userId} = useContext(AuthContext);
+
+  const { buscaUserById } = useUser();
+  const { buscaAssistencias } = useAssistencia();
+  const { buscaEnderecoById } = useEndereco();
 
   // verifica se user está logado
   if(localStorage.getItem("userType") === "Visitante") return <Navigate to="/login"/>
@@ -32,29 +40,24 @@ const Conta = () => {
       const id = userId || localStorage.getItem("userId");
 
       try{
-        const url = "http://localhost:5001";
-
         // busca dados do user pelo id do localstorage
-        const reqBuscaDadosUserById = await fetch(`${url}/${user}/${id}`);
-        const resBuscaDadosUserById = await reqBuscaDadosUserById.json();
+        const resBuscaDadosUserById = await buscaUserById(user, id);
+        
         // atribuição ao state
         setUserInfos(resBuscaDadosUserById);
         // pega FK id_endereco --- realizar verificação de qual é o tipo de user antes da atribuição
         const idEnderecoUser = resBuscaDadosUserById.id_endereco;
 
         // buscar assistencias do user
-        const reqBuscaAssistenciasByUserId = await fetch(`${url}/assistencia`);
-        const resListaAssistencias = await reqBuscaAssistenciasByUserId.json();
+        const resListaAssistencias = await buscaAssistencias();
 
         // define lista de assistencias encontradas
         setListaAssistencia(resListaAssistencias);
 
         // somente se solicitante ocorrera a busca aqui
         if(user === "solicitante"){
-          // POG
           // busca dados de endereco pela FK id_endereco
-          const reqBuscaEnderecoById = await fetch(`${url}/endereco/${idEnderecoUser}`)
-          const respBuscaEnderecoById = await reqBuscaEnderecoById.json();
+          const respBuscaEnderecoById = await buscaEnderecoById(idEnderecoUser);
           // atribuição ao state
           setUserEndereco(respBuscaEnderecoById);
         }

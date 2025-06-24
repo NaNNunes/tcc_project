@@ -12,12 +12,19 @@ import styles from "../../componentes/conta_perfil/conta_perfil.module.css";
 
 import { useState, useEffect } from "react";
 
-
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useVerificadorDeCnpj, useEndereco } from "../../hooks/useApi";
+import { useVerificadorDeCnpj } from "../../hooks/useApi.js";
+import { useEndereco } from "../../hooks/useEndereco.js";
+import { useAssistencia } from "../../hooks/useAssistencia.js";
 
 const CadastroNovaAssistencia = () => {
+  const navigate = useNavigate();
+  const userType = localStorage.getItem("userType");
+  if(userType !== "administrador") return navigate("/inicio");
+
+  const userId = localStorage.getItem("userId");
+
   const {
     register,
     handleSubmit,
@@ -26,9 +33,9 @@ const CadastroNovaAssistencia = () => {
     formState: { errors },
   } = useForm();
 
-  const navigate = useNavigate();
   const { verificador } = useVerificadorDeCnpj();
   const { cadastrarEndereco, atualizarEndereco } = useEndereco();
+  const {inserirAssistencia} = useAssistencia();
 
   // Estado para o endereço
   const [endereco, setEndereco] = useState({
@@ -102,20 +109,40 @@ const CadastroNovaAssistencia = () => {
     }
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (!verificador(data.cnpj)) {
       alert("CNPJ inválido");
       return;
     }
 
-    if (data.zipcode === endereco.zipcode) {
-      cadastrarEndereco(data);
-    } else {
-      atualizarEndereco(endereco.id, data);
+    const dadosAssistencia = {
+      "assistenciaEmail": data,
+      "nomeFantasia": data,
+      "razaoSocial": data,
+      "cnpj": data,
+      "assistenciaTelefone": data,
+      "assistenciaTermos": data,
+      "administradorId": userId
     }
 
-    console.log("Dados para salvar:", data);
-    navigate("/cadastro-endereco");
+    // cadastra assistencia
+    const resCadastrarAssistencia = await inserirAssistencia(dadosAssistencia);
+
+    if(resCadastrarAssistencia){
+
+      const dadosEnderecoAssitiencia = {
+
+      }
+
+      if (data.zipcode === endereco.zipcode) {
+        cadastrarEndereco(data);
+      } else {
+        atualizarEndereco(endereco.id, data);
+      }
+    }
+
+    console.log("Dados para salvar:", dadosAssistencia);
+    // navigate("/cadastro-endereco");
   };
 
   const onError = (error) => {

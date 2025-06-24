@@ -1,4 +1,3 @@
-import React from 'react'
 
 // Importação do react-boostrap.
 import Form from 'react-bootstrap/Form';

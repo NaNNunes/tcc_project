@@ -16,6 +16,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   const userType = localStorage.getItem("userType");
+  console.log(userType)
   if(userType !== "Visitante" && userType !== null) return <Navigate to="/inicio"/>;
 
   const {        

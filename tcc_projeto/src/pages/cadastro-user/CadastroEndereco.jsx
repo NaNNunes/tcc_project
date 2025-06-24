@@ -15,9 +15,10 @@ import Image from "react-bootstrap/Image";
 import { useForm } from "react-hook-form";
 
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { useUser, useEndereco } from "../../hooks/useApi";
+import { useEndereco } from "../../hooks/useEndereco.js";
+import { useUser } from "../../hooks/useUser.js";
 
 const CadastroEndereco = () => {
   const {

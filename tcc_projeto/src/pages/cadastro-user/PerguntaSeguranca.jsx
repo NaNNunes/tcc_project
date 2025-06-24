@@ -12,11 +12,11 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 
 // router dom
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // hooks
 import { useForm } from "react-hook-form";
-import { useUser } from "../../hooks/useApi";
+import { useUser } from "../../hooks/useUser.js";
 
 const PerguntaSeguranca = () => {
   const {
