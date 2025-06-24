@@ -1,4 +1,7 @@
-import { Container, Row, Col, Button } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 
 const ErrorPage = () => {
@@ -13,15 +16,10 @@ const ErrorPage = () => {
           </h1>
           <h2 className="mb-3">Página não encontrada</h2>
           <p className="mb-4">
-            A página que você está tentando acessar não existe <br /> ou você não possui permissão para visualizá-la.
+            A página que você está tentando acessar não existe <br /> ou você
+            não possui permissão para visualizá-la.
           </p>
-          <Button
-            as={Link}
-            to="/"
-            variant="primary"
-            size="lg"
-            className="px-4"
-          >
+          <Button as={Link} to="/" variant="primary" size="lg" className="px-4">
             Voltar para Home
           </Button>
         </Col>

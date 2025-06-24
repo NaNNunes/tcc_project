@@ -23,7 +23,7 @@ const Inicio = () => {
     case "Visitante":
       return <InicioDeslog />;
     default:
-      return false; 
+      return false;
   }
 };
 

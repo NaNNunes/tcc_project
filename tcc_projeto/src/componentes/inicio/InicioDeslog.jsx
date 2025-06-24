@@ -1,12 +1,11 @@
-import {
-  Container,
-  Card,
-  Row,
-  Col,
-  Button,
-  Image,
-  Carousel,
-} from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
+import Carousel from "react-bootstrap/Carousel";
+
 import styles from "./inicio.module.css";
 
 import { useNavigate } from "react-router-dom";

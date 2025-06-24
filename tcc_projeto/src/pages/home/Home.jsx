@@ -1,13 +1,10 @@
-
-import {
-  Container,
-  Card,
-  Row,
-  Col,
-  Button,
-  Image,
-  Carousel,
-} from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Image from "react-bootstrap/Image";
+import Carousel from "react-bootstrap/Carousel";
 
 import styles from "./home.module.css";
 
@@ -37,10 +34,7 @@ const Home = () => {
                 rápida, segura e prática.
               </p>
               <div className={styles.buttons}>
-                <Button
-                  className={styles.primaryButton}
-                  onClick={goEscolha}
-                >
+                <Button className={styles.primaryButton} onClick={goEscolha}>
                   Veja aqui as melhores opções para você
                 </Button>
               </div>
@@ -171,7 +165,6 @@ const Home = () => {
       </section>
 
       {/* Footer */}
-      
     </div>
   );
 };

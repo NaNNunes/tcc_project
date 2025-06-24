@@ -25,7 +25,7 @@ import { TiArrowSortedUp } from "react-icons/ti";
 import { IoMenu } from "react-icons/io5";
 import { GrFavorite } from "react-icons/gr";
 
-import { useDemanda  } from "../../hooks/useDemanda.js";
+import { useDemanda } from "../../hooks/useDemanda.js";
 import { useAssistencia } from "../../hooks/useAssistencia.js";
 import { useUser } from "../../hooks/useUser.js";
 

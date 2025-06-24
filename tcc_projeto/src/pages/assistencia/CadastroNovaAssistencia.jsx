@@ -1,11 +1,9 @@
-import {
-  Button,
-  Col,
-  Container,
-  FloatingLabel,
-  Form,
-  Row,
-} from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
 
 import styles from "../../componentes/conta_perfil/conta_perfil.module.css";
 
@@ -21,11 +19,11 @@ import { useAssistencia } from "../../hooks/useAssistencia.js";
 const CadastroNovaAssistencia = () => {
   const navigate = useNavigate();
   const userType = localStorage.getItem("userType");
-  if(userType !== "administrador") return navigate("/inicio");
+  if (userType !== "administrador") return navigate("/inicio");
 
   const userId = localStorage.getItem("userId");
 
-  const {buscaEnderecoByZipCode} = useEndereco();
+  const { buscaEnderecoByZipCode } = useEndereco();
 
   const {
     register,
@@ -37,7 +35,7 @@ const CadastroNovaAssistencia = () => {
 
   const { verificador } = useVerificadorDeCnpj();
   const { cadastrarEndereco } = useEndereco();
-  const {inserirAssistencia} = useAssistencia();
+  const { inserirAssistencia } = useAssistencia();
 
   // Estado para o endereço
   const [endereco, setEndereco] = useState({
@@ -86,10 +84,12 @@ const CadastroNovaAssistencia = () => {
     }
 
     try {
-
       const resBuscaEnderecoByZipCode = await buscaEnderecoByZipCode(zipCode);
 
-      if (resBuscaEnderecoByZipCode.errors || resBuscaEnderecoByZipCode.message) {
+      if (
+        resBuscaEnderecoByZipCode.errors ||
+        resBuscaEnderecoByZipCode.message
+      ) {
         throw new Error();
       }
 
@@ -116,36 +116,36 @@ const CadastroNovaAssistencia = () => {
     }
 
     const dadosAssistencia = {
-      "assistenciaEmail": data.assistenciaEmail,
-      "nomeFantasia": data.nomeFantasia,
-      "razaoSocial": data.razaoSocial,
-      "cnpj": data.cnpj,
-      "assistenciaTelefone": data.assistenciaTelefone,
-      "assistenciaTermos": data.assistenciaTermos,
-      "administradorId": userId
-    }
+      assistenciaEmail: data.assistenciaEmail,
+      nomeFantasia: data.nomeFantasia,
+      razaoSocial: data.razaoSocial,
+      cnpj: data.cnpj,
+      assistenciaTelefone: data.assistenciaTelefone,
+      assistenciaTermos: data.assistenciaTermos,
+      administradorId: userId,
+    };
 
     // cadastra assistencia
     const resCadastrarAssistencia = await inserirAssistencia(dadosAssistencia);
 
-    if(resCadastrarAssistencia){
-      
+    if (resCadastrarAssistencia) {
       const dadosEnderecoAssitiencia = {
-        "zipcode": data.zipcode,
-        "localidade": data.localidade,
-        "bairro": data.bairro,
-        "logradouro": data.logradouro,
-        "uf": data.uf,
-        "number": data.number,
-        "complemento": data.complemento,
-      }
+        zipcode: data.zipcode,
+        localidade: data.localidade,
+        bairro: data.bairro,
+        logradouro: data.logradouro,
+        uf: data.uf,
+        number: data.number,
+        complemento: data.complemento,
+      };
 
-      const isEnderecoCadastrado = await cadastrarEndereco(dadosEnderecoAssitiencia);
-      if(isEnderecoCadastrado){
+      const isEnderecoCadastrado = await cadastrarEndereco(
+        dadosEnderecoAssitiencia
+      );
+      if (isEnderecoCadastrado) {
         alert(`Nova assistencia, ${data.razaoSocial}, cadastrada`);
         location.reload();
       }
-      
     }
   };
 
@@ -154,7 +154,6 @@ const CadastroNovaAssistencia = () => {
   };
 
   return (
-
     <Form className="p-4" onSubmit={handleSubmit(onSubmit, onError)}>
       <Container fluid className={styles.parteFormulario}>
         <Row className="justify-content-center mb-4">

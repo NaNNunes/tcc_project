@@ -6,12 +6,11 @@ import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import styles from "./inicio.module.css";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import { MdDevices } from "react-icons/md";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
-import { BsClipboardCheck } from "react-icons/bs";
 import { HiOutlineUsers } from "react-icons/hi";
 import { MdOutlineTimelapse } from "react-icons/md";
 import { LuClipboardCheck } from "react-icons/lu";
@@ -25,11 +24,12 @@ const InicioADM = () => {
   const navigate = useNavigate();
 
   // verifica se user está deslogado
-  const userType = localStorage.getItem("userType");
-  if (userType !== "solicitante" && userType !== "administrador") {
-    console.log("Acesso negado");
-    return navigate("/login");
-  }
+  useEffect(() => {
+    const tipo = localStorage.getItem("userType");
+    if (tipo !== "solicitante" && tipo !== "administrador") {
+      navigate("/login");
+    }
+  }, []);
 
   const { usuarioNome } = useContext(AuthContext);
 

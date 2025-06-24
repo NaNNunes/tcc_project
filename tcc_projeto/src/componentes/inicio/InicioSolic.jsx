@@ -1,15 +1,14 @@
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Card from "react-bootstrap/Card";
+import Image from "react-bootstrap/Image";
+import NavDropdown from "react-bootstrap/NavDropdown";
+
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/userContext";
-import {
-  Row,
-  Col,
-  Button,
-  Container,
-  Card,
-  Image,
-  NavDropdown,
-} from "react-bootstrap";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { MdDevices, MdOutlineTimelapse } from "react-icons/md";
 import { FaRegStarHalfStroke } from "react-icons/fa6";

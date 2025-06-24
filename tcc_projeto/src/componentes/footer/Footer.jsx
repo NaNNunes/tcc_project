@@ -86,6 +86,9 @@ const Footer = () => {
             <p className={styles.paragrafoFooter}>
               <strong>Whatsapp:</strong> 4002-8922
             </p>
+            <p className={styles.paragrafoFooter}>
+              <strong>Email:</strong> contato@connectfix.com
+            </p>
           </Col>
         </Row>
         <hr className=" text-white border-2 w-100" />

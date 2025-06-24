@@ -7,7 +7,6 @@ import Footer from "./componentes/footer/Footer.jsx";
 
 import { AuthProvider } from "./context/userContext.jsx";
 
-
 function App() {
   const location = useLocation();
 
@@ -46,13 +45,15 @@ function App() {
   return (
     <>
       <AuthProvider>
-          <div>
-            <Navbar />
+        <div className="pageWrapper">
+          <Navbar />
+          <main className="mainContent">
             <Container style={{ maxWidth: "100%", margin: "0", padding: "0" }}>
               <Outlet />
             </Container>
-            <Footer />
-          </div>
+          </main>
+          <Footer />
+        </div>
       </AuthProvider>
     </>
   );

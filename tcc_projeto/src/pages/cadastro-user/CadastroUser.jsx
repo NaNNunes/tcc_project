@@ -17,7 +17,7 @@ import { Link, useNavigate } from "react-router-dom";
 //hooks
 import { useForm } from "react-hook-form";
 
-import {useVerificadorDeCpf, useComparaDados} from "../../hooks/useApi.js";
+import { useVerificadorDeCpf, useComparaDados } from "../../hooks/useApi.js";
 
 import { useUser } from "../../hooks/useUser.js";
 

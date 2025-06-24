@@ -6,17 +6,19 @@ body {
 }
 
 /* O container principal ocupa todo o espaço */
-#__root,
+#root,
 .pageWrapper {
   display: flex;
   flex-direction: column;
-  min-height: 80vh;
+  min-height: 100vh; /* usar 100vh garante o preenchimento total da tela */
 }
+
 
 /* O conteúdo (body) cresce se precisar */
 .mainContent {
-  flex: 1;
+  flex: 1; /* faz o conteúdo expandir e empurrar o footer para baixo */
 }
+
 
 body.login-background {
   background-image: url("/backgrounds/image.webp");
