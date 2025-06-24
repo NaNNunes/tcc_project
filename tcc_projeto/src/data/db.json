@@ -238,6 +238,18 @@
       "solicitante_id": "d150"
     },
     {
+      "id": "8511",
+      "categoria": "Celular",
+      "marca": "Samsung",
+      "fabricante": "",
+      "modelo": "s24",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "solicitante_id": "d150"
+    },
+    {
       "id": "19e1",
       "categoria": "Tablet",
       "marca": "Samsung",
@@ -289,7 +301,23 @@
   "demanda": [
     {
       "id": "df51",
-      "idDispostivo": "8510",
+      "idDispositivo": "8511",
+      "descProblema": "Siiiiiiiiiiiiiiiummmmmm",
+      "observacoes": "",
+      "status": "Em atendimento",
+      "assistencia": "28fd",
+      "solicitante_id": "d150",
+      "dataEmissao": "21/06/2025",
+      "horaEmissao": "19:36:14",
+      "problema_identificado": "Problema na rebimboca da parafuseta",
+      "solucao": "Trocar a rebimboca da parafuseta",
+      "pecaTrocada": "rebimboca da parafuseta",
+      "valorObra": "US$ 164 mil",
+      "observacoesOrcamento": "Valor da mão"
+    },
+    {
+      "id": "df52",
+      "idDispositivo": "8510",
       "descProblema": "Siiiiiiiiiiiiiiiummmmmm",
       "observacoes": "",
       "status": "Em atendimento",
@@ -300,7 +328,7 @@
     },
     {
       "id": "26d5",
-      "idDispostivo": "19e1",
+      "idDispositivo": "19e1",
       "descProblema": "Siiiiiiiiiiiiiiiiuuuuuuummmmmm 2",
       "observacoes": "",
       "status": "Aberto",
@@ -311,7 +339,7 @@
     },
     {
       "id": "d457",
-      "idDispostivo": "b9cf",
+      "idDispositivo": "b9cf",
       "descProblema": "É observavel que há um problema que problematiza a rotina problemática do meu problema. Dificultando assim minhas problematizações diárias.",
       "observacoes": "Observe que é observavel nesta observação que há um problema perceptivelmente observavel. Basta apenas observar.",
       "status": "Em atendimento",
@@ -322,7 +350,7 @@
     },
     {
       "id": "3273",
-      "idDispostivo": "6eff",
+      "idDispositivo": "6eff",
       "descProblema": "Siiiiiiiiiiiiiiiuuuuuuuuuummmmmmm",
       "observacoes": "",
       "status": "Em atendimento",
@@ -333,7 +361,7 @@
     },
     {
       "id": "70d4",
-      "idDispostivo": "19e1",
+      "idDispositivo": "19e1",
       "descProblema": "hjk g vjnlhkfg vjnklfagdjnkl adfjn klcsfadcjnklfcadjnk l",
       "observacoes": "",
       "status": "Cancelada",
@@ -344,7 +372,7 @@
     },
     {
       "id": "70d6",
-      "idDispostivo": "19e1",
+      "idDispositivo": "19e1",
       "descProblema": "hjk g vjnlhkfg vjnklfagdjnkl adfjn klcsfadcjnklfcadjnk l",
       "observacoes": "",
       "status": "Em atendimento",
@@ -355,7 +383,7 @@
     },
     {
       "id": "70d5",
-      "idDispostivo": "19e1",
+      "idDispositivo": "19e1",
       "descProblema": "hjk g vjnlhkfg vjnklfagdjnkl adfjn klcsfadcjnklfcadjnk l",
       "observacoes": "",
       "status": "Em atendimento",
@@ -366,7 +394,7 @@
     },
     {
       "id": "70d7",
-      "idDispostivo": "19e1",
+      "idDispositivo": "19e1",
       "descProblema": "hjk g vjnlhkfg vjnklfagdjnkl adfjn klcsfadcjnklfcadjnk l",
       "observacoes": "",
       "status": "Em atendimento",
@@ -377,7 +405,7 @@
     },
     {
       "id": "4f2f",
-      "idDispostivo": "202f",
+      "idDispositivo": "202f",
       "descProblema": "vfg df cvb cgvb gfdghdfg",
       "observacoes": "",
       "status": "Em atendimento",

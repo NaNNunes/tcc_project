@@ -8,7 +8,7 @@ import Container from 'react-bootstrap/Container'
 
 import Card from 'react-bootstrap/Card';
 
-import { useUser } from '../../hooks/useApi';
+import { useUser } from '../../hooks/useUser.js';
 import { useForm } from 'react-hook-form';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/userContext';

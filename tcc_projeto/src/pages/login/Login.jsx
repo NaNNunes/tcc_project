@@ -10,14 +10,15 @@ import { useForm } from "react-hook-form";
 
 import styles from "./login.module.css";
 
-import { useVerificaLogin, useUser } from "../../hooks/useApi";
+import { useUser } from "../../hooks/useUser.js";
+import { useVerificaLogin } from "../../hooks/useVerificaLogin.js";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
   const userType = localStorage.getItem("userType");
-  
-  if(userType !== "Visitante") return <Navigate to="/inicio"/>;
+  console.log(userType)
+  if(userType !== "Visitante" && userType !== null) return <Navigate to="/inicio"/>;
 
   const {        
     buscaAdministradores,

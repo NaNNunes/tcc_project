@@ -8,6 +8,7 @@ import {
   Image,
   Carousel,
 } from "react-bootstrap";
+
 import styles from "./home.module.css";
 
 import { useNavigate } from "react-router-dom";

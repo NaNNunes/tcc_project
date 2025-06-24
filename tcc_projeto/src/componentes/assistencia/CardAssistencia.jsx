@@ -1,5 +1,4 @@
 // componente card para mostrar infos da assistencia para o solicitante
-
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -7,13 +6,18 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
 // hooks
-import { useEndereco, useUser } from "../../hooks/useApi";
+import { useEndereco } from "../../hooks/useEndereco.js";
+import { useUser } from "../../hooks/useUser.js";
 import { useEffect, useState } from "react";
 
 const CardAssistencia = (props) => {
   // descontrutores
   const { buscaEnderecoById } = useEndereco();
-  const { favoritarAssistencia, removerAssistenciaDeFavoritos } = useUser();
+  const { 
+    buscaAssistenciasFavoritas ,
+    favoritarAssistencia,
+    removerAssistenciaDeFavoritos,
+  } = useUser();
 
   // IDs
   const idAssistencia = props.idAssistencia;
@@ -28,29 +32,17 @@ const CardAssistencia = (props) => {
   // state de lista de matchs --- utilizado em remover match
   const [matchs, setMatchs] = useState();
 
-  // busca endereco by id
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const dadosEndereco = await buscaEnderecoById(idEndereco);
-        setEndereco(dadosEndereco);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    fetchData();
-  }, []);
-
   const url = import.meta.env.VITE_API_URL;
   // busca todos os registros de matchs e verifica se o match pertence ao cliente e a assistencia renderizada
   useEffect(() => {
     async function fetchData() {
       try {
+        // busca endereco by id
+        const dadosEndereco = await buscaEnderecoById(idEndereco);
+        setEndereco(dadosEndereco);
+
         // busca por matchs
-        const reqBuscaMatchs = await fetch(
-          `${url}/assistencia_Fav_Solicitante`
-        );
-        const resBuscaMatchs = await reqBuscaMatchs.json();
+        const resBuscaMatchs = await buscaAssistenciasFavoritas();
         setMatchs(resBuscaMatchs);
 
         // lista para armazenar id de assistencias favoritas do user

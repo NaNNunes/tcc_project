@@ -1,5 +1,3 @@
-import React from 'react'
-
 // Importação do react-boostrap.
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -15,8 +13,14 @@ import { useForm } from "react-hook-form";
 
 // Importação do estilo.
 import stylesCad from '../demanda/cadastro-demanda/CadastroDemanda.module.css'
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
+import { useAssistencia } from '../../hooks/useAssistencia.js';
+import { useDemanda } from '../../hooks/useDemanda.js';
 
 const OrcamentoForm = () => {
+
   const {
     register,
     handleSubmit,
@@ -25,8 +29,63 @@ const OrcamentoForm = () => {
     formState: {errors},
   } = useForm();
 
+  const navigate = useNavigate();
+
+  const {
+    buscaDemandaById,
+    buscaDemandaVinculadaAssistencia,
+    buscaDispositivoById,
+    buscaDispositivoDeDemandaDaAt,
+    inserirOrcamento
+  } = useDemanda();
+  const {buscaAssistenciasDoAdministrador} = useAssistencia();
+  const {idDemanda} = useParams();
+  const userId = localStorage.getItem("userId");
+
+  // state de demandas em atendimento vinculadas a assistencia
+  const [demandaSelecionada, setDemandaSelecionada] = useState({});
+  const [dispositivoDemandaSelecionada, setDispositivoDemandaSelecionada] = useState({});
+  const [demandasEmAtendimento, setDemandasEmAtendimento] = useState([]);
+  const [dispositivos, setDispositivos] = useState([]);
+
+  useEffect(()=>{
+    async function fetchData() {
+      try {
+        buscaDadosDeDemanda(idDemanda);
+        // busca assistencias do user
+        const resBuscaAssistenciasDoAdm = await buscaAssistenciasDoAdministrador(userId);
+
+        // busca demandas vinculadas as assistencias
+        const resBuscaDemandas = await buscaDemandaVinculadaAssistencia(resBuscaAssistenciasDoAdm);
+        setDemandasEmAtendimento(resBuscaDemandas);
+
+        const resBuscaDispositivosDeDemandasDaAt = await buscaDispositivoDeDemandaDaAt(resBuscaDemandas);
+        setDispositivos(resBuscaDispositivosDeDemandasDaAt);
+
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchData();
+  },[]);
+
+  // quando uma outra demanda selecionada
+  const buscaDadosDeDemanda = async(id)=>{
+    // busca demanda por id
+    const resBuscaDemanda = await buscaDemandaById(id);
+    setDemandaSelecionada(resBuscaDemanda);
+    // busca dispositivo dad demanda
+    const idDispositivoDemandaSelecionada = resBuscaDemanda.idDispositivo;
+    const resBuscaDispositivosDemanda = await buscaDispositivoById(idDispositivoDemandaSelecionada);
+    setDispositivoDemandaSelecionada(resBuscaDispositivosDemanda);
+  }
+
   const onSubmit = async (dados) => {
-    console.log(dados);
+    const isOrcamentoInserido = await inserirOrcamento(dados, demandaSelecionada.id);
+    if(isOrcamentoInserido){
+      alert("Orçamento inserido");
+      navigate("/procurar-demandas/aceitas");
+    }
   };
 
   const onError = (errors) => {
@@ -66,8 +125,36 @@ const OrcamentoForm = () => {
                     controlId='DemandaSelect'
                     label='Demanda'
                   >
-                    <Form.Select>
-                      <option value="">Demanda 1</option>
+                    <Form.Select
+                      onChange={(e)=>{buscaDadosDeDemanda(e.target.value);}}
+                    >
+                      {
+                        // mostra demanda passada na url como selecionada
+                        <option 
+                          value={idDemanda}
+                          selected
+                        >
+                          {dispositivoDemandaSelecionada.modelo}
+                        </option>
+                      }
+                      {
+                        // mostra outras demandas vinculados a ats que seja diferentes da demanda selecionada
+                        demandasEmAtendimento.map((demanda)=>(
+                          dispositivos.map((dispositivo)=>(
+                            (
+                              demanda.id != idDemanda &&
+                              demanda.status === "Em atendimento" && 
+                              dispositivo.id === demanda.idDispositivo
+                            ) &&
+                            <option 
+                              key={demanda.id}
+                              value={demanda.id}
+                            >
+                              {dispositivo.modelo}
+                            </option>
+                          ))
+                        ))
+                      }
                     </Form.Select>
                   </FloatingLabel>
                 </Col>
@@ -97,22 +184,30 @@ const OrcamentoForm = () => {
               <Row>
                 {/* Categoria. */}
                 <Col>
-                  <span><strong>Categoria: </strong>CATEGORIA</span>
+                  <span>
+                    <strong>Categoria: </strong>{dispositivoDemandaSelecionada.categoria}
+                  </span>
                 </Col>
 
                 {/* Marca. */}
                 <Col>
-                  <span><strong>Marca: </strong>MARCA</span>
+                  <span>
+                    <strong>Marca: </strong>{dispositivoDemandaSelecionada.marca}
+                  </span>
                 </Col>
 
                 {/* Fabricante. */}
                 <Col>
-                  <span><strong>Fabricante: </strong>FABRICANTE</span>
+                  <span>
+                    <strong>Fabricante: </strong>{dispositivoDemandaSelecionada.fabricante}
+                  </span>
                 </Col>
 
                 {/* Modelo. */}
                 <Col>
-                  <span><strong>Modelo: </strong>MODELO</span>
+                  <span>
+                    <strong>Modelo: </strong>{dispositivoDemandaSelecionada.modelo}
+                  </span>
                 </Col>
               </Row>
 
@@ -120,31 +215,33 @@ const OrcamentoForm = () => {
               <Row>
                 {/* Tensão. */}
                 <Col>
-                  <span><strong>Tensão: </strong>TENSÃO</span>
+                  <span>
+                    <strong>Tensão: </strong>{dispositivoDemandaSelecionada.tensao}
+                  </span>
                 </Col>
 
                 {/* Amperagem. */}
                 <Col>
-                  <span><strong>Amperagem: </strong>AMPERAGEM</span>
+                  <span><strong>Amperagem: </strong>{dispositivoDemandaSelecionada.amperagem}</span>
                 </Col>
 
                 {/* Cor. */}
                 <Col>
-                  <span><strong>Cor: </strong>COR</span>
+                  <span><strong>Cor: </strong>{dispositivoDemandaSelecionada.cor}</span>
                 </Col>
               </Row>
 
               {/* Linha com descrição do problema. */}
               <Row>
                 <Col>
-                  <span><strong>Descrição do problema: </strong>DESCRIÇÃO</span>
+                  <span><strong>Descrição do problema: </strong>{demandaSelecionada.descProblema}</span>
                 </Col>
               </Row>
 
               {/* Linha observações. */}
               <Row>
                 <Col>
-                  <span><strong>Observações: </strong>OBSERVAÇÕES</span>
+                  <span><strong>Observações: </strong>{demandaSelecionada.observacoes}</span>
                 </Col>
               </Row>
             </div>
@@ -266,7 +363,7 @@ const OrcamentoForm = () => {
                     <Form.Control
                       type='text'
                       placeholder=''
-                      {...register("observacoes")}
+                      {...register("observacoesOrcamento")}
                     />
                   </FloatingLabel>
                 </Col>

@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import styles from "./inicio.module.css";
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import { MdDevices } from "react-icons/md";

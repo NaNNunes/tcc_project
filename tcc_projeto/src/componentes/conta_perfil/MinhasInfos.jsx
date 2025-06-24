@@ -13,8 +13,8 @@ import { IoSaveOutline } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 
 // hooks
-import { useUser } from "../../hooks/useApi";
-import { useEffect, useState } from "react";
+import { useUser } from "../../hooks/useUser.js";
+import { useState } from "react";
 
 import styles from "./conta_perfil.module.css";
 

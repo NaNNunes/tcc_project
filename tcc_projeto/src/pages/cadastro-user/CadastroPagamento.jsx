@@ -1,14 +1,13 @@
-import {
-  Form,
-  FloatingLabel,
-  Button,
-  Row,
-  Col,
-  Container,
-  Image,
-} from "react-bootstrap";
 
-import { Link, useNavigate } from "react-router-dom";
+import Form from "react-bootstrap/Form";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
+
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import styles from "./cadastro.module.css";

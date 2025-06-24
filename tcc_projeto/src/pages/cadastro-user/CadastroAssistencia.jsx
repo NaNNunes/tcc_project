@@ -10,11 +10,10 @@ import Image from "react-bootstrap/Image";
 import { Link, useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
-import {
-  useVerificadorDeCnpj,
-  useAssistencia,
-  useComparaDados,
-} from "../../hooks/useApi";
+import { useVerificadorDeCnpj, useComparaDados } from "../../hooks/useApi";
+
+import { useAssistencia } from "../../hooks/useAssistencia.js";
+// import {  } from "../../hooks/useComparaDados.js";
 
 const { verificador } = useVerificadorDeCnpj();
 

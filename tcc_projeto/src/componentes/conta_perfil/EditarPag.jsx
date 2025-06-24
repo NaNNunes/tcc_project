@@ -8,7 +8,8 @@ import Col from 'react-bootstrap/Col'
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { useUser, useAssistencia } from '../../hooks/useApi';
+import { useAssistencia } from '../../hooks/useAssistencia.js';
+import { useUser } from '../../hooks/useUser.js';
 
 const EditarPag = (props) => {
     const idAssistencia = props.id_assistencia;

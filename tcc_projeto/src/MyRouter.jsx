@@ -36,6 +36,10 @@ const router = createBrowserRouter([
         element: <Inicio />,
       },
       {
+        path: "/inicio",
+        element: <Inicio />,
+      },
+      {
         path: "/assistencia-info",
         element: <AssistenciaInfo />,
       },
@@ -88,7 +92,7 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/orcamento",
+        path: "/orcamento/:idDemanda",
         element: <Orcamento />,
       },
       {

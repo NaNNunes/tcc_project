@@ -1,4 +1,3 @@
-import React from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { Link } from "react-router";
 import styles from "./termos.module.css"

@@ -9,15 +9,24 @@ import {
 
 import styles from "../../componentes/conta_perfil/conta_perfil.module.css";
 
-
 import { useState, useEffect } from "react";
-
 
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useVerificadorDeCnpj, useEndereco } from "../../hooks/useApi";
+
+import { useVerificadorDeCnpj } from "../../hooks/useApi.js";
+import { useEndereco } from "../../hooks/useEndereco.js";
+import { useAssistencia } from "../../hooks/useAssistencia.js";
 
 const CadastroNovaAssistencia = () => {
+  const navigate = useNavigate();
+  const userType = localStorage.getItem("userType");
+  if(userType !== "administrador") return navigate("/inicio");
+
+  const userId = localStorage.getItem("userId");
+
+  const {buscaEnderecoByZipCode} = useEndereco();
+
   const {
     register,
     handleSubmit,
@@ -26,9 +35,9 @@ const CadastroNovaAssistencia = () => {
     formState: { errors },
   } = useForm();
 
-  const navigate = useNavigate();
   const { verificador } = useVerificadorDeCnpj();
-  const { cadastrarEndereco, atualizarEndereco } = useEndereco();
+  const { cadastrarEndereco } = useEndereco();
+  const {inserirAssistencia} = useAssistencia();
 
   // Estado para o endereço
   const [endereco, setEndereco] = useState({
@@ -77,22 +86,20 @@ const CadastroNovaAssistencia = () => {
     }
 
     try {
-      const request = await fetch(
-        `https://brasilapi.com.br/api/cep/v2/${zipCode}`
-      );
-      const response = await request.json();
 
-      if (response.errors || response.message) {
+      const resBuscaEnderecoByZipCode = await buscaEnderecoByZipCode(zipCode);
+
+      if (resBuscaEnderecoByZipCode.errors || resBuscaEnderecoByZipCode.message) {
         throw new Error();
       }
 
       setEndereco((prev) => ({
         ...prev,
         zipcode: zipCode,
-        localidade: response.city || response.localidade,
-        bairro: response.neighborhood || response.bairro,
-        logradouro: response.street || response.logradouro,
-        uf: response.state || response.uf,
+        localidade: resBuscaEnderecoByZipCode.localidade,
+        bairro: resBuscaEnderecoByZipCode.bairro,
+        logradouro: resBuscaEnderecoByZipCode.logradouro,
+        uf: resBuscaEnderecoByZipCode.uf,
       }));
 
       setInputFieldEnable(false);
@@ -102,20 +109,44 @@ const CadastroNovaAssistencia = () => {
     }
   };
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (!verificador(data.cnpj)) {
       alert("CNPJ inválido");
       return;
     }
 
-    if (data.zipcode === endereco.zipcode) {
-      cadastrarEndereco(data);
-    } else {
-      atualizarEndereco(endereco.id, data);
+    const dadosAssistencia = {
+      "assistenciaEmail": data.assistenciaEmail,
+      "nomeFantasia": data.nomeFantasia,
+      "razaoSocial": data.razaoSocial,
+      "cnpj": data.cnpj,
+      "assistenciaTelefone": data.assistenciaTelefone,
+      "assistenciaTermos": data.assistenciaTermos,
+      "administradorId": userId
     }
 
-    console.log("Dados para salvar:", data);
-    navigate("/cadastro-endereco");
+    // cadastra assistencia
+    const resCadastrarAssistencia = await inserirAssistencia(dadosAssistencia);
+
+    if(resCadastrarAssistencia){
+      
+      const dadosEnderecoAssitiencia = {
+        "zipcode": data.zipcode,
+        "localidade": data.localidade,
+        "bairro": data.bairro,
+        "logradouro": data.logradouro,
+        "uf": data.uf,
+        "number": data.number,
+        "complemento": data.complemento,
+      }
+
+      const isEnderecoCadastrado = await cadastrarEndereco(dadosEnderecoAssitiencia);
+      if(isEnderecoCadastrado){
+        alert(`Nova assistencia, ${data.razaoSocial}, cadastrada`);
+        location.reload();
+      }
+      
+    }
   };
 
   const onError = (error) => {

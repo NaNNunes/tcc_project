@@ -10,9 +10,8 @@ const Inicio = () => {
   const { userType, usuarioNome } = useContext(AuthContext);
 
   useEffect(() => {
-    if (userType === "Visitante") {
-      console.log("Acesso negado - redirecionando para login");
-      navigate("/login");
+    if (userType !== "administrador" && userType !== "solicitante") {
+      return navigate("/login");
     }
   }, [userType, navigate]);
 
@@ -24,7 +23,7 @@ const Inicio = () => {
     case "Visitante":
       return <InicioDeslog />;
     default:
-      return null; 
+      return false; 
   }
 };
 
