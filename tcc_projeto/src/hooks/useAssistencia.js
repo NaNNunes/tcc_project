@@ -12,6 +12,23 @@ export function useAssistencia() {
     return response;
   };
 
+  const buscaAssistenciasDoAdministrador = async (idAdm) =>{
+    const request = await fetch(`${url}/assistencia`);
+    const response = await request.json();
+
+    // lista de todas assistencias do user
+    const listaAssistenciasAdministrador = [];
+
+    // mapeia lista de assitencias e separa todas assistencias vinculadas ao adm
+    response.map((assistencia)=>{
+      if(assistencia.administradorId === idAdm){
+          listaAssistenciasAdministrador.push(assistencia);
+      }
+    });
+
+    return listaAssistenciasAdministrador;
+  }
+
   // Busca assistencia pelo id
   const buscaAssistenciaById = async (id) => {
     const request = await fetch(`${url}/assistencia/${id}`);
@@ -70,6 +87,7 @@ export function useAssistencia() {
   return {
     buscaAssistencias,
     buscaAssistenciaById,
+    buscaAssistenciasDoAdministrador,
     inserirAssistencia,
     inserirValidacaoAssistencia,
   };

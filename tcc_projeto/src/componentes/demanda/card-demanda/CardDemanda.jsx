@@ -1,4 +1,3 @@
-// TODO PERMITIR APENAS EDIÇÃO DE DEMANDA EM ABERTO E DE ESCOPO PÚBLICO
 // TODO PERMITIR AO ADM ENCERRAR DEMANDAS PRESENCIAIS
 
 // Importação de componentes do react-bootstrap
@@ -67,7 +66,7 @@ const CardDemanda = (props) => {
     const idBuscador = props.idBuscador
 
     const idResponsavel = props.idResponsavel;
-    const idDispostivo = props.idDispostivo;
+    const idDispositivo = props.idDispositivo;
     // para mostrar qual assistencia está responsável pela demanda/ buscar nome fantasia da assistencia
     const idAssistencia = props.idAssistenciaResponsavel; 
     
@@ -144,17 +143,15 @@ const CardDemanda = (props) => {
                 setSolicitante(resBuscaSolicitanteById);
                 // id do endereco do solicitante
                 const idEndereco = resBuscaSolicitanteById.id_endereco;
-                console.log(idEndereco)
                 // Caso id tenha algum registro
                 // buscar endereco do user by id
                 if(idEndereco != undefined){
-                    console.log(idEndereco);
                     const resBuscaEnderecoSolicitanteById = await buscaEnderecoById(idEndereco);
                     setEndereco(resBuscaEnderecoSolicitanteById);
                 }
 
                 //buscar dispositivo do user by id
-                const resBuscaDispositivoSolicitanteById = await buscaDispositivoById(idDispostivo);
+                const resBuscaDispositivoSolicitanteById = await buscaDispositivoById(idDispositivo);
                 setDispositivo(resBuscaDispositivoSolicitanteById);
 
             } catch (error) {
@@ -230,7 +227,7 @@ const CardDemanda = (props) => {
     const botaoGerarOrcamento = (
         <>
             <Button 
-                href='/orcamento'
+                href={`/orcamento/${props.id}`}
                 className={styles.botaoModal}
                 onClick={()=>{setMostrarModal(false)}}
             >

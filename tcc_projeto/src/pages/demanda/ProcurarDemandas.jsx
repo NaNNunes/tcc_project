@@ -204,7 +204,7 @@ const ProcurarDemandas = () => {
                     // ids 
                     id = {demanda.id}
                     idResponsavel = {demanda.solicitante_id} // id do emissor da demanda
-                    idDispostivo = {demanda.idDispostivo} 
+                    idDispositivo = {demanda.idDispositivo} 
                     idAssistenciaResponsavel = {demanda.assistencia} // id assistencia responsavel pela demanda
                     // infos da demanda
                     descricao = {demanda.descProblema}

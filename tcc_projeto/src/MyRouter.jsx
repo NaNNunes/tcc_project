@@ -92,7 +92,7 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/orcamento",
+        path: "/orcamento/:idDemanda",
         element: <Orcamento />,
       },
       {

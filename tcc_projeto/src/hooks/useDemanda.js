@@ -33,12 +33,47 @@ export function useDemanda() {
         return response;
     }
 
+    const buscaDemandaVinculadaAssistencia = async (assistencias) =>{
+        const request = await fetch(`${url}/demanda`);
+        const response = await request.json();
+
+        const listaDemandasVinculadasAssistencia = [];
+
+        // mapeia demandas e filtra demandas viculadas a ats
+        response.map((demanda)=>{
+            assistencias.map((assistencia)=>{
+                if(demanda.assistencia === assistencia.id){
+                    listaDemandasVinculadasAssistencia.push(demanda);
+                }
+            })
+        })
+
+        return listaDemandasVinculadasAssistencia;
+    }
+
     // busca dispositivo pelo id
     const buscaDispositivoById = async(idDispositivo)=>{
         const request = await fetch(`${url}/dispositivo/${idDispositivo}`);
         const response = await request.json();
 
         return response;
+    }
+
+    const buscaDispositivoDeDemandaDaAt = async(demandasDaAssistencia)=>{
+        const request = await fetch(`${url}/dispositivo/`);
+        const response = await request.json();
+
+        const listaDispositivos = [];
+
+        response.map((dispositivo)=>{
+            demandasDaAssistencia.map((demanda)=>{
+                if(demanda.idDispositivo === dispositivo.id){
+                    listaDispositivos.push(dispositivo);
+                }
+            })
+        })
+
+        return listaDispositivos;
     }
     
     // cadastra dispositivo no sistema
@@ -178,6 +213,14 @@ export function useDemanda() {
         return request.ok;
     }
 
+    // inserir dados de orcamento na demanda
+    const inserirOrcamento = async (data, idDemanda) =>{
+        const request = await fetch(`${url}/demanda/${idDemanda}`,{
+            method: "PATCH",
+            body: JSON.stringify(data)
+        });
+    }
+
     // rejeitar demanda solicitada a at
     const rejeitarDemanda = async (id) => {
         const data = {
@@ -199,11 +242,14 @@ export function useDemanda() {
         atualizarStatusDemanda,
         buscaDemandas,
         buscaDemandaById,
+        buscaDemandaVinculadaAssistencia,
         buscaDispositivoById,
+        buscaDispositivoDeDemandaDaAt,
         cadastrarDemanda, 
         cadastrarDispositivo, 
         cancelarDemanda,
         defineIdAssistencia,
+        inserirOrcamento,
         rejeitarDemanda
     };
 }
