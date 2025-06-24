@@ -168,7 +168,11 @@ const CardDemanda = (props) => {
     // botao para selecionar qual assistencia recebera a demanda
     const botaoAceitarDemanda = (
         <> 
-            <FloatingLabel>
+            <FloatingLabel
+                /* Campo do formulário */
+                style={{margin: '0px', marginLeft: '12px', width: '60%', alignSelf: 'flex-start'}}
+                label='Selecione uma assistência'
+            >
                 <Form.Select
                     onChange={(e)=>{setAssistenciaSelecionada(e.target.value)}}
                 >
@@ -264,15 +268,18 @@ const CardDemanda = (props) => {
     );
 
     // Botões que apareceram no modal para o solicitante no consultar pedidos.
-    const botaoDentroModal = (
+    const botaoMinhasDemandas = (
         <>
             {
-                (props.status === "Concluido" || props.status === "Cancelada") && (
-                    botaoFecharModalDeInfosDemanda
-                )
+                ((props.status === "Concluido" || props.status === "Cancelada") 
+                || 
+                (demandaSelecionada.statusOrcamento === "Recusado" || demandaSelecionada.statusOrcamento === "Aceito")
+                ||
+                (demandaSelecionada.statusOrcamento === undefined && props.status === "Em atendimento")) && 
+                botaoFecharModalDeInfosDemanda
             }
             {
-                (props.status === "Em atendimento" && (demandaSelecionada.problema_identificado)) &&
+                (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Sem resposta") &&
                 botaoAceitarRejeitarOrcamento
             }
             {
@@ -304,7 +311,7 @@ const CardDemanda = (props) => {
         "abertas": botaoAceitarDemanda,
         "aceitas": botaoGerarOrcamento,
         "historico": botaoFecharModalDeInfosDemanda,
-        "minhas-demandas": botaoDentroModal,
+        "minhas-demandas": botaoMinhasDemandas,
         // caso adm defina que outra assistencia receberá a demanda,
             // não sendo a esperada pelo solicitante,
             // a solução deverá permitir ao solicitante aceitar ou rejeitar.
@@ -464,7 +471,6 @@ const CardDemanda = (props) => {
 
                         <Container className={styles.containerBotao} style={{padding: '0'}}>
                             {botaoVisualizarDemada}
-                            
                         </Container>
                     </Card.Body>
                 </Card>
