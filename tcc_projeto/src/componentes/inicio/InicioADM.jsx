@@ -18,7 +18,8 @@ import { LuClipboardCheck } from "react-icons/lu";
 import { LuClipboardCopy } from "react-icons/lu";
 
 const tipoUser = localStorage.getItem("userType");
-const perfilUsuario = (tipoUser !== "Visitante") && localStorage.getItem("userType");
+const perfilUsuario =
+  tipoUser !== "Visitante" && localStorage.getItem("userType");
 
 const InicioADM = () => {
   const navigate = useNavigate();
@@ -31,6 +32,195 @@ const InicioADM = () => {
   }
 
   const { usuarioNome } = useContext(AuthContext);
+
+  const [totalClientes, setTotalClientes] = useState(0);
+  const [novosClientes, setNovosClientes] = useState(0);
+  const [demandasAceitas, setDemandasAceitas] = useState(0);
+  const [demandasConcluidas, setDemandasConcluidas] = useState(0);
+  const [tempoMedioResposta, setTempoMedioResposta] = useState("");
+  const [maisRequisitados, setMaisRequisitados] = useState("");
+  const [mediaAvaliacao, setMediaAvaliacao] = useState("");
+  const [cidadesTop, setCidadesTop] = useState("");
+  const assistenciaId = localStorage.getItem("assistenciaId");
+
+  // Total de Clientes Cadastrados
+  useEffect(() => {
+    fetch("http://localhost:5001/solicitante")
+      .then((res) => res.json())
+      .then((data) => {
+        setTotalClientes(data.length);
+
+        const novos = data.filter((s) => {
+          const dataCadastro = new Date(s.dataCadastro);
+          const hojeMenos30 = new Date();
+          hojeMenos30.setDate(hojeMenos30.getDate() - 30);
+          return dataCadastro > hojeMenos30;
+        });
+        setNovosClientes(novos.length);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5001/demanda")
+      .then((res) => res.json())
+      .then((data) => {
+        // Aceitas e Concluídas
+        setDemandasAceitas(
+          data.filter(
+            (d) => d.status === "Aceita" || d.status === "Em atendimento"
+          ).length
+        );
+        setDemandasConcluidas(
+          data.filter((d) => d.status === "Concluída").length
+        );
+
+        // Tempo médio de resposta
+        const agora = new Date();
+        const tempos = data
+          .filter((d) => d.dataEmissao)
+          .map((d) => {
+            const [dia, mes, ano] = d.dataEmissao.split("/");
+            const data = new Date(`${ano}-${mes}-${dia}`);
+            return (agora - data) / (1000 * 60 * 60); // em horas
+          });
+
+        const mediaHoras = tempos.length
+          ? tempos.reduce((a, b) => a + b, 0) / tempos.length
+          : 0;
+
+        const horas = Math.floor(mediaHoras);
+        const minutos = Math.floor((mediaHoras % 1) * 60);
+        setTempoMedioResposta(`${horas}h ${minutos}min`);
+
+        // Média de avaliação (caso tenha)
+        const avaliacoes = data
+          .map((d) => parseFloat(d.avaliacao))
+          .filter((a) => !isNaN(a));
+        const media =
+          avaliacoes.length > 0
+            ? avaliacoes.reduce((a, b) => a + b, 0) / avaliacoes.length
+            : 0;
+        setMediaAvaliacao(media.toFixed(1));
+      });
+  }, []);
+
+  useEffect(() => {
+    Promise.all([
+      fetch("http://localhost:5001/demanda").then((res) => res.json()),
+      fetch("http://localhost:5001/dispositivo").then((res) => res.json()),
+    ]).then(([demandas, dispositivos]) => {
+      const contador = {};
+
+      demandas.forEach((d) => {
+        const dispositivo = dispositivos.find(
+          (dev) => dev.id === d.idDispostivo
+        );
+        if (dispositivo) {
+          const categoria = dispositivo.categoria || "Outros";
+          contador[categoria] = (contador[categoria] || 0) + 1;
+        }
+      });
+
+      const mais = Object.entries(contador)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 2)
+        .map(([categoria]) => categoria)
+        .join(" e ");
+
+      setMaisRequisitados(mais);
+    });
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5001/endereco")
+      .then((res) => res.json())
+      .then((data) => {
+        const contagem = {};
+        data.forEach((e) => {
+          const cidade = e.localidade;
+          if (cidade) {
+            contagem[cidade] = (contagem[cidade] || 0) + 1;
+          }
+        });
+
+        const top = Object.entries(contagem)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 3)
+          .map(([cidade]) => cidade)
+          .join(", ");
+
+        setCidadesTop(top || "Não encontrado");
+      });
+  }, []);
+
+  const [relatorioAssistencia, setRelatorioAssistencia] = useState({
+    total: 0,
+    emAtendimento: 0,
+    abertas: 0,
+    canceladas: 0,
+    concluidas: 0,
+    mediaAvaliacao: 0,
+    tempoMedio: "",
+  });
+
+  useEffect(() => {
+    fetch("http://localhost:5001/demanda")
+      .then((res) => res.json())
+      .then((demandas) => {
+        const minhasDemandas = demandas.filter(
+          (d) => d.assistencia === assistenciaId
+        );
+
+        const emAtendimento = minhasDemandas.filter(
+          (d) => d.status === "Em atendimento"
+        ).length;
+        const abertas = minhasDemandas.filter(
+          (d) => d.status === "Aberto"
+        ).length;
+        const canceladas = minhasDemandas.filter(
+          (d) => d.status === "Cancelada"
+        ).length;
+        const concluidas = minhasDemandas.filter(
+          (d) => d.status === "Concluída"
+        ).length;
+
+        const avaliacoes = minhasDemandas
+          .map((d) => parseFloat(d.avaliacao))
+          .filter((a) => !isNaN(a));
+        const mediaAvaliacao =
+          avaliacoes.length > 0
+            ? (
+                avaliacoes.reduce((a, b) => a + b, 0) / avaliacoes.length
+              ).toFixed(1)
+            : 0;
+
+        const agora = new Date();
+        const tempos = minhasDemandas
+          .filter((d) => d.dataEmissao)
+          .map((d) => {
+            const [dia, mes, ano] = d.dataEmissao.split("/");
+            const data = new Date(`${ano}-${mes}-${dia}`);
+            return (agora - data) / (1000 * 60 * 60); // horas
+          });
+
+        const mediaHoras = tempos.length
+          ? tempos.reduce((a, b) => a + b, 0) / tempos.length
+          : 0;
+        const horas = Math.floor(mediaHoras);
+        const minutos = Math.floor((mediaHoras % 1) * 60);
+        const tempoMedio = `${horas}h ${minutos}min`;
+
+        setRelatorioAssistencia({
+          total: minhasDemandas.length,
+          emAtendimento,
+          abertas,
+          canceladas,
+          concluidas,
+          mediaAvaliacao,
+          tempoMedio,
+        });
+      });
+  }, [assistenciaId]);
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center">
@@ -64,7 +254,7 @@ const InicioADM = () => {
                       size="2rem"
                     />
                     <div className={styles.info}>
-                      <div className={styles.valor}>225</div>
+                      <div className={styles.valor}>{totalClientes}</div>
                       <div className={styles.descricao}>Total de Clientes</div>
                     </div>
                     <div className={styles.percentual}>+21%</div>
@@ -77,7 +267,7 @@ const InicioADM = () => {
                       alt="Clientes"
                     />
                     <div className={styles.info}>
-                      <div className={styles.valor}>41</div>
+                      <div className={styles.valor}>{novosClientes}</div>
                       <div className={styles.descricao}>Novos Clientes</div>
                     </div>
                     <div className={styles.percentual}>+19%</div>
@@ -90,7 +280,7 @@ const InicioADM = () => {
                       size="2rem"
                     />
                     <div className={styles.info}>
-                      <div className={styles.valor}>243</div>
+                      <div className={styles.valor}>{demandasAceitas}</div>
                       <div className={styles.descricao}>Demandas Aceitas</div>
                     </div>
                     <div className={styles.percentual}>+43%</div>
@@ -103,7 +293,7 @@ const InicioADM = () => {
                       size="2rem"
                     />
                     <div className={styles.info}>
-                      <div className={styles.valor}>189</div>
+                      <div className={styles.valor}>{demandasConcluidas}</div>
                       <div className={styles.descricao}>
                         Demandas Concluídas
                       </div>
@@ -133,7 +323,9 @@ const InicioADM = () => {
                       size="2rem"
                     />
                     <div className={styles.info}>
-                      <div className={styles.valor}>Cel. e Notebooks</div>
+                      <div className={styles.valor}>
+                        {maisRequisitados || "Carregando..."}
+                      </div>
                       <div className={styles.descricao}>Mais Requisitados</div>
                     </div>
                     <div className={styles.percentual}>+12%</div>
@@ -159,7 +351,10 @@ const InicioADM = () => {
                       alt="Localidades"
                     />
                     <div className={styles.info}>
-                      <div className={styles.valor}>SP, RJ, MG</div>
+                      <div className={styles.valor}>
+                        {cidadesTop || "Carregando..."}
+                      </div>
+
                       <div className={styles.descricao}>
                         Principais Localidades
                       </div>

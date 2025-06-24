@@ -28,10 +28,9 @@ import { GrFavorite } from "react-icons/gr";
 import { useDemanda, useAssistencia, useUser } from "../../hooks/useApi";
 
 const MenuNavegacao = () => {
-
-  const {buscaDemandas} = useDemanda();
-  const {buscaAssistencias} = useAssistencia();
-  const {buscaUserById} = useUser();
+  const { buscaDemandas } = useDemanda();
+  const { buscaAssistencias } = useAssistencia();
+  const { buscaUserById } = useUser();
 
   const navigate = useNavigate();
 
@@ -43,52 +42,52 @@ const MenuNavegacao = () => {
   const [numeroSolicitacoes, setNumeroSolicitacoes] = useState(0);
 
   // aqui código sempre segue em execução sempre atualizando de acordo com atualizações da pagina
-  useEffect(()=>{
-    async function fetchData(){
-
-      if(userType !== "Visitante"){
+  useEffect(() => {
+    async function fetchData() {
+      if (userType !== "Visitante") {
         const resBuscaUserById = await buscaUserById(userType, userId);
-        
-        if(resBuscaUserById.isValido == false){
+
+        if (resBuscaUserById.isValido == false) {
           logout();
         }
       }
 
       // caso user seja adm
-      if(userType === "administrador"){
+      if (userType === "administrador") {
         // lista para receber assistencias do adm
         const listaAssistenciasAdm = [];
-        // busca todas as assistencias 
+        // busca todas as assistencias
         const resBuscaAssistenciasDoAdm = await buscaAssistencias();
         // mapeia e filtra todas as assistencias do adm
-        resBuscaAssistenciasDoAdm.map((assistencia)=>{
-          (assistencia.administradorId === userId) &&
+        resBuscaAssistenciasDoAdm.map((assistencia) => {
+          assistencia.administradorId === userId &&
             listaAssistenciasAdm.push(assistencia);
         });
-  
+
         // lista para receber todas as demandas solicitadas as assistencias do adm
         const listaDemandasSolicitadas = [];
         // busca por todas as demandas
-        const resBuscaDemandas =  await buscaDemandas();
+        const resBuscaDemandas = await buscaDemandas();
         // mapeia e filtra todas as demanda que foram solicitadas para as assistencias do adm
-        resBuscaDemandas.map((demanda) =>{
-          listaAssistenciasAdm.map((assistencia)=>{
+        resBuscaDemandas.map((demanda) => {
+          listaAssistenciasAdm.map((assistencia) => {
             const isDemandaVinculada = demanda.assistencia === assistencia.id;
             const statusEmAtendimento = demanda.status === "Aberto";
-            if(isDemandaVinculada && statusEmAtendimento){
+            if (isDemandaVinculada && statusEmAtendimento) {
               listaDemandasSolicitadas.push(demanda);
             }
           });
         });
         setNumeroSolicitacoes(listaDemandasSolicitadas.length);
-      };
-    };
+      }
+    }
     fetchData();
   });
 
   // pega info do context por sincronia evitando que ao recarregar page o user seja deslogado
   const tipoUser = localStorage.getItem("userType");
-  const perfilUsuario = tipoUser !== "Visitante" && localStorage.getItem("userType");
+  const perfilUsuario =
+    tipoUser !== "Visitante" && localStorage.getItem("userType");
 
   // Content para navegação de cada perfil. Obs: sem o botão para visualizar perfil.
   const contentNavSolicitante = (
@@ -100,12 +99,21 @@ const MenuNavegacao = () => {
           id="dropdown-demandas-solicitante"
           show={openDropdown === "demandas-solicitante"}
           // Verifca se o NavDropdown está ativo ou não.
-          onToggle={(isOpen) => setOpenDropdown(isOpen ? 'demandas-solicitante' : null)}
-          className={`${openDropdown === 'demandas-solicitante' ? styles.dropDownActive : ''}`}
+          onToggle={(isOpen) =>
+            setOpenDropdown(isOpen ? "demandas-solicitante" : null)
+          }
+          className={`${
+            openDropdown === "demandas-solicitante" ? styles.dropDownActive : ""
+          }`}
           title={
             <span className={styles.dropDownTitle}>
               {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
-              Demandas {openDropdown === 'demandas-solicitante' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+              Demandas{" "}
+              {openDropdown === "demandas-solicitante" ? (
+                <TiArrowSortedUp />
+              ) : (
+                <TiArrowSortedDown />
+              )}
             </span>
           }
         >
@@ -113,15 +121,16 @@ const MenuNavegacao = () => {
           {/* Cadastro pedido */}
           <NavDropdown.Item
             as={Link}
-            to='/criar-demanda/criar'
+            to="/criar-demanda/criar"
             className={styles.dropdownItem}
-            onClick={()=>{
+            onClick={() => {
               setTimeout(() => {
                 location.reload();
               }, 1);
             }}
           >
-            <Image className={styles.icone} src='/icons/Icon_pedido.svg' />Cadastro pedido
+            <Image className={styles.icone} src="/icons/Icon_pedido.svg" />
+            Cadastro pedido
           </NavDropdown.Item>
 
           {/* Consultar pedidos */}
@@ -129,13 +138,14 @@ const MenuNavegacao = () => {
             as={Link}
             to={`/procurar-demandas/minhas-demandas`}
             className={styles.dropdownItem}
-            onClick={()=>{
+            onClick={() => {
               setTimeout(() => {
                 location.reload();
               }, 1);
             }}
           >
-            <Image className={styles.icone} src='/icons/Icon_consultar.svg' />Consultar pedidos
+            <Image className={styles.icone} src="/icons/Icon_consultar.svg" />
+            Consultar pedidos
           </NavDropdown.Item>
         </NavDropdown>
       </div>
@@ -146,12 +156,23 @@ const MenuNavegacao = () => {
           id="dropdown-assistencias-solicitante"
           show={openDropdown === "assistencias-solicitante"}
           // Verifca se o NavDropdown está ativo ou não.
-          onToggle={(isOpen) => setOpenDropdown(isOpen ? 'assistencias-solicitante' : null)}
-          className={`${openDropdown === 'assistencias-solicitante' ? styles.dropDownActive : ''}`}
+          onToggle={(isOpen) =>
+            setOpenDropdown(isOpen ? "assistencias-solicitante" : null)
+          }
+          className={`${
+            openDropdown === "assistencias-solicitante"
+              ? styles.dropDownActive
+              : ""
+          }`}
           title={
             <span className={styles.dropDownTitle}>
               {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
-              Assistências{openDropdown === 'assistencias-solicitante' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+              Assistências
+              {openDropdown === "assistencias-solicitante" ? (
+                <TiArrowSortedUp />
+              ) : (
+                <TiArrowSortedDown />
+              )}
             </span>
           }
         >
@@ -167,35 +188,33 @@ const MenuNavegacao = () => {
               }, 1);
             }}
           >
-            <Image className={styles.icone} src='/icons/add_location_alt.svg' />Encontrar Assistências
+            <Image className={styles.icone} src="/icons/add_location_alt.svg" />
+            Encontrar Assistências
           </NavDropdown.Item>
 
-          {
-            /* 
+          {/* 
                 ACREDITO QUE NÃO HÁ NECESSIDADE DE TER ESSE LINK 
                 POIS PARA VER ASSITENCIAS FAVS BASTA UM FILTRO, bem simples, 
                 NA PAGINAS DE ENCONTRAR ASSISTENCIAS
-            */
-          }
+            */}
           {/* Consultar assistencias favoritas */}
           <NavDropdown.Item
             as={Link}
             to={`/buscar-assistencias/favoritas`}
             className={styles.dropdownItem}
-
             onClick={() => {
               setTimeout(() => {
                 location.reload();
               }, 1);
             }}
           >
-            <GrFavorite size={24} className={styles.icone} /> Assistências Favoritas
+            <GrFavorite size={24} className={styles.icone} /> Assistências
+            Favoritas
           </NavDropdown.Item>
         </NavDropdown>
       </div>
     </>
-
-  )
+  );
 
   const contentNavADM = (
     <>
@@ -206,8 +225,9 @@ const MenuNavegacao = () => {
           show={openDropdown === "demandas-adm"}
           // Verifca se o NavDropdown está ativo ou não.
           onToggle={(isOpen) => setOpenDropdown(isOpen ? "demandas-adm" : null)}
-          className={`${openDropdown === "demandas-adm" ? styles.dropDownActive : ""
-            }`}
+          className={`${
+            openDropdown === "demandas-adm" ? styles.dropDownActive : ""
+          }`}
           title={
             <span className={styles.dropDownTitle}>
               {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
@@ -229,7 +249,7 @@ const MenuNavegacao = () => {
             // espera a tela carregar para atualizar a tela e ocorrer a renderização das demandas
             onClick={() => {
               setTimeout(() => {
-                location.reload()
+                location.reload();
               }, 1);
             }}
           >
@@ -240,13 +260,18 @@ const MenuNavegacao = () => {
           {/* Cadastro pedido */}
           <NavDropdown.Item
             as={Link}
-            to='/criar-demanda/criar'
+            to="/criar-demanda/criar"
             className={styles.dropdownItem}
           >
-            <Image className={styles.icone} style={{paddingLeft: '4px'}} src='/icons/Icon_pedido.svg' />Cadastro pedido
+            <Image
+              className={styles.icone}
+              style={{ paddingLeft: "4px" }}
+              src="/icons/Icon_pedido.svg"
+            />
+            Cadastro pedido
           </NavDropdown.Item>
 
-          {/* Demandas abertas */}
+          {/* Demandas aceitas */}
           <NavDropdown.Item
             as={Link}
             to={`/procurar-demandas/aceitas`}
@@ -254,12 +279,12 @@ const MenuNavegacao = () => {
             // espera a tela carregar para atualizar a tela e ocorrer a renderização das demandas
             onClick={() => {
               setTimeout(() => {
-                location.reload()
+                location.reload();
               }, 1);
             }}
           >
             <Image className={styles.icone} src="/icons/pending_actions.svg" />
-            Demandas abertas
+            Demandas aceitas
           </NavDropdown.Item>
 
           {/* Histórico de demandas */}
@@ -270,7 +295,7 @@ const MenuNavegacao = () => {
             // espera a tela carregar para atualizar a tela e ocorrer a renderização das demandas
             onClick={() => {
               setTimeout(() => {
-                location.reload()
+                location.reload();
               }, 1);
             }}
           >
@@ -287,8 +312,9 @@ const MenuNavegacao = () => {
           show={openDropdown === "assistencia"}
           // Verifca se o NavDropdown está ativo ou não.
           onToggle={(isOpen) => setOpenDropdown(isOpen ? "assistencia" : null)}
-          className={`${openDropdown === "assistencia" ? styles.dropDownActive : ""
-            }`}
+          className={`${
+            openDropdown === "assistencia" ? styles.dropDownActive : ""
+          }`}
           title={
             <span className={styles.dropDownTitle}>
               {/* Verifica se o NavDropdown está ativo ou não, trocando o icone. */}
@@ -302,9 +328,9 @@ const MenuNavegacao = () => {
           }
         >
           {/* Cadastrar local */}
-          <NavDropdown.Item 
-            as={Link} 
-            to="/cadastro-nova-assistencia" 
+          <NavDropdown.Item
+            as={Link}
+            to="/cadastro-nova-assistencia"
             className={styles.dropdownItem}
           >
             <Image className={styles.icone} src="/icons/add_location_alt.svg" />
@@ -319,7 +345,7 @@ const MenuNavegacao = () => {
             // espera a tela carregar para atualizar a tela e ocorrer a renderização e assistencias
             onClick={() => {
               setTimeout(() => {
-                location.reload()
+                location.reload();
               }, 1);
             }}
           >
@@ -334,24 +360,22 @@ const MenuNavegacao = () => {
           Notificação de novas demandas 
           estilize front enzo
         */}
-        <Nav.Link 
+        <Nav.Link
           as={Link}
           to={"/procurar-demandas/solicitacoes"}
           className="text-white fw-bold fs-6"
-          onClick={()=>{
+          onClick={() => {
             setTimeout(() => {
               location.reload();
             }, 1);
           }}
         >
           Solicitações
-          {
-            (numeroSolicitacoes > 0) &&
-              <Badge className="ms-1" bg="danger">
-                {numeroSolicitacoes}
-              </Badge>
-          }
-          
+          {numeroSolicitacoes > 0 && (
+            <Badge className="ms-1" bg="danger">
+              {numeroSolicitacoes}
+            </Badge>
+          )}
         </Nav.Link>
       </div>
     </>
@@ -392,17 +416,23 @@ const MenuNavegacao = () => {
           align="end"
           id="dropdown-perfil-solicitante"
           show={openDropdown === "perfil-solicitante"}
-          onToggle={(isOpen) => setOpenDropdown(isOpen ? 'perfil-solicitante' : null)}
+          onToggle={(isOpen) =>
+            setOpenDropdown(isOpen ? "perfil-solicitante" : null)
+          }
           title={
             <div>
-              <span style={{color: 'white'}}>
+              <span style={{ color: "white" }}>
                 <Image
                   src="/icons/person.svg"
                   width={29}
                   height={29}
                   alt="Perfil"
                 />
-                {openDropdown === 'perfil-solicitante' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+                {openDropdown === "perfil-solicitante" ? (
+                  <TiArrowSortedUp />
+                ) : (
+                  <TiArrowSortedDown />
+                )}
               </span>
             </div>
           }
@@ -410,11 +440,9 @@ const MenuNavegacao = () => {
         >
           <NavDropdown.Header className={styles.navHeaderText}>
             {/* SÓ BOTAR O NOME DO CABA AQUI */}
-            {
-              (usuarioNome != "Visitante")
-                ? usuarioNome
-                : localStorage.getItem("userName")
-            }
+            {usuarioNome != "Visitante"
+              ? usuarioNome
+              : localStorage.getItem("userName")}
           </NavDropdown.Header>
 
           <NavDropdown.Divider
@@ -434,7 +462,7 @@ const MenuNavegacao = () => {
               width={34}
               height={24}
               src="/icons/person.svg"
-              style={{marginRight: '6px'}}
+              style={{ marginRight: "6px" }}
             />
             Meu perfil
           </NavDropdown.Item>
@@ -449,7 +477,11 @@ const MenuNavegacao = () => {
             }}
             className={styles.dropdownItem}
           >
-            <Image className={styles.icone} style={{paddingLeft: '2px'}} src="/icons/sair.svg" />
+            <Image
+              className={styles.icone}
+              style={{ paddingLeft: "2px" }}
+              src="/icons/sair.svg"
+            />
             Sair
           </NavDropdown.Item>
         </NavDropdown>
@@ -466,28 +498,32 @@ const MenuNavegacao = () => {
           align="end"
           id="dropdown-perfil-solicitante"
           show={openDropdown === "perfil-solicitante"}
-          onToggle={(isOpen) => setOpenDropdown(isOpen ? 'perfil-solicitante' : null)}
+          onToggle={(isOpen) =>
+            setOpenDropdown(isOpen ? "perfil-solicitante" : null)
+          }
           title={
             <div>
-              <span style={{color: 'white'}}>
+              <span style={{ color: "white" }}>
                 <Image
                   src="/icons/person.svg"
                   width={29}
                   height={29}
                   alt="Perfil"
                 />
-                {openDropdown === 'perfil-solicitante' ? <TiArrowSortedUp /> : <TiArrowSortedDown />}
+                {openDropdown === "perfil-solicitante" ? (
+                  <TiArrowSortedUp />
+                ) : (
+                  <TiArrowSortedDown />
+                )}
               </span>
             </div>
           }
           className={styles.dropDownActive}
         >
           <NavDropdown.Header className={styles.navHeaderText}>
-            {
-              (usuarioNome != "Visitante")
-                ? usuarioNome
-                : localStorage.getItem("userName")
-            }
+            {usuarioNome != "Visitante"
+              ? usuarioNome
+              : localStorage.getItem("userName")}
           </NavDropdown.Header>
 
           <NavDropdown.Divider
@@ -507,7 +543,7 @@ const MenuNavegacao = () => {
               width={34}
               height={24}
               src="/icons/person.svg"
-              style={{marginRight: '6px'}}
+              style={{ marginRight: "6px" }}
             />
             Meu perfil
           </NavDropdown.Item>
@@ -520,7 +556,11 @@ const MenuNavegacao = () => {
             }}
             className={styles.dropdownItem}
           >
-            <Image className={styles.icone} style={{paddingLeft: '2px'}} src="/icons/sair.svg" />
+            <Image
+              className={styles.icone}
+              style={{ paddingLeft: "2px" }}
+              src="/icons/sair.svg"
+            />
             Sair
           </NavDropdown.Item>
         </NavDropdown>
