@@ -125,7 +125,7 @@ const MenuNavegacao = () => {
             }}
           >
             <Image className={styles.icone} src="/icons/Icon_pedido.svg" />
-            Cadastro pedido
+            <span className={styles.textoDropdownItem}>Cadastro pedido</span>
           </NavDropdown.Item>
 
           {/* Consultar pedidos */}
@@ -140,7 +140,7 @@ const MenuNavegacao = () => {
             }}
           >
             <Image className={styles.icone} src="/icons/Icon_consultar.svg" />
-            Consultar pedidos
+            <span className={styles.textoDropdownItem}>Consultar pedidos</span>
           </NavDropdown.Item>
         </NavDropdown>
       </div>
@@ -184,7 +184,7 @@ const MenuNavegacao = () => {
             }}
           >
             <Image className={styles.icone} src="/icons/add_location_alt.svg" />
-            Encontrar Assistências
+            <span className={styles.textoDropdownItem}>Encontrar Assistências</span>
           </NavDropdown.Item>
 
           {/* 
@@ -203,8 +203,8 @@ const MenuNavegacao = () => {
               }, 1);
             }}
           >
-            <GrFavorite size={24} className={styles.icone} /> Assistências
-            Favoritas
+            <GrFavorite size={24} className={styles.icone} /> 
+            <span className={styles.textoDropdownItem}>Assistências Favoritas</span>
           </NavDropdown.Item>
         </NavDropdown>
       </div>
@@ -249,7 +249,7 @@ const MenuNavegacao = () => {
             }}
           >
             <Image className={styles.icone} src="/icons/zoom_in.svg" />
-            Procurar demandas
+            <span className={styles.textoDropdownItem}>Procurar demandas</span>
           </NavDropdown.Item>
 
           {/* Cadastro pedido */}
@@ -263,7 +263,7 @@ const MenuNavegacao = () => {
               style={{ paddingLeft: "4px" }}
               src="/icons/Icon_pedido.svg"
             />
-            Cadastro pedido
+            <span className={styles.textoDropdownItem}>Cadastro pedido</span>
           </NavDropdown.Item>
 
           {/* Demandas aceitas */}
@@ -279,7 +279,7 @@ const MenuNavegacao = () => {
             }}
           >
             <Image className={styles.icone} src="/icons/pending_actions.svg" />
-            Demandas aceitas
+            <span className={styles.textoDropdownItem}>Demandas aceitas</span>
           </NavDropdown.Item>
 
           {/* Histórico de demandas */}
@@ -295,7 +295,7 @@ const MenuNavegacao = () => {
             }}
           >
             <Image className={styles.icone} src="/icons/history.svg" />
-            Histórico de demandas
+            <span className={styles.textoDropdownItem}>Histórico de demandas</span>
           </NavDropdown.Item>
         </NavDropdown>
       </div>
@@ -329,7 +329,7 @@ const MenuNavegacao = () => {
             className={styles.dropdownItem}
           >
             <Image className={styles.icone} src="/icons/add_location_alt.svg" />
-            Cadastrar Assistência
+            <span className={styles.textoDropdownItem}>Cadastrar Assistência</span>
           </NavDropdown.Item>
 
           {/* Consultar locais */}
@@ -345,12 +345,12 @@ const MenuNavegacao = () => {
             }}
           >
             <Image className={styles.icone} src="/icons/location_on.svg" />
-            Consultar Assistências
+            <span className={styles.textoDropdownItem}>Consultar Assistências</span>
           </NavDropdown.Item>
         </NavDropdown>
       </div>
 
-      <div>
+      <div className={styles.divNavdropdown}>
         {/* 
           Notificação de novas demandas 
           estilize front enzo
@@ -358,7 +358,7 @@ const MenuNavegacao = () => {
         <Nav.Link
           as={Link}
           to={"/procurar-demandas/solicitacoes"}
-          className="text-white fw-bold fs-6"
+          className={styles.navText}
           onClick={() => {
             setTimeout(() => {
               location.reload();
@@ -367,7 +367,7 @@ const MenuNavegacao = () => {
         >
           Solicitações
           {numeroSolicitacoes > 0 && (
-            <Badge className="ms-1" bg="danger">
+            <Badge className={styles.badgeAtualizacoes}>
               {numeroSolicitacoes}
             </Badge>
           )}
@@ -626,7 +626,7 @@ const MenuNavegacao = () => {
             <Nav className={styles.navbarE}>{mainNav}</Nav>
 
             {/* Nav com o dropdown para navegação no perfil. */}
-            <Nav>{mainPerfil}</Nav>
+            <Nav className={styles.navbarPerfil}>{mainPerfil}</Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>

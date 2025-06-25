@@ -147,4 +147,10 @@
   .sigaRedes {
     font-size: 0.95rem;
   }
+
+  .paragrafoFooter {
+    white-space: normal;
+    word-break: break-word;
+    text-align: center;
+  }
 }

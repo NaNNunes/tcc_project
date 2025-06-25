@@ -83,7 +83,6 @@
 
 .icone {
     margin-right: 15px;
-    
 }
 
 /* Fazendo animação para o dropdown. */
@@ -126,6 +125,14 @@
     background-color: #0069C6 !important;
     border-radius: inherit;
     color: white;
+}
+
+/* Atualizações de demandas. */
+.badgeAtualizacoes {
+    background: #d43d3d !important;
+    margin-left: 5px;
+    color: rgb(255, 255, 255);
+    font-size: 1rem;
 }
 
 /* Tirando o icone do dropdown 🙏 */
@@ -263,5 +270,49 @@
 
     .navbarBrand {
         margin: 0;
+    }
+}
+
+@media screen and (max-width: 270px) {
+    .dropDownTitle {
+        display: flex;
+        flex-direction: column;
+        white-space: normal;
+        word-break: break-word;
+        max-width: 90vw;
+        text-align: center;
+        align-items: center;
+    }
+    
+    .navbarE {
+        align-items: center;
+    }
+
+    .navbarPerfil {
+        align-items: center;
+    }
+
+    :global(.dropdown-toggle.show.nav-link) {
+        padding: 0px;
+    }
+    
+    .dropdownItem {
+        flex-direction: column;
+        max-width: 90vw; /* Garante que nunca ultrapasse 90% da tela */
+    }
+    
+    .textoDropdownItem {
+        white-space: normal;
+        word-break: break-word;
+        text-align: center;
+    }
+
+    :global(.dropdown-menu.show) {
+        min-width: 0px;
+        width: 100px;
+    }
+
+    .icone {
+        margin: 0px;
     }
 }
