@@ -324,7 +324,7 @@ const CardDemanda = (props) => {
             {
                 ((props.status === "Concluido" || props.status === "Cancelada") 
                 || 
-                (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Sem resposta")) && 
+                (props.status === "Em atendimento" && (demandaSelecionada.statusOrcamento === "Sem resposta" || demandaSelecionada.statusOrcamento === 'Recusado'))) && 
                 botaoFecharModalDeInfosDemanda
             }
             {
@@ -636,7 +636,7 @@ const CardDemanda = (props) => {
                                     {/* Data de aceitação do orçamento */}
                                     <span className={styles.textoInfoModal}>
                                         <strong>Data de aceitação do orçamento: </strong>
-                                        {demandaSelecionada.tensao}
+                                        {demandaSelecionada.statusOrcamento}
                                     </span>
                                 </Container>      
                             </div>
