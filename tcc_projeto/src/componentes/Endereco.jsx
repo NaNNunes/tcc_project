@@ -7,7 +7,7 @@ import { use, useState } from "react";
 import { useForm } from "react-hook-form";
 
 // hooks
-import { useEndereco } from "../hooks/useApi";
+import { useEndereco } from "../hooks/useEndereco.js";
 
 // Importação do estilo.
 import styles from "./conta_perfil/conta_perfil.module.css";

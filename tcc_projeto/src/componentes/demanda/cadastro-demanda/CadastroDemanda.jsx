@@ -351,22 +351,21 @@ const CadastroDemanda = () => {
     }
 
     const enviarDemandaCompleta = async (responsavelDemanda) => {
-        
-        // console.log("id assistencia:",assistenciaId);
 
         const dados = dadosTemporarios;
         // separando dados de solicitante presencial
         const dadosPseudoUser = {
-            "email": dadosTemporarios.email,
-            "cpf": dadosTemporarios.cpf,
-            "userTelefone": dadosTemporarios.userTelefone,
-            "nome": dadosTemporarios.nome,
-            "sobrenome": dadosTemporarios.sobrenome,
+            "email": dados.email,
+            "cpf": dados.cpf,
+            "userTelefone": dados.userTelefone,
+            "nome": dados.nome,
+            "sobrenome": dados.sobrenome,
             "isValido": false
         }
-
         // cadastrar pseudo user, solicitante presencial
-        const idPseudoUser = await cadastrarPseudoUser(dadosPseudoUser);
+        const idPseudoUser = (userType === "administrador") && await cadastrarPseudoUser(dadosPseudoUser);
+
+        const idSolicitante = (userType === "administrador") ? idPseudoUser : userId;
         
         // separando dados de dispositivo
         const dispositivo = {
@@ -382,7 +381,7 @@ const CadastroDemanda = () => {
         };
 
         // cadastrar dispositivo
-        const idDispostivo = await cadastrarDispositivo(dispositivo);
+        const idDispostivo = await cadastrarDispositivo(dispositivo, idSolicitante);
         
         const statusPadrao = (userType === "solicitante") ? "Aberto" : "Em atendimento"
         
@@ -393,11 +392,10 @@ const CadastroDemanda = () => {
             "observacoes": dados.observacoes,
             "status": statusPadrao,
             "assistencia": responsavelDemanda,
-            "solicitante_id": idPseudoUser
         };
         
         // cadastrar demanda
-        const isDemandaCadastrada = await cadastrarDemanda(infosDemanda);
+        const isDemandaCadastrada = await cadastrarDemanda(infosDemanda, idSolicitante);
 
         // direciona user para a tela de demandas ou de historico de demandas
         if(isDemandaCadastrada){

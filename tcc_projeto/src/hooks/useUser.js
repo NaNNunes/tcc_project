@@ -96,12 +96,21 @@ export function useUser() {
     // cadastra solicitante presencial
     const cadastrarPseudoUser = async (data) =>{
 
+        const dadosPseudoUser = {
+            "email": data.email,
+            "cpf": data.cpf,
+            "userTelefone": data.userTelefone,
+            "nome": data.nome,
+            "sobrenome": data.sobrenome,
+            "isValido": false
+        }
+
         const request = await fetch(`${url}/solicitante`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(dadosPseudoUser)
         });
         const response = await request.json();
         return response.id;

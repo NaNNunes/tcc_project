@@ -17,7 +17,7 @@ import styles from './Conta.module.css';
 
 import { useUser } from "../../hooks/useUser.js";
 import { useAssistencia } from "../../hooks/useAssistencia.js";
-import { useEndereco } from "../../hooks/useApi"
+import { useEndereco } from "../../hooks/useEndereco.js"
 
 const Conta = () => {
   const {userType, userId} = useContext(AuthContext);

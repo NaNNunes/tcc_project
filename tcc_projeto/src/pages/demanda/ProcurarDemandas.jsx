@@ -43,9 +43,15 @@ const ProcurarDemandas = () => {
     // cancelada -> cancelada pelo user
 
   // funcao que busca lista de todas as demandas
-  const {buscaDemandas} = useDemanda();
+  const {
+    buscaDemandasPublicas,
+    buscarDemandasDoSolicitante
+  } = useDemanda();
   // funcao que busca todas assistencias
-  const {buscaAssistencias} = useAssistencia();
+  const {
+    buscaAssistencias,
+    buscaAssistenciasDoAdministrador
+  } = useAssistencia();
 
   //todas as demandas
   const [demandas, setDemandas] = useState([]);
@@ -54,100 +60,52 @@ const ProcurarDemandas = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        // busca todas as demandas
-        const resBuscaDemandas = await buscaDemandas();
+
         // caso user seja solicitante
         // lista apenas demandas emitidas por ele independente de status
         if(userType === "solicitante" && tipoDemanda === "minhas-demandas"){
-
-          // lista para armazenas demandas 
-          const listaDemandasDoSolicitante = [];
-
-          // mapeia demandas identificando e saperando demandas do solicitante pelo id
-          resBuscaDemandas.map((demanda)=>{
-            if(demanda.solicitante_id === userId){
-              listaDemandasDoSolicitante.push(demanda);
-            }
-          });
-
-          // return para finalizar o script
-          return setDemandas(listaDemandasDoSolicitante);
+          // buscar demandas do user
+          const resBuscaDemandasDoSolicitante = await buscarDemandasDoSolicitante(userId);
+          return setDemandas(resBuscaDemandasDoSolicitante);
         }
 
-        // lista para armazenas apenas demandas públicas
-        const listaDemandasPublicas = [];
         if(userType === "administrador"){
           // Para adm procurando novas demandas 
           if(tipoDemanda === "abertas"){
-            // caso solicitante seja adm
-            // mapeamento de demandas para encontrar apenas demandas publicas e definí-las
-            resBuscaDemandas.map((demanda)=>{
-              const demandaPublica = demanda.assistencia === "Público";
-              const isStatusAberto = demanda.status === "Aberto"
-              if(demandaPublica && isStatusAberto){
-                listaDemandasPublicas.push(demanda)
-              }
-            })
-            // console.log("Todas as demandas publicas:", listaDemandasPublicas);
-            return setDemandas(listaDemandasPublicas);
+
+            // buscar demandas em aberto e públicas
+            const resBuscaDemandasAbertasPublicas = await buscaDemandasPublicas();
+            return setDemandas(resBuscaDemandasAbertasPublicas);
           }
 
-          // Busca por assitencias
-          const resBuscaAssistencias = await buscaAssistencias();
-          // lista para armazenar id de assistencias do adm
-          const listaIdAssistencias = [];
-
-          // mapeamento de lista de todas assistencias para filtragem e insersao à lista de id assistencias
-          // apenas assistencias que possuam id do adm
-          resBuscaAssistencias.map((assistencia) =>{
-            if(assistencia.administradorId === userId){
-              listaIdAssistencias.push(assistencia.id);
-            }
-          })
-          // console.log("Assistencias do adm:", listaIdAssistencia);
-          
-          // lista para armazenar apenas demandas que estejam atribuidas a assistencias do adm
+          // buscar assistencias do adm
+          const resBuscaAssistenciasDoAdministrador = await buscaAssistenciasDoAdministrador(userId);
+          // buscar demandas vinculadas as ats do user
+          const resBuscaDemandasAssistenciasAdministrador = await buscaDemandaVinculadaAssistencia(resBuscaAssistenciasDoAdministrador);
+          // lista para demandas vinculadas as ats do adm
           const listaDemandasAssistenciasDoAdministrador = [];
 
           // mostrar todas as demandas que ja foram atribuidas as assistencias independente de status
           if(tipoDemanda === "historico"){
-            // mapeia lista de demandas
-            resBuscaDemandas.map((demanda) =>{
-              // mapeia lista de assistencias
-              listaIdAssistencias.map((idAssistencia)=>{
-                // verifica se assistencia responsavel pela demanda é a mesma do do id
-                const isDemandaVinculada = demanda.assistencia === idAssistencia;
-                // status aceitaveis para demanda
+            resBuscaDemandasAssistenciasAdministrador.map((demanda)=>{
                 const status = (
                   demanda.status === "Cancelada" || 
                   demanda.status === "Concluido" || 
                   demanda.status === "Em atendimento"
                 );
-
-                // demanda vinculada a assitencia e status dentro dos parametro
-                if(isDemandaVinculada && status){
+                if(status){
                   listaDemandasAssistenciasDoAdministrador.push(demanda);
-                }
-              })
+                };
             });
-            // console.log(listaDemandasAssistenciasDoAdministrador);
             return setDemandas(listaDemandasAssistenciasDoAdministrador);
           }
           
           // consulta por demandas atuais da assistencia
           if(tipoDemanda === "aceitas"){
-            // mapeia demandas e verifica quais demandas estão vinculadas as assistencias do adm 
-            // que estejam em andamento ou apenas aceitas 
-            resBuscaDemandas.map((demanda) =>{
-              listaIdAssistencias.map((idAssistencia)=>{
-                const isDemandaVinculada = demanda.assistencia === idAssistencia;
-                // const statusAberto = demanda.status === "Aberto";
-                // Removi statusAberto ||
-                const statusEmAtendimento = demanda.status === "Em atendimento";
-                if(isDemandaVinculada && statusEmAtendimento){
-                  listaDemandasAssistenciasDoAdministrador.push(demanda);
-                }
-              })
+            resBuscaDemandasAssistenciasAdministrador.map((demanda)=>{
+              if(demanda.status === "Em atendimento"){
+                listaDemandasAssistenciasDoAdministrador.push(demanda);
+              };
             });
             // console.log("demandas atribuidas:",listaIdDemandasAssistenciasDoAdministrador);
             return setDemandas(listaDemandasAssistenciasDoAdministrador);
@@ -155,16 +113,10 @@ const ProcurarDemandas = () => {
 
           // consulta por demandas solicitadas a assistencia
           if(tipoDemanda === "solicitacoes"){
-            // mapeia demandas e verifica quais demandas estão vinculadas as assistencias do adm 
-            // que estejam em andamento ou apenas aceitas 
-            resBuscaDemandas.map((demanda) =>{
-              listaIdAssistencias.map((idAssistencia)=>{
-                const isDemandaVinculada = demanda.assistencia === idAssistencia;
-                const statusEmAtendimento = demanda.status === "Aberto";
-                if(isDemandaVinculada && statusEmAtendimento){
-                  listaDemandasAssistenciasDoAdministrador.push(demanda);
-                }
-              })
+            resBuscaDemandasAssistenciasAdministrador.map((demanda)=>{
+              if(demanda.status === "Aberto"){
+                listaDemandasAssistenciasDoAdministrador.push(demanda);
+              };
             });
             return setDemandas(listaDemandasAssistenciasDoAdministrador);
           }
