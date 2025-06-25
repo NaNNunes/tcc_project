@@ -213,9 +213,16 @@
 /* Distância da navbar para os outros componentes. */
 .navbarE {
     margin-left: auto;
+    padding-right: 100px;
     margin-right: auto;
     display: flex;  
     gap: 100px;
+}
+
+@media screen and (max-width: 1400px) {
+    .navbarE {
+        padding: 0;
+    }
 }
 
 @media screen and (max-width: 1300px) {
