@@ -164,7 +164,106 @@ const CardDemanda = (props) => {
         fetchData();
     },[]);
 
-    // COMPONENTES
+    // --- SOLICITANTE ---
+    // botões para aceitar ou rejeitar o orçamento.
+    const botaoAceitarRejeitarOrcamento = (
+        <>
+            <Button>
+                Recusar
+            </Button>
+            <Button>
+                Aceitar
+            </Button>
+        </>
+    );
+
+    // botao para fechar o modal
+    const botaoFecharModalDeInfosDemanda = (
+        <>
+            <Button 
+                className={styles.botaoModal}
+                onClick={()=>{setMostrarModal(false)}}
+            >
+                Fechar
+            </Button>
+        </>
+    );
+
+    // botao para editar a demanda.
+    const botaoEditarDemanda = (
+        <>
+            <Button
+                href={`/criar-demanda/${props.id}`}
+            >
+                Editar
+            </Button>
+        </>
+    );
+
+    // botao para cancelar demanda.
+    const botaoCancelarDemanda = (
+        <>
+            <Button 
+                onClick={()=>{cancelarDemanda(props.id)}}
+                variant='danger'
+            >
+                Cancelar
+            </Button>
+        </>
+    );
+
+    // Botões que aparecerão no modal para o solicitante no consultar pedidos.
+    const botaoMinhasDemandas = (
+        <>
+            {
+                ((props.status === "Concluido" || props.status === "Cancelada") 
+                || 
+                (demandaSelecionada.statusOrcamento === "Recusado" || demandaSelecionada.statusOrcamento === "Aceito")
+                ||
+                (demandaSelecionada.statusOrcamento === undefined && props.status === "Em atendimento")) && 
+                botaoFecharModalDeInfosDemanda
+            }
+            {
+                (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Sem resposta") &&
+                botaoAceitarRejeitarOrcamento
+            }
+            {
+                (userBuscador === "solicitante" && props.status === "Aberto" && idAssistencia === "Público") &&
+                botaoEditarDemanda
+            }
+            {
+                (props.status === "Aberto" && userBuscador === "solicitante") && 
+                botaoCancelarDemanda
+            }
+        </>
+    );
+
+    // --- ADMINISTRADOR ---
+
+    // botao para direcionar user a tela de orçamento.
+    const botaoGerarOrcamento = (
+        <>
+            <Button 
+                href={`/orcamento/${props.id}`}
+                className={styles.botaoModal}
+                onClick={()=>{setMostrarModal(false)}}
+            >
+                Gerar Orçamento
+            </Button>
+        </>
+    );
+
+    // botao para concluir demanda.
+    const botaoConcluirDemanda = (
+        <>
+            <Button
+                className={styles.botaoModal}
+            >
+                Concluir demanda
+            </Button>
+        </>
+    );
+
     // botao para selecionar qual assistencia recebera a demanda
     const botaoAceitarDemanda = (
         <> 
@@ -219,105 +318,7 @@ const CardDemanda = (props) => {
         </>
     );
 
-    // --- SOLICITANTE ---
-    // botões para aceitar ou rejeitar o orçamento.
-    const botaoAceitarRejeitarOrcamento = (
-        <>
-            <Button>
-                Recusar
-            </Button>
-            <Button>
-                Aceitar
-            </Button>
-        </>
-    );
-
-    // botao para fechar o modal
-    const botaoFecharModalDeInfosDemanda = (
-        <>
-            <Button 
-                className={styles.botaoModal}
-                onClick={()=>{setMostrarModal(false)}}
-            >
-                Fechar
-            </Button>
-        </>
-    );
-
-    // botao para editar a demanda.
-    const botaoEditarDemanda = (
-        <>
-            <Button
-                href={`/criar-demanda/${props.id}`}
-            >
-                Editar
-            </Button>
-        </>
-    );
-
-    // botao para cancelar demanda.
-    const botaoCancelarDemanda = (
-        <>
-            <Button 
-                onClick={()=>{cancelarDemanda(props.id)}}
-                variant='danger'
-            >
-                Cancelar
-            </Button>
-        </>
-    );
-
-    // Botões que apareceram no modal para o solicitante no consultar pedidos.
-    const botaoMinhasDemandas = (
-        <>
-            {
-                ((props.status === "Concluido" || props.status === "Cancelada") 
-                || 
-                (demandaSelecionada.statusOrcamento === "Recusado" || demandaSelecionada.statusOrcamento === "Aceito")
-                ||
-                (demandaSelecionada.statusOrcamento === undefined && props.status === "Em atendimento")) && 
-                botaoFecharModalDeInfosDemanda
-            }
-            {
-                (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Sem resposta") &&
-                botaoAceitarRejeitarOrcamento
-            }
-            {
-                (userBuscador === "solicitante" && props.status === "Aberto" && idAssistencia === "Público") &&
-                botaoEditarDemanda
-            }
-            {
-                (props.status === "Aberto" && userBuscador === "solicitante") && 
-                botaoCancelarDemanda
-            }
-        </>
-    );
-
-    // --- ADMINISTRADOR ---
-
-    // botao para direcionar user a tela de orçamento
-    const botaoGerarOrcamento = (
-        <>
-            <Button 
-                href={`/orcamento/${props.id}`}
-                className={styles.botaoModal}
-                onClick={()=>{setMostrarModal(false)}}
-            >
-                Gerar Orçamento
-            </Button>
-        </>
-    );
-
-    const botaoConcluirDemanda = (
-        <>
-            <Button
-                className={styles.botaoModal}
-            >
-                Concluir demanda
-            </Button>
-        </>
-    );
-
+    // Botões que aparecerão no modal para o administrador no histórico de demandas.
     const botaoHistoricoDemandas = (
         <>
             {
@@ -374,13 +375,13 @@ const CardDemanda = (props) => {
             case 'celular':
                 return <img src={ImgCelular} alt="Celular" style={{ width: '50px', height: '50px' }}></img>;
             case 'notebook':
-                return <img src={ImgNotebook} alt="Celular" style={{ width: '50px', height: '50px' }}></img>;
+                return <img src={ImgNotebook} alt="Notebook" style={{ width: '50px', height: '50px' }}></img>;
             case 'tablet':
                 return <img></img>;
             case 'desktop':
                 return <img></img>;
             case 'perifericos':
-                return <img src={ImgPerifericos} alt="Celular" style={{ width: '50px', height: '50px' }}></img>;
+                return <img src={ImgPerifericos} alt="Perifericos" style={{ width: '50px', height: '50px' }}></img>;
             case 'outros':
                 return <img></img>
         }
@@ -421,12 +422,12 @@ const CardDemanda = (props) => {
                         width: "100%", display: "flex", flexDirection: "column"
                     }}
                 >
-                    {/* mude o design front enzo */}
+                    {/* mude o design front enzo */}  
                     {
-                        (props.status !== "Cancelada" && idAssistencia != "Público") &&
-                            <Card.Header>
-                                {assistenciaResponsavel}
-                            </Card.Header>
+                        (props.status !== "Aberto" && idAssistencia != "Público") && 
+                        <Card.Header className={styles.textoTitle}>
+                            <span>{assistenciaResponsavel}</span>
+                        </Card.Header>
                     }
                     <Card.Body 
                         className={styles.cardBody} 

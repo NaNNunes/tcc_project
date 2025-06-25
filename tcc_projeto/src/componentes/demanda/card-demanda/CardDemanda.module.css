@@ -76,6 +76,13 @@
     background-color: #0069C6;
 }
 
+.textoTitle {
+    background-color: #ffffff;
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: center !important;
+}
+
 /* AQUI COMEÇA A ESTILIZAÇÃO DO MODAL */
 
 /* Container contendo tudo que vai aparecer no modal. */

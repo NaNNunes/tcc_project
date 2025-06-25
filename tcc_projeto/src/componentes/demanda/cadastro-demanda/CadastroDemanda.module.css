@@ -224,4 +224,11 @@
     .modalContent {
         padding: 10px;
     }
+
+    .listaBotao {
+        justify-content: center;
+        padding-left: 0px;
+        padding-right: 0px;
+        font-size: 0.9rem;
+    } 
 }
