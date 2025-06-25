@@ -170,7 +170,7 @@ const CardDemanda = (props) => {
         <> 
             <FloatingLabel
                 /* Campo do formulário */
-                style={{margin: '0px', marginLeft: '12px', width: '60%', alignSelf: 'flex-start'}}
+                className={styles.selecaoModal}
                 label='Selecione uma assistência'
             >
                 <Form.Select
@@ -293,6 +293,8 @@ const CardDemanda = (props) => {
         </>
     );
 
+    // --- ADMINISTRADOR ---
+
     // botao para direcionar user a tela de orçamento
     const botaoGerarOrcamento = (
         <>
@@ -306,11 +308,40 @@ const CardDemanda = (props) => {
         </>
     );
 
+    const botaoConcluirDemanda = (
+        <>
+            <Button
+                className={styles.botaoModal}
+            >
+                Concluir demanda
+            </Button>
+        </>
+    );
+
+    const botaoHistoricoDemandas = (
+        <>
+            {
+                ((props.status === "Concluido" || props.status === "Cancelada") 
+                || 
+                (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Sem resposta")) && 
+                botaoFecharModalDeInfosDemanda
+            }
+            {
+                ((props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === undefined)) &&
+                botaoGerarOrcamento
+            }
+            {
+                (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Aceito") &&
+                botaoConcluirDemanda
+            }
+        </>
+    )
+
     // define como sera a composição do botao do modal
-    const botoes = {
+    const botoesDemanda = {
         "abertas": botaoAceitarDemanda,
         "aceitas": botaoGerarOrcamento,
-        "historico": botaoFecharModalDeInfosDemanda,
+        "historico": botaoHistoricoDemandas,
         "minhas-demandas": botaoMinhasDemandas,
         // caso adm defina que outra assistencia receberá a demanda,
             // não sendo a esperada pelo solicitante,
@@ -319,9 +350,8 @@ const CardDemanda = (props) => {
         "solicitacoes": botaoAceitarDemanda
     }
     // O Botão
-    const mainBotao = botoes[tipoDemanda];
+    const mainBotao = botoesDemanda[tipoDemanda];
 
-    
     // botao direcionado a visualizar mais infos da demanda, abrir modal
     const botaoVisualizarDemada = (
         <>
@@ -369,6 +399,8 @@ const CardDemanda = (props) => {
                 return '#FF3B30'; // se estiver em cancelado, retorna vermelho
         }
     }
+
+    console.log(demandaSelecionada)
 
   return (
     // Div com todo o card.
@@ -542,13 +574,14 @@ const CardDemanda = (props) => {
 
                         </Container>
                     </div>
+
                     <hr className={styles.divisao}/>
 
                     {/* Colocar container para texto do modal ficar ajustado à esquerda */}
                     {/* Informações do contexto */}
                     <div>
                         <h3 className={styles.tituloInfoModal}>Contexto</h3>
-                        <Container style={{display: "grid", gridTemplateColumns: "repeat(1, 1fr)"}}>
+                        <Container style={{display: "grid", gridTemplateColumns: "repeat(1, 1fr)", margin: '0px'}}>
                             <span className={styles.textoInfoModal}>
                                 <strong>Descrição do problema: </strong>
                                 {props.descricao}
@@ -561,6 +594,53 @@ const CardDemanda = (props) => {
                             </span>
                         </Container>
                     </div>
+
+                    {
+                        (!(demandaSelecionada?.statusOrcamento === undefined)) &&
+                        <>
+                            <hr className={styles.divisao}/>
+                            <div>
+                                <h3 className={styles.tituloInfoModal}>Orçamento</h3>
+                                <Container style={{display: "grid", gridTemplateColumns: "repeat(1, 1fr)", margin: '0px'}}>
+                                    {/* Problema identificado */}
+                                    <span className={styles.textoInfoModal}>
+                                        <strong>Problema identificado: </strong>
+                                        {demandaSelecionada.problema_identificado}
+                                    </span>
+
+                                    {/* Possível solução */}
+                                    <span className={styles.textoInfoModal}>
+                                        <strong>Possível solução: </strong>
+                                        {demandaSelecionada.solucao}
+                                    </span>
+
+                                    {/* Peça a ser trocada */}
+                                    <span className={styles.textoInfoModal}>
+                                        <strong>Peça a ser trocada: </strong>
+                                        {demandaSelecionada.pecaTrocada}
+                                    </span>
+
+                                    {/* Observações */}
+                                    <span className={styles.textoInfoModal}>
+                                        <strong>Observações: </strong>
+                                        {demandaSelecionada.observacoesOrcamento}
+                                    </span>
+
+                                    {/* Valor da mão de obra */}
+                                    <span className={styles.textoInfoModal}>
+                                        <strong>Valor da mão de obra: </strong>
+                                        {demandaSelecionada.valorObra}
+                                    </span>
+                                    
+                                    {/* Data de aceitação do orçamento */}
+                                    <span className={styles.textoInfoModal}>
+                                        <strong>Data de aceitação do orçamento: </strong>
+                                        {demandaSelecionada.tensao}
+                                    </span>
+                                </Container>      
+                            </div>
+                        </>
+                    }
                 </Modal.Body>
 
                 {/* Footer com o botão com a funcionalidade passada dentro do mainBotao */}

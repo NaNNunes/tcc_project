@@ -87,8 +87,7 @@
 
 /* Personalização do "dialogClassName", basicamente o espaço do modal. */
 .modalInfo {
-    max-width: fit-content !important; 
-    margin: auto;
+    max-width: 50% !important;
 }
 
 /* Personalização do "contentClassName", todo o conteúdo que está dentro do modal. */
@@ -119,7 +118,7 @@
 .divisao {
     border: none;
     border-top: 2px solid #cacaca;
-    margin: 1rem 0;              
+    margin: 10px 0;              
     width: 100%;                  
     opacity: 1;       
 }
@@ -128,22 +127,43 @@
 .botaoModal {
     width: fit-content;
     align-self: center;
+    align-content: center;
     background-color: #0061B7;
     width: 12rem;
     border: 0;
     height: 50px;
     font-weight: bold;
     margin: 0px;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .botaoModal:hover {
     background-color: #0069C6;
 }
 
+.selecaoModal {
+    margin: 0px;
+    margin-left: 12px;
+    width: 50%;
+    align-self: flex-start;
+}
+
+@media screen and (max-width: 1500px) {
+    .modalInfo {
+        max-width: 60% !important;
+    }
+
+}
+
 @media screen and (max-width: 1350px) {
     .cardBody {
         height: fit-content;
+    }
+}
+
+@media screen and (max-width: 1120px) {
+    .modalInfo {
+        max-width: 75% !important;
     }
 }
 
@@ -156,6 +176,14 @@
 @media screen and (max-width: 560px) {
     .ContainerModalInfo {
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    .selecaoModal {
+        width: 75%;
+    }
+
+    .modalInfo {
+        max-width: 85% !important;
     }
 }
 
@@ -170,6 +198,10 @@
         margin: 0px;
         margin-top: 20px;
         font-size: 1rem;
+    }
+
+    .selecaoModal {
+        width: 90%;
     }
 }
 
