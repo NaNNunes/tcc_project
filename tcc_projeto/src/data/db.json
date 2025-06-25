@@ -53,6 +53,15 @@
       "pergunta": "1",
       "resposta": "Blu",
       "id_endereco": "52cb"
+    },
+    {
+      "id": "9cb2",
+      "email": "lews@gmail.com",
+      "cpf": "851.490.500-75",
+      "userTelefone": "40028922",
+      "nome": "Pseudo",
+      "sobrenome": "MMz",
+      "isValido": false
     }
   ],
   "administrador": [
@@ -329,6 +338,18 @@
       "amperagem": "",
       "cor": "",
       "solicitante_id": "a0a9"
+    },
+    {
+      "id": "2dfc",
+      "categoria": "Celular",
+      "marca": "Motorola",
+      "fabricante": "",
+      "modelo": "Moto G05",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "solicitante_id": "9cb2"
     }
   ],
   "demanda": [
@@ -446,6 +467,17 @@
       "solicitante_id": "a0a9",
       "dataEmissao": "23/06/2025",
       "horaEmissao": "00:20:42"
+    },
+    {
+      "id": "72f6",
+      "idDispostivo": "2dfc",
+      "descProblema": "sdfsdfsdfsdfsdfsdfsdfs",
+      "observacoes": "",
+      "status": "Em atendimento",
+      "assistencia": "28fd",
+      "solicitante_id": "9cb2",
+      "dataEmissao": "24/06/2025",
+      "horaEmissao": "23:57:50"
     }
   ],
   "assistencia_Fav_Solicitante": [
