@@ -154,6 +154,17 @@
       "administradorId": "6c47",
       "isValido": true,
       "id_endereco": "347a"
+    },
+    {
+      "id": "6c90",
+      "assistenciaEmail": "kevi@linsda.com",
+      "nomeFantasia": "",
+      "razaoSocial": "sada",
+      "cnpj": "00.040.015/0001-83",
+      "assistenciaTelefone": "27 988379121",
+      "administradorId": "0d6b",
+      "isValido": true,
+      "id_endereco": "051f"
     }
   ],
   "endereco": [
@@ -264,6 +275,16 @@
       "gia": "",
       "ddd": "27",
       "siafi": "5705"
+    },
+    {
+      "id": "051f",
+      "zipcode": "29141422",
+      "localidade": "Cariacica",
+      "bairro": "Jardim Campo Grande",
+      "logradouro": "Rua Santa Catarina",
+      "uf": "ES",
+      "number": "",
+      "complemento": ""
     }
   ],
   "dispositivo": [

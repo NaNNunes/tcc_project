@@ -1,3 +1,4 @@
+// Importação do react-bootstrap.
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -5,8 +6,10 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-import styles from "../../componentes/conta_perfil/conta_perfil.module.css";
+// Importação dos estilos.
+import stylesCad from "../../componentes/demanda/cadastro-demanda/CadastroDemanda.module.css";
 
+// Importação do useState e useEffect.
 import { useState, useEffect } from "react";
 
 import { useForm } from "react-hook-form";
@@ -154,258 +157,339 @@ const CadastroNovaAssistencia = () => {
   };
 
   return (
-    <Form className="p-4" onSubmit={handleSubmit(onSubmit, onError)}>
-      <Container fluid className={styles.parteFormulario}>
-        <Row className="justify-content-center mb-4">
-          <Col md="auto">
-            <h3 className={styles.titleh3}>Cadastro de Assistência</h3>
-          </Col>
-        </Row>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      {/* Div para controlar o tamanho do Form. */}
+      <div className={stylesCad.formulario}>  
+        <Form onSubmit={handleSubmit(onSubmit, onError)}>
+          <Container 
+            fluid 
+            className={stylesCad.parteFormulario} 
+            style={{
+              paddingBottom: '1.7rem', 
+              marginBottom: '20px'
+            }}
+          >
+            {/* Assistência */}
+            <div>
+              {/* Título do container */}
+              <Row style={{paddingBottom: '1%'}}>
+                <Col>
+                  <h3 className={stylesCad.titleh3}>
+                    Cadastro de Assistência
+                  </h3>
+                </Col>
+              </Row>
 
-        <Row>
-          <Col>
-            {/* Email */}
-            <FloatingLabel
-              controlId="assistenciaEmailInput"
-              label="Email"
-              className="mb-3"
-            >
-              <Form.Control
-                type="email"
-                placeholder=""
-                isInvalid={!!errors.assistenciaEmail}
-                {...register("assistenciaEmail", {
-                  required: "O email é obrigatório",
-                  pattern: {
-                    value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-                    message: "Email inválido",
-                  },
-                })}
-              />
-              {errors.assistenciaEmail && (
-                <p className={styles.error}>
-                  {errors.assistenciaEmail.message}
-                </p>
-              )}
-            </FloatingLabel>
-          </Col>
-        </Row>
-        {/* Nome Fantasia */}
-        <Row>
-          <Col>
-            <FloatingLabel
-              controlId="nomeFantasiaInput"
-              label="Nome Fantasia"
-              className="mb-3"
-            >
-              <Form.Control type="text" {...register("nomeFantasia")} />
-            </FloatingLabel>
-          </Col>
-        </Row>
+              {/* Linha de e-mail */}
+              <Row> 
+                {/* Email */}
+                <Col md={12} xs={12} className={stylesCad.campo}>
+                  <FloatingLabel
+                    controlId="assistenciaEmailInput"
+                    label="Email"
+                  >
+                    <Form.Control
+                      type="email"
+                      placeholder=""
+                      isInvalid={!!errors.assistenciaEmail}
+                      {...register("assistenciaEmail", {
+                        required: "O email é obrigatório",
+                        pattern: {
+                          value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                          message: "Email inválido",
+                        },
+                      })}
+                    />
+                    {errors.assistenciaEmail && (
+                      <span className='error'>
+                        {errors.assistenciaEmail.message}
+                      </span>
+                    )}
+                  </FloatingLabel>
+                </Col>
+              </Row>
+              
+              {/* Linha de nome fantasia e razão social */}
+              <Row>
+                {/* Nome fantasia */}
+                <Col md={6} xs={12} className={stylesCad.campo}>
+                  <FloatingLabel
+                    controlId="nomeFantasiaInput"
+                    label="Nome Fantasia"
+                  >
+                    <Form.Control type="text" {...register("nomeFantasia")}/>
+                  </FloatingLabel>
+                </Col>
 
-        {/* Razão Social */}
-        <Row>
-          <Col>
-            <FloatingLabel
-              controlId="razaoSocialInput"
-              label="Razão Social"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder=""
-                isInvalid={!!errors.razaoSocial}
-                {...register("razaoSocial", {
-                  required: "Razão Social é obrigatória",
-                })}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.razaoSocial?.message}
-              </Form.Control.Feedback>
-            </FloatingLabel>
-          </Col>
-        </Row>
+                {/* Razão Social */}
+                <Col md={6} xs={12} className={stylesCad.campo}>
+                  <FloatingLabel
+                    controlId="razaoSocialInput"
+                    label="Razão Social"
+                  >
+                    <Form.Control
+                      type="text"
+                      placeholder=""
+                      isInvalid={!!errors.razaoSocial}
+                      {...register("razaoSocial", {
+                        required: "Razão Social é obrigatória",
+                      })}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.razaoSocial && (
+                        <span className='error'>
+                          {errors.razaoSocial.message}
+                        </span>
+                      )}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Col>
+              </Row>
 
-        {/* CNPJ */}
-        <Row>
-          <Col>
-            <FloatingLabel controlId="cnpjInput" label="CNPJ" className="mb-3">
-              <Form.Control
-                type="text"
-                placeholder="00.000.000/0000-00"
-                value={formatarCNPJ(watch("cnpj") || "")}
-                isInvalid={!!errors.cnpj}
-                onChange={(e) => {
-                  const apenasNumeros = e.target.value.replace(/\D/g, "");
-                  if (apenasNumeros.length <= 14) {
-                    setValue("cnpj", apenasNumeros);
-                  }
-                }}
-                {...register("cnpj", {
-                  required: "CNPJ é obrigatório",
-                  validate: (value) => {
-                    const numeros = value.replace(/\D/g, "");
-                    if (numeros.length !== 14)
-                      return "CNPJ deve ter 14 dígitos";
-                    if (!verificador(numeros)) return "CNPJ inválido";
-                    return true;
-                  },
-                })}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.cnpj?.message}
-              </Form.Control.Feedback>
-            </FloatingLabel>
-          </Col>
+              {/* Linha com CNPJ e Telefone */}
+              <Row>
+                {/* CNPJ */}
+                <Col md={6} xs={12} className={stylesCad.campo}>
+                  <FloatingLabel 
+                    controlId="cnpjInput" 
+                    label="CNPJ"
+                  >
+                    <Form.Control
+                      type="text"
+                      placeholder="00.000.000/0000-00"
+                      value={formatarCNPJ(watch("cnpj") || "")}
+                      isInvalid={!!errors.cnpj}
+                      onChange={(e) => {
+                        const apenasNumeros = e.target.value.replace(/\D/g, "");
+                        if (apenasNumeros.length <= 14) {
+                          setValue("cnpj", apenasNumeros);
+                        }
+                      }}
+                      {...register("cnpj", {
+                        required: "CNPJ é obrigatório",
+                        validate: (value) => {
+                          const numeros = value.replace(/\D/g, "");
+                          if (numeros.length !== 14)
+                            return "CNPJ deve ter 14 dígitos";
+                          if (!verificador(numeros)) return "CNPJ inválido";
+                          return true;
+                        },
+                      })}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.cnpj && (
+                        <span className='error'>
+                          {errors.cnpj.message}
+                        </span>
+                      )}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Col>
 
-          {/* Telefone */}
-          <Col>
-            <FloatingLabel
-              controlId="assistenciaTelInput"
-              label="Telefone"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="(00) 00000-0000"
-                isInvalid={!!errors.assistenciaTelefone}
-                {...register("assistenciaTelefone", {
-                  required: "Telefone é obrigatório",
-                  pattern: {
-                    value:
-                      /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
-                    message: "Telefone inválido",
-                  },
-                })}
-              />
-              {errors.assistenciaTelefone && (
-                <p className={styles.error}>
-                  {errors.assistenciaTelefone.message}
-                </p>
-              )}
-            </FloatingLabel>
-          </Col>
-        </Row>
+                {/* Telefone */}
+                <Col md={6} xs={12} className={stylesCad.campo}>
+                  <FloatingLabel
+                    controlId="assistenciaTelInput"
+                    label="Telefone"
+                  >
+                    <Form.Control
+                      type="text"
+                      placeholder="(00) 00000-0000"
+                      isInvalid={!!errors.assistenciaTelefone}
+                      {...register("assistenciaTelefone", {
+                        required: "Telefone é obrigatório",
+                        pattern: {
+                          value:
+                            /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
+                          message: "Telefone inválido",
+                        },
+                      })}
+                    />
+                    {errors.assistenciaTelefone && (
+                      <span className='error'>
+                        {errors.assistenciaTelefone.message}
+                      </span>
+                    )}
+                  </FloatingLabel>
+                </Col>
+              </Row>
+            </div>
+                  
+            {/* Endereço */}
+            <div>
+              <Row style={{paddingBottom: '1%'}}>
+                <Col>
+                  <h3 className={stylesCad.titleh3}>Endereço</h3>
+                </Col>
+              </Row>
 
-        {/* Endereço */}
-        <Row className="pt-3">
-          <Col md={12}>
-            <h4 className={styles.titleh3}>Endereço</h4>
-          </Col>
-        </Row>
+              {/* Linha com CEP, Cidade e Bairro */}
+              <Row>
+                {/* CEP */}
+                <Col md={4} xs={12} className={stylesCad.campo}>
+                  <FloatingLabel
+                    controlId="cepUserInput"
+                    label="CEP"
+                  >
+                    <Form.Control
+                      type="text"
+                      placeholder="00000-000"
+                      maxLength={9}
+                      isInvalid={!!errors.zipcode}
+                      {...register("zipcode", {
+                        required: "CEP é obrigatório",
+                        validate: (value) => {
+                          const numeros = value.replace(/\D/g, "");
+                          if (numeros.length !== 8)
+                            return "CEP deve conter 8 dígitos numéricos";
+                          return true;
+                        },
+                        onBlur: handleZipCodeBlur,
+                      })}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.zipcode && (
+                        <span className='error'>
+                          {errors.zipcode.message}
+                        </span>
+                      )}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Col>
+                
+                {/* Localidade */}
+                <Col>
+                  <FloatingLabel
+                    controlId="cityUserInput"
+                    label="Cidade"
+                    className="mb-3"
+                  >
+                    <Form.Control
+                      type="text"
+                      disabled={!inputFieldEnable}
+                      {...register("localidade")}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.localidade && (
+                        <span className='error'>
+                          {errors.localidade.message}
+                        </span>
+                      )}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Col>
 
-        {/* CEP */}
-        <Row>
-          <Col>
-            <FloatingLabel
-              controlId="cepUserInput"
-              label="CEP"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                placeholder="00000-000"
-                maxLength={9}
-                isInvalid={!!errors.zipcode}
-                {...register("zipcode", {
-                  required: "CEP é obrigatório",
-                  validate: (value) => {
-                    const numeros = value.replace(/\D/g, "");
-                    if (numeros.length !== 8)
-                      return "CEP deve conter 8 dígitos numéricos";
-                    return true;
-                  },
-                  onBlur: handleZipCodeBlur,
-                })}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.zipcode?.message}
-              </Form.Control.Feedback>
-            </FloatingLabel>
-          </Col>
-          <Col>
-            <FloatingLabel
-              controlId="cityUserInput"
-              label="Cidade"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                disabled={!inputFieldEnable}
-                {...register("localidade")}
-              />
-            </FloatingLabel>
-          </Col>
-          <Col>
-            <FloatingLabel
-              controlId="bairroUserInput"
-              label="Bairro"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                disabled={!inputFieldEnable}
-                {...register("bairro")}
-              />
-            </FloatingLabel>
-          </Col>
-        </Row>
+                <Col>
+                  <FloatingLabel
+                    controlId="bairroUserInput"
+                    label="Bairro"
+                    className="mb-3"
+                  >
+                    <Form.Control
+                      type="text"
+                      disabled={!inputFieldEnable}
+                      {...register("bairro")}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.bairro && (
+                        <span className='error'>
+                          {errors.bairro.message}
+                        </span>
+                      )}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Col>
+              </Row>
 
-        <Row>
-          <Col>
-            <FloatingLabel
-              controlId="logradouroUserInput"
-              label="Logradouro"
-              className="mb-3"
-            >
-              <Form.Control
-                type="text"
-                disabled={!inputFieldEnable}
-                {...register("logradouro")}
-              />
-            </FloatingLabel>
-          </Col>
-          <Col>
-            <FloatingLabel controlId="ufUserInput" label="UF" className="mb-3">
-              <Form.Control
-                type="text"
-                disabled={!inputFieldEnable}
-                {...register("uf")}
-              />
-            </FloatingLabel>
-          </Col>
-          <Col>
-            <FloatingLabel
-              controlId="numResidUserInput"
-              label="Nº"
-              className="mb-3"
-            >
-              <Form.Control type="text" {...register("number")} />
-            </FloatingLabel>
-          </Col>
-        </Row>
+              <Row>
+                <Col>
+                  <FloatingLabel
+                    controlId="logradouroUserInput"
+                    label="Logradouro"
+                    className="mb-3"
+                  >
+                    <Form.Control
+                      type="text"
+                      disabled={!inputFieldEnable}
+                      {...register("logradouro")}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.logradouro && (
+                        <span className='error'>
+                          {errors.logradouro.message}
+                        </span>
+                      )}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Col>
 
-        <Row>
-          <Col>
-            <FloatingLabel
-              controlId="complementoUserInput"
-              label="Complemento"
-              className="mb-3"
-            >
-              <Form.Control type="text" {...register("complemento")} />
-            </FloatingLabel>
-          </Col>
-        </Row>
+                <Col>
+                  <FloatingLabel controlId="ufUserInput" label="UF" className="mb-3">
+                    <Form.Control
+                      type="text"
+                      disabled={!inputFieldEnable}
+                      {...register("uf")}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.uf && (
+                        <span className='error'>
+                          {errors.uf.message}
+                        </span>
+                      )}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Col>
 
-        <Row className="mt-4 pb-4">
-          <Col className="d-flex justify-content-center">
-            <Button type="submit" size="lg" className={styles.botaoSalvar}>
-              Salvar Assistência
-            </Button>
-          </Col>
-        </Row>
-      </Container>
-    </Form>
+                <Col>
+                  <FloatingLabel
+                    controlId="numResidUserInput"
+                    label="Nº"
+                    className="mb-3"
+                  >
+                    <Form.Control type="text" {...register("number")} />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.number && (
+                        <span className='error'>
+                          {errors.number.message}
+                        </span>
+                      )}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <FloatingLabel
+                    controlId="complementoUserInput"
+                    label="Complemento"
+                    className="mb-3"
+                  >
+                    <Form.Control type="text" {...register("complemento")} />
+
+                    <Form.Control.Feedback type="invalid">
+                      {errors.complemento && (
+                        <span className='error'>
+                          {errors.complemento.message}
+                        </span>
+                      )}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                </Col>
+              </Row>
+            </div>
+
+            <Row className="mt-4 pb-4">
+              <Col className="d-flex justify-content-center">
+                <Button type="submit" size="lg">
+                  Salvar Assistência
+                </Button>
+              </Col>
+            </Row>
+          </Container>
+        </Form>
+      </div>
+    </div>
   );
 };
 
