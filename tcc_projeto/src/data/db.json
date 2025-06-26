@@ -63,7 +63,18 @@
       "assistenciaTelefone": "40028922",
       "administradorId": "1bbe",
       "isValido": true,
-      "idEndereco": "d4fd"
+      "id_endereco": "347a"
+    },
+    {
+      "id": "6c90",
+      "assistenciaEmail": "kevi@linsda.com",
+      "nomeFantasia": "",
+      "razaoSocial": "sada",
+      "cnpj": "00.040.015/0001-83",
+      "assistenciaTelefone": "27 988379121",
+      "administradorId": "0d6b",
+      "isValido": true,
+      "id_endereco": "051f"
     }
   ],
   "endereco": [
@@ -111,7 +122,25 @@
       "logradouro": "Rua Francisco Eugênio Mussiello",
       "uf": "ES",
       "number": "18",
-      "complemento": "sim"
+      "complemento": "sim",
+      "cep": "29060-290",
+      "unidade": "",
+      "estado": "Espírito Santo",
+      "regiao": "Sudeste",
+      "ibge": "3205309",
+      "gia": "",
+      "ddd": "27",
+      "siafi": "5705"
+    },
+    {
+      "id": "051f",
+      "zipcode": "29141422",
+      "localidade": "Cariacica",
+      "bairro": "Jardim Campo Grande",
+      "logradouro": "Rua Santa Catarina",
+      "uf": "ES",
+      "number": "",
+      "complemento": ""
     }
   ],
   "dispositivo": [

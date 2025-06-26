@@ -1,0 +1,27 @@
+/* Container com o card da assistencia. */
+.caixaCard {
+    max-width: 100%;
+    margin: 0; 
+    padding: 0;
+    padding-right: 4%;
+    padding-left: 4%;
+    padding-bottom: 8%;
+}
+
+/* Corpo do card */
+.cardBody {
+    height: 27.5rem;
+    padding: 20px;
+}
+
+/* Texto com um cortono para marca e modelo. */
+.textoCardPrincipal {
+    font-size: 1rem;
+    text-align: center;
+    font-weight: bold;
+    padding-left: 8px;
+    color: #757575;
+    border: 3px solid #757575;
+    border-radius: 10px;
+    padding: 10px;
+}

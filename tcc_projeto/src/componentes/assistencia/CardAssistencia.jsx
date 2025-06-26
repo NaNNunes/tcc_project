@@ -10,6 +10,8 @@ import { useEndereco } from "../../hooks/useEndereco.js";
 import { useUser } from "../../hooks/useUser.js";
 import { useEffect, useState } from "react";
 
+import styles from './CardAssistencia.module.css'
+
 const CardAssistencia = (props) => {
   // descontrutores
   const { buscaEnderecoById } = useEndereco();
@@ -96,67 +98,69 @@ const CardAssistencia = (props) => {
   };
 
   return (
-    <div>
-      <Container className="mb-3">
-        <Card>
-          <Card.Title className="text-center p-1">
+    <div 
+      style={{
+        minWidth: '100%', maxWidth: '100%'
+      }}
+    >
+      <div
+        style={{
+          margin: '0', padding: '0', marginTop:"1rem"
+        }}
+      >
+        <Container className={styles.caixaCard}>
+          <Card
+            style={{
+              width: "100%", display: "flex", flexDirection: "column"
+            }}
+          >
             {/* nome fantasia */}
-            <Row>
-              <Col>{props.nome}</Col>
-            </Row>
-          </Card.Title>
-          <Card.Body>
-            {/* cnpj */}
-            <Row className="mb-1">
-              <Col>CNPJ: {props.cnpj}</Col>
-            </Row>
-            {/* telefone */}
-            <Row className="mb-1">
-              <Col>Contato: {props.telefone}</Col>
-            </Row>
-            {/* endereco */}
-            <Row className="mb-1">
-              <Col className="mb-2">{endereco.zipcode}</Col>
-              <Col className="mb-2">{endereco.localidade}</Col>
-              <Col className="mb-2">{endereco.bairro}</Col>
-            </Row>
-            <Row className="mb-1">
-              <Col className="mb-2">{endereco.logradouro}</Col>
-              <Col className="mb-2">{endereco.number}</Col>
-              <Col className="mb-2">{endereco.uf}</Col>
-            </Row>
-            <Row>
-              <Col>Complemento: {endereco.complemento}</Col>
-            </Row>
-          </Card.Body>
+            <div style={{width: '70%', alignSelf: 'center', paddingTop: '20px'}}>
+              <Card.Title className={styles.textoCardPrincipal}>
+                  {props.nome}
+              </Card.Title>
+            </div>
 
-          {
-            // verifica o tipo do user para mostrar ou não opção de favoritar (melhorar essa logica)
-            localStorage.getItem("userType") === "solicitante" && (
-              <Card.Footer>
-                {/* colocar icone de favoritar */}
-                {assistenciaIsFav ? (
-                  <Button
-                    type="submit"
-                    value="Remover Match"
-                    as="input"
-                    variant="warning"
-                    onClick={removerMatch}
-                  />
-                ) : (
-                  <Button
-                    type="submit"
-                    value="Favoritar"
-                    as="input"
-                    variant="danger"
-                    onClick={favoritar}
-                  />
-                )}
-              </Card.Footer>
-            )
-          }
-        </Card>
-      </Container>
+            <Card.Body className={styles.cardBody}>
+              {/* cnpj */}
+              <Container style={{padding: '0'}}>
+                <Card.Text>
+                  CNPJ: {props.cnpj}
+                </Card.Text>
+                <Card.Text>
+                  {endereco.zipcode}
+                </Card.Text>
+              </Container>
+            </Card.Body>
+
+            {
+              // verifica o tipo do user para mostrar ou não opção de favoritar (melhorar essa logica)
+              localStorage.getItem("userType") === "solicitante" && (
+                <Card.Footer>
+                  {/* colocar icone de favoritar */}
+                  {assistenciaIsFav ? (
+                    <Button
+                      type="submit"
+                      value="Remover Match"
+                      as="input"
+                      variant="warning"
+                      onClick={removerMatch}
+                    />
+                  ) : (
+                    <Button
+                      type="submit"
+                      value="Favoritar"
+                      as="input"
+                      variant="danger"
+                      onClick={favoritar}
+                    />
+                  )}
+                </Card.Footer>
+              )
+            }
+          </Card>
+        </Container>
+      </div>
     </div>
   );
 };

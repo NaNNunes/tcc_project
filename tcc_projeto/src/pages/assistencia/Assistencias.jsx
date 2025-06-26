@@ -1,11 +1,12 @@
 // utilizado para mostrar todas as assistencias cadastradas
 
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
 
 import { useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
+
+import styles from './Assistencias.module.css';
 
 import VisualizarAssistencia from "../../componentes/assistencia/CardAssistencia";
 
@@ -100,20 +101,18 @@ const Assistencias = () => {
 
   return (
     <div style={{ marginTop: "80px", marginBottom: "80px" }} className="p-3">
-      <Row>
+      <Container className={styles.caixa}>
         {assistenciasParaMostrar.map((assistencia) => (
-          <Col lg={4} sm={6} xs={12} key={assistencia.id}>
-            <VisualizarAssistencia
-              key={assistencia.id}
-              idAssistencia={assistencia.id}
-              nome={assistencia.nomeFantasia}
-              cnpj={assistencia.cnpj}
-              telefone={assistencia.assistenciaTelefone}
-              idEndereco={assistencia.id_endereco}
-            />
-          </Col>
+          <VisualizarAssistencia
+            key={assistencia.id}
+            idAssistencia={assistencia.id}
+            nome={assistencia.nomeFantasia}
+            cnpj={assistencia.cnpj}
+            telefone={assistencia.assistenciaTelefone}
+            idEndereco={assistencia.id_endereco}
+          />
         ))}
-      </Row>
+      </Container>
     </div>
   );
 };
