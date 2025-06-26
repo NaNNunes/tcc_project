@@ -1,0 +1,23 @@
+.caixaBotaoFiltro {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px rgb(204, 204, 204);
+    margin: 0;
+    width: 100%;
+    padding: 10px 20px 10px 20px;
+}
+
+.selecao {
+    border: 0;
+    background: #034C8C;
+    color: #FFFFFF !important;
+    font-size: 1rem;
+    font-weight: bold;
+    width: fit-content;
+}
+
+.selecao option {
+    color: #000000 !important;
+    background: #FFFFFF;
+    font-size: 1rem;
+}

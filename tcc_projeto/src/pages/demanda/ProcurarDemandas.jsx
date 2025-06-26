@@ -1,6 +1,9 @@
 // Importação do card de demanda.
 import CardDemanda from "../../componentes/demanda/card-demanda/CardDemanda";
 
+// Importação da barra de pesquisa.
+import BarraPesquisa from "../../componentes/barra-pesquisa/BarraPesquisa.jsx";
+
 // Importação do react-bootstrap.
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
@@ -143,6 +146,7 @@ const ProcurarDemandas = () => {
 
   return (
     <div style={{paddingTop: '80px', paddingBottom: '80px'}}>
+      <BarraPesquisa/>
       <Container className={styles.caixa}>
         {
           // verifica se há demandas
