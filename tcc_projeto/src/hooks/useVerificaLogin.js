@@ -9,11 +9,7 @@ export function useVerificaLogin() {
   const verificaLogin = (data, solicitantes, administradores) => {
     // verifica se email ou senha foi encontrado em solicitantes
     const solicitante2find = solicitantes.find((solicitante) => {
-      console.log(
-        "solicitante: ",
-        solicitante.cpf === data.loginOuCpf ||
-          solicitante.email === data.loginOuCpf
-      );
+
       return (
         solicitante.cpf === data.loginOuCpf ||
         solicitante.email === data.loginOuCpf
@@ -22,11 +18,7 @@ export function useVerificaLogin() {
 
     // verifica se email ou senha foi encontrado em administradores
     const administrador2find = administradores.find((administrador) => {
-      console.log(
-        "administrador: ",
-        administrador.cpf === data.loginOuCpf ||
-          administrador.email === data.loginOuCpf
-      );
+
       return (
         administrador.cpf === data.loginOuCpf ||
         administrador.email === data.loginOuCpf
@@ -42,7 +34,6 @@ export function useVerificaLogin() {
       if (solicitante2find.isValido !== true) {
         return alert("user Inválido");
       }
-
       login(solicitante2find, "solicitante");
       return "Login efetuado com sucesso";
     }

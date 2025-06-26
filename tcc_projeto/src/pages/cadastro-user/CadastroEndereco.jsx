@@ -35,7 +35,6 @@ const CadastroEndereco = () => {
   const {setType} = useContext(AuthContext);
 
   const user = localStorage.getItem("tipoUsuario");
-  console.log(user);
   const { cadastrarEndereco } = useEndereco();
   const { inserirValidacao } = useUser();
   const navigate = useNavigate();

@@ -1,7 +1,6 @@
 const url = import.meta.env.VITE_API_URL;
 
 export function useDemanda() {
-  const userType = localStorage.getItem("userType");
 
     // atualiza status de demanda
     const atualizarStatusDemanda = async(idDemanda, novoStatus) =>{
@@ -15,6 +14,43 @@ export function useDemanda() {
         });
 
         return request.ok;
+    }
+
+    const atualizarDadosDemanda = async(dados, idDemanda)=>{
+        const request = await fetch(`${url}/demanda/${idDemanda}`,{
+            method: "PATCH",
+            body: JSON.stringify(dados)
+        });
+        const response = request.json();
+
+        return request.ok;
+    }
+
+    const atualizarDadosDispositivo = async (dados, idDispositivo) => {
+        const request = await fetch(`${url}/dispositivo/${idDispositivo}`,{
+            method: "PATCH",
+            body: JSON.stringify(dados)
+        });
+        const response = request.json();
+
+        return request.ok;
+    };
+
+    const buscaDemandasPublicas = async () =>{
+        const request = await fetch(`${url}/demanda`);
+        const response = await request.json();
+
+        const listaDemandasPublicas = [];
+
+        response.map((demanda)=>{
+            const isDemandaAberta = demanda.status === "Aberto";
+            const isDemandaPublica = demanda.assistencia === "Público";
+            if(isDemandaAberta && isDemandaPublica){
+                listaDemandasPublicas.push(demanda);
+            }
+        })
+
+        return listaDemandasPublicas;
     }
 
     // lista todas as demandas
@@ -31,6 +67,24 @@ export function useDemanda() {
         const response = await request.json();
 
         return response;
+    }
+
+    // busca demandas do solicitante
+    const buscarDemandasDoSolicitante = async (idSolicitante) =>{
+        const request = await fetch(`${url}/demanda`);
+        const response = await request.json();
+
+        // lista para armazenas demandas 
+        const listaDemandasDoSolicitante = [];
+
+        // mapeia demandas identificando e saperando demandas do solicitante pelo id
+        response.map((demanda)=>{
+            if(demanda.idSolicitante === idSolicitante){
+                listaDemandasDoSolicitante.push(demanda);
+            }
+        });
+
+        return listaDemandasDoSolicitante;
     }
 
     const buscaDemandaVinculadaAssistencia = async (assistencias) =>{
@@ -77,8 +131,8 @@ export function useDemanda() {
     }
     
     // cadastra dispositivo no sistema
-    const cadastrarDispositivo = async (data) =>{
-        
+    const cadastrarDispositivo = async (data, idSolicitante) =>{
+
         const request = await fetch(`${url}/dispositivo`,{
             method: "POST",
             headers: {
@@ -87,19 +141,16 @@ export function useDemanda() {
             body: JSON.stringify(data)
         })
         const response =  await request.json();
-
-        // Define id de solicitante no dispositivo somente quando o mesmo emite a demanda com sua própria conta
-        // caso adm estja emitindo demanda, id do solicitante presencial no dispositivo será definido em CadastroDemanda
-        if(userType === "solicitante"){
-            //definir dono do dispositivo
-            defineIdSolicitante("dispositivo", response.id);
+       
+        const isIdDefinido = await defineIdSolicitanteNoDispositivo(response.id, idSolicitante);
+        
+        if(isIdDefinido){
+            return response.id;
         }
-        // retorna id Dispositivo para cadastrar em demanda
-        return response.id;
     }
 
     // cadastrar demanda
-    const cadastrarDemanda = async (data) => {
+    const cadastrarDemanda = async (data, idSolicitante) => {
         
         const request = await fetch(`${url}/demanda`,{
             method: "POST",
@@ -107,32 +158,19 @@ export function useDemanda() {
                 "Content-Type":"application/json"
             },
             body: JSON.stringify(data)
-        })
+        });
         
         const response = await request.json();
         
-        // verifica se demanda ja tem id
-        if(userType === "solicitante"){
-            // define id emissor da demanda
-            const isIdSolicitanteDefinido = await defineIdSolicitante("demanda", response.id);
+        // define id emissor da demanda
+        const isIdSolicitanteDefinido = await defineIdSolicitanteNaDemanda(response.id, idSolicitante);
             
-            // define data e hora da emissao da demanda
-            const isDataEmissaoDefinida = await defineDataEmissao(response.id);
-    
-            if(isIdSolicitanteDefinido && isDataEmissaoDefinida && request.ok){
-                alert("Demanda cadastrada");
-                return request.ok;
-            }
-        }
-        // verifica se demanda ja tem id
-        if(userType === "administrador"){            
-            // define data e hora da emissao da demanda
-            const isDataEmissaoDefinida = await defineDataEmissao(response.id);
-    
-            if(isDataEmissaoDefinida && request.ok){
-                alert("Demanda cadastrada");
-                return request.ok;
-            }
+        // define data e hora da emissao da demanda
+        const isDataEmissaoDefinida = await defineDataEmissao(response.id);
+
+        if(isIdSolicitanteDefinido && isDataEmissaoDefinida){
+            alert("Demanda cadastrada");
+            return request.ok;
         }
     }
 
@@ -169,20 +207,33 @@ export function useDemanda() {
     }
     
     // define o id do solicitante 
-    const defineIdSolicitante = async (tabelaDestino, id) =>{
-        // tabela Destino = dispositivo || demanda
+    const defineIdSolicitanteNaDemanda = async (idDemanda, idSolicitante) =>{
 
-        const solicitante = {
-            "solicitante_id": localStorage.getItem("userId")
+        const idDoSolicitante = {
+            "idSolicitante": idSolicitante
         }
 
-        const request = await fetch(`${url}/${tabelaDestino}/${id}`,{
+        const request = await fetch(`${url}/demanda/${idDemanda}`,{
             method: "PATCH",
-            body: JSON.stringify(solicitante)
+            body: JSON.stringify(idDoSolicitante)
         })
 
         return request.ok;
     }
+
+    const defineIdSolicitanteNoDispositivo = async (idDispositivo, idSolicitante) =>{
+
+        const idDoSolicitante = {
+            "idSolicitante": idSolicitante
+        }
+
+        const request = await fetch(`${url}/dispositivo/${idDispositivo}`,{
+            method: "PATCH",
+            body: JSON.stringify(idDoSolicitante)
+        });
+
+        return request.ok;
+    };
 
     // define data e hora emissao
     const defineDataEmissao = async (id) =>{
@@ -239,9 +290,13 @@ export function useDemanda() {
     }
 
     return {
+        atualizarDadosDispositivo,
+        atualizarDadosDemanda,
         atualizarStatusDemanda,
         buscaDemandas,
+        buscaDemandasPublicas,
         buscaDemandaById,
+        buscarDemandasDoSolicitante,
         buscaDemandaVinculadaAssistencia,
         buscaDispositivoById,
         buscaDispositivoDeDemandaDaAt,

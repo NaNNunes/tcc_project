@@ -4,6 +4,7 @@ const url = import.meta.env.VITE_API_URL;
 
 // cadastra assistencia
 export function useAssistencia() {
+
   // Lista todas as assistencias
   const buscaAssistencias = async () => {
     const request = await fetch(`${url}/assistencia`);
@@ -49,10 +50,8 @@ export function useAssistencia() {
     const response = await request.json();
     const id = await response.id;
 
-    // jogar para o context?
     localStorage.setItem("assistenciaId", id);
-    
-    //para quando o 
+     
     if(data.administradorId === undefined){
       const isAdmInserido = await inserirAdministrador(id);
       const isAssistenciaValida = await inserirValidacaoAssistencia(id, true);

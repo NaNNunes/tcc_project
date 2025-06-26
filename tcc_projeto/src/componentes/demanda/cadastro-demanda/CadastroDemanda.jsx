@@ -60,6 +60,8 @@ const CadastroDemanda = () => {
     } = useForm();
 
     const { 
+        atualizarDadosDispositivo,
+        atualizarDadosDemanda,
         buscaDemandaById,
         buscaDispositivoById 
     } = useDemanda();
@@ -120,7 +122,7 @@ const CadastroDemanda = () => {
                 const resBuscaDemandaById = await buscaDemandaById(idDemanda);
                 
                 // busca dados do dispositivo da demanda
-                const idDispositivo = resBuscaDemandaById.idDispostivo;
+                const idDispositivo = resBuscaDemandaById.idDispositivo;
                 const resBuscaispositivoById = await buscaDispositivoById(idDispositivo);
 
                 //salva dados de dispositivo no state
@@ -350,24 +352,32 @@ const CadastroDemanda = () => {
         setMostrarModal(true);
     }
 
-    const enviarDemandaCompleta = async (responsavelDemanda) => {
-        
-        // console.log("id assistencia:",assistenciaId);
+    // TODO FUNCAO PARA ATUALIZAR DEMANDA OU CADATRAR DEMANDA DE ACORDO
 
-        const dados = dadosTemporarios;
+    const enviarDemandaCompleta = async (responsavelDemanda) => {
+
+        (userType === "administrador")
+            ? cadastraDemandaPresencial(dadosTemporarios)
+            : cadastrarDemandaOnline(dadosTemporarios)
+    }
+
+    const handleAtualizaDemanda = async(idDemanda, idDispositivo) =>{
+        const isDispositivoAtualizado = await atualizarDadosDispositivo();
+        const isDemandaAtualizada = await atualizarDadosDemanda();
+    }
+
+    // funcao para cadastrar pseudo user
+    const cadastraDemandaPresencial = async(dados) => {
         // separando dados de solicitante presencial
         const dadosPseudoUser = {
-            "email": dadosTemporarios.email,
-            "cpf": dadosTemporarios.cpf,
-            "userTelefone": dadosTemporarios.userTelefone,
-            "nome": dadosTemporarios.nome,
-            "sobrenome": dadosTemporarios.sobrenome,
+            "email": dados.email,
+            "cpf": dados.cpf,
+            "userTelefone": dados.userTelefone,
+            "nome": dados.nome,
+            "sobrenome": dados.sobrenome,
             "isValido": false
         }
-
-        // cadastrar pseudo user, solicitante presencial
         const idPseudoUser = await cadastrarPseudoUser(dadosPseudoUser);
-        
         // separando dados de dispositivo
         const dispositivo = {
             "categoria": dados.categoria,
@@ -380,24 +390,19 @@ const CadastroDemanda = () => {
             "cor": dados.cor,
             "solicitante_id": idPseudoUser
         };
-
         // cadastrar dispositivo
-        const idDispostivo = await cadastrarDispositivo(dispositivo);
-        
+        const idDispositivo = await cadastrarDispositivo(dispositivo, idPseudoUser);
         const statusPadrao = (userType === "solicitante") ? "Aberto" : "Em atendimento"
-        
         // separando dados de demanda
         const infosDemanda = {
-            "idDispostivo" : idDispostivo,
+            "idDispositivo" : idDispositivo,
             "descProblema" : dados.descProblema,
             "observacoes": dados.observacoes,
             "status": statusPadrao,
             "assistencia": responsavelDemanda,
-            "solicitante_id": idPseudoUser
         };
-        
         // cadastrar demanda
-        const isDemandaCadastrada = await cadastrarDemanda(infosDemanda);
+        const isDemandaCadastrada = await cadastrarDemanda(infosDemanda, idPseudoUser);
 
         // direciona user para a tela de demandas ou de historico de demandas
         if(isDemandaCadastrada){
@@ -406,8 +411,44 @@ const CadastroDemanda = () => {
                 : '/procurar-demandas/historico'
             );
         }
-        setMostrarModal(false);
     }
+
+    const cadastrarDemandaOnline = async (dados) =>{
+        const idSolicitante = userId; 
+        // separando dados de dispositivo
+        const dispositivo = {
+            "categoria": dados.categoria,
+            "marca": dados.marca,
+            "fabricante": dados.fabricante,
+            "modelo": dados.modelo,
+            "numSerie": dados.numSerie, 
+            "tensao": dados.tensao,
+            "amperagem": dados.amperagem,
+            "cor": dados.cor,
+            "solicitante_id": idSolicitante
+        };
+        // cadastrar dispositivo
+        const idDispositivo = await cadastrarDispositivo(dispositivo, idSolicitante);
+        const statusPadrao = (userType === "solicitante") ? "Aberto" : "Em atendimento"
+        // separando dados de demanda
+        const infosDemanda = {
+            "idDispositivo" : idDispositivo,
+            "descProblema" : dados.descProblema,
+            "observacoes": dados.observacoes,
+            "status": statusPadrao,
+            "assistencia": responsavelDemanda,
+        };
+        // cadastrar demanda
+        const isDemandaCadastrada = await cadastrarDemanda(infosDemanda, idSolicitante);
+
+        // direciona user para a tela de demandas ou de historico de demandas
+        if(isDemandaCadastrada){
+            navigate(userType === "solicitante"
+                ? '/procurar-demandas/minhas-demandas'
+                : '/procurar-demandas/historico'
+            );
+        }
+    } 
 
     const onError = (errors) => {
         console.log("Erros: ", errors)

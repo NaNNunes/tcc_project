@@ -1,6 +1,7 @@
 const url = import.meta.env.VITE_API_URL;
 
 export function useEndereco() {
+
   // atualiza endereco do user
   const atualizarEndereco = async (idEndereco, data) => {
     const request = await fetch(`${url}/endereco/${idEndereco}`, {
@@ -35,6 +36,7 @@ export function useEndereco() {
 
   // cadastra endereco
   const cadastrarEndereco = async (data) => {
+    const userType = localStorage.getItem("userType") || localStorage.get("tipoUsuario");
     const request = await fetch(`${url}/endereco`, {
       method: "POST",
       headers: {
@@ -44,47 +46,65 @@ export function useEndereco() {
     });
 
     const response = await request.json();
-    const endereco_id = response.id;
-    // define id do endereco como chave estrangeira
-    const isEnderecoAtribuido = await setaIdEmUser(endereco_id);
+    const idEndereco = response.id;
 
-    if(isEnderecoAtribuido){
-      // retorna endereço fora cadastrado e user recebeu o id do endereco
-      return request.ok;
+    // define id do endereco como chave estrangeira
+    
+    if(userType === "administrador"){
+      const isEnderecoAtribuidoAssistencia =  await defineIdEmAssistencia(idEndereco)
+      if(isEnderecoAtribuidoAssistencia){
+        // retorna endereço fora cadastrado e user recebeu o id do endereco
+        return request.ok;
+      }
+    }
+
+    if(userType === "solicitante"){
+      const isEnderecoAtribuidoSolicitante =  await defineIdEmSolicitante(idEndereco)
+      if(isEnderecoAtribuidoSolicitante){
+        // retorna endereço fora cadastrado e user recebeu o id do endereco
+        return request.ok;
+      }
     }
   };
 
-  // define id de endereco de acordo com o user, solicitante ou pseudo user
-  const setaIdEmUser = async (endereco_id) => {
-    // define quem receberá o id do endereco
-    const tipo = localStorage.getItem("tipoUsuario");
-    const user =
-      tipo !== "Visitante" && tipo === "solicitante"
-        ? "solicitante"
-        : "assistencia";
-
-    // pega o id do endereco
-    const id =
-      user !== "Visitante" && tipo === "solicitante"
-        ? localStorage.getItem("userId")
-        : localStorage.getItem("assistenciaId");
-
+  const defineIdEmAssistencia = async (idEndereco) =>{
     const enderecoId = {
-      id_endereco: endereco_id,
+      "idEndereco": idEndereco,
     };
 
-    const request = await fetch(`${url}/${user}/${id}`, {
+    const id = localStorage.getItem("assistenciaId");
+
+    const request = await fetch(`${url}/assistencia/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(enderecoId),
+    });
+
+    if(request.ok){
+      localStorage.removeItem("assistenciaId");
+      return request.ok;
+    }
+  }
+
+  const defineIdEmSolicitante = async (idEndereco) =>{
+
+    const enderecoId = {
+      "idEndereco": idEndereco,
+    };
+
+    const id = localStorage.getItem("userId");
+
+    const request = await fetch(`${url}/solicitante/${id}`, {
       method: "PATCH",
       body: JSON.stringify(enderecoId),
     });
 
     return request.ok;
-  };
+  }
 
   return { 
     atualizarEndereco,
     buscaEnderecoById,
     buscaEnderecoByZipCode,
-    cadastrarEndereco 
+    cadastrarEndereco, 
   };
 }

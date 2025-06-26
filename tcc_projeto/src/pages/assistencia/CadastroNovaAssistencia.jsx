@@ -139,9 +139,8 @@ const CadastroNovaAssistencia = () => {
         complemento: data.complemento,
       };
 
-      const isEnderecoCadastrado = await cadastrarEndereco(
-        dadosEnderecoAssitiencia
-      );
+      const isEnderecoCadastrado = await cadastrarEndereco(dadosEnderecoAssitiencia);
+
       if (isEnderecoCadastrado) {
         alert(`Nova assistencia, ${data.razaoSocial}, cadastrada`);
         location.reload();
