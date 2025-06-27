@@ -96,6 +96,7 @@ export function useUser() {
     // cadastra solicitante presencial
     const cadastrarPseudoUser = async (data) =>{
 
+        // separando dados de solicitante presencial        
         const dadosPseudoUser = {
             "email": data.email,
             "cpf": data.cpf,

@@ -16,12 +16,12 @@
       "idEndereco": "4358"
     },
     {
-      "id": "c806",
+      "id": "0431",
       "email": "pseudouser@gmail.com",
-      "cpf": "785.367.290-07",
-      "userTelefone": "27996008563",
+      "cpf": "133.127.937-26",
+      "userTelefone": "12912345678",
       "nome": "Pseudo",
-      "sobrenome": "UserSurname",
+      "sobrenome": "User",
       "isValido": false
     }
   ],
@@ -145,20 +145,7 @@
   ],
   "dispositivo": [
     {
-      "id": "a0ac",
-      "categoria": "Celular",
-      "marca": "Motorola",
-      "fabricante": "",
-      "modelo": "Moto G35",
-      "numSerie": "",
-      "tensao": "",
-      "amperagem": "",
-      "cor": "",
-      "solicitante_id": "5744",
-      "idSolicitante": "5744"
-    },
-    {
-      "id": "1441",
+      "id": "668e",
       "categoria": "Celular",
       "marca": "Nokia",
       "fabricante": "",
@@ -166,57 +153,44 @@
       "numSerie": "",
       "tensao": "",
       "amperagem": "",
-      "cor": "",
-      "solicitante_id": "5744",
+      "cor": "Azul da cor do Mar",
       "idSolicitante": "5744"
     },
     {
-      "id": "7685",
-      "categoria": "Celular",
-      "marca": "Samsung",
+      "id": "baec",
+      "categoria": "Tablet",
+      "marca": "Apple",
       "fabricante": "",
-      "modelo": "Galaxy A06",
+      "modelo": "iPad Air",
       "numSerie": "",
       "tensao": "",
       "amperagem": "",
       "cor": "",
-      "solicitante_id": "c806",
-      "idSolicitante": "c806"
+      "idSolicitante": "0431"
     }
   ],
   "demanda": [
     {
-      "id": "7cea",
-      "idDispositivo": "a0ac",
-      "descProblema": "dsafsdafsdafsdafsdafsdfsdfdsfsdafsdafsda",
-      "observacoes": "",
-      "status": "Em atendimento",
-      "assistencia": "7e02",
-      "idSolicitante": "5744",
-      "dataEmissao": "25/06/2025",
-      "horaEmissao": "19:15:54"
-    },
-    {
-      "id": "1890",
-      "idDispositivo": "1441",
-      "descProblema": "ksdlafjklsdhjkfsdkjfkjsdfsjdkfsd",
+      "id": "9c8b",
+      "idDispositivo": "668e",
+      "descProblema": "Demanda modificada",
       "observacoes": "",
       "status": "Aberto",
       "assistencia": "Público",
       "idSolicitante": "5744",
-      "dataEmissao": "25/06/2025",
-      "horaEmissao": "19:21:07"
+      "dataEmissao": "27/06/2025",
+      "horaEmissao": "03:53:23"
     },
     {
-      "id": "71e0",
-      "idDispositivo": "7685",
-      "descProblema": "mnklsfkljfsdakljfasdklnfasdjioksksjkejdj",
+      "id": "f6f2",
+      "idDispositivo": "baec",
+      "descProblema": "dsafsdafgsdagfdsagsdagsdfsdfwdsfsd",
       "observacoes": "",
       "status": "Em atendimento",
       "assistencia": "7e02",
-      "idSolicitante": "c806",
-      "dataEmissao": "25/06/2025",
-      "horaEmissao": "19:44:32"
+      "idSolicitante": "0431",
+      "dataEmissao": "27/06/2025",
+      "horaEmissao": "03:54:41"
     }
   ],
   "assistencia_Fav_Solicitante": []

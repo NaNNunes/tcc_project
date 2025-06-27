@@ -40,17 +40,15 @@ import { useUser} from '../../../hooks/useUser.js';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const CadastroDemanda = () => {
-    
-    const navigate = useNavigate();
-    // recebe id da demada ou 'criar' da url para definir a pagina carregada será para edição ou criação de demanda
-    const {idDemanda} = useParams();
+    const navigate = useNavigate();    
 
-    const userId = localStorage.getItem("userId");
     const userType = localStorage.getItem("userType");
-
     // caso user não seja válido
     if(userType != "administrador" && userType != "solicitante") return navigate("/login");
     
+    const userId = localStorage.getItem("userId");
+    // recebe id da demada ou 'criar' da url para definir a pagina carregada será para edição ou criação de demanda
+    const {idDemanda} = useParams();
     const {
         register,
         handleSubmit,
@@ -63,7 +61,9 @@ const CadastroDemanda = () => {
         atualizarDadosDispositivo,
         atualizarDadosDemanda,
         buscaDemandaById,
-        buscaDispositivoById 
+        buscaDispositivoById,
+        cadastrarDispositivo,
+        cadastrarDemanda
     } = useDemanda();
     
     const { 
@@ -143,7 +143,6 @@ const CadastroDemanda = () => {
         fetchData();
     },[]);
 
-    const {cadastrarDispositivo, cadastrarDemanda} = useDemanda();
     // Categoria e marca selecionada no ListGroup.
     const categoriaSelecionada = watch("categoria");
     const [marcaSelecionada, setMarcaSelecionada] = useState("");
@@ -352,107 +351,101 @@ const CadastroDemanda = () => {
         setMostrarModal(true);
     }
 
-    // TODO FUNCAO PARA ATUALIZAR DEMANDA OU CADATRAR DEMANDA DE ACORDO
-
-    const enviarDemandaCompleta = async (responsavelDemanda) => {
-
-        (userType === "administrador")
-            ? cadastraDemandaPresencial(dadosTemporarios)
-            : cadastrarDemandaOnline(dadosTemporarios)
-    }
-
-    const handleAtualizaDemanda = async(idDemanda, idDispositivo) =>{
-        const isDispositivoAtualizado = await atualizarDadosDispositivo();
-        const isDemandaAtualizada = await atualizarDadosDemanda();
-    }
-
-    // funcao para cadastrar pseudo user
-    const cadastraDemandaPresencial = async(dados) => {
-        // separando dados de solicitante presencial
-        const dadosPseudoUser = {
-            "email": dados.email,
-            "cpf": dados.cpf,
-            "userTelefone": dados.userTelefone,
-            "nome": dados.nome,
-            "sobrenome": dados.sobrenome,
-            "isValido": false
+    // funcao para verificaçao do tipo de user e 
+    // cadastro de dispositivo, demanda e pseudo user, 
+    // quando demanda criada presencialmente. 
+    const handleCadastrarDemanda = async (responsavelDemanda) =>{
+        // para atendimento presencial
+        if(userType === "administrador"){
+            return cadastrarDemandaPresencial(responsavelDemanda);
         }
-        const idPseudoUser = await cadastrarPseudoUser(dadosPseudoUser);
-        // separando dados de dispositivo
-        const dispositivo = {
-            "categoria": dados.categoria,
-            "marca": dados.marca,
-            "fabricante": dados.fabricante,
-            "modelo": dados.modelo,
-            "numSerie": dados.numSerie, 
-            "tensao": dados.tensao,
-            "amperagem": dados.amperagem,
-            "cor": dados.cor,
-            "solicitante_id": idPseudoUser
-        };
-        // cadastrar dispositivo
-        const idDispositivo = await cadastrarDispositivo(dispositivo, idPseudoUser);
-        const statusPadrao = (userType === "solicitante") ? "Aberto" : "Em atendimento"
-        // separando dados de demanda
-        const infosDemanda = {
-            "idDispositivo" : idDispositivo,
-            "descProblema" : dados.descProblema,
-            "observacoes": dados.observacoes,
-            "status": statusPadrao,
-            "assistencia": responsavelDemanda,
-        };
-        // cadastrar demanda
-        const isDemandaCadastrada = await cadastrarDemanda(infosDemanda, idPseudoUser);
 
-        // direciona user para a tela de demandas ou de historico de demandas
-        if(isDemandaCadastrada){
-            navigate(userType === "solicitante"
-                ? '/procurar-demandas/minhas-demandas'
-                : '/procurar-demandas/historico'
-            );
+        // para demanda online
+        if(userType === "solicitante"){
+            return cadastrarDemandaOnline(responsavelDemanda);
         }
     }
 
-    const cadastrarDemandaOnline = async (dados) =>{
-        const idSolicitante = userId; 
-        // separando dados de dispositivo
-        const dispositivo = {
-            "categoria": dados.categoria,
-            "marca": dados.marca,
-            "fabricante": dados.fabricante,
-            "modelo": dados.modelo,
-            "numSerie": dados.numSerie, 
-            "tensao": dados.tensao,
-            "amperagem": dados.amperagem,
-            "cor": dados.cor,
-            "solicitante_id": idSolicitante
-        };
-        // cadastrar dispositivo
-        const idDispositivo = await cadastrarDispositivo(dispositivo, idSolicitante);
-        const statusPadrao = (userType === "solicitante") ? "Aberto" : "Em atendimento"
-        // separando dados de demanda
-        const infosDemanda = {
-            "idDispositivo" : idDispositivo,
-            "descProblema" : dados.descProblema,
-            "observacoes": dados.observacoes,
-            "status": statusPadrao,
-            "assistencia": responsavelDemanda,
-        };
-        // cadastrar demanda
-        const isDemandaCadastrada = await cadastrarDemanda(infosDemanda, idSolicitante);
+    const cadastrarDemandaPresencial = async (responsavelDemanda) => {
+        // cadastra solicitante presencial e dispositivo
+        const idSolicitante = await cadastrarPseudoUser(dadosTemporarios);
+        const idDispositivo = await cadastrarDispositivo(dadosTemporarios, idSolicitante);
 
-        // direciona user para a tela de demandas ou de historico de demandas
-        if(isDemandaCadastrada){
-            navigate(userType === "solicitante"
-                ? '/procurar-demandas/minhas-demandas'
-                : '/procurar-demandas/historico'
-            );
+        // verifica se todos os ids foram criados
+        const isIdsAtribuidos = (idSolicitante && idDispositivo);
+        if(!isIdsAtribuidos) return alert("Dispositivo e solicitante não criado");
+
+        const isDemandaCadastrada = await cadastrarDemanda(dadosTemporarios, idSolicitante, idDispositivo, responsavelDemanda)
+        // verifica se demanda foi criada
+        if(!isDemandaCadastrada) return alert("Demanda não criada");
+        // direciona user para a tela de demandas
+        return afterCadastroOuAtualizacaoDemanda();
+    }
+
+    const cadastrarDemandaOnline = async (responsavelDemanda) =>{
+        // cadastra dispositivo
+        const idDispositivo = await cadastrarDispositivo(dadosTemporarios, userId);
+        // verifica se dispositivo foi criado
+        if(idDispositivo == undefined) return alert("Dispositivo não criado");
+
+        const isDemandaCadastrada = await cadastrarDemanda(dadosTemporarios, userId, idDispositivo, responsavelDemanda);
+        // verifica se demanda foi criada
+        if(!isDemandaCadastrada) return alert("Demanda não criada");
+
+        // direciona para a tela de demandas
+        return afterCadastroOuAtualizacaoDemanda();
+    }
+
+    // utilizado para atualização de demanda e dispositivo, apenas online
+    // OBS COLOCAR VERIFICAÇÃO SE USER É SOLICITANTE PARA REALIZAR ALTERAÇÃO
+    const handleAtualizarDemanda = async(idDemanda, idDispositivo, responsavelDemanda) =>{
+        // funcao de atualizar dispositivo
+        const isDispositivoAtualizado = await atualizarDadosDispositivo(dadosTemporarios, idDispositivo);
+        // verifica se dispositivo foi atualizado
+        if(!isDispositivoAtualizado) return alert("Dispositivo não atualizado");
+
+        const isDemandaAtualizada = await atualizarDadosDemanda(dadosTemporarios, idDemanda, responsavelDemanda);
+        // verifica se demanda foi atualizada
+        if(!isDemandaAtualizada) return alert("Demanda não atualizada");
+        return afterCadastroOuAtualizacaoDemanda();
+    }
+
+    // direciona user para a tela de demandas ou de historico de demandas
+    const afterCadastroOuAtualizacaoDemanda = () =>{
+        if((userType === "solicitante")){
+            return navigate('/procurar-demandas/minhas-demandas');
+        }
+        else if ((userType === "administrador")){
+            return navigate('/procurar-demandas/historico');
         }
     } 
 
     const onError = (errors) => {
         console.log("Erros: ", errors)
     }
+
+    // botao para atualizar demanda, disposnível apenas para solicitante
+    const botaoAtualizarDemanda = (
+        <Button
+            as='input'
+            type='submit'
+            value="Atualizar"
+            onClick={() => { handleAtualizarDemanda(idDemanda, dispositivo.id, atSelecionada)}}
+            className={stylesCad.botaoModal}
+        />
+    );
+
+    // botao para atualizar demanda
+    const botaoCadastrarDemanda = (
+        <Button
+            as='input'
+            type='submit'
+            value={userType === "solicitante" ? "Enviar" : "Cadastrar"}
+            disabled={(atSelecionada === "Público" && userType === "administrador")}
+            onClick={() => { handleCadastrarDemanda(atSelecionada) }}
+            className={stylesCad.botaoModal}
+        />
+    );
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
@@ -1005,16 +998,11 @@ const CadastroDemanda = () => {
             </Modal.Body>
 
             <Modal.Footer className={stylesCad.footerModal}>
-                <Button
-                    as='input'
-                    type='submit'
-                    value={userType === "solicitante" ? "Enviar" : "Cadastrar"}
-                    disabled={(atSelecionada === "Público" && userType === "administrador")}
-                    onClick={() => {
-                        enviarDemandaCompleta(atSelecionada)
-                    }}
-                    className={stylesCad.botaoModal}
-                />
+                {
+                    (userType === "solicitante" && idDemanda != "criar")
+                        ? botaoAtualizarDemanda
+                        : botaoCadastrarDemanda
+                }
             </Modal.Footer>
         </Modal>
     </div> 

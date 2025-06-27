@@ -16,22 +16,40 @@ export function useDemanda() {
         return request.ok;
     }
 
-    const atualizarDadosDemanda = async(dados, idDemanda)=>{
+    const atualizarDadosDemanda = async(dados, idDemanda, responsavelDemanda)=>{
+        // define dados do dispositivo
+        // separando dados de demanda
+        const infosDemanda = {
+            "descProblema" : dados.descProblema,
+            "observacoes": dados.observacoes,
+            "assistencia": responsavelDemanda,
+        };
+
         const request = await fetch(`${url}/demanda/${idDemanda}`,{
             method: "PATCH",
-            body: JSON.stringify(dados)
+            body: JSON.stringify(infosDemanda)
         });
-        const response = request.json();
 
         return request.ok;
     }
 
     const atualizarDadosDispositivo = async (dados, idDispositivo) => {
+        // separando dados de dispositivo
+        const dispositivo = {
+            "categoria": dados.categoria,
+            "marca": dados.marca,
+            "fabricante": dados.fabricante,
+            "modelo": dados.modelo,
+            "numSerie": dados.numSerie, 
+            "tensao": dados.tensao,
+            "amperagem": dados.amperagem,
+            "cor": dados.cor
+        };
+
         const request = await fetch(`${url}/dispositivo/${idDispositivo}`,{
             method: "PATCH",
-            body: JSON.stringify(dados)
+            body: JSON.stringify(dispositivo)
         });
-        const response = request.json();
 
         return request.ok;
     };
@@ -132,43 +150,63 @@ export function useDemanda() {
     
     // cadastra dispositivo no sistema
     const cadastrarDispositivo = async (data, idSolicitante) =>{
+        // separando dados de dispositivo
+        const dispositivo = {
+            "categoria": data.categoria,
+            "marca": data.marca,
+            "fabricante": data.fabricante,
+            "modelo": data.modelo,
+            "numSerie": data.numSerie, 
+            "tensao": data.tensao,
+            "amperagem": data.amperagem,
+            "cor": data.cor,
+            "idSolicitante": idSolicitante
+        };
 
         const request = await fetch(`${url}/dispositivo`,{
             method: "POST",
             headers: {
                 "Content-Type":"application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(dispositivo)
         })
+
         const response =  await request.json();
-       
-        const isIdDefinido = await defineIdSolicitanteNoDispositivo(response.id, idSolicitante);
-        
-        if(isIdDefinido){
-            return response.id;
-        }
+
+        return response.id;
     }
 
     // cadastrar demanda
-    const cadastrarDemanda = async (data, idSolicitante) => {
+    const cadastrarDemanda = async (data, idSolicitante, idDispositivo, responsavelDemanda) => {
+        const userType = localStorage.getItem("userType");
+        const statusPadrao = (userType === "solicitante") 
+            ? "Aberto" 
+            : "Em atendimento"
+        
+        // separando dados de demanda
+        const infosDemanda = {
+            "idDispositivo" : idDispositivo,
+            "descProblema" : data.descProblema,
+            "observacoes": data.observacoes,
+            "status": statusPadrao,
+            "assistencia": responsavelDemanda,
+            "idSolicitante": idSolicitante
+        };
         
         const request = await fetch(`${url}/demanda`,{
             method: "POST",
             headers: {
                 "Content-Type":"application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(infosDemanda)
         });
         
         const response = await request.json();
-        
-        // define id emissor da demanda
-        const isIdSolicitanteDefinido = await defineIdSolicitanteNaDemanda(response.id, idSolicitante);
             
         // define data e hora da emissao da demanda
         const isDataEmissaoDefinida = await defineDataEmissao(response.id);
 
-        if(isIdSolicitanteDefinido && isDataEmissaoDefinida){
+        if(isDataEmissaoDefinida){
             alert("Demanda cadastrada");
             return request.ok;
         }
@@ -204,21 +242,6 @@ export function useDemanda() {
         })
 
         return request.ok
-    }
-    
-    // define o id do solicitante 
-    const defineIdSolicitanteNaDemanda = async (idDemanda, idSolicitante) =>{
-
-        const idDoSolicitante = {
-            "idSolicitante": idSolicitante
-        }
-
-        const request = await fetch(`${url}/demanda/${idDemanda}`,{
-            method: "PATCH",
-            body: JSON.stringify(idDoSolicitante)
-        })
-
-        return request.ok;
     }
 
     const defineIdSolicitanteNoDispositivo = async (idDispositivo, idSolicitante) =>{
