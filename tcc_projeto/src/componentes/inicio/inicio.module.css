@@ -103,20 +103,6 @@ h4 {
   height: 100%;
 }
 
-/* .card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 800px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-  border: none;
-  margin: 2rem auto;
-  padding: 1rem;
-} */
-
 .relatoriosSection {
   /* background-image: url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"); */
   background: linear-gradient(
@@ -138,24 +124,6 @@ h4 {
       rgba(197, 201, 204, 0.55)
     ),
     url("https://images.pexels.com/photos/9242901/pexels-photo-9242901.jpeg")
-      center/cover no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 70vh;
-  min-width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-}
-
-.assistenciaSection {
-  background: linear-gradient(
-      rgba(121, 121, 121, 0.75),
-      rgba(144, 183, 216, 0.55)
-    ),
-    url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
       center/cover no-repeat;
   background-size: cover;
   background-position: center;
@@ -260,6 +228,49 @@ h4 {
   gap: 1.2rem;
   justify-content: center;
   padding: 1.5rem;
+}
+
+.assistenciaSection {
+  background: linear-gradient(
+      rgba(121, 121, 121, 0.75),
+      rgba(144, 183, 216, 0.55)
+    ),
+    url("https://images.pexels.com/photos/39284/macbook-apple-imac-computer-39284.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1")
+      center/cover no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 70vh;
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.assistenciasRecentes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem; /* Espaço entre os cards */
+}
+
+.assistenciaCard {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  width: 220px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.assistenciaCard:hover {
+  transform: translateY(-5px);
+}
+
+.assistenciaInfo {
+  text-align: center;
 }
 
 /* Responsivo */

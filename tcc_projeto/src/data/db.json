@@ -197,18 +197,6 @@
       "amperagem": "",
       "cor": "",
       "idSolicitante": "5744"
-    },
-    {
-      "id": "c21b",
-      "categoria": "Celular",
-      "marca": "Samsung",
-      "fabricante": "",
-      "modelo": "Galaxy S24 FE",
-      "numSerie": "",
-      "tensao": "",
-      "amperagem": "",
-      "cor": "",
-      "idSolicitante": "5744"
     }
   ],
   "demanda": [
@@ -237,34 +225,18 @@
     {
       "id": "da42",
       "idDispositivo": "1b93",
-      "descProblema": "Problema na minha praca",
+      "descProblema": "Problema na minha placa",
       "observacoes": "",
-      "status": "Cancelada",
+      "status": "Aberto",
       "assistencia": "Público",
       "idSolicitante": "5744",
       "dataEmissao": "27/06/2025",
       "horaEmissao": "05:07:40"
-    },
-    {
-      "id": "74f9",
-      "idDispositivo": "c21b",
-      "descProblema": "siiiiiiiiiiiiiiiiiiuuuuuuu",
-      "observacoes": "",
-      "status": "Aberto",
-      "assistencia": "7e02",
-      "idSolicitante": "5744",
-      "dataEmissao": "27/06/2025",
-      "horaEmissao": "19:02:50"
     }
   ],
   "assistencia_Fav_Solicitante": [
     {
-      "id": "4e77",
-      "id_solicitante": "5744",
-      "id_assistencia": "7e02"
-    },
-    {
-      "id": "adf2",
+      "id": "c85f",
       "id_solicitante": "5744",
       "id_assistencia": "2a23"
     }

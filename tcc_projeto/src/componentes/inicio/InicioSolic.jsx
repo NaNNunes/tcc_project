@@ -6,7 +6,7 @@ import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/userContext";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
@@ -22,6 +22,33 @@ const InicioSolic = () => {
   const navigate = useNavigate();
   const [openDropdown, setOpenDropdown] = useState(null);
   const { usuarioNome } = useContext(AuthContext);
+  // const [favoritas, setFavoritas] = useState([]);
+  // const [assistencias, setAssistencias] = useState([]);
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const resAssist = await fetch("http://localhost:3000/assistencia");
+  //       const resFav = await fetch(
+  //         "http://localhost:3000/assistencia_Fav_Solicitante"
+  //       );
+
+  //       if (!resAssist.ok || !resFav.ok) {
+  //         throw new Error("Erro ao buscar dados");
+  //       }
+
+  //       const assistenciasData = await resAssist.json();
+  //       const favoritasData = await resFav.json();
+
+  //       setAssistencias(assistenciasData);
+  //       setFavoritas(favoritasData);
+  //     } catch (error) {
+  //       console.error("Erro ao carregar assistências:", error);
+  //     }
+  //   }
+
+  //   fetchData();
+  // }, []);
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center">
@@ -206,58 +233,42 @@ const InicioSolic = () => {
         </Container>
       </section>
 
-      {/* Seção de Assistências Recentes */}
+      {/* Seção de Assistências Favoritas */}
       <section className={styles.assistenciaSection}>
         <Container fluid>
           <div className={styles.cardWrapperCenter}>
             <Card className={styles.card}>
               <Row className="justify-content-center text-center mb-4">
                 <Col xs="auto">
-                  <h4>Assistências Recentes</h4>
+                  <h4>Assistências Favoritadas</h4>
                 </Col>
               </Row>
 
-              <Row className="justify-content-center">
-                <div className={styles.assistenciasRecentes}>
-                  {/* Exemplo de assistência recente */}
-                  <div className={styles.assistenciaCard}>
-                    <Image
-                      src="/logos/assistencia1.jpg"
-                      roundedCircle
-                      className={styles.assistenciaLogo}
-                    />
-                    <div className={styles.assistenciaInfo}>
-                      <h5>TecnoFix</h5>
-                      <p>Nota: 4.9 ★</p>
-                      <Button
-                        variant="outline-primary"
-                        size="sm"
-                        onClick={() => navigate("/assistencia/1")}
-                      >
-                        Ver Detalhes
-                      </Button>
-                    </div>
-                  </div>
+              <Row
+                className={`justify-content-center ${styles.assistenciasRecentes}`}
+              >
+                {favoritas.map((fav) => {
+                  const dados = assistencias.find(
+                    (a) => a.id === fav.id_assistencia
+                  );
+                  if (!dados) return null;
 
-                  <div className={styles.assistenciaCard}>
-                    <Image
-                      src="/logos/assistencia2.jpg"
-                      roundedCircle
-                      className={styles.assistenciaLogo}
-                    />
-                    <div className={styles.assistenciaInfo}>
-                      <h5>PC Express</h5>
-                      <p>Nota: 4.7 ★</p>
-                      <Button
-                        variant="outline-primary"
-                        size="sm"
-                        onClick={() => navigate("/assistencia/2")}
-                      >
-                        Ver Detalhes
-                      </Button>
+                  return (
+                    <div key={fav.id} className={styles.assistenciaCard}>
+                      <div className={styles.assistenciaInfo}>
+                        <h5>{dados.nome}</h5>
+                        <p>Nota: {dados.nota} ★</p>
+                        <Button
+                          variant="outline-primary"
+                          size="sm"
+                          onClick={() => navigate(`/assistencia/${dados.id}`)}
+                        >
+                          Ver Detalhes
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  );
+                })}
               </Row>
             </Card>
           </div>
