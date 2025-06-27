@@ -666,7 +666,7 @@ const CadastroDemanda = () => {
                     {/* Título do container */}
                     <Row style={{paddingBottom: '1%'}}> 
                         <Col md={12} xs={12}>
-                            <h3 className={stylesCad.titleh3}>Informações do dispositivo</h3>
+                            <h3 className={stylesCad.titleh3}>Dados do dispositivo</h3>
                         </Col>
                     </Row>
 

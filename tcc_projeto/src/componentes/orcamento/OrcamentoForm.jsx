@@ -130,7 +130,12 @@ const OrcamentoForm = () => {
                     label='Demanda'
                   >
                     <Form.Select
-                      onChange={(e)=>{buscaDadosDeDemanda(e.target.value);}}
+                      onChange={(e)=>{
+                        setTimeout(() => {
+                          location.reload();
+                        }, .1);
+                        navigate(`/orcamento/${e.target.value}`);
+                      }}
                     >
                       {
                         // mostra demanda passada na url como selecionada
