@@ -1,5 +1,5 @@
 // TODO PERMITIR AO ADM ENCERRAR DEMANDAS PRESENCIAIS
-
+// TODO MOSTRAR ASSISTENCIA QUE DEMANDA EM ABERTO ESTÁ VINCULADA
 // Importação de componentes do react-bootstrap
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
@@ -425,9 +425,9 @@ const CardDemanda = (props) => {
                     {/* mude o design front enzo */}  
                     {
                         (props.status !== "Aberto" && idAssistencia != "Público") && 
-                        <Card.Header className={styles.textoTitle}>
-                            <span>{assistenciaResponsavel}</span>
-                        </Card.Header>
+                            <Card.Header className={styles.textoTitle}>
+                                <span>{assistenciaResponsavel}</span>
+                            </Card.Header>
                     }
                     <Card.Body 
                         className={styles.cardBody} 

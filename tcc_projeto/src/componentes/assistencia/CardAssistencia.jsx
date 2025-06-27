@@ -99,7 +99,7 @@ const CardAssistencia = (props) => {
   const botaoDesLikeAssistencia = (
     <Button
       type="submit"
-      value="Remover Match"
+      value="Desfavoritar"
       as="input"
       variant="warning"
       onClick={removerMatch}
