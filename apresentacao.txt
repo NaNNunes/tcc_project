@@ -1,3 +1,15 @@
+Solicitante:
+
+LOGIN
+
+Email: jaqueline_bianca_dacunha@seal.com.br
+Senha: Senha@123
+
+----------------------------------
+	
+
+
+
 	ADM:
 
 Cadastro:
@@ -5,7 +17,7 @@ Cadastro:
 Email: isaacpietro@gmail.com
 CPF: 930.426.712-91
 Telefone: (63) 3774-7041
-Senha: 12345678
+Senha: Senha@123
 
 ----------------------------------
 
@@ -25,22 +37,13 @@ CEP: 69919-817
 
 Login:
 
-Email: adm@gmail.com
-Senha: Senha@123
-
-
-
-----------------------------------
-
-	Solicitante:
-
-Login:
-
-Email: user@gmail.com.br
+Email: isaacpietro@gmail.com
 Senha: Senha@123
 
 ----------------------------------
-	
+
 Demanda:
 
 CPF: 979.370.053-00
+
+----------------------------------
