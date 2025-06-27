@@ -345,7 +345,7 @@ const MenuNavegacao = () => {
             }}
           >
             <Image className={styles.icone} src="/icons/location_on.svg" />
-            <span className={styles.textoDropdownItem}>Consultar Assistências</span>
+            <span className={styles.navText}>Consultar Assistências</span>
           </NavDropdown.Item>
         </NavDropdown>
       </div>
@@ -365,12 +365,13 @@ const MenuNavegacao = () => {
             }, 1);
           }}
         >
-          Solicitações
-          {numeroSolicitacoes > 0 && (
-            <Badge className={styles.badgeAtualizacoes}>
-              {numeroSolicitacoes}
-            </Badge>
-          )}
+          <span className={styles.textoDropdownItem}>Solicitações
+            {numeroSolicitacoes > 0 && (
+              <Badge className={styles.badgeAtualizacoes}>
+                {numeroSolicitacoes}
+              </Badge>
+            )}
+          </span>
         </Nav.Link>
       </div>
     </>
