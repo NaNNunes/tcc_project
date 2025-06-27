@@ -345,7 +345,7 @@ const MenuNavegacao = () => {
             }}
           >
             <Image className={styles.icone} src="/icons/location_on.svg" />
-            <span className={styles.navText}>Consultar Assistências</span>
+            <span className={styles.textoDropdownItem}>Consultar Assistências</span>
           </NavDropdown.Item>
         </NavDropdown>
       </div>
