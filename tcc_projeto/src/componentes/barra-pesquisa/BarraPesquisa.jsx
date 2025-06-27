@@ -8,6 +8,10 @@ import FormFloating from "react-bootstrap/FormFloating";
 import FormSelect from 'react-bootstrap/FormSelect';
 import Dropdown from 'react-bootstrap/Dropdown';
 
+// Importação dos icones.
+import { TiArrowSortedDown } from "react-icons/ti";
+import { TiArrowSortedUp } from "react-icons/ti";
+
 import { useEffect, useState } from "react";
 
 // Importação dos estilos.
@@ -15,8 +19,11 @@ import styles from './BarraPesquisa.module.css';
 
 const BarraPesquisa = ({props}) => {
     const [textoBusca, setTextoBusca] = useState("");
-    const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todos");
-    const [stausSelecionado, setStausSelecionado] = useState("Todos");
+    const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todas categorias");
+    const [stausSelecionado, setStausSelecionado] = useState("Todos status");
+
+    // Dropdown para saber se o dropdown está aberto.
+    const [openDropdown, setOpenDropdown] = useState(null);
 
     console.log("Texto: ", textoBusca);
     console.log("categoria: ", categoriaSelecionada);
@@ -24,9 +31,19 @@ const BarraPesquisa = ({props}) => {
 
     const dropdownCategorias = (
         <>
-            <Dropdown onSelect={(value) => setCategoriaSelecionada(value)}>
+            <Dropdown 
+                onSelect={(value) => setCategoriaSelecionada(value)}
+                className={styles.selecao}
+                show={openDropdown === "Categorias"}
+                onToggle={(isOpen) => setOpenDropdown(isOpen ? "Categorias" : null)}
+            >
                 <Dropdown.Toggle className={styles.botaoDropdown}>
                     {categoriaSelecionada}
+                    {openDropdown === "demandas-adm" ? (
+                        <TiArrowSortedUp />
+                    ) : (
+                        <TiArrowSortedDown />
+                    )}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu className={styles.menuDropdown}>
@@ -65,7 +82,7 @@ const BarraPesquisa = ({props}) => {
             <Row>
                 <Col>
                     {dropdownCategorias}
-                    {dropdownStatus}
+
                 </Col>
 
                 <Col>

@@ -10,13 +10,13 @@
 
 /* Corpo do card */
 .cardBody {
-    height: 27.5rem;
+    height: 28rem;
     padding: 20px;
 }
 
 /* Texto com um cortono para marca e modelo. */
 .textoCardPrincipal {
-    font-size: 1rem;
+    font-size: 1.2rem;
     text-align: center;
     font-weight: bold;
     padding-left: 8px;
@@ -24,4 +24,63 @@
     border: 3px solid #757575;
     border-radius: 10px;
     padding: 10px;
+    margin: 0;
+}
+
+.textoInfo {
+    font-size: 1rem;
+    color: #757575;
+    font-weight: bold;
+    margin-bottom: 10px !important;
+}
+
+/* hr fazendo a divisão entre topicos. */
+.divisao {
+    border: none;
+    border-top: 2px solid #cacaca;
+    margin: 10px 0;              
+    width: 100%;                  
+    opacity: 1;       
+}
+
+/* Container contendo tudo que vai aparecer no modal. */
+.ContainerModalInfo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 0px;
+}
+
+
+@media screen and (max-width: 1300px) {
+    .ContainerModalInfo {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cardBody {
+        height: 30rem;
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .ContainerModalInfo {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .cardBody {
+        height: fit-content;
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 310px) {
+    .textoInfo {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .textoCardPrincipal {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
 }

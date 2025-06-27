@@ -98,7 +98,7 @@ const Assistencias = () => {
   };
 
   return (
-    <div style={{ marginTop: "80px", marginBottom: "80px" }} className="p-3">
+    <div style={{ marginTop: "80px", marginBottom: "80px", padding: '0px' }}>
       <Container className={styles.caixa}>
         {assistenciasParaMostrar.map((assistencia) => (
           <VisualizarAssistencia
@@ -106,6 +106,7 @@ const Assistencias = () => {
             idAssistencia={assistencia.id}
             nome={assistencia.nomeFantasia}
             cnpj={assistencia.cnpj}
+            email={assistencia.assistenciaEmail}
             telefone={assistencia.assistenciaTelefone}
             idEndereco={assistencia.idEndereco}
           />

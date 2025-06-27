@@ -353,12 +353,13 @@ const MenuNavegacao = () => {
             }, 1);
           }}
         >
-          Solicitações
-          {numeroSolicitacoes > 0 && (
-            <Badge className={styles.badgeAtualizacoes}>
-              {numeroSolicitacoes}
-            </Badge>
-          )}
+          <span className={styles.textoDropdownItem}>Solicitações
+            {numeroSolicitacoes > 0 && (
+              <Badge className={styles.badgeAtualizacoes}>
+                {numeroSolicitacoes}
+              </Badge>
+            )}
+          </span>
         </Nav.Link>
       </div>
     </>

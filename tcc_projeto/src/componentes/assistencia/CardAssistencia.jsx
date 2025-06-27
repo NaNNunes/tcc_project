@@ -142,13 +142,80 @@ const CardAssistencia = (props) => {
 
             <Card.Body className={styles.cardBody}>
               {/* cnpj */}
-              <Container style={{padding: '0'}}>
-                <Card.Text>
-                  CNPJ: {props.cnpj}
-                </Card.Text>
-                <Card.Text>
-                  {endereco.zipcode}
-                </Card.Text>
+              <Container>
+                <Row>
+                  <Col>
+                    <Card.Text className={styles.textoInfo}>
+                      <span><strong style={{color: 'black'}}>CNPJ: </strong>{props.cnpj}</span> 
+                    </Card.Text>
+                  </Col>
+                </Row>
+              </Container>
+
+              <hr className={styles.divisao}/>
+
+              <Container>
+                <Row>
+                  <h3 style={{fontSize: '1.5rem'}}>Contato</h3>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <Card.Text className={styles.textoInfo}>
+                      <span><strong style={{color: 'black'}}>Telefone: </strong>{props.telefone}</span> 
+                    </Card.Text>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <Col>
+                    <Card.Text className={styles.textoInfo}>
+                      <span><strong style={{color: 'black'}}>E-mail: </strong>{props.email}</span> 
+                    </Card.Text>
+                  </Col>
+                </Row>
+              </Container>
+
+              <hr className={styles.divisao}/>
+
+              <Container>
+                <Row>
+                  <h3 style={{fontSize: '1.5rem'}}>Endereço</h3>
+                </Row>
+
+                <Row>
+                  <Container className={styles.ContainerModalInfo}>
+                    <Card.Text className={styles.textoInfo}>
+                      <span><strong style={{color: 'black'}}>CEP: </strong>{endereco.zipcode}</span> 
+                    </Card.Text>
+
+                    <Card.Text className={styles.textoInfo}>
+                      <span><strong style={{color: 'black'}}>UF: </strong>{endereco.uf}</span> 
+                    </Card.Text>
+                  
+                    <Card.Text className={styles.textoInfo}>
+                      <span><strong style={{color: 'black'}}>N°: </strong>{endereco.number}</span> 
+                    </Card.Text>
+                  </Container>
+                </Row>
+
+                <Row>
+                  <Card.Text className={styles.textoInfo}>
+                    <span><strong style={{color: 'black'}}>Bairro: </strong>{endereco.bairro}</span>
+                  </Card.Text>
+                </Row>
+
+                <Row>
+                  <Card.Text className={styles.textoInfo}>
+                    <span><strong style={{color: 'black'}}>Logradouro: </strong>{endereco.logradouro}</span>
+                  </Card.Text>
+                </Row>
+                
+                <Row>
+                  <Card.Text className={styles.textoInfo}>
+                    <span><strong style={{color: 'black'}}>Cidade: </strong>{endereco.localidade}</span>
+                  </Card.Text>
+                </Row>
               </Container>
             </Card.Body>
 

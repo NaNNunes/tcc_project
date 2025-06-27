@@ -9,15 +9,42 @@
 
 .selecao {
     border: 0;
-    background: #034C8C;
     color: #FFFFFF !important;
     font-size: 1rem;
     font-weight: bold;
-    width: fit-content;
+    width: 50%;
 }
 
 .selecao option {
     color: #000000 !important;
     background: #FFFFFF;
     font-size: 1rem;
+}
+
+.botaoDropdown {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-direction: row;
+    align-self: flex-start;
+    align-items: center;
+    border: 0; 
+    background-color: #034C8C;
+    min-width: 100%;
+    width: 100%; 
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.botaoDropdown:focus,
+.botaoDropdown:active,
+.botaoDropdown:hover,
+.botaoDropdown:focus-visible,
+.show > .botaoDropdown {
+  background-color: #00529A !important;
+}
+
+.menuDropdown {
+    width: fit-content;
 }
