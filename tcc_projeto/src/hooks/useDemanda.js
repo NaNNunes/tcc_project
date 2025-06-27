@@ -105,6 +105,26 @@ export function useDemanda() {
         return listaDemandasDoSolicitante;
     }
 
+    // buscar demandas solicitadas a assistencias do adm
+    const buscaDemandasSolicitadasAssistencia = async (assistenciasAdministrador) =>{
+        const request = await fetch(`${url}/demanda`);
+        const response = await request.json();
+
+        const listaDemandasSolicitadas = [];
+
+        response.map((demanda)=>{
+            assistenciasAdministrador.map((assistencia)=>{
+                const isDemandaVinculada = demanda.assistencia === assistencia.id;
+                const statusEmAtendimento = demanda.status === "Aberto";
+                if(isDemandaVinculada && statusEmAtendimento){
+                    listaDemandasSolicitadas.push(demanda);
+                }
+            })
+        })
+
+        return listaDemandasSolicitadas;
+    }
+
     const buscaDemandaVinculadaAssistencia = async (assistencias) =>{
         const request = await fetch(`${url}/demanda`);
         const response = await request.json();
@@ -318,6 +338,7 @@ export function useDemanda() {
         atualizarStatusDemanda,
         buscaDemandas,
         buscaDemandasPublicas,
+        buscaDemandasSolicitadasAssistencia,
         buscaDemandaById,
         buscarDemandasDoSolicitante,
         buscaDemandaVinculadaAssistencia,

@@ -30,7 +30,10 @@ import { useAssistencia } from "../../hooks/useAssistencia.js";
 import { useUser } from "../../hooks/useUser.js";
 
 const MenuNavegacao = () => {
-  const { buscaDemandas } = useDemanda();
+  const { 
+    buscaDemandas,
+    buscaDemandasSolicitadasAssistencia
+   } = useDemanda();
   const { buscaAssistencias } = useAssistencia();
   const { buscaUserById } = useUser();
 
@@ -49,31 +52,16 @@ const MenuNavegacao = () => {
 
       // caso user seja adm
       if (userType === "administrador") {
-        // lista para receber assistencias do adm
-        const listaAssistenciasAdm = [];
-        // busca todas as assistencias
-        const resBuscaAssistenciasDoAdm = await buscaAssistencias();
-        // mapeia e filtra todas as assistencias do adm
-        resBuscaAssistenciasDoAdm.map((assistencia) => {
-          assistencia.administradorId === userId &&
-            listaAssistenciasAdm.push(assistencia);
-        });
-
-        // lista para receber todas as demandas solicitadas as assistencias do adm
-        const listaDemandasSolicitadas = [];
+        // busca assistencias do adm
+        const resBuscaAssistenciasAdm = await buscaAssistenciasDoAdministrador(userId);
         // busca por todas as demandas
-        const resBuscaDemandas = await buscaDemandas();
-        // mapeia e filtra todas as demanda que foram solicitadas para as assistencias do adm
-        resBuscaDemandas.map((demanda) => {
-          listaAssistenciasAdm.map((assistencia) => {
-            const isDemandaVinculada = demanda.assistencia === assistencia.id;
-            const statusEmAtendimento = demanda.status === "Aberto";
-            if (isDemandaVinculada && statusEmAtendimento) {
-              listaDemandasSolicitadas.push(demanda);
-            }
-          });
-        });
-        setNumeroSolicitacoes(listaDemandasSolicitadas.length);
+        const resBuscaDemandas = await buscaDemandasSolicitadasAssistencia(resBuscaAssistenciasAdm);
+        setNumeroSolicitacoes(resBuscaDemandas.length);
+      }
+
+      // buscas demandas com orçamento gerado 
+      if(userType === "solicitante"){
+
       }
     }
     fetchData();

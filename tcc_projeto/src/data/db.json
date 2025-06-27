@@ -63,7 +63,7 @@
       "assistenciaTelefone": "40028922",
       "administradorId": "1bbe",
       "isValido": true,
-      "id_endereco": "347a"
+      "idEndereco": "347a"
     },
     {
       "id": "6c90",
@@ -74,12 +74,30 @@
       "assistenciaTelefone": "27 988379121",
       "administradorId": "0d6b",
       "isValido": true,
-      "id_endereco": "051f"
+      "idEndereco": "051f"
     }
   ],
   "endereco": [
     {
       "id": "4358",
+      "zipcode": "89810-162",
+      "localidade": "Chapecó",
+      "bairro": "Cristo Rei",
+      "logradouro": "Rua João Cruz e Souza",
+      "uf": "SC",
+      "number": "831",
+      "complemento": "de 952 ao fim - lado par",
+      "cep": "89810-162",
+      "unidade": "",
+      "estado": "Santa Catarina",
+      "regiao": "Sul",
+      "ibge": "4204202",
+      "gia": "",
+      "ddd": "49",
+      "siafi": "8081"
+    },
+    {
+      "id": "347a",
       "zipcode": "89810-162",
       "localidade": "Chapecó",
       "bairro": "Cristo Rei",
@@ -167,6 +185,18 @@
       "amperagem": "",
       "cor": "",
       "idSolicitante": "0431"
+    },
+    {
+      "id": "1b93",
+      "categoria": "Desktop",
+      "marca": "AMD Placa de Vídeo",
+      "fabricante": "",
+      "modelo": "RX 6600",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "5744"
     }
   ],
   "demanda": [
@@ -191,6 +221,17 @@
       "idSolicitante": "0431",
       "dataEmissao": "27/06/2025",
       "horaEmissao": "03:54:41"
+    },
+    {
+      "id": "da42",
+      "idDispositivo": "1b93",
+      "descProblema": "Problema na minha placa",
+      "observacoes": "",
+      "status": "Aberto",
+      "assistencia": "Público",
+      "idSolicitante": "5744",
+      "dataEmissao": "27/06/2025",
+      "horaEmissao": "05:07:40"
     }
   ],
   "assistencia_Fav_Solicitante": []

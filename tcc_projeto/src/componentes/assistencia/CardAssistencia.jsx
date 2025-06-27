@@ -34,7 +34,6 @@ const CardAssistencia = (props) => {
   // state de lista de matchs --- utilizado em remover match
   const [matchs, setMatchs] = useState();
 
-  const url = import.meta.env.VITE_API_URL;
   // busca todos os registros de matchs e verifica se o match pertence ao cliente e a assistencia renderizada
   useEffect(() => {
     async function fetchData() {
@@ -97,6 +96,26 @@ const CardAssistencia = (props) => {
     removerAssistenciaDeFavoritos(match.id);
   };
 
+  const botaoDesLikeAssistencia = (
+    <Button
+      type="submit"
+      value="Remover Match"
+      as="input"
+      variant="warning"
+      onClick={removerMatch}
+    />
+  );
+
+  const botaoLikeAssistencia = (
+    <Button
+      type="submit"
+      value="Favoritar"
+      as="input"
+      variant="danger"
+      onClick={favoritar}
+    />
+  );
+
   return (
     <div 
       style={{
@@ -138,23 +157,11 @@ const CardAssistencia = (props) => {
               localStorage.getItem("userType") === "solicitante" && (
                 <Card.Footer>
                   {/* colocar icone de favoritar */}
-                  {assistenciaIsFav ? (
-                    <Button
-                      type="submit"
-                      value="Remover Match"
-                      as="input"
-                      variant="warning"
-                      onClick={removerMatch}
-                    />
-                  ) : (
-                    <Button
-                      type="submit"
-                      value="Favoritar"
-                      as="input"
-                      variant="danger"
-                      onClick={favoritar}
-                    />
-                  )}
+                  {
+                    (assistenciaIsFav) 
+                      ? botaoDesLikeAssistencia
+                      : botaoLikeAssistencia 
+                  }
                 </Card.Footer>
               )
             }

@@ -55,9 +55,7 @@ const Assistencias = () => {
 
           // filtro definido pela url para mostrar assistencias favoritas
           if (tipoAssistencia === "favoritas") {
-            const reqBuscaMatchs = await fetch(
-              `${url}/assistencia_Fav_Solicitante`
-            );
+            const reqBuscaMatchs = await fetch(`${url}/assistencia_Fav_Solicitante`);
             const resBuscaMatchs = await reqBuscaMatchs.json();
 
             const assistenciaFavoritasDoSolicitante = [];
@@ -109,7 +107,7 @@ const Assistencias = () => {
             nome={assistencia.nomeFantasia}
             cnpj={assistencia.cnpj}
             telefone={assistencia.assistenciaTelefone}
-            idEndereco={assistencia.id_endereco}
+            idEndereco={assistencia.idEndereco}
           />
         ))}
       </Container>
