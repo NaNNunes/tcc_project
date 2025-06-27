@@ -34,7 +34,10 @@ const MenuNavegacao = () => {
     buscaDemandas,
     buscaDemandasSolicitadasAssistencia
    } = useDemanda();
-  const { buscaAssistencias } = useAssistencia();
+  const { 
+    buscaAssistencias,
+    buscaAssistenciasDoAdministrador
+   } = useAssistencia();
   const { buscaUserById } = useUser();
 
   const navigate = useNavigate();

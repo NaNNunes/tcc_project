@@ -97,7 +97,6 @@ const Endereco = (props) => {
     console.log(data);
 
     // verifica se o cep foi alterado
-    console.log(data.zipcode == endereco.zipcode);
     data.zipcode == endereco.zipcode
       ? cadastrarEndereco(data)
       : atualizarEndereco(endereco.id, data);

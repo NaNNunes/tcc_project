@@ -146,7 +146,7 @@ const ProcurarDemandas = () => {
 
   return (
     <div style={{paddingTop: '80px', paddingBottom: '80px'}}>
-      <BarraPesquisa/>
+      {/* <BarraPesquisa/> */}
       <Container className={styles.caixa}>
         {
           // verifica se há demandas
