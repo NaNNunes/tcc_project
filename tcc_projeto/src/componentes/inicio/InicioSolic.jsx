@@ -18,8 +18,13 @@ import { LuClipboardCheck, LuClipboardCopy } from "react-icons/lu";
 import { GrFavorite } from "react-icons/gr";
 import styles from "./inicio.module.css";
 
+import { useAssistencia } from "../../hooks/useAssistencia";
+
 const InicioSolic = () => {
   const navigate = useNavigate();
+
+  const userId = localStorage.getItem("userId");
+
   const [openDropdown, setOpenDropdown] = useState(null);
   const { usuarioNome } = useContext(AuthContext);
   // const [favoritas, setFavoritas] = useState([]);
@@ -28,9 +33,9 @@ const InicioSolic = () => {
   // useEffect(() => {
   //   async function fetchData() {
   //     try {
-  //       const resAssist = await fetch("http://localhost:3000/assistencia");
+  //       const resAssist = await fetch("http://localhost:5001/assistencia");
   //       const resFav = await fetch(
-  //         "http://localhost:3000/assistencia_Fav_Solicitante"
+  //         "http://localhost:5001/assistencia_Fav_Solicitante"
   //       );
 
   //       if (!resAssist.ok || !resFav.ok) {
@@ -49,6 +54,19 @@ const InicioSolic = () => {
 
   //   fetchData();
   // }, []);
+
+  useEffect(()=>{
+    async function fetchData(){
+      try {
+        // busca likes do solicitante
+        // const buscaLikesSolicitante = await buscarLikesSolicitante(userId);
+        
+      } catch (error) {
+        console.log(error.messsage)
+      }
+    };
+    fetchData();
+  },[])
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center">
@@ -247,7 +265,7 @@ const InicioSolic = () => {
               <Row
                 className={`justify-content-center ${styles.assistenciasRecentes}`}
               >
-                {favoritas.map((fav) => {
+                {/* {favoritas.map((fav) => {
                   const dados = assistencias.find(
                     (a) => a.id === fav.id_assistencia
                   );
@@ -268,7 +286,7 @@ const InicioSolic = () => {
                       </div>
                     </div>
                   );
-                })}
+                })} */}
               </Row>
             </Card>
           </div>

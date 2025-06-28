@@ -10,30 +10,35 @@ import styles from './Assistencias.module.css';
 
 import VisualizarAssistencia from "../../componentes/assistencia/CardAssistencia";
 
-const Assistencias = () => {
-  const { tipoAssistencia } = useParams();
-  const navigate = useNavigate();
+import { useAssistencia } from "../../hooks/useAssistencia";
 
+const Assistencias = () => {
+  const navigate = useNavigate();
+  
+  const { tipoAssistencia } = useParams();
   // busca todas as assistencias cadastradas e lista-as
   const [assistencias, setAssistencias] = useState([]);
-
+  
   const userType = localStorage.getItem("userType");
   const userId = localStorage.getItem("userId");
 
+  const {
+    buscaAssistenciasDoAdministrador
+  } = useAssistencia();
+  
   const url = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     async function fetchData() {
       try {
-        // lista de assistencias
-        const reqBuscaAssistencias = await fetch(`${url}/assistencia`);
-        const resBuscaAssistencias = await reqBuscaAssistencias.json();
-
         // caso user seja adm lista apenas assistencias pertencentes a ele
         if (
           tipoAssistencia === "administrador" &&
           userType === "administrador"
         ) {
+
+          const resBuscaAssistencias = await buscaAssistenciasDoAdministrador(userId);
+
           // lista para armazenar assistencias do adm
           const listaAssitenciasAdministrador = [];
 

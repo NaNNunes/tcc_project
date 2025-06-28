@@ -17,15 +17,19 @@ export function useAssistencia() {
     const request = await fetch(`${url}/assistencia`);
     const response = await request.json();
 
-    // lista de todas assistencias do user
-    const listaAssistenciasAdministrador = [];
+    // // lista de todas assistencias do user
+    // const listaAssistenciasAdministrador = [];
 
-    // mapeia lista de assitencias e separa todas assistencias vinculadas ao adm
-    response.map((assistencia)=>{
-      if(assistencia.administradorId === idAdm){
-          listaAssistenciasAdministrador.push(assistencia);
-      }
-    });
+    // // mapeia lista de assitencias e separa todas assistencias vinculadas ao adm
+    // response.map((assistencia)=>{
+    //   if(assistencia.administradorId === idAdm){
+    //       listaAssistenciasAdministrador.push(assistencia);
+    //   }
+    // });
+
+    const listaAssistenciasAdministrador = response.filter(
+      assistencia => assistencia.administradorId === idAdm
+    );
 
     return listaAssistenciasAdministrador;
   }
