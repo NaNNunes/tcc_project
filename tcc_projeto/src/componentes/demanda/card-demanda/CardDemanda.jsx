@@ -121,6 +121,7 @@ const CardDemanda = (props) => {
         }
     }
 
+    // funcao para concluir demanda
     const handleConcluirDemanda = async () =>{
         const isDemandaConcluida = await concluirDemanda(idDemanda);
         if(isDemandaConcluida){
@@ -129,6 +130,7 @@ const CardDemanda = (props) => {
         }
     }
 
+    // funcao para aceitar oracamento
     const handleAceitarOrcamento = async() =>{
         const isDemandaAceita = await aceitarOrcamento(idDemanda);
         if(isDemandaAceita){
@@ -137,6 +139,7 @@ const CardDemanda = (props) => {
         }
     }
 
+    // funcao para rejeitar orcamento
     const handleRejeitarOrcamento = async() =>{
         const isDemandaRejeitada = await recusarOrcamento(idDemanda);
         if(isDemandaRejeitada){
