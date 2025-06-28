@@ -36,14 +36,6 @@ export function useUser() {
         })
         location.reload();
     }
-    
-    // lista todos os likes
-    const buscaAssistenciasFavoritas = async() =>{
-        const request = await fetch(`${url}/assistencia_Fav_Solicitante`);
-        const response = await request.json();
-
-        return response;
-    }
 
     // busca user pelo id e o tipo de usuario
     const buscaUserById = async (tipoUser ,idUser) =>{
@@ -117,26 +109,6 @@ export function useUser() {
         return response.id;
     }
 
-    // favorita assistencia
-    const favoritarAssistencia = async (data) =>{
-
-        const request = await fetch(`${url}/assistencia_Fav_Solicitante`,{
-            method: "POST",
-            headers: {
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify(data)
-        });
-
-        const response = await request.json();
-
-        if(request.ok){
-            console.log("assistencia favoritada:", response);
-            location.reload();
-            return response.id;
-        }
-    }
-
     // define validaçao do user
     const inserirValidacao = async (isValido) =>{
         const id = localStorage.getItem('userId');
@@ -162,20 +134,6 @@ export function useUser() {
         })
     }
 
-    // remove assistencia da lista de favoritos
-    const removerAssistenciaDeFavoritos = async (id) =>{
-        const request = await fetch(`${url}/assistencia_Fav_Solicitante/${id}`,{
-            method: "DELETE",
-        });
-
-        const response = await request.json();
-
-        if(request.ok){
-            console.log("Assistencia removida de favoritos:", response);
-            location.reload();
-        }
-    }
-
     // verificar senha informada pelo user
     const verificaSenhaInformada = async (senha) => {
         const user = userType || localStorage.getItem("userType");
@@ -191,16 +149,13 @@ export function useUser() {
     return {
         atualizaInfosUser,
         alteraSenhaUser,
-        buscaAssistenciasFavoritas,
         buscaAdministradores,
         buscaSolicitantes,
         buscaUserById,
         cadastrarInfosUser,
         cadastrarPseudoUser,
-        favoritarAssistencia,
         inserirPerguntaResposta,
         inserirValidacao,
-        removerAssistenciaDeFavoritos,
         verificaSenhaInformada
     }
 }

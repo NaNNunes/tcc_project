@@ -236,9 +236,9 @@
   ],
   "assistencia_Fav_Solicitante": [
     {
-      "id": "c85f",
-      "id_solicitante": "5744",
-      "id_assistencia": "2a23"
+      "id": "9923",
+      "idSolicitante": "5744",
+      "idAssistencia": "7e02"
     }
   ]
 }

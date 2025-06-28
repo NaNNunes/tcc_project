@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 
 // hooks
 import { useEndereco } from "../../hooks/useEndereco.js";
-import { useUser } from "../../hooks/useUser.js";
+import { useLikes } from "../../hooks/useLikes.js";
 import { useEffect, useState } from "react";
 
 import styles from './CardAssistencia.module.css'
@@ -15,62 +15,51 @@ import styles from './CardAssistencia.module.css'
 const CardAssistencia = (props) => {
   // descontrutores
   const { buscaEnderecoById } = useEndereco();
-  const { 
-    buscaAssistenciasFavoritas ,
+
+  const {
+    buscarAssistenciasFavoritas,
     favoritarAssistencia,
     removerAssistenciaDeFavoritos,
-  } = useUser();
+    buscaLikesSolicitante
+  } = useLikes()
+
+  const userType = localStorage.getItem("userType");
 
   // IDs
   const idAssistencia = props.idAssistencia;
   const idUsuario = localStorage.getItem("userId");
   const idEndereco = props.idEndereco;
+  
 
   // states
   // state para receber endereco
   const [endereco, setEndereco] = useState({});
   // state iniciado como false onde verifica se a assistencia está favoritada pelo user
   const [assistenciaIsFav, setAssistenciaIsFav] = useState(false);
-  // state de lista de matchs --- utilizado em remover match
-  const [matchs, setMatchs] = useState();
+  // state de lista de likes --- utilizado em remover match
+  const [likes, setLikes] = useState();
 
-  // busca todos os registros de matchs e verifica se o match pertence ao cliente e a assistencia renderizada
+  // busca todos os registros de likes e verifica se o match pertence ao cliente e a assistencia renderizada
   useEffect(() => {
     async function fetchData() {
       try {
+        if(userType !== "solicitante") return;
+
         // busca endereco by id
         const dadosEndereco = await buscaEnderecoById(idEndereco);
         setEndereco(dadosEndereco);
+        
+        const likesSolicitante = await buscaLikesSolicitante(idUsuario);
+        setLikes(likesSolicitante);
 
-        // busca por matchs
-        const resBuscaMatchs = await buscaAssistenciasFavoritas();
-        setMatchs(resBuscaMatchs);
-
-        // lista para armazenar id de assistencias favoritas do user
-        const listaIdAssistenciasFavs = [];
-
-        // mapeia lista de matchs e verifica qual match está vinculado ao solicitante e a assistencia renderizada
-        resBuscaMatchs.map((match) => {
-          // verifica se match pertence ao solicitante
-          const isMatchSolicitante = match.id_solicitante === idUsuario;
-          // verifica se match pertence a assistencia renderizada
-          const isAssistenciaFav = match.id_assistencia === idAssistencia;
-          // assistencia pertence ao favoritos do solicitante
-          if (isMatchSolicitante && isAssistenciaFav) {
-            // insere id de assistencia do match na lista de assistencias favoritas do solicitante
-            listaIdAssistenciasFavs.push(match.id_assistencia);
-          }
-        });
         // procura na lista de assistencias favoritas do user o id igual ao id da assistencia renderizada
-        listaIdAssistenciasFavs.find((id) => {
-          id === idAssistencia
-            ? setAssistenciaIsFav(true)
-            : setAssistenciaIsFav(false);
-        });
+        const idsAssistenciasFavoritas = await buscarAssistenciasFavoritas(idUsuario, idAssistencia);
+        setAssistenciaIsFav(idsAssistenciasFavoritas.includes(idAssistencia))
+        
       } catch (error) {
-        console.log(error);
-      }
-    }
+        console.log(error.message);
+      };
+    };
     fetchData();
   }, []);
 
@@ -78,8 +67,8 @@ const CardAssistencia = (props) => {
   const favoritar = async () => {
     // dados do match
     const identificadores = {
-      id_solicitante: idUsuario,
-      id_assistencia: idAssistencia,
+      idSolicitante: idUsuario,
+      idAssistencia: idAssistencia,
     };
     // funcao do hook
     const idMatch = await favoritarAssistencia(identificadores);
@@ -87,13 +76,9 @@ const CardAssistencia = (props) => {
 
   //  funcao chamada pelo botao remover match
   const removerMatch = async () => {
-    // retorna o match vinculado ao id do solicitante e id da assistencia renderizada
-    const match = matchs.find((match) => {
-      const isMatchSolicitante = match.id_solicitante === idUsuario;
-      const isAssistenciaFav = match.id_assistencia === idAssistencia;
-      if (isAssistenciaFav && isMatchSolicitante) return match;
-    });
-    removerAssistenciaDeFavoritos(match.id);
+    // retorna o like vinculado ao id da assistencia renderizada
+    const like = likes.find(like => like.idAssistencia === idAssistencia)?.id ?? null
+    removerAssistenciaDeFavoritos(like);
   };
 
   const botaoDesLikeAssistencia = (

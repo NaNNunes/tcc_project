@@ -10,7 +10,8 @@ import styles from './Assistencias.module.css';
 
 import VisualizarAssistencia from "../../componentes/assistencia/CardAssistencia";
 
-import { useAssistencia } from "../../hooks/useAssistencia";
+import { useAssistencia } from "../../hooks/useAssistencia.js";
+import { useLikes } from "../../hooks/useLikes.js";
 
 const Assistencias = () => {
   const navigate = useNavigate();
@@ -23,70 +24,54 @@ const Assistencias = () => {
   const userId = localStorage.getItem("userId");
 
   const {
-    buscaAssistenciasDoAdministrador
+    buscaAssistencias,
+    buscaAssistenciasDoAdministrador,
+    buscarAssistenciasFavoritasSolicitante
   } = useAssistencia();
-  
-  const url = import.meta.env.VITE_API_URL;
+
+  const {
+    buscaLikesSolicitante
+  } = useLikes();
 
   useEffect(() => {
     async function fetchData() {
       try {
+        const isAssisitenciaAdm = tipoAssistencia === "administrador";
+        const isUserAdm = userType === "administrador";
+        const isSolicitante = userType === "solicitante";
+
         // caso user seja adm lista apenas assistencias pertencentes a ele
-        if (
-          tipoAssistencia === "administrador" &&
-          userType === "administrador"
-        ) {
-
+        if ( isAssisitenciaAdm && isUserAdm){
           const resBuscaAssistencias = await buscaAssistenciasDoAdministrador(userId);
-
-          // lista para armazenar assistencias do adm
-          const listaAssitenciasAdministrador = [];
-
-          // mapeamento de assistencias listadas para filtro de asssitencias pertencentes ao adm
-          resBuscaAssistencias.map((assistencia) => {
-            assistencia.administradorId === userId &&
-              listaAssitenciasAdministrador.push(assistencia);
-          });
-
-          return setAssistencias(listaAssitenciasAdministrador);
+          return setAssistencias(resBuscaAssistencias);
         }
-
+        
         // caso user seja solicitante
-        if (userType === "solicitante") {
-          // filtro definido pela url para mostrar todas assistencias
-          if (tipoAssistencia === "todas") {
-            return setAssistencias(resBuscaAssistencias);
-          }
-
-          // filtro definido pela url para mostrar assistencias favoritas
-          if (tipoAssistencia === "favoritas") {
-            const reqBuscaMatchs = await fetch(`${url}/assistencia_Fav_Solicitante`);
-            const resBuscaMatchs = await reqBuscaMatchs.json();
-
-            const assistenciaFavoritasDoSolicitante = [];
-
-            // mapeia lista de demandas e mapeia lista de assistencias
-            // verificando se o match pertence ao solicitante e a assistencia pertence ao match
-            // inserindo toda instancia encontrada na lista de assistencias favoritas do solicitante
-            resBuscaMatchs.map((match) => {
-              resBuscaAssistencias.map((assistencia) => {
-                const isMatchSolicitante = match.id_solicitante === userId;
-                const isAssistenciaFav =
-                  match.id_assistencia === assistencia.id;
-
-                isMatchSolicitante &&
-                  isAssistenciaFav &&
-                  assistenciaFavoritasDoSolicitante.push(assistencia);
-              });
-            });
-            return setAssistencias(assistenciaFavoritasDoSolicitante);
+        if (isSolicitante) {
+          switch (tipoAssistencia){
+            case "todas":{
+              // busca todas assistencias
+              const resBuscaTodasAssistencias = await buscaAssistencias();
+              setAssistencias(resBuscaTodasAssistencias);
+              return;
+            }
+            case "favoritas":{
+              // busca todos os likes do solicitante
+              const likes = await buscaLikesSolicitante(userId);
+              // busca todas assistencias que possuam id nos likes do solicitante
+              const assistenciasFavoritas = await buscarAssistenciasFavoritasSolicitante(likes, userId);
+              setAssistencias(assistenciasFavoritas);
+              return;
+            }
+            default:
+              break;
           }
         }
-
         // caso nenhuma das ocasioes carregar 404
         navigate("/erro");
+        
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
     fetchData();

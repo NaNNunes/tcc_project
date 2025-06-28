@@ -17,21 +17,26 @@ export function useAssistencia() {
     const request = await fetch(`${url}/assistencia`);
     const response = await request.json();
 
-    // // lista de todas assistencias do user
-    // const listaAssistenciasAdministrador = [];
-
-    // // mapeia lista de assitencias e separa todas assistencias vinculadas ao adm
-    // response.map((assistencia)=>{
-    //   if(assistencia.administradorId === idAdm){
-    //       listaAssistenciasAdministrador.push(assistencia);
-    //   }
-    // });
-
+    // lista todas assistencias que tenha o id do adm
     const listaAssistenciasAdministrador = response.filter(
       assistencia => assistencia.administradorId === idAdm
     );
 
     return listaAssistenciasAdministrador;
+  }
+
+  const buscarAssistenciasFavoritasSolicitante = async (likes) =>{
+    const request = await fetch(`${url}/assistencia`);
+    const response = await request.json();
+
+    // lista todas assistencias que tenham id em um dos likes do solicitante
+    const assistenciasFavoritas = likes.flatMap(
+      (like) => response.filter(
+        (assistencia) => assistencia.id === like.idAssistencia
+      )
+    )
+
+    return assistenciasFavoritas;
   }
 
   // Busca assistencia pelo id
@@ -91,6 +96,7 @@ export function useAssistencia() {
     buscaAssistencias,
     buscaAssistenciaById,
     buscaAssistenciasDoAdministrador,
+    buscarAssistenciasFavoritasSolicitante,
     inserirAssistencia,
     inserirValidacaoAssistencia,
   };
