@@ -250,11 +250,17 @@
       "idDispositivo": "96e0",
       "descProblema": "jklçfasdjklçdfasgjklçfasdjklfsdjklwer",
       "observacoes": "",
-      "status": "Aberto",
+      "status": "Concluído",
       "assistencia": "7e02",
       "idSolicitante": "5744",
       "dataEmissao": "28/06/2025",
-      "horaEmissao": "14:39:49"
+      "horaEmissao": "14:39:49",
+      "problema_identificado": "Tem problema",
+      "solucao": "resolver o problema",
+      "pecaTrocada": "rebimboca da parafuseta",
+      "valorObra": "2mil milhões de reais",
+      "observacoesOrcamento": "sim",
+      "statusOrcamento": "Aceito"
     }
   ],
   "assistencia_Fav_Solicitante": [

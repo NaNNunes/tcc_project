@@ -2,6 +2,15 @@ const url = import.meta.env.VITE_API_URL;
 
 export function useDemanda() {
 
+    const aceitarOrcamento = async (idDemanda) =>{
+        const request = await fetch(`${url}/demanda/${idDemanda}`,{
+            method: "PATCH",
+            body: JSON.stringify({"statusOrcamento":"Aceito"})
+        });
+
+        return request.ok
+    }
+
     // atualiza status de demanda
     const atualizarStatusDemanda = async(idDemanda, novoStatus) =>{
         const status = {
@@ -92,17 +101,22 @@ export function useDemanda() {
         const request = await fetch(`${url}/demanda`);
         const response = await request.json();
 
-        // lista para armazenas demandas 
-        const listaDemandasDoSolicitante = [];
+        const demandas = response.filter(demanda => demanda.idSolicitante === idSolicitante);
 
-        // mapeia demandas identificando e saperando demandas do solicitante pelo id
-        response.map((demanda)=>{
-            if(demanda.idSolicitante === idSolicitante){
-                listaDemandasDoSolicitante.push(demanda);
-            }
-        });
+        return demandas;
+    }
 
-        return listaDemandasDoSolicitante;
+    const buscarDemandasComOrcamentoGerado = async (idSolicitante) =>{
+        const request = await fetch(`${url}/demanda`);
+        const response = await request.json();
+
+        const demandasComOrcamento = response.filter(demanda => (
+            demanda.idSolicitante === idSolicitante && 
+            demanda.statusOrcamento === "Sem resposta" &&
+            demanda.status === "Em atendimento"
+        ));
+
+        return demandasComOrcamento;
     }
 
     // buscar demandas solicitadas a assistencias do adm
@@ -245,6 +259,15 @@ export function useDemanda() {
         }
     }
 
+    const concluirDemanda = async (idDemanda) => {
+        const request = await fetch(`${url}/demanda/${idDemanda}`,{
+            method: "PATCH",
+            body: JSON.stringify({"status":"Concluído"})
+        });
+
+        return request.ok;
+    }
+
     // define id de assistencia como responsavel pela demanda quando adm aceita demanda atribuinda-a à uma de suas assistencias
     const defineIdAssistencia = async(idDemanda, idAssistencia)=>{
         
@@ -259,20 +282,6 @@ export function useDemanda() {
 
         return request.ok
     }
-
-    const defineIdSolicitanteNoDispositivo = async (idDispositivo, idSolicitante) =>{
-
-        const idDoSolicitante = {
-            "idSolicitante": idSolicitante
-        }
-
-        const request = await fetch(`${url}/dispositivo/${idDispositivo}`,{
-            method: "PATCH",
-            body: JSON.stringify(idDoSolicitante)
-        });
-
-        return request.ok;
-    };
 
     // define data e hora emissao
     const defineDataEmissao = async (id) =>{
@@ -305,9 +314,35 @@ export function useDemanda() {
 
     // inserir dados de orcamento na demanda
     const inserirOrcamento = async (data, idDemanda) =>{
+        
+        dados = {
+            ...data,
+            statusOrcamento: 'Sem resposta'
+        }
+
         const request = await fetch(`${url}/demanda/${idDemanda}`,{
             method: "PATCH",
-            body: JSON.stringify(data)
+            body: JSON.stringify(dados)
+        });
+
+        return request.ok
+    }
+
+    const recusarOrcamento = async (idDemanda) =>{
+        const status = {
+            "status": "Aberto",
+            "assistencia": "Público",
+            "problema_identificado": "",
+            "solucao": "",
+            "pecaTrocada": "",
+            "valorObra": "",
+            "observacoesOrcamento": "",
+            "statusOrcamento": "Recusado"
+        }
+
+        const request = await fetch(`${url}/demanda/${idDemanda}`,{
+            method: "PATCH",
+            body: JSON.stringify(status)
         });
 
         return request.ok
@@ -331,12 +366,14 @@ export function useDemanda() {
     }
 
     return {
+        aceitarOrcamento,
         atualizarDadosDispositivo,
         atualizarDadosDemanda,
         atualizarStatusDemanda,
         buscaDemandas,
         buscaDemandasPublicas,
         buscaDemandasSolicitadasAssistencia,
+        buscarDemandasComOrcamentoGerado,
         buscaDemandaById,
         buscarDemandasDoSolicitante,
         buscaDemandaVinculadaAssistencia,
@@ -345,8 +382,10 @@ export function useDemanda() {
         cadastrarDemanda, 
         cadastrarDispositivo, 
         cancelarDemanda,
+        concluirDemanda,
         defineIdAssistencia,
         inserirOrcamento,
+        recusarOrcamento,
         rejeitarDemanda
     };
 }

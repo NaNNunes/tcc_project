@@ -81,10 +81,6 @@ const OrcamentoForm = () => {
   }
 
   const onSubmit = async (dados) => {
-    dados = {
-      ...dados,
-      statusOrcamento: 'Sem resposta'
-    }
     const isOrcamentoInserido = await inserirOrcamento(dados, demandaSelecionada.id);
     if(isOrcamentoInserido){
       alert("Orçamento inserido");

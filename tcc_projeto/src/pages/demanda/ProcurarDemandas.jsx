@@ -38,6 +38,7 @@ const ProcurarDemandas = () => {
 
     // SOLICITANTE
       // minhas-demandas -> emitidas pelo user independente de status
+      // ofertas -> demandas com orçamento ofertado por ats
 
   // status
     // aberta -> emitida pelo user
@@ -49,7 +50,8 @@ const ProcurarDemandas = () => {
   const {
     buscaDemandasPublicas,
     buscarDemandasDoSolicitante,
-    buscaDemandaVinculadaAssistencia
+    buscaDemandaVinculadaAssistencia,
+    buscarDemandasComOrcamentoGerado
   } = useDemanda();
   // funcao que busca todas assistencias
   const {
@@ -65,10 +67,23 @@ const ProcurarDemandas = () => {
       try {
         // caso user seja solicitante
         // lista apenas demandas emitidas por ele independente de status
-        if(userType === "solicitante" && tipoDemanda === "minhas-demandas"){
-          // buscar demandas do user
-          const resBuscaDemandasDoSolicitante = await buscarDemandasDoSolicitante(userId);
-          return setDemandas(resBuscaDemandasDoSolicitante);
+        if(userType === "solicitante"){
+
+          switch (tipoDemanda) {
+            case "minhas-demandas":
+              // buscar demandas do user
+              const resBuscaDemandasDoSolicitante = await buscarDemandasDoSolicitante(userId);
+              return setDemandas(resBuscaDemandasDoSolicitante);
+            
+            case "ofertas":
+              // mostrar demandas com orçamento gerado por ats, onde o solicitante deve aceitar ou rejeitar
+              const ofertasNaoRespondidas = await buscarDemandasComOrcamentoGerado(userId);
+              setDemandas(ofertasNaoRespondidas);
+              return;
+
+            default:
+              break;
+          }
         }
 
         if(userType === "administrador"){

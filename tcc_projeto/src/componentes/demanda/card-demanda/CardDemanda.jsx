@@ -44,12 +44,15 @@ const CardDemanda = (props) => {
     // Hooks
     // hook de demandas
     const { 
+        aceitarOrcamento,
         atualizarStatusDemanda,
         buscaDispositivoById, // funcao que busca dispositivo pelo id 
         cancelarDemanda,      // cancelar demanda pelo id
         defineIdAssistencia,   // funcao que busca assistencia responsavel pela demanda como o id registrado da mesma na demanda
         rejeitarDemanda,
-        buscaDemandaById
+        buscaDemandaById,
+        recusarOrcamento,
+        concluirDemanda
     } = useDemanda();
     // funcao que busca lista de assistencias
     const { 
@@ -65,7 +68,7 @@ const CardDemanda = (props) => {
     // infos do buscador
     const userBuscador = props.userBuscador;
     const idBuscador = props.idBuscador
-
+    const idDemanda = props.id;
     const idResponsavel = props.idResponsavel;
     const idDispositivo = props.idDispositivo;
     // para mostrar qual assistencia está responsável pela demanda/ buscar nome fantasia da assistencia
@@ -90,12 +93,11 @@ const CardDemanda = (props) => {
 
     // funcao de aceitar demanda
     const handleAceitaDemanda = async() =>{
-        const idDemanda = props.id;
         const isDemandaAtribuida = await defineIdAssistencia(idDemanda, assistenciaSelecionada);
 
         // caso não ocorra sucesso na atribuição da demanda
         if(isDemandaAtribuida != true){
-            return alert(`Demanda ${idDemanda} não atribuida a sua Assistência ${assistenciaSelecionada}`);
+            return alert(`Demanda não atribuida a sua assistência`);
         }
 
         const isStatusDemandaAtualizado = await atualizarStatusDemanda(idDemanda, "Em atendimento");
@@ -103,15 +105,44 @@ const CardDemanda = (props) => {
         if(isStatusDemandaAtualizado != true){
             // retorna demanda como aberto
             defineIdAssistencia(idDemanda, "Aberto");
-            return alert("Status de demanda não modificado");    
+            alert("Status de demanda não modificado");    
+            return;
         }
+        alert("Demanda Aceita");
         location.reload();
     }
 
     // funcao de rejeitar demanda
     const handleRejeitarDemanda = async() =>{
-        const idDemanda = props.id;
-        rejeitarDemanda(idDemanda);
+        const isDemandasRejeitada = await rejeitarDemanda(idDemanda);
+        if(isDemandasRejeitada){
+            alert("Demanda rejeitada");
+            location.reload();
+        }
+    }
+
+    const handleConcluirDemanda = async () =>{
+        const isDemandaConcluida = await concluirDemanda(idDemanda);
+        if(isDemandaConcluida){
+            alert("Demanda Concluida");
+            location.reload();
+        }
+    }
+
+    const handleAceitarOrcamento = async() =>{
+        const isDemandaAceita = await aceitarOrcamento(idDemanda);
+        if(isDemandaAceita){
+            alert("Orçamento de demanda aceito");
+            location.reload();
+        }
+    }
+
+    const handleRejeitarOrcamento = async() =>{
+        const isDemandaRejeitada = await recusarOrcamento(idDemanda);
+        if(isDemandaRejeitada){
+            alert("Orçamento de demanda rejeitado");
+            location.reload();
+        }
     }
 
     // busca dados de solicitante, endereco e dispositivo
@@ -168,11 +199,18 @@ const CardDemanda = (props) => {
     // botões para aceitar ou rejeitar o orçamento.
     const botaoAceitarRejeitarOrcamento = (
         <>
-            <Button>
-                Recusar
-            </Button>
-            <Button>
+            <Button
+                className={styles.botaoModal}
+                onClick={()=>{handleAceitarOrcamento()}}
+            >
                 Aceitar
+            </Button>
+                
+            <Button
+                className={styles.botaoModal}
+                onClick={()=>{handleRejeitarOrcamento()}}
+            >
+                Rejeitar
             </Button>
         </>
     );
@@ -257,6 +295,7 @@ const CardDemanda = (props) => {
     const botaoConcluirDemanda = (
         <>
             <Button
+                onClick={()=>{handleConcluirDemanda()}}
                 className={styles.botaoModal}
             >
                 Concluir demanda
@@ -344,10 +383,7 @@ const CardDemanda = (props) => {
         "aceitas": botaoGerarOrcamento,
         "historico": botaoHistoricoDemandas,
         "minhas-demandas": botaoMinhasDemandas,
-        // caso adm defina que outra assistencia receberá a demanda,
-            // não sendo a esperada pelo solicitante,
-            // a solução deverá permitir ao solicitante aceitar ou rejeitar.
-            // (Tenho que parar de me meter nessas roubas);
+        "ofertas": botaoMinhasDemandas,
         "solicitacoes": botaoAceitarDemanda
     }
     // O Botão
@@ -401,7 +437,7 @@ const CardDemanda = (props) => {
         }
     }
 
-    console.log(demandaSelecionada)
+    // console.log(demandaSelecionada)
 
   return (
     // Div com todo o card.

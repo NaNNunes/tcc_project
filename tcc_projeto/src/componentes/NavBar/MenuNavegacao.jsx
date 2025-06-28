@@ -32,7 +32,9 @@ import { useUser } from "../../hooks/useUser.js";
 const MenuNavegacao = () => {
   const { 
     buscaDemandas,
-    buscaDemandasSolicitadasAssistencia
+    buscarDemandasDoSolicitante,
+    buscaDemandasSolicitadasAssistencia,
+    buscarDemandasComOrcamentoGerado
    } = useDemanda();
 
   const { 
@@ -49,7 +51,7 @@ const MenuNavegacao = () => {
   const userType = localStorage.getItem("userType");
   const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.
 
-  const [numeroSolicitacoes, setNumeroSolicitacoes] = useState(0);
+  const [notificacoes, setNotificacoes] = useState(0);
 
   // aqui código sempre segue em execução sempre atualizando de acordo com atualizações da pagina
   useEffect(() => {
@@ -63,13 +65,15 @@ const MenuNavegacao = () => {
         const resBuscaAssistenciasAdm = await buscaAssistenciasDoAdministrador(userId);
         // busca por todas as demandas
         const resBuscaDemandas = await buscaDemandasSolicitadasAssistencia(resBuscaAssistenciasAdm);
-        setNumeroSolicitacoes(resBuscaDemandas.length);
+        setNotificacoes(resBuscaDemandas.length);
         return;
       }
 
       // buscas demandas com orçamento gerado 
       if(isUserSolicitnate){
-
+        // busca demandas do solicitante
+        const demandasSolicitante = await buscarDemandasComOrcamentoGerado(userId);
+        setNotificacoes(demandasSolicitante.length);
       }
     }
     fetchData();
@@ -183,11 +187,6 @@ const MenuNavegacao = () => {
             <span className={styles.textoDropdownItem}>Encontrar Assistências</span>
           </NavDropdown.Item>
 
-          {/* 
-                ACREDITO QUE NÃO HÁ NECESSIDADE DE TER ESSE LINK 
-                POIS PARA VER ASSITENCIAS FAVS BASTA UM FILTRO, bem simples, 
-                NA PAGINAS DE ENCONTRAR ASSISTENCIAS
-            */}
           {/* Consultar assistencias favoritas */}
           <NavDropdown.Item
             as={Link}
@@ -203,6 +202,33 @@ const MenuNavegacao = () => {
             <span className={styles.textoDropdownItem}>Assistências Favoritas</span>
           </NavDropdown.Item>
         </NavDropdown>
+      </div>
+
+            <div className={styles.divNavdropdown}>
+        {/* 
+          Notificação de orçamentos gerados
+        */}
+        <Nav.Link
+          as={Link}
+          to={"/procurar-demandas/ofertas"}
+          className={styles.navText}
+          onClick={() => {
+            setTimeout(() => {
+              location.reload();
+            }, 1);
+          }}
+        >
+          <span className={styles.textoDropdownItem}>Solicitações
+            {
+              (notificacoes > 0) && 
+              (
+                <Badge className={styles.badgeAtualizacoes}>
+                  {notificacoes}
+                </Badge>
+              )
+            }
+          </span>
+        </Nav.Link>
       </div>
     </>
   );
@@ -362,9 +388,9 @@ const MenuNavegacao = () => {
           }}
         >
           <span className={styles.textoDropdownItem}>Solicitações
-            {numeroSolicitacoes > 0 && (
+            {notificacoes > 0 && (
               <Badge className={styles.badgeAtualizacoes}>
-                {numeroSolicitacoes}
+                {notificacoes}
               </Badge>
             )}
           </span>
