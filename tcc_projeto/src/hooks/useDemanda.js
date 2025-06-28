@@ -106,23 +106,19 @@ export function useDemanda() {
     }
 
     // buscar demandas solicitadas a assistencias do adm
-    const buscaDemandasSolicitadasAssistencia = async (assistenciasAdministrador) =>{
+    const buscaDemandasSolicitadasAssistencia = async (assistencias) =>{
         const request = await fetch(`${url}/demanda`);
         const response = await request.json();
 
-        const listaDemandasSolicitadas = [];
+        const demandasSolicitadas = response.filter(demada => {
+            const isEmAtendimento = demada.status === "Aberto";
+            const isVinculada = assistencias.some(assistencia => assistencia.id === demada.assistencia);
+            return isEmAtendimento && isVinculada;
+        });
 
-        response.map((demanda)=>{
-            assistenciasAdministrador.map((assistencia)=>{
-                const isDemandaVinculada = demanda.assistencia === assistencia.id;
-                const statusEmAtendimento = demanda.status === "Aberto";
-                if(isDemandaVinculada && statusEmAtendimento){
-                    listaDemandasSolicitadas.push(demanda);
-                }
-            })
-        })
+        console.log(demandasSolicitadas);
 
-        return listaDemandasSolicitadas;
+        return demandasSolicitadas;
     }
 
     const buscaDemandaVinculadaAssistencia = async (assistencias) =>{
@@ -313,6 +309,8 @@ export function useDemanda() {
             method: "PATCH",
             body: JSON.stringify(data)
         });
+
+        return request.ok
     }
 
     // rejeitar demanda solicitada a at

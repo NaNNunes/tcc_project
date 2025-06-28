@@ -197,6 +197,18 @@
       "amperagem": "",
       "cor": "",
       "idSolicitante": "5744"
+    },
+    {
+      "id": "96e0",
+      "categoria": "Celular",
+      "marca": "Motorola",
+      "fabricante": "",
+      "modelo": "Moto G05",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "5744"
     }
   ],
   "demanda": [
@@ -232,13 +244,29 @@
       "idSolicitante": "5744",
       "dataEmissao": "27/06/2025",
       "horaEmissao": "05:07:40"
+    },
+    {
+      "id": "2673",
+      "idDispositivo": "96e0",
+      "descProblema": "jklçfasdjklçdfasgjklçfasdjklfsdjklwer",
+      "observacoes": "",
+      "status": "Aberto",
+      "assistencia": "7e02",
+      "idSolicitante": "5744",
+      "dataEmissao": "28/06/2025",
+      "horaEmissao": "14:39:49"
     }
   ],
   "assistencia_Fav_Solicitante": [
     {
-      "id": "9923",
+      "id": "948a",
       "idSolicitante": "5744",
       "idAssistencia": "7e02"
+    },
+    {
+      "id": "1b31",
+      "idSolicitante": "5744",
+      "idAssistencia": "2a23"
     }
   ]
 }

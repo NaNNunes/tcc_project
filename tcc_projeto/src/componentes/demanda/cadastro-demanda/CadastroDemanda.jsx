@@ -38,6 +38,7 @@ import { useVerificadorDeCpf } from '../../../hooks/useApi.js';
 import { useUser} from '../../../hooks/useUser.js';
 
 import { useNavigate, useParams } from 'react-router-dom';
+import { useLikes } from '../../../hooks/useLikes.js';
 
 const CadastroDemanda = () => {
     const navigate = useNavigate();    
@@ -72,9 +73,12 @@ const CadastroDemanda = () => {
      } = useAssistencia();
     
     const { 
-        cadastrarPseudoUser, // funcao que cadastra solicitante presencial
-        buscaAssistenciasFavoritas 
+        cadastrarPseudoUser// funcao que cadastra solicitante presencial
     } = useUser();
+
+    const {
+        buscarAssistenciasFavoritas
+    } = useLikes();
 
     // state para receber lista de assistencias
     const [assistencias, setAssistencias] = useState([]);
@@ -104,15 +108,15 @@ const CadastroDemanda = () => {
 
             // carrega assistencias favoritas do solicitante
             if(userType === "solicitante"){
-                const resBuscaLikes = await buscaAssistenciasFavoritas();
-                
+                const idsAssistenciasFavoritas = await buscarAssistenciasFavoritas(userId);
+                console.log(idsAssistenciasFavoritas);
                 // mapeia todas os matchs e retorna nome da assistencia pelo id encontrado no match
                 // pegar assitencias apenas com que seja favoritadas pelo user, verificando o id do solicitante no match
                 const assistenciasFavoritadas = await Promise.all(
-                    resBuscaLikes
-                        .filter(res => res.id_solicitante === userId)
-                        .map(res => buscaAssistenciaById(res.id_assistencia))
+                    idsAssistenciasFavoritas.map(res => buscaAssistenciaById(res))
                 );
+
+                console.log(assistenciasFavoritadas);
                 setAssistencias(assistenciasFavoritadas);
             }
 
@@ -309,11 +313,6 @@ const CadastroDemanda = () => {
                         })}
                     >
                         <option value="">Selecione uma opção</option>
-                        {/* Só carrega os modelos se houver uma categoria e marca selecionada. */}
-                        {/* 
-                            Obs - Renan: Não consegui fazer o modelo do dispositivo da demanda
-                            carregar quando tela é chamada na funão editar 
-                        */}
                         {
                             categoriaSelecionada && marcaSelecionada && dadosDispositivos[categoriaSelecionada]?.[marcaSelecionada]?.map((modelo) => (
                                 (modelo === dispositivo.modelo)

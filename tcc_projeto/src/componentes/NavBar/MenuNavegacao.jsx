@@ -34,10 +34,12 @@ const MenuNavegacao = () => {
     buscaDemandas,
     buscaDemandasSolicitadasAssistencia
    } = useDemanda();
+
   const { 
     buscaAssistencias,
     buscaAssistenciasDoAdministrador
    } = useAssistencia();
+
   const { buscaUserById } = useUser();
 
   const navigate = useNavigate();
@@ -52,18 +54,21 @@ const MenuNavegacao = () => {
   // aqui código sempre segue em execução sempre atualizando de acordo com atualizações da pagina
   useEffect(() => {
     async function fetchData() {
+      const isUserAdministrador = userType === "administrador";
+      const isUserSolicitnate = userType === "solicitante"
 
       // caso user seja adm
-      if (userType === "administrador") {
+      if (isUserAdministrador) {
         // busca assistencias do adm
         const resBuscaAssistenciasAdm = await buscaAssistenciasDoAdministrador(userId);
         // busca por todas as demandas
         const resBuscaDemandas = await buscaDemandasSolicitadasAssistencia(resBuscaAssistenciasAdm);
         setNumeroSolicitacoes(resBuscaDemandas.length);
+        return;
       }
 
       // buscas demandas com orçamento gerado 
-      if(userType === "solicitante"){
+      if(isUserSolicitnate){
 
       }
     }
