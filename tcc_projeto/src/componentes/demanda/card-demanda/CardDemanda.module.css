@@ -235,6 +235,21 @@
     .selecaoModal {
         width: 90%;
     }
+
+    .tituloModal {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .tituloInfoModal {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .textoInfoModal {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
 }
 
 @media screen and (max-width: 300px) {
@@ -285,20 +300,14 @@
 @media screen and (max-width: 220px) {
     .tituloModal {
         font-size: 1rem;
-        word-break: break-word;
-        overflow-wrap: break-word;
     }
 
     .tituloInfoModal {
         font-size: 1rem;
-        word-break: break-word;
-        overflow-wrap: break-word;
     }
 
     .textoInfoModal {
         font-size: 1rem;
-        word-break: break-word;
-        overflow-wrap: break-word;
     }
 
     .modalContent {

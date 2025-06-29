@@ -14,6 +14,15 @@
       "pergunta": "1",
       "resposta": "Pingo",
       "idEndereco": "4358"
+    },
+    {
+      "id": "1927",
+      "email": "Cleberson@gmail.com",
+      "cpf": "785.367.290-07",
+      "userTelefone": "12912345678",
+      "nome": "adm",
+      "sobrenome": "Sobrenome user",
+      "isValido": false
     }
   ],
   "administrador": [
@@ -282,11 +291,23 @@
       "idSolicitante": "5744"
     },
     {
-      "id": "41bf",
-      "categoria": "Outros",
-      "marca": "AAAAAAAAAAAAAA",
+      "id": "40f7",
+      "categoria": "Tablet",
+      "marca": "Xiaomi",
       "fabricante": "",
-      "modelo": "AAAAAAAAAAAAAAAAAAAAAA",
+      "modelo": "Redmi Pad SE 8.7",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "1927"
+    },
+    {
+      "id": "f3d1",
+      "categoria": "Celular",
+      "marca": "LG",
+      "fabricante": "",
+      "modelo": "LG K22+",
       "numSerie": "",
       "tensao": "",
       "amperagem": "",
@@ -357,22 +378,26 @@
       "horaEmissao": "00:21:32"
     },
     {
-      "id": "91e1",
-      "idDispositivo": "41bf",
-      "descProblema": "AAAAAAAAAAAAAAAAAAAAAAA",
+      "id": "53d2",
+      "idDispositivo": "40f7",
+      "descProblema": "FASDFSDSFDASDFSDFSDF",
+      "observacoes": "",
+      "status": "Em atendimento",
+      "assistencia": "2a23",
+      "idSolicitante": "1927",
+      "dataEmissao": "29/06/2025",
+      "horaEmissao": "00:46:44"
+    },
+    {
+      "id": "7d02",
+      "idDispositivo": "f3d1",
+      "descProblema": "tem um probremaasd",
       "observacoes": "",
       "status": "Aberto",
-      "assistencia": "Público",
+      "assistencia": "7e02",
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
-      "horaEmissao": "00:09:04",
-      "problema_identificado": "",
-      "solucao": "",
-      "pecaTrocada": "",
-      "valorObra": "",
-      "observacoesOrcamento": "",
-      "statusOrcamento": "Recusado"
-
+      "horaEmissao": "01:03:03"
     }
   ],
   "assistencia_Fav_Solicitante": [

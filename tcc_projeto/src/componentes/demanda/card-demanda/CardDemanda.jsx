@@ -185,11 +185,10 @@ const CardDemanda = (props) => {
                 const idEndereco = resBuscaSolicitanteById.idEndereco;
                 // Caso id tenha algum registro
                 // buscar endereco do user by id
-                if(idEndereco === undefined){
-                    alert("Endereco de solicitante não encontrado");
+                if(idEndereco !== undefined){
+                    const resBuscaEnderecoSolicitanteById = await buscaEnderecoById(idEndereco);
+                    setEndereco(resBuscaEnderecoSolicitanteById);
                 }
-                const resBuscaEnderecoSolicitanteById = await buscaEnderecoById(idEndereco);
-                setEndereco(resBuscaEnderecoSolicitanteById);
 
                 //buscar dispositivo do user by id
                 const resBuscaDispositivoSolicitanteById = await buscaDispositivoById(idDispositivo);
@@ -252,7 +251,6 @@ const CardDemanda = (props) => {
             <Button 
                 onClick={()=>{cancelarDemanda(props.id)}}
                 className={styles.botaoCancelar}
-                variant='danger'
             >
                 Cancelar
             </Button>
@@ -288,9 +286,33 @@ const CardDemanda = (props) => {
         </>
     );
 
-    // botao para selecionar qual assistencia recebera a demanda
     const botaoAceitarDemanda = (
-        <> 
+        <>  
+            <Button 
+                className={styles.botaoModal}
+                disabled={assistenciaSelecionada === ""}
+                onClick={()=>{handleAceitaDemanda()}}
+            >
+                Aceitar
+            </Button>
+        </>
+    )
+    
+    // botao para rejeitar demanda
+    const botaoRejeitarDemanda = (
+        <>
+            <Button 
+                // className={styles.botaoModal}
+                onClick={()=>{handleRejeitarDemanda()}}
+                className={styles.botaoCancelar}
+            >
+                Rejeitar
+            </Button>
+        </>
+    );
+
+    const botaoDemandasAbertas = (
+        <>
             <FloatingLabel
                 /* Campo do formulário */
                 className={styles.selecaoModal}
@@ -319,28 +341,9 @@ const CardDemanda = (props) => {
                 </Form.Select>
             </FloatingLabel>
 
-            <Button 
-                className={styles.botaoModal}
-                disabled={assistenciaSelecionada === ""}
-                onClick={()=>{handleAceitaDemanda()}}
-            >
-                Aceitar
-            </Button>
+            {botaoAceitarDemanda}
         </>
-    );
-
-    // botao para rejeitar demanda
-    const botaoRejeitarDemanda = (
-        <>
-            <Button 
-                // className={styles.botaoModal}
-                onClick={()=>{handleRejeitarDemanda()}}
-                variant="danger"
-            >
-                Rejeitar
-            </Button>
-        </>
-    );
+    )
 
     // Botões que aparecerão no modal para o administrador nas demandas aceitas.
     const botaoDemandasAceitas = (
@@ -406,14 +409,56 @@ const CardDemanda = (props) => {
         </>
     )
 
+    // botao para selecionar qual assistencia recebera a demanda
+    const botaoSolicitacoes = (
+        <>
+            <FloatingLabel
+                /* Campo do formulário */
+                className={styles.selecaoModal}
+                label='Selecione uma assistência'
+            >
+                <Form.Select
+                    onChange={(e)=>{setAssistenciaSelecionada(e.target.value)}}
+                >
+                    <option value="" selected disabled>
+                        Selecione uma opção
+                    </option>
+                    {
+                        // mapear todas as assistencias do adm 
+                        // para que o mesmo defina qual assistencia será responsavel
+                        assistenciasDoAdministrador.map((assistencia)=>(
+                            
+                            <option 
+                                key={assistencia.id}
+                                value={assistencia.id}
+                            >
+                                {assistencia.nomeFantasia}
+                            </option>
+                            
+                        ))
+                    }
+                </Form.Select>
+            </FloatingLabel>
+
+            <div style={{display: 'flex', gap: '20px'}}>
+                {botaoAceitarDemanda}
+                {
+                    // mostra apenas quando adm acessa pagina de solicitações
+                    (userBuscador === "administrador" && tipoDemanda === "solicitacoes") && 
+                    botaoRejeitarDemanda
+                }
+            </div>
+        </>
+    );
+
     // define como sera a composição do botao do modal
     const botoesDemanda = {
-        "abertas": botaoAceitarDemanda,
+        "abertas": botaoDemandasAbertas,
         "aceitas": botaoDemandasAceitas,
         "historico": botaoHistoricoDemandas,
         "minhas-demandas": botaoMinhasDemandas,
         "ofertas": botaoMinhasDemandas,
-        "solicitacoes": botaoAceitarDemanda
+        "solicitacoes": botaoSolicitacoes
     }
     // O Botão
     const mainBotao = botoesDemanda[tipoDemanda];
@@ -710,11 +755,6 @@ const CardDemanda = (props) => {
                 {/* Footer com o botão com a funcionalidade passada dentro do mainBotao */}
                 <Modal.Footer style={{padding: "0", border: "0", display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     {mainBotao}
-                    {
-                        // mostra apenas quando adm acessa pagina de solicitações
-                        (userBuscador === "administrador" && tipoDemanda === "solicitacoes") && 
-                            botaoRejeitarDemanda
-                    }
                 </Modal.Footer>
             </Modal>
         </div>
