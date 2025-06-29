@@ -20,6 +20,7 @@
     flex-direction: column;
     justify-content: flex-end !important;
     min-height: 30rem;
+    box-shadow: 0px 0px 10px 2px #00000028;
 }
 
 .ContPerfCat {

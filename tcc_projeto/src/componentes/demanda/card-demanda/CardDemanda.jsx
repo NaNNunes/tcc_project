@@ -257,8 +257,6 @@ const CardDemanda = (props) => {
         </>
     );
 
-    
-
     // --- ADMINISTRADOR ---
 
     // botao para direcionar user a tela de orçamento.

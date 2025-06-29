@@ -12,6 +12,10 @@ import Button from 'react-bootstrap/Button';
 // Importação do styles.
 import styles from "./ProcurarDemandas.module.css";
 
+// Importação de icones.
+import { FaPlus } from "react-icons/fa6";
+import { FaMinus } from "react-icons/fa";
+
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAssistencia } from "../../hooks/useAssistencia.js";
@@ -159,6 +163,10 @@ const ProcurarDemandas = () => {
     setNumLinhas((prev) => prev + 2);
   };
 
+  const handleCarregarMenos = () => {
+    setNumLinhas((prev) => prev - 2);
+  };
+
   return (
     <div style={{paddingTop: '80px', paddingBottom: '80px'}}>
       {/* <BarraPesquisa/> */}
@@ -195,18 +203,26 @@ const ProcurarDemandas = () => {
         }
       </Container>
 
-      {cardsVisiveis < demandas.length && (
-        <div>
-          <Button onClick={handleCarregarMais}>Carregar mais</Button>
-        </div>
-      )}
+      <div className={styles.botoesCarregar}>
+        {cardsVisiveis < demandas.length && (
+          <Button 
+            onClick={handleCarregarMais}
+            className={styles.botaoCarregar}
+          >
+            <FaPlus /> Carregar mais
+          </Button>
+        )}
 
-      {/* PRECISA? */}
-      {/* {cardsVisiveis > demandas.length && (
-        <div className="text-center mt-4">
-          <Button onClick={handleCarregarMenos}>Carregar menos</Button>
-        </div>
-      )} */}
+        {/* PRECISA? */}
+        {cardsVisiveis > 6 && (
+          <Button 
+            onClick={handleCarregarMenos}
+            className={styles.botaoCarregar}
+          >
+            <FaMinus/> Carregar menos
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

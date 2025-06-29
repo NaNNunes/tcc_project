@@ -8,6 +8,28 @@
     padding-right: 8%;
     max-width: none;
 }
+.botoesCarregar {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Botão para carregar mais ou menos. */
+.botaoCarregar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: #0061B7;
+    width: 11rem;
+    border: 0;
+    height: 50px;
+    font-weight: bold;
+    margin: 0px;
+    margin-top: 20px;
+}
 
 @media screen and (max-width: 1400px) {
     .caixa {
@@ -44,5 +66,18 @@
         grid-template-columns: repeat(1, 1fr);
         padding-left: 6%;
         padding-right: 6%;
-    }  
+    }
+    
+    .botoesCarregar {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 40px;
+    }
+}
+
+@media screen and (max-width: 230px) {
+    .botaoCarregar {
+        width: 5rem;
+        padding-left: 5px;
+    }
 }
