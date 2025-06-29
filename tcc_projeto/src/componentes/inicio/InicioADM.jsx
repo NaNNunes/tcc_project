@@ -113,7 +113,7 @@ const InicioADM = () => {
 
       demandas.forEach((d) => {
         const dispositivo = dispositivos.find(
-          (dev) => dev.id === d.idDispostivo
+          (dev) => dev.id === d.idDispositivo
         );
         if (dispositivo) {
           const categoria = dispositivo.categoria || "Outros";
@@ -322,13 +322,21 @@ const InicioADM = () => {
                       color="#ffffff"
                       size="2rem"
                     />
+
                     <div className={styles.info}>
                       <div className={styles.valor}>
-                        {maisRequisitados || "Carregando..."}
+                        {maisRequisitados
+                          ? maisRequisitados.length > 25
+                            ? maisRequisitados.slice(0, 25) + "..."
+                            : maisRequisitados
+                          : "Carregando..."}
                       </div>
                       <div className={styles.descricao}>Mais Requisitados</div>
                     </div>
-                    <div className={styles.percentual}>+12%</div>
+
+                    {maisRequisitados && (
+                      <div className={styles.percentual}>+12%</div>
+                    )}
                   </div>
 
                   <div className={styles.cardRelatorioNovo}>
