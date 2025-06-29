@@ -192,18 +192,6 @@
       "idSolicitante": "5744"
     },
     {
-      "id": "baec",
-      "categoria": "Tablet",
-      "marca": "Apple",
-      "fabricante": "",
-      "modelo": "iPad Air",
-      "numSerie": "",
-      "tensao": "",
-      "amperagem": "",
-      "cor": "",
-      "idSolicitante": "0431"
-    },
-    {
       "id": "1b93",
       "categoria": "Desktop",
       "marca": "AMD Placa de Vídeo",
@@ -226,6 +214,42 @@
       "amperagem": "",
       "cor": "",
       "idSolicitante": "5744"
+    },
+    {
+      "id": "dbd4",
+      "categoria": "Notebook",
+      "marca": "Asus",
+      "fabricante": "",
+      "modelo": "ASUS Zenbook 14",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "5744"
+    },
+    {
+      "id": "06a1",
+      "categoria": "Periférico",
+      "marca": "Logitech Mouse",
+      "fabricante": "",
+      "modelo": "G Pro",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "5744"
+    },
+    {
+      "id": "41bf",
+      "categoria": "Outros",
+      "marca": "AAAAAAAAAAAAAA",
+      "fabricante": "",
+      "modelo": "AAAAAAAAAAAAAAAAAAAAAA",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "5744"
     }
   ],
   "demanda": [
@@ -241,22 +265,11 @@
       "horaEmissao": "03:53:23"
     },
     {
-      "id": "f6f2",
-      "idDispositivo": "baec",
-      "descProblema": "dsafsdafgsdagfdsagsdagsdfsdfwdsfsd",
-      "observacoes": "",
-      "status": "Em atendimento",
-      "assistencia": "7e02",
-      "idSolicitante": "0431",
-      "dataEmissao": "27/06/2025",
-      "horaEmissao": "03:54:41"
-    },
-    {
       "id": "da42",
       "idDispositivo": "1b93",
       "descProblema": "Problema na minha placa",
       "observacoes": "",
-      "status": "Aberto",
+      "status": "Cancelada",
       "assistencia": "Público",
       "idSolicitante": "5744",
       "dataEmissao": "27/06/2025",
@@ -278,6 +291,39 @@
       "valorObra": "2mil milhões de reais",
       "observacoesOrcamento": "sim",
       "statusOrcamento": "Aceito"
+    },
+    {
+      "id": "c4f8",
+      "idDispositivo": "dbd4",
+      "descProblema": "AAAAAAAAAAAAAAAAAAAAAAAA",
+      "observacoes": "",
+      "status": "Aberto",
+      "assistencia": "7e02",
+      "idSolicitante": "5744",
+      "dataEmissao": "28/06/2025",
+      "horaEmissao": "23:20:23"
+    },
+    {
+      "id": "2f3f",
+      "idDispositivo": "06a1",
+      "descProblema": "Joguei na parede.",
+      "observacoes": "",
+      "status": "Aberto",
+      "assistencia": "7e02",
+      "idSolicitante": "5744",
+      "dataEmissao": "29/06/2025",
+      "horaEmissao": "00:21:32"
+    },
+    {
+      "id": "91e1",
+      "idDispositivo": "41bf",
+      "descProblema": "AAAAAAAAAAAAAAAAAAAAAAA",
+      "observacoes": "",
+      "status": "Aberto",
+      "assistencia": "Público",
+      "idSolicitante": "5744",
+      "dataEmissao": "29/06/2025",
+      "horaEmissao": "00:22:00"
     }
   ],
   "assistencia_Fav_Solicitante": [
