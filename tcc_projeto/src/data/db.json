@@ -91,29 +91,7 @@
       "assistenciaTermos": "true",
       "administradorId": "be9d",
       "isValido": true,
-      "idEndereco": "051f"
-    },
-    {
-      "id": "1ee4",
-      "assistenciaEmail": "juridico@raimundaecarloseduardofotografiasltda.com.br",
-      "nomeFantasia": "Raimunda e Carlos Eduardo Fotografias Ltda",
-      "razaoSocial": "Raimunda e Carlos Eduardo Fotografias Ltda",
-      "cnpj": "31.868.147/0001-21",
-      "assistenciaTelefone": "(21) 99150-1124",
-      "administradorId": "1bbe",
-      "isValido": true,
-      "idEndereco": "5dc8"
-    },
-    {
-      "id": "012f",
-      "assistenciaEmail": "qualidade@danielaeheloisejoalherialtda.com.br",
-      "nomeFantasia": "Daniela e Heloise Joalheria Ltda",
-      "razaoSocial": "Daniela e Heloise Joalheria Ltda",
-      "cnpj": "77.444.586/0001-08",
-      "assistenciaTelefone": "(21) 99676-4320",
-      "administradorId": "1bbe",
-      "isValido": true,
-      "idEndereco": "75ec"
+      "idEndereco": "a3df"
     }
   ],
   "endereco": [
@@ -198,26 +176,6 @@
       "uf": "ES",
       "number": "122",
       "complemento": "Casa da ração"
-    },
-    {
-      "id": "5dc8",
-      "zipcode": "22461060",
-      "localidade": "Rio de Janeiro",
-      "bairro": "Jardim Botânico",
-      "logradouro": "Rua Conde Afonso Celso",
-      "uf": "RJ",
-      "number": "197",
-      "complemento": "sim"
-    },
-    {
-      "id": "75ec",
-      "zipcode": "26157001",
-      "localidade": "Belford Roxo",
-      "bairro": "Shangri-lá",
-      "logradouro": "Beco da Fonte",
-      "uf": "RJ",
-      "number": "161",
-      "complemento": "lugar nenhum"
     }
   ],
   "dispositivo": [
@@ -322,7 +280,7 @@
       "idDispositivo": "96e0",
       "descProblema": "jklçfasdjklçdfasgjklçfasdjklfsdjklwer",
       "observacoes": "",
-      "status": "Em atendimento",
+      "status": "Concluído",
       "assistencia": "7e02",
       "idSolicitante": "5744",
       "dataEmissao": "28/06/2025",
@@ -361,18 +319,11 @@
       "idDispositivo": "41bf",
       "descProblema": "AAAAAAAAAAAAAAAAAAAAAAA",
       "observacoes": "",
-      "status": "Aberto",
-      "assistencia": "Público",
+      "status": "Em atendimento",
+      "assistencia": "2a23",
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
-      "horaEmissao": "00:09:04",
-      "problema_identificado": "",
-      "solucao": "",
-      "pecaTrocada": "",
-      "valorObra": "",
-      "observacoesOrcamento": "",
-      "statusOrcamento": "Recusado"
-
+      "horaEmissao": "00:22:00"
     }
   ],
   "assistencia_Fav_Solicitante": [
