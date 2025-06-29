@@ -18,7 +18,8 @@ import { LuClipboardCheck, LuClipboardCopy } from "react-icons/lu";
 import { GrFavorite } from "react-icons/gr";
 import styles from "./inicio.module.css";
 
-import { useAssistencia } from "../../hooks/useAssistencia";
+import { useAssistencia } from "../../hooks/useAssistencia.js";
+import { useLikes } from "../../hooks/useLikes.js";
 
 const InicioSolic = () => {
   const navigate = useNavigate();
@@ -27,40 +28,18 @@ const InicioSolic = () => {
 
   const [openDropdown, setOpenDropdown] = useState(null);
   const { usuarioNome } = useContext(AuthContext);
-  // const [favoritas, setFavoritas] = useState([]);
+  const {buscaLikesSolicitante} = useLikes();
+  const {buscarAssistenciasFavoritasSolicitante} = useAssistencia();
+  const [favoritas, setFavoritas] = useState([]);
   // const [assistencias, setAssistencias] = useState([]);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const resAssist = await fetch("http://localhost:5001/assistencia");
-  //       const resFav = await fetch(
-  //         "http://localhost:5001/assistencia_Fav_Solicitante"
-  //       );
-
-  //       if (!resAssist.ok || !resFav.ok) {
-  //         throw new Error("Erro ao buscar dados");
-  //       }
-
-  //       const assistenciasData = await resAssist.json();
-  //       const favoritasData = await resFav.json();
-
-  //       setAssistencias(assistenciasData);
-  //       setFavoritas(favoritasData);
-  //     } catch (error) {
-  //       console.error("Erro ao carregar assistências:", error);
-  //     }
-  //   }
-
-  //   fetchData();
-  // }, []);
 
   useEffect(()=>{
     async function fetchData(){
       try {
         // busca likes do solicitante
-        // const buscaLikesSolicitante = await buscarLikesSolicitante(userId);
-        
+        const likes = await buscaLikesSolicitante(userId);
+        const assistenciasFavoritas = await buscarAssistenciasFavoritasSolicitante(likes);
+        setFavoritas(assistenciasFavoritas);
       } catch (error) {
         console.log(error.messsage)
       }
@@ -265,28 +244,27 @@ const InicioSolic = () => {
               <Row
                 className={`justify-content-center ${styles.assistenciasRecentes}`}
               >
-                {/* {favoritas.map((fav) => {
-                  const dados = assistencias.find(
-                    (a) => a.id === fav.id_assistencia
-                  );
-                  if (!dados) return null;
-
-                  return (
-                    <div key={fav.id} className={styles.assistenciaCard}>
-                      <div className={styles.assistenciaInfo}>
-                        <h5>{dados.nome}</h5>
-                        <p>Nota: {dados.nota} ★</p>
-                        <Button
-                          variant="outline-primary"
-                          size="sm"
-                          onClick={() => navigate(`/assistencia/${dados.id}`)}
-                        >
-                          Ver Detalhes
-                        </Button>
+                {
+                  favoritas.map((assistencia) => (
+                    <>
+                      <div 
+                        key={assistencia.id} 
+                        className={styles.assistenciaCard}
+                      >
+                        <div className={styles.assistenciaInfo}>
+                          <h5>{assistencia.nomeFantasia}</h5>
+                          {/* <p>Nota: {} ★</p> */}
+                          <Button
+                            variant="outline-primary"
+                            size="sm"
+                            onClick={() => navigate(`/buscar-assistencias/favoritas`)}
+                          >
+                            Ver Detalhes
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  );
-                })} */}
+                    </>
+                ))}
               </Row>
             </Card>
           </div>
