@@ -1,234 +1,240 @@
 /* Tamanho total do formulário. */
 .formulario {
-    width: 60%;
-    margin-top: 80px;
-    margin-bottom: 80px;
+  width: 60%;
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 4px;
 }
 
 /* Parte do formulário dentro do formulário */
 .parteFormulario {
-    background-color: #FFFFFF;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 2px #00000028;
-    padding-left: 1.7rem;
-    padding-right: 1.7rem;
-    padding-top: 1.7rem;
-    padding-bottom: 0;
-    margin: 0;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 2px #00000028;
+  padding-left: 1.7rem;
+  padding-right: 1.7rem;
+  padding-top: 1.7rem;
+  padding-bottom: 0;
+  margin: 0;
 }
 
 /* Campo do formulário */
 .campo {
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-bottom: 30px;
-    margin: 0px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 30px;
+  margin: 0px;
 }
 
 /* Lista de categoria do dispositivo */
-.lista { 
-    background-color: #034C8C;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1rem;
-    padding: 1rem;
+.lista {
+  background-color: #034c8c;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  padding: 1rem;
 }
 
 /* Cada botão dentro da lista de categoria do dispositivo */
 .listaBotao {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    align-content: center;
-    background-color: #0061B7;
-    color: rgb(255, 255, 255);
-    box-shadow: 0px 0px 10px 1px #0000005d;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-radius: 10px !important;
-    border: 2px solid transparent;
-    font-size: 1rem;
-    height: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  background-color: #0061b7;
+  color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 10px 1px #0000005d;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 10px !important;
+  border: 2px solid transparent;
+  font-size: 1rem;
+  height: 50px;
 }
 
 .listaBotao:hover {
-    background-color: #0069C6;
-    cursor: pointer;
+  background-color: #0069c6;
+  cursor: pointer;
 }
 
 /* Quando o botão for clickado */
 .listaBotaoSelecionado {
-    background-color: #0069C6 !important;
-    border: 2px solid #FFDA8C !important;
+  background-color: #0069c6 !important;
+  border: 2px solid #ffda8c !important;
 }
 
 /* Botão para enviar o formulário */
 .botaoSubmit {
-    background-color: #0061B7;
-    width: 16rem;
-    border: 0;
-    height: 50px;
+  background-color: #0061b7;
+  width: 16rem;
+  border: 0;
+  height: 50px;
 }
 
 .botaoSubmit:hover {
-    background-color: #0069C6;
+  background-color: #0069c6;
 }
 
 /* --- AQUI COMEÇA A ESTILIZAÇÃO DO MODAL --- */
 
 /* Personalização do "dialogClassName", basicamente o espaço do modal. */
 .modalInfo {
-    max-width: 376px; 
-    margin: auto;
+  max-width: 376px;
+  margin: auto;
 }
 
 /* Personalização do "contentClassName", todo o conteúdo que está dentro do modal. */
 .modalContent {
-    padding: 20px;
+  padding: 20px;
 }
 
 /* Modal.Title */
 .tituloModal {
-    font-size: 2rem;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    font-weight: bold;
+  font-size: 2rem;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  font-weight: bold;
 }
 
 /* Texto com informações */
 .textSpan {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #757575;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #757575;
 }
 
 /* Divisor de público para assistências. */
 .divisor {
-    color: white !important;
-    margin: 0;
-    border: 1px solid white;
+  color: white !important;
+  margin: 0;
+  border: 1px solid white;
 }
 
 /* Footer com o botão para enviar. */
 .footerModal {
-    border: 0px;
-    padding: 0px;
-    align-self: center !important;
+  border: 0px;
+  padding: 0px;
+  align-self: center !important;
 }
 
 /* Botão para enviar a demanda. */
 .botaoModal {
-    width: fit-content;
-    align-self: center;
-    background-color: #0061B7;
-    width: 12rem;
-    border: 0;
-    height: 50px;
-    font-weight: bold;
-    margin: 0px;
-    margin-top: 20px;
+  width: fit-content;
+  align-self: center;
+  background-color: #0061b7;
+  width: 12rem;
+  border: 0;
+  height: 50px;
+  font-weight: bold;
+  margin: 0px;
+  margin-top: 20px;
 }
 
 @media screen and (max-width: 1465px) {
-    .formulario {
-        width: 75%;
-    }
+  .formulario {
+    width: 75%;
+  }
 }
 
 @media screen and (max-width: 1260px) {
-    .formulario {
-        width: 80%;
-    }
+  .formulario {
+    width: 80%;
+  }
 }
 
 @media screen and (max-width: 1100px) {
-    .lista {    
-        grid-template-columns: repeat(3, 1fr);
-        padding: 2%;
-    }
+  .lista {
+    grid-template-columns: repeat(3, 1fr);
+    padding: 2%;
+  }
 }
 
 @media screen and (max-width: 900px) {
-    .lista {
-        padding: 3%;
-    }
+  .lista {
+    padding: 3%;
+  }
 
-    .formulario {
-        width: 83%;
-    }
+  .formulario {
+    width: 83%;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .parteFormulario {
-        padding: 1.5rem;
-    }
+  .parteFormulario {
+    padding: 1.5rem;
+  }
 
-    .campo {
-        padding-bottom: 30px;
-    }
+  .campo {
+    padding-bottom: 30px;
+  }
 }
 
 @media screen and (max-width: 610px) {
-    .lista {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 15px;
-        max-height: max-content;
-    }
+  .lista {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 15px;
+    max-height: max-content;
+  }
 }
 
 @media screen and (max-width: 448px) {
-    .formulario {
-        width: 90%
-    }
+  .formulario {
+    width: 90%;
+  }
 }
 
 @media screen and (max-width: 352px) {
-    .botaoSubmit {
-        width: 100%;
-    }
+  .botaoSubmit {
+    width: 100%;
+  }
 
-    .botaoModal {
-        width: 5rem;
-    }
+  .botaoModal {
+    width: 5rem;
+  }
 
-    .titleh3 {
-        font-size: 1.5rem;
-    }
+  .titleh3 {
+    font-size: 1.5rem;
+  }
 }
 
 @media screen and (max-width: 310px) {
-    .lista {    
-        grid-template-columns: repeat(1, 1fr);
-        padding: 6%;
-    }
-    
-    .listaBotao {
-        width: 100%;
-    }
+  .lista {
+    grid-template-columns: repeat(1, 1fr);
+    padding: 6%;
+  }
 
-    .titleh3 {
-        word-break: break-word;
-        overflow-wrap: break-word;
-    }
+  .listaBotao {
+    width: 100%;
+  }
+
+  .titleh3 {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
 }
 
 @media screen and (max-width: 220px) {
-    .tituloModal {
-        font-size: 1.2rem;
-        word-break: break-word;
-        overflow-wrap: break-word;
-    }
+  .tituloModal {
+    font-size: 1.2rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
 
-    .modalContent {
-        padding: 10px;
-    }
+  .modalContent {
+    padding: 10px;
+  }
 
-    .listaBotao {
-        justify-content: center;
-        padding-left: 0px;
-        padding-right: 0px;
-        font-size: 0.9rem;
-    } 
+  .listaBotao {
+    justify-content: center;
+    padding-left: 0px;
+    padding-right: 0px;
+    font-size: 0.9rem;
+  }
 }
