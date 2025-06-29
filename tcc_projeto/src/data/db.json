@@ -258,11 +258,19 @@
       "idSolicitante": "5744"
     },
     {
+<<<<<<< HEAD
       "id": "1eb9",
       "categoria": "Tablet",
       "marca": "Xiaomi",
       "fabricante": "",
       "modelo": "POCO PAD",
+=======
+      "id": "dbd4",
+      "categoria": "Notebook",
+      "marca": "Asus",
+      "fabricante": "",
+      "modelo": "ASUS Zenbook 14",
+>>>>>>> 60305be3c0b8fb0be8208402e785ed1d271fb6ce
       "numSerie": "",
       "tensao": "",
       "amperagem": "",
@@ -270,11 +278,31 @@
       "idSolicitante": "5744"
     },
     {
+<<<<<<< HEAD
       "id": "ab8d",
       "categoria": "Tablet",
       "marca": "Xiaomi",
       "fabricante": "",
       "modelo": "X95 Pro",
+=======
+      "id": "06a1",
+      "categoria": "Periférico",
+      "marca": "Logitech Mouse",
+      "fabricante": "",
+      "modelo": "G Pro",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "5744"
+    },
+    {
+      "id": "41bf",
+      "categoria": "Outros",
+      "marca": "AAAAAAAAAAAAAA",
+      "fabricante": "",
+      "modelo": "AAAAAAAAAAAAAAAAAAAAAA",
+>>>>>>> 60305be3c0b8fb0be8208402e785ed1d271fb6ce
       "numSerie": "",
       "tensao": "",
       "amperagem": "",
@@ -299,8 +327,8 @@
       "idDispositivo": "1b93",
       "descProblema": "Problema na minha placa",
       "observacoes": "",
-      "status": "Em atendimento",
-      "assistencia": "1ee4",
+      "status": "Cancelada",
+      "assistencia": "Público",
       "idSolicitante": "5744",
       "dataEmissao": "27/06/2025",
       "horaEmissao": "05:07:40"
@@ -323,6 +351,7 @@
       "statusOrcamento": "Aceito"
     },
     {
+<<<<<<< HEAD
       "id": "cb67",
       "idDispositivo": "1eb9",
       "descProblema": "não achei nenhum problema mas ta com problema",
@@ -343,11 +372,39 @@
       "id": "53ab",
       "idDispositivo": "ab8d",
       "descProblema": "bhjkasdfhjklfasdkhjlfsdjkhfsdahjklfdashjklrf",
+=======
+      "id": "c4f8",
+      "idDispositivo": "dbd4",
+      "descProblema": "AAAAAAAAAAAAAAAAAAAAAAAA",
+      "observacoes": "",
+      "status": "Aberto",
+      "assistencia": "7e02",
+      "idSolicitante": "5744",
+      "dataEmissao": "28/06/2025",
+      "horaEmissao": "23:20:23"
+    },
+    {
+      "id": "2f3f",
+      "idDispositivo": "06a1",
+      "descProblema": "Joguei na parede.",
+      "observacoes": "",
+      "status": "Aberto",
+      "assistencia": "7e02",
+      "idSolicitante": "5744",
+      "dataEmissao": "29/06/2025",
+      "horaEmissao": "00:21:32"
+    },
+    {
+      "id": "91e1",
+      "idDispositivo": "41bf",
+      "descProblema": "AAAAAAAAAAAAAAAAAAAAAAA",
+>>>>>>> 60305be3c0b8fb0be8208402e785ed1d271fb6ce
       "observacoes": "",
       "status": "Aberto",
       "assistencia": "Público",
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
+<<<<<<< HEAD
       "horaEmissao": "00:09:04",
       "problema_identificado": "",
       "solucao": "",
@@ -355,6 +412,9 @@
       "valorObra": "",
       "observacoesOrcamento": "",
       "statusOrcamento": "Recusado"
+=======
+      "horaEmissao": "00:22:00"
+>>>>>>> 60305be3c0b8fb0be8208402e785ed1d271fb6ce
     }
   ],
   "assistencia_Fav_Solicitante": [

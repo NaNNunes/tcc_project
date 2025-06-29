@@ -27,6 +27,9 @@ import { FaUser } from "react-icons/fa";
 import ImgCelular from '/icons/img_card_celular.png';
 import ImgNotebook from '/icons/img_card_notebook.png';
 import ImgPerifericos from '/icons/img_card_perifericos.png';
+import ImgTablet from '/icons/img_card_tablet.png';
+import ImgDesktop from '/icons/img_card_desktop.png';
+import ImgOthers from '/icons/img_card_outros.png';
 
 import { useEffect, useState } from 'react';
 
@@ -236,6 +239,7 @@ const CardDemanda = (props) => {
         <>
             <Button
                 href={`/criar-demanda/${props.id}`}
+                className={styles.botaoModal}
             >
                 Editar
             </Button>
@@ -247,6 +251,7 @@ const CardDemanda = (props) => {
         <>
             <Button 
                 onClick={()=>{cancelarDemanda(props.id)}}
+                className={styles.botaoCancelar}
                 variant='danger'
             >
                 Cancelar
@@ -254,31 +259,7 @@ const CardDemanda = (props) => {
         </>
     );
 
-    // Botões que aparecerão no modal para o solicitante no consultar pedidos.
-    const botaoMinhasDemandas = (
-        <>
-            {
-                ((props.status === "Concluido" || props.status === "Cancelada") 
-                || 
-                (demandaSelecionada.statusOrcamento === "Recusado" || demandaSelecionada.statusOrcamento === "Aceito")
-                ||
-                (demandaSelecionada.statusOrcamento === undefined && props.status === "Em atendimento")) && 
-                botaoFecharModalDeInfosDemanda
-            }
-            {
-                (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Sem resposta") &&
-                botaoAceitarRejeitarOrcamento
-            }
-            {
-                (userBuscador === "solicitante" && props.status === "Aberto" && idAssistencia === "Público") &&
-                botaoEditarDemanda
-            }
-            {
-                (props.status === "Aberto" && userBuscador === "solicitante") && 
-                botaoCancelarDemanda
-            }
-        </>
-    );
+    
 
     // --- ADMINISTRADOR ---
 
@@ -361,6 +342,50 @@ const CardDemanda = (props) => {
         </>
     );
 
+    // Botões que aparecerão no modal para o administrador nas demandas aceitas.
+    const botaoDemandasAceitas = (
+        <>
+            {
+                ((props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === undefined)) &&
+                botaoGerarOrcamento
+            }
+            {
+                (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Aceito") &&
+                botaoConcluirDemanda
+            }
+        </>
+    )
+
+    // Botões que aparecerão no modal para o solicitante no consultar pedidos.
+    const botaoMinhasDemandas = (
+        <>
+            {
+                ((props.status === "Concluido" || props.status === "Cancelada") 
+                || 
+                (demandaSelecionada.statusOrcamento === "Recusado" || demandaSelecionada.statusOrcamento === "Aceito")
+                ||
+                (demandaSelecionada.statusOrcamento === undefined && props.status === "Em atendimento")) && 
+                botaoFecharModalDeInfosDemanda
+            }
+            {
+                (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Sem resposta") &&
+                botaoAceitarRejeitarOrcamento
+            }
+            {
+                <div style={{display: 'flex', gap: '20px'}}>
+                    {
+                        (props.status === "Aberto" && userBuscador === "solicitante") && 
+                        botaoCancelarDemanda
+                    }
+                    {
+                        (userBuscador === "solicitante" && props.status === "Aberto" && idAssistencia === "Público") &&
+                        botaoEditarDemanda
+                    }
+                </div>
+            }
+        </>
+    );
+
     // Botões que aparecerão no modal para o administrador no histórico de demandas.
     const botaoHistoricoDemandas = (
         <>
@@ -384,7 +409,7 @@ const CardDemanda = (props) => {
     // define como sera a composição do botao do modal
     const botoesDemanda = {
         "abertas": botaoAceitarDemanda,
-        "aceitas": botaoGerarOrcamento,
+        "aceitas": botaoDemandasAceitas,
         "historico": botaoHistoricoDemandas,
         "minhas-demandas": botaoMinhasDemandas,
         "ofertas": botaoMinhasDemandas,
@@ -417,13 +442,13 @@ const CardDemanda = (props) => {
             case 'notebook':
                 return <img src={ImgNotebook} alt="Notebook" style={{ width: '50px', height: '50px' }}></img>;
             case 'tablet':
-                return <img></img>;
+                return <img src={ImgTablet} alt="Notebook" style={{ width: '50px', height: '50px' }}></img>;
             case 'desktop':
-                return <img></img>;
-            case 'perifericos':
+                return <img src={ImgDesktop} alt="Notebook" style={{ width: '50px', height: '50px' }}></img>;
+            case 'periférico':
                 return <img src={ImgPerifericos} alt="Perifericos" style={{ width: '50px', height: '50px' }}></img>;
             case 'outros':
-                return <img></img>
+                return <img src={ImgOthers} alt="Notebook" style={{ width: '50px', height: '50px' }}></img>
         }
     }
 
@@ -434,7 +459,7 @@ const CardDemanda = (props) => {
                 return '#00BFFF'; // se estiver aberto, retorna ciano.
             case 'em atendimento':
                 return '#FFCA68'; // se estiver em atendimento, retorna amarelo
-            case 'concluido':
+            case 'concluído':
                 return '#00C400'; // se estiver em concluido, retorna verde
             case 'cancelada':
                 return '#FF3B30'; // se estiver em cancelado, retorna vermelho
@@ -458,9 +483,7 @@ const CardDemanda = (props) => {
             {/* Card com as informações. */}
             <Container className={styles.caixaCard}>
                 <Card 
-                    style={{
-                        width: "100%", display: "flex", flexDirection: "column"
-                    }}
+                    className={styles.cardDemanda}
                 >
                     {/* mude o design front enzo */}  
                     {
@@ -473,7 +496,7 @@ const CardDemanda = (props) => {
                         className={styles.cardBody} 
                     >
                         <Container 
-                            fluid 
+                            fluid
                             className={styles.ContPerfCat}
                         >
                                 {
