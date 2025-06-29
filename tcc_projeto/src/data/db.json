@@ -351,28 +351,6 @@
       "statusOrcamento": "Aceito"
     },
     {
-<<<<<<< HEAD
-      "id": "cb67",
-      "idDispositivo": "1eb9",
-      "descProblema": "não achei nenhum problema mas ta com problema",
-      "observacoes": "",
-      "status": "Em atendimento",
-      "assistencia": "2a23",
-      "idSolicitante": "5744",
-      "dataEmissao": "29/06/2025",
-      "horaEmissao": "00:08:20",
-      "problema_identificado": "tem probrema",
-      "solucao": "olhe",
-      "pecaTrocada": "rebimboca da parafuseta",
-      "valorObra": "US$ 164 mil",
-      "observacoesOrcamento": "Valor da mão",
-      "statusOrcamento": "Aceito"
-    },
-    {
-      "id": "53ab",
-      "idDispositivo": "ab8d",
-      "descProblema": "bhjkasdfhjklfasdkhjlfsdjkhfsdahjklfdashjklrf",
-=======
       "id": "c4f8",
       "idDispositivo": "dbd4",
       "descProblema": "AAAAAAAAAAAAAAAAAAAAAAAA",
@@ -398,13 +376,11 @@
       "id": "91e1",
       "idDispositivo": "41bf",
       "descProblema": "AAAAAAAAAAAAAAAAAAAAAAA",
->>>>>>> 60305be3c0b8fb0be8208402e785ed1d271fb6ce
       "observacoes": "",
       "status": "Aberto",
       "assistencia": "Público",
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
-<<<<<<< HEAD
       "horaEmissao": "00:09:04",
       "problema_identificado": "",
       "solucao": "",
@@ -412,9 +388,7 @@
       "valorObra": "",
       "observacoesOrcamento": "",
       "statusOrcamento": "Recusado"
-=======
-      "horaEmissao": "00:22:00"
->>>>>>> 60305be3c0b8fb0be8208402e785ed1d271fb6ce
+
     }
   ],
   "assistencia_Fav_Solicitante": [
