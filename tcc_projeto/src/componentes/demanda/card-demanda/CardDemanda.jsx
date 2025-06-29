@@ -205,19 +205,21 @@ const CardDemanda = (props) => {
     // botões para aceitar ou rejeitar o orçamento.
     const botaoAceitarRejeitarOrcamento = (
         <>
-            <Button
-                className={styles.botaoModal}
-                onClick={()=>{handleAceitarOrcamento()}}
-            >
-                Aceitar
-            </Button>
-                
-            <Button
-                className={styles.botaoModal}
-                onClick={()=>{handleRejeitarOrcamento()}}
-            >
-                Rejeitar
-            </Button>
+            <div className={styles.divBotoes}>
+                <Button
+                    className={styles.botaoModal}
+                    onClick={()=>{handleAceitarOrcamento()}}
+                >
+                    Aceitar
+                </Button>
+                    
+                <Button
+                    className={styles.botaoCancelar}
+                    onClick={()=>{handleRejeitarOrcamento()}}
+                >
+                    Rejeitar
+                </Button>
+            </div>
         </>
     );
 
@@ -373,7 +375,7 @@ const CardDemanda = (props) => {
                 botaoAceitarRejeitarOrcamento
             }
             {
-                <div style={{display: 'flex', gap: '20px'}}>
+                <div className={styles.divBotoes}>
                     {
                         (props.status === "Aberto" && userBuscador === "solicitante") && 
                         botaoCancelarDemanda
@@ -438,7 +440,7 @@ const CardDemanda = (props) => {
                 </Form.Select>
             </FloatingLabel>
 
-            <div style={{display: 'flex', gap: '20px'}}>
+            <div className={styles.divBotoes}>
                 {botaoAceitarDemanda}
                 {
                     // mostra apenas quando adm acessa pagina de solicitações
@@ -607,11 +609,13 @@ const CardDemanda = (props) => {
                                 ></span>{props.status}
                             </Card.Text>
                         </Container>
+                    </Card.Body>
 
+                    <Card.Footer style={{border: '0', background: '#FFFFFF', padding: '0', marginBottom: '20px'}}>
                         <Container className={styles.containerBotao} style={{padding: '0'}}>
                             {botaoVisualizarDemada}
                         </Container>
-                    </Card.Body>
+                    </Card.Footer>
                 </Card>
             </Container>
         </div>

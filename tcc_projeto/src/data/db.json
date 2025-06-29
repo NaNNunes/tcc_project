@@ -355,6 +355,18 @@
       "amperagem": "",
       "cor": "",
       "idSolicitante": "5744"
+    },
+    {
+      "id": "3cda",
+      "categoria": "Celular",
+      "marca": "Motorola",
+      "fabricante": "",
+      "modelo": "Moto G75",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "5744"
     }
   ],
   "demanda": [
@@ -447,7 +459,7 @@
       "descProblema": "AAAAAAAAAAAAAAAAAAAAAAAAAAA",
       "observacoes": "",
       "status": "Aberto",
-      "assistencia": "2a23",
+      "assistencia": "7e02",
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
       "horaEmissao": "01:26:01"
@@ -472,7 +484,13 @@
       "assistencia": "7e02",
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
-      "horaEmissao": "01:28:45"
+      "horaEmissao": "01:28:45",
+      "problema_identificado": "AAAAAAAAAAAAAAAAAAAAAAAA",
+      "solucao": "AAAAAAAAAAAAAAAAAAAAA",
+      "pecaTrocada": "AAAAAAAAAAAAAAAAAAAa",
+      "valorObra": "150",
+      "observacoesOrcamento": "",
+      "statusOrcamento": "Sem resposta"
     },
     {
       "id": "a95f",
@@ -517,6 +535,17 @@
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
       "horaEmissao": "01:38:48"
+    },
+    {
+      "id": "b958",
+      "idDispositivo": "3cda",
+      "descProblema": "AAAAAAAAAAAAAAAAAAAAAAA",
+      "observacoes": "",
+      "status": "Aberto",
+      "assistencia": "Público",
+      "idSolicitante": "5744",
+      "dataEmissao": "29/06/2025",
+      "horaEmissao": "03:18:46"
     }
   ],
   "assistencia_Fav_Solicitante": [
