@@ -133,6 +133,7 @@
     margin-left: 5px;
     color: rgb(255, 255, 255);
     font-size: 1rem;
+    box-shadow: 1.5px 2px 3.5px rgba(0, 0, 0, 0.35);
 }
 
 /* Tirando o icone do dropdown 🙏 */
