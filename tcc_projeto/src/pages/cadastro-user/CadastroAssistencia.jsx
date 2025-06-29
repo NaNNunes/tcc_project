@@ -13,11 +13,17 @@ import { useForm } from "react-hook-form";
 import { useVerificadorDeCnpj, useComparaDados } from "../../hooks/useApi";
 
 import { useAssistencia } from "../../hooks/useAssistencia.js";
-// import {  } from "../../hooks/useComparaDados.js";
 
 const { verificador } = useVerificadorDeCnpj();
 
 const CadastroAssistencia = () => {
+  const navigate = useNavigate();
+
+  const userType = localStorage.getItem("userType");
+  if(userType !== "Visitante" ){
+    return navigate("/inicio");
+  };
+
   const {
     register,
     handleSubmit,
@@ -25,7 +31,6 @@ const CadastroAssistencia = () => {
     formState: { errors },
   } = useForm();
 
-  const navigate = useNavigate();
 
   const { inserirAssistencia } = useAssistencia();
   const { verificador } = useVerificadorDeCnpj();

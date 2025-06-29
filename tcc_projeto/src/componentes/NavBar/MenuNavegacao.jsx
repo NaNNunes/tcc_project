@@ -46,7 +46,8 @@ const MenuNavegacao = () => {
 
   const navigate = useNavigate();
 
-  const { logout, usuarioNome } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
+  const usuarioNome = localStorage.getItem("userName");
   const userId = localStorage.getItem("userId");
   const userType = localStorage.getItem("userType");
   const [openDropdown, setOpenDropdown] = useState(null); // useState para verificar se o dropdown esta aberto ou não.

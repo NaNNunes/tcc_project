@@ -19,11 +19,6 @@ const Login = () => {
   const userType = localStorage.getItem("userType");
   if(userType !== "Visitante" && userType !== null) return <Navigate to="/inicio"/>;
 
-  const {        
-    buscaAdministradores,
-    buscaSolicitantes
-  } = useUser();
-
   const { verificaLogin } = useVerificaLogin();
   
   const {
@@ -33,20 +28,15 @@ const Login = () => {
   } = useForm();
   
   const onSubmit = async (data) => {
-
-    // lista adms
-    const resBuscaAdministradores = await buscaAdministradores();
-    // lista solicitantes
-    const resBuscaSolicitantes = await buscaSolicitantes();
-
     // verifica qual a resposta da tentativa de acesso
-    const respVerificacao = verificaLogin(data, resBuscaSolicitantes, resBuscaAdministradores);
+    const respVerificacao = await verificaLogin(data);
 
     if (respVerificacao === "Login efetuado com sucesso") {
       alert(respVerificacao);
       navigate("/inicio");
     } else {
       alert(respVerificacao);
+      console.log(respVerificacao);
     }
   };
 

@@ -22,6 +22,13 @@ import { useVerificadorDeCpf, useComparaDados } from "../../hooks/useApi.js";
 import { useUser } from "../../hooks/useUser.js";
 
 const CadastroUser = () => {
+  const navigate = useNavigate();
+  const tipoUsuario = localStorage.getItem("tipoUsuario");
+  const userType = localStorage.getItem("userType");
+  if(userType !== "Visitante" ){
+    return navigate("/inicio");
+  };
+
   const {
     register,
     handleSubmit,
@@ -29,7 +36,6 @@ const CadastroUser = () => {
     formState: { errors },
   } = useForm();
   const { cadastrarInfosUser } = useUser();
-  const navigate = useNavigate();
   const { verificador } = useVerificadorDeCpf();
 
   const {
@@ -42,12 +48,10 @@ const CadastroUser = () => {
 
   const senha = watch("senha");
 
-  const userType = localStorage.getItem("tipoUsuario");
-
   const onSubmit = async (data) => {
-    if (userType !== "solicitante" && userType !== "administrador") {
+    if (tipoUsuario !== "solicitante" && tipoUsuario !== "administrador") {
       alert("Defina um tipo de user");
-      return false;
+      return ;
     }
 
     // verificar se cpf ja foi cadastrado por outrem
@@ -56,7 +60,7 @@ const CadastroUser = () => {
     // caso adm ou solicitante não seja undefined
     if (cpfDeSolicitante || cpfDeAdm) {
       alert("CPF já utilizado ");
-      return false;
+      return ;
     }
 
     // verifica se email ja foi cadastrado por outrem
@@ -67,11 +71,11 @@ const CadastroUser = () => {
     // caso adm ou solicitante ou assistencia não seja undefined 2
     if (emailDeAdm || emailDeSolicitante || emailDeAssistencia) {
       alert("Email em uso");
-      return false;
+      return;
     }
 
     // cadastra user
-    const isCadastrado = await cadastrarInfosUser(data, userType);
+    const isCadastrado = await cadastrarInfosUser(data, tipoUsuario);
     if(isCadastrado){
       navigate("/pergunta-seguranca");
     }

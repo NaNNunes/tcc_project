@@ -5,11 +5,18 @@ import { AuthContext } from "../context/userContext";
 export function useVerificaLogin() {
   // funçoes do context para salvar id e tipo de user
   const { login } = useContext(AuthContext);
+  const url = import.meta.env.VITE_API_URL;
 
-  const verificaLogin = (data, solicitantes, administradores) => {
+  const verificaLogin = async (data) => {
+
+    const buscarSolicitates = await fetch(`${url}/solicitante`);
+    const solicitantes = await buscarSolicitates.json();
+
+    const buscarAdministradores = await fetch(`${url}/administrador`);
+    const administradores = await buscarAdministradores.json();
+
     // verifica se email ou senha foi encontrado em solicitantes
     const solicitante2find = solicitantes.find((solicitante) => {
-
       return (
         solicitante.cpf === data.loginOuCpf ||
         solicitante.email === data.loginOuCpf
@@ -18,7 +25,6 @@ export function useVerificaLogin() {
 
     // verifica se email ou senha foi encontrado em administradores
     const administrador2find = administradores.find((administrador) => {
-
       return (
         administrador.cpf === data.loginOuCpf ||
         administrador.email === data.loginOuCpf

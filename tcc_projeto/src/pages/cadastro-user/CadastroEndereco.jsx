@@ -24,6 +24,13 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/userContext.jsx";
 
 const CadastroEndereco = () => {
+
+  const navigate = useNavigate();
+  const userType = localStorage.getItem("userType");
+  if(userType !== "Visitante" ){
+    return navigate("/inicio");
+  };
+
   const {
     register,
     handleSubmit,
@@ -32,12 +39,11 @@ const CadastroEndereco = () => {
     formState: { errors },
   } = useForm();
 
-  const {setType} = useContext(AuthContext);
+  const {setType, login} = useContext(AuthContext);
 
   const user = localStorage.getItem("tipoUsuario");
   const { cadastrarEndereco } = useEndereco();
   const { inserirValidacao } = useUser();
-  const navigate = useNavigate();
 
   // enable input at the fields
   const [inputFieldEnable, setInputFieldEnable] = useState(false);
@@ -69,8 +75,6 @@ const CadastroEndereco = () => {
     // consulta
 
     try {
-      // brasilApi
-      // const response = await fetch(`https://brasilapi.com.br/api/cep/v2/${zipCode}`);
 
       // viaCep
       const response = await fetch(`https://viacep.com.br/ws/${zipCode}/json/`);
@@ -106,7 +110,12 @@ const CadastroEndereco = () => {
   };
 
   const onSubmit = async (data) => {
-    cadastrarEndereco(data);
+    const isEnderecoCadastrado = await cadastrarEndereco(data);
+    if(!isEnderecoCadastrado || isEnderecoCadastrado == undefined){
+      alert("Erro: de errado");
+      console.log(isEnderecoCadastrado);
+      return;
+    }
     const isUserValido = await inserirValidacao(true);
     if(isUserValido){
       setType(user);

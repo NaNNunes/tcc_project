@@ -15,6 +15,11 @@ import styles from "./cadastro.module.css";
 const CadastroUser = () => {
   const navigate = useNavigate();
 
+  const userType = localStorage.getItem("userType");
+  if(userType !== "Visitante" ){
+    return navigate("/inicio");
+  };
+
   const {
     register,
     handleSubmit,

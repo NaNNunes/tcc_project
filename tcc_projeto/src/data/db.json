@@ -14,15 +14,6 @@
       "pergunta": "1",
       "resposta": "Pingo",
       "idEndereco": "4358"
-    },
-    {
-      "id": "0431",
-      "email": "pseudouser@gmail.com",
-      "cpf": "133.127.937-26",
-      "userTelefone": "12912345678",
-      "nome": "Pseudo",
-      "sobrenome": "User",
-      "isValido": false
     }
   ],
   "administrador": [
@@ -33,6 +24,20 @@
       "userTelefone": "27996008563",
       "nome": "Admininastror",
       "sobrenome": "Adm",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "1",
+      "resposta": "Blu"
+    },
+    {
+      "id": "be9d",
+      "email": "kaueclaudiomonteiro@accor.com.br",
+      "cpf": "856.885.440-07",
+      "userTelefone": "(11) 98872-6074",
+      "nome": "Manuel",
+      "sobrenome": "Monteiro",
       "senha": "Senha@123",
       "confirmarSenha": "Senha@123",
       "termos": "true",
@@ -75,6 +80,18 @@
       "administradorId": "0d6b",
       "isValido": true,
       "idEndereco": "051f"
+    },
+    {
+      "id": "7b46",
+      "assistenciaEmail": "contabil@sebastianaebernardocontabilme.com.br",
+      "nomeFantasia": "Sebastiana e Bernardo Contábil ME",
+      "razaoSocial": "Sebastiana e Bernardo Contábil ME",
+      "cnpj": "09.391.114/0001-84",
+      "assistenciaTelefone": "(28) 2882-6130",
+      "assistenciaTermos": "true",
+      "administradorId": "be9d",
+      "isValido": true,
+      "idEndereco": "a3df"
     }
   ],
   "endereco": [

@@ -9,16 +9,19 @@ export const AuthProvider = ({children}) => {
 
     // define id do user
     const setId = (data) =>{
-        console.log('userType',data);
         setUserId(data);
         localStorage.setItem('userId',data);
     }
 
     // define tipo do user
     const setType = (data) =>{
-        console.log('userType',data);
         setUserType(data);
         localStorage.setItem('userType', data);
+    }
+
+    const setNome = (data) =>{
+        setUsuarioNome(data);
+        localStorage.setItem("userName", data);
     }
 
     useEffect( () => {
@@ -34,7 +37,7 @@ export const AuthProvider = ({children}) => {
         // novo acesso
         setId(data.id);
         setType(tipoUser);
-        setUsuarioNome(data.nome);
+        setNome(data.nome)
         localStorage.setItem("userName", data.nome); 
     }
 
@@ -49,7 +52,7 @@ export const AuthProvider = ({children}) => {
         <AuthContext.Provider 
             value={
                 {
-                    usuarioNome,  
+                    usuarioNome, setNome, 
                     userId, setId,
                     userType, setType,
                     login, logout
