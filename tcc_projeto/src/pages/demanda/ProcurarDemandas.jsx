@@ -169,7 +169,7 @@ const ProcurarDemandas = () => {
             ? 
                 demandasParaMostrar.map((demanda) => (
                   // passar props informando qual é o user que está acessando a page, para request no componente de card demanda
-                  <CardDemanda
+                  <CardDemanda 
                     key = {demanda.id}
                     // ids 
                     id = {demanda.id}

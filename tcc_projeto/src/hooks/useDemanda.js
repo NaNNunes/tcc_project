@@ -130,8 +130,6 @@ export function useDemanda() {
             return isEmAtendimento && isVinculada;
         });
 
-        console.log(demandasSolicitadas);
-
         return demandasSolicitadas;
     }
 
@@ -315,7 +313,7 @@ export function useDemanda() {
     // inserir dados de orcamento na demanda
     const inserirOrcamento = async (data, idDemanda) =>{
         
-        dados = {
+        const dados = {
             ...data,
             statusOrcamento: 'Sem resposta'
         }

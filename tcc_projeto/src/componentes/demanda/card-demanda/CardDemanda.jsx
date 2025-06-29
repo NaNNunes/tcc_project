@@ -46,9 +46,9 @@ const CardDemanda = (props) => {
     const { 
         aceitarOrcamento,
         atualizarStatusDemanda,
-        buscaDispositivoById, // funcao que busca dispositivo pelo id 
-        cancelarDemanda,      // cancelar demanda pelo id
-        defineIdAssistencia,   // funcao que busca assistencia responsavel pela demanda como o id registrado da mesma na demanda
+        buscaDispositivoById,  
+        cancelarDemanda,      
+        defineIdAssistencia,  
         rejeitarDemanda,
         buscaDemandaById,
         recusarOrcamento,
@@ -179,13 +179,14 @@ const CardDemanda = (props) => {
                 const resBuscaSolicitanteById = await buscaUserById("solicitante" , idResponsavel);
                 setSolicitante(resBuscaSolicitanteById);
                 // id do endereco do solicitante
-                const idEndereco = resBuscaSolicitanteById.id_endereco;
+                const idEndereco = resBuscaSolicitanteById.idEndereco;
                 // Caso id tenha algum registro
                 // buscar endereco do user by id
-                if(idEndereco != undefined){
-                    const resBuscaEnderecoSolicitanteById = await buscaEnderecoById(idEndereco);
-                    setEndereco(resBuscaEnderecoSolicitanteById);
+                if(idEndereco === undefined){
+                    alert("Endereco de solicitante não encontrado");
                 }
+                const resBuscaEnderecoSolicitanteById = await buscaEnderecoById(idEndereco);
+                setEndereco(resBuscaEnderecoSolicitanteById);
 
                 //buscar dispositivo do user by id
                 const resBuscaDispositivoSolicitanteById = await buscaDispositivoById(idDispositivo);
@@ -510,7 +511,7 @@ const CardDemanda = (props) => {
                             <Card.Text className={styles.textoCard}>
                                 <IoLocationOutline color='black' size={35}/> 
                                 {
-                                    (endereco != undefined)
+                                    (endereco !== undefined)
                                         ?
                                             <>
                                                 {endereco.localidade} - {endereco.uf}

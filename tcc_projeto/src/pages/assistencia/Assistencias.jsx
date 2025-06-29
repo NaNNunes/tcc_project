@@ -43,7 +43,8 @@ const Assistencias = () => {
         // caso user seja adm lista apenas assistencias pertencentes a ele
         if ( isAssisitenciaAdm && isUserAdm){
           const resBuscaAssistencias = await buscaAssistenciasDoAdministrador(userId);
-          return setAssistencias(resBuscaAssistencias);
+          setAssistencias(resBuscaAssistencias);
+          return;
         }
         
         // caso user seja solicitante

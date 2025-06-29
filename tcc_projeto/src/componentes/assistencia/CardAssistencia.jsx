@@ -43,12 +43,12 @@ const CardAssistencia = (props) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        if(userType !== "solicitante") return;
 
         // busca endereco by id
         const dadosEndereco = await buscaEnderecoById(idEndereco);
         setEndereco(dadosEndereco);
-        
+
+        if(userType !== "solicitante") return;  
         const likesSolicitante = await buscaLikesSolicitante(idUsuario);
         setLikes(likesSolicitante);
 
@@ -206,7 +206,7 @@ const CardAssistencia = (props) => {
 
             {
               // verifica o tipo do user para mostrar ou não opção de favoritar (melhorar essa logica)
-              localStorage.getItem("userType") === "solicitante" && (
+              userType === "solicitante" && (
                 <Card.Footer>
                   {/* colocar icone de favoritar */}
                   {
