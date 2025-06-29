@@ -3,27 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/userContext.jsx";
 import InicioADM from "../../componentes/inicio/InicioADM";
 import InicioSolic from "../../componentes/inicio/InicioSolic";
-import InicioDeslog from "../../componentes/inicio/InicioDeslog";
+import Home from "../home/Home.jsx";
 
 const Inicio = () => {
   const navigate = useNavigate();
   const { userType, usuarioNome } = useContext(AuthContext);
   
-  useEffect(() => {
-    if (userType !== "administrador" && userType !== "solicitante") {
-      return navigate("/login");
-    }
-  }, [userType, navigate]);
-
   switch (userType) {
     case "administrador":
       return <InicioADM />;
     case "solicitante":
       return <InicioSolic />;
     case "Visitante":
-      return <InicioDeslog />;
+      return <Home />;
     default:
-      return false;
+      return <Home />;
   }
 };
 

@@ -403,7 +403,7 @@ const MenuNavegacao = () => {
   const contentNavDeslogado = (
     <>
       <div className={styles.divNavdropdown}>
-        <Nav.Link className={styles.navText} href="/home">
+        <Nav.Link className={styles.navText} href="/inicio">
           Início
         </Nav.Link>
       </div>
@@ -612,11 +612,7 @@ const MenuNavegacao = () => {
   const mainPerfil = perfis[perfilUsuario] ?? perfilNavDeslogado;
 
   const handleLogoClick = () => {
-    if (usuarioNome != "Visitante") {
-      navigate("/inicio");
-    } else {
-      navigate("/home");
-    }
+    navigate("/inicio");
   };
 
   return (
