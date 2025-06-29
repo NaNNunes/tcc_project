@@ -258,19 +258,11 @@
       "idSolicitante": "5744"
     },
     {
-<<<<<<< HEAD
-      "id": "1eb9",
-      "categoria": "Tablet",
-      "marca": "Xiaomi",
-      "fabricante": "",
-      "modelo": "POCO PAD",
-=======
       "id": "dbd4",
       "categoria": "Notebook",
       "marca": "Asus",
       "fabricante": "",
       "modelo": "ASUS Zenbook 14",
->>>>>>> 60305be3c0b8fb0be8208402e785ed1d271fb6ce
       "numSerie": "",
       "tensao": "",
       "amperagem": "",
@@ -278,13 +270,6 @@
       "idSolicitante": "5744"
     },
     {
-<<<<<<< HEAD
-      "id": "ab8d",
-      "categoria": "Tablet",
-      "marca": "Xiaomi",
-      "fabricante": "",
-      "modelo": "X95 Pro",
-=======
       "id": "06a1",
       "categoria": "Periférico",
       "marca": "Logitech Mouse",
@@ -302,7 +287,6 @@
       "marca": "AAAAAAAAAAAAAA",
       "fabricante": "",
       "modelo": "AAAAAAAAAAAAAAAAAAAAAA",
->>>>>>> 60305be3c0b8fb0be8208402e785ed1d271fb6ce
       "numSerie": "",
       "tensao": "",
       "amperagem": "",
