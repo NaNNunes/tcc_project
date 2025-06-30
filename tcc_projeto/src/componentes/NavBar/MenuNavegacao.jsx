@@ -219,7 +219,7 @@ const MenuNavegacao = () => {
             }, 1);
           }}
         >
-          <span className={styles.textoDropdownItem}>Solicitações
+          <span className={styles.textoDropdownItem}>Atualizações
             {
               (notificacoes > 0) && 
               (

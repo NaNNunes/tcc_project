@@ -31,6 +31,14 @@
     margin-top: 20px;
 }
 
+.semDemandas {
+    justify-content: center;
+    justify-items: center;
+    align-self: center;
+    align-items: center;
+    align-content: center;
+}
+
 @media screen and (max-width: 1400px) {
     .caixa {
         padding-left: 4%;
