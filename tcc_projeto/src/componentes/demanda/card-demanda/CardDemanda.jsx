@@ -390,6 +390,8 @@ const CardDemanda = (props) => {
         </>
     )
 
+    console.log(demandaSelecionada);
+
     // Botões que aparecerão no modal para o administrador nas demandas aceitas.
     const botaoDemandasAceitas = (
         <>
@@ -400,6 +402,10 @@ const CardDemanda = (props) => {
             {
                 (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Aceito") &&
                 botaoConcluirDemanda
+            }
+            {
+                (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Sem resposta") &&
+                botaoFecharModalDeInfosDemanda
             }
         </>
     )
