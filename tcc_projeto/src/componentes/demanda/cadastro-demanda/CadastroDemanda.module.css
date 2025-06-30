@@ -73,6 +73,7 @@
 /* Botão para enviar o formulário */
 .botaoSubmit {
   background-color: #0061b7;
+  font-weight: bold;
   width: 16rem;
   border: 0;
   height: 50px;

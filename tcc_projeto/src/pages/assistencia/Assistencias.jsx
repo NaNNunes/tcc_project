@@ -96,6 +96,7 @@ const Assistencias = () => {
             key={assistencia.id}
             idAssistencia={assistencia.id}
             nome={assistencia.nomeFantasia}
+            razaoSocial={assistencia.razaoSocial}
             cnpj={assistencia.cnpj}
             email={assistencia.assistenciaEmail}
             telefone={assistencia.assistenciaTelefone}

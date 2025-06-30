@@ -514,7 +514,7 @@ const CadastroDemanda = () => {
                             <Col md={4} xs={12} className={stylesCad.campo}>
                                 <FloatingLabel 
                                     id="userNomeInput" 
-                                    label="Nome"
+                                    label="Nome *"
                                 >
                                     <Form.Control
                                         type="text"
@@ -545,7 +545,7 @@ const CadastroDemanda = () => {
                             <Col md={4} xs={12} className={stylesCad.campo}>
                                 <FloatingLabel
                                     id="userSobrenomeInput"
-                                    label="Sobrenome"
+                                    label="Sobrenome *"
                                 >
                                     <Form.Control
                                         type="text"
@@ -574,7 +574,10 @@ const CadastroDemanda = () => {
 
                             {/* Coluna de CPF */}
                             <Col md={4} xs={12} className={stylesCad.campo}>
-                                <FloatingLabel id="userCpfInput" label="CPF">
+                                <FloatingLabel 
+                                    id="userCpfInput" 
+                                    label="CPF *"
+                                >
                                     <Form.Control
                                     type="text"
                                     placeholder="000.000.000-00"
@@ -612,7 +615,7 @@ const CadastroDemanda = () => {
                             <Col md={8} xs={12} className={stylesCad.campo}>
                                 <FloatingLabel 
                                     controlId='EmailInput'
-                                    label='E-mail'
+                                    label='E-mail *'
                                 >
                                     <Form.Control
                                     name="email"
@@ -637,7 +640,7 @@ const CadastroDemanda = () => {
                             <Col md={4} xs={12} className={stylesCad.campo}>
                                 <FloatingLabel
                                     id="userTelInput"
-                                    label="Telefone"
+                                    label="Telefone *"
                                 >
                                     <Form.Control
                                     type="text"
@@ -675,7 +678,7 @@ const CadastroDemanda = () => {
                         <Col md={4} xs={12} className={stylesCad.campo}>
                             <FloatingLabel
                                 controlId='MarcaInput'
-                                label='Marca'
+                                label='Marca *'
                             >
                                 {campoMarca}
                             </FloatingLabel>
@@ -715,7 +718,7 @@ const CadastroDemanda = () => {
                         <Col md={4} xs={12} className={stylesCad.campo}>
                             <FloatingLabel
                                 controlId='ModeloInput'
-                                label='Modelo'
+                                label='Modelo *'
                             >
                                 {campoModelo} 
                             </FloatingLabel>
@@ -829,7 +832,7 @@ const CadastroDemanda = () => {
                         <Col md={6} xs={12} className={stylesCad.campo}>
                             <FloatingLabel
                                 controlId='DescProblemInput'
-                                label='Descrição do problema'
+                                label='Descrição do problema *'
                             >
                                 <Form.Control 
                                     as='textarea'

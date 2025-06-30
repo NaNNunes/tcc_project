@@ -130,7 +130,7 @@ const CardAssistencia = (props) => {
               {/* nome fantasia */}
               <div className={styles.divtextoCardPrincipal}>
                 <Card.Title className={styles.textoCardPrincipal}>
-                    {props.nome}
+                    {props.nome && props.nome.trim() !== "" ? props.nome : props.razaoSocial}
                 </Card.Title>
               </div>
 

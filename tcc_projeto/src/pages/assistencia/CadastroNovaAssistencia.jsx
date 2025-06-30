@@ -144,8 +144,9 @@ const CadastroNovaAssistencia = () => {
 
       const isEnderecoCadastrado = await cadastrarEndereco(dadosEnderecoAssitiencia);
 
-      if (isEnderecoCadastrado) {
+      if (!isEnderecoCadastrado) {
         alert(`Nova assistencia, ${data.razaoSocial}, cadastrada`);
+        // COLOCAR NAVIGATE
         location.reload();
       }
     }
@@ -185,7 +186,7 @@ const CadastroNovaAssistencia = () => {
                 <Col md={12} xs={12} className={stylesCad.campo}>
                   <FloatingLabel
                     controlId="assistenciaEmailInput"
-                    label="Email"
+                    label="Email *"
                   >
                     <Form.Control
                       type="email"
@@ -224,7 +225,7 @@ const CadastroNovaAssistencia = () => {
                 <Col md={6} xs={12} className={stylesCad.campo}>
                   <FloatingLabel
                     controlId="razaoSocialInput"
-                    label="Razão Social"
+                    label="Razão Social *"
                   >
                     <Form.Control
                       type="text"
@@ -251,7 +252,7 @@ const CadastroNovaAssistencia = () => {
                 <Col md={6} xs={12} className={stylesCad.campo}>
                   <FloatingLabel 
                     controlId="cnpjInput" 
-                    label="CNPJ"
+                    label="CNPJ *"
                   >
                     <Form.Control
                       type="text"
@@ -289,7 +290,7 @@ const CadastroNovaAssistencia = () => {
                 <Col md={6} xs={12} className={stylesCad.campo}>
                   <FloatingLabel
                     controlId="assistenciaTelInput"
-                    label="Telefone"
+                    label="Telefone *"
                   >
                     <Form.Control
                       type="text"
@@ -313,6 +314,15 @@ const CadastroNovaAssistencia = () => {
                 </Col>
               </Row>
             </div>
+
+            <hr style={{
+              border: 'none', 
+              borderTop: '2px solid #cacaca',
+              margin: '10px 0',
+              width: '100%',               
+              opacity: '1',
+              }}
+            />
                   
             {/* Endereço */}
             <div>
@@ -328,7 +338,7 @@ const CadastroNovaAssistencia = () => {
                 <Col md={4} xs={12} className={stylesCad.campo}>
                   <FloatingLabel
                     controlId="cepUserInput"
-                    label="CEP"
+                    label="CEP *"
                   >
                     <Form.Control
                       type="text"
@@ -357,11 +367,10 @@ const CadastroNovaAssistencia = () => {
                 </Col>
                 
                 {/* Localidade */}
-                <Col>
+                <Col md={4} xs={12} className={stylesCad.campo}>
                   <FloatingLabel
                     controlId="cityUserInput"
-                    label="Cidade"
-                    className="mb-3"
+                    label="Cidade *"
                   >
                     <Form.Control
                       type="text"
@@ -378,11 +387,10 @@ const CadastroNovaAssistencia = () => {
                   </FloatingLabel>
                 </Col>
 
-                <Col>
+                <Col md={4} xs={12} className={stylesCad.campo}>
                   <FloatingLabel
                     controlId="bairroUserInput"
-                    label="Bairro"
-                    className="mb-3"
+                    label="Bairro *"
                   >
                     <Form.Control
                       type="text"
@@ -399,13 +407,13 @@ const CadastroNovaAssistencia = () => {
                   </FloatingLabel>
                 </Col>
               </Row>
-
+              
+              {/* Linha com logradouro, UF e N° */}
               <Row>
-                <Col>
+                <Col md={4} xs={12} className={stylesCad.campo}>
                   <FloatingLabel
                     controlId="logradouroUserInput"
-                    label="Logradouro"
-                    className="mb-3"
+                    label="Logradouro *"
                   >
                     <Form.Control
                       type="text"
@@ -422,8 +430,11 @@ const CadastroNovaAssistencia = () => {
                   </FloatingLabel>
                 </Col>
 
-                <Col>
-                  <FloatingLabel controlId="ufUserInput" label="UF" className="mb-3">
+                <Col md={4} xs={12} className={stylesCad.campo}>
+                  <FloatingLabel 
+                    controlId="ufUserInput" 
+                    label="UF *"
+                  >
                     <Form.Control
                       type="text"
                       disabled={!inputFieldEnable}
@@ -439,13 +450,27 @@ const CadastroNovaAssistencia = () => {
                   </FloatingLabel>
                 </Col>
 
-                <Col>
-                  <FloatingLabel
-                    controlId="numResidUserInput"
-                    label="Nº"
-                    className="mb-3"
+                <Col md={4} xs={12} className={stylesCad.campo}>
+                  <FloatingLabel 
+                    id="userNumInput" 
+                    label="Nº *"
                   >
-                    <Form.Control type="text" {...register("number")} />
+                    <Form.Control
+                      type="text"
+                      placeholder=""
+                      isInvalid={!!errors.number}
+                      {...register("number", {
+                        required: "Número é obrigatório",
+                        minLength: {
+                          value: 2,
+                          message: "Digite pelo menos 2 dígitos",
+                        },
+                        pattern: {
+                          value: /^[0-9]+$/,
+                          message: "Somente números",
+                        },
+                      })}
+                    />
                     <Form.Control.Feedback type="invalid">
                       {errors.number && (
                         <span className='error'>
@@ -458,11 +483,10 @@ const CadastroNovaAssistencia = () => {
               </Row>
 
               <Row>
-                <Col>
+                <Col xs={12} className={stylesCad.campo}>
                   <FloatingLabel
                     controlId="complementoUserInput"
                     label="Complemento"
-                    className="mb-3"
                   >
                     <Form.Control type="text" {...register("complemento")} />
 
@@ -478,9 +502,12 @@ const CadastroNovaAssistencia = () => {
               </Row>
             </div>
 
-            <Row className="mt-4 pb-4">
+            <Row>
               <Col className="d-flex justify-content-center">
-                <Button type="submit" size="lg">
+                <Button
+                  type='submit'
+                  className={stylesCad.botaoSubmit}
+                >
                   Salvar Assistência
                 </Button>
               </Col>

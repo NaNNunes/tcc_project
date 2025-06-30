@@ -53,6 +53,20 @@
       "pergunta": "1",
       "resposta": "Blu",
       "idEndereco": "4543"
+    },
+    {
+      "id": "ecb4",
+      "email": "Pietr@email.com",
+      "cpf": "335.186.651-89",
+      "userTelefone": "(98) 3990-3303",
+      "nome": "Pietra ",
+      "sobrenome": "Elza Rezende",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": false,
+      "pergunta": "2",
+      "resposta": "aadasdasdasdasdas"
     }
   ],
   "administrador": [
@@ -157,6 +171,26 @@
       "administradorId": "6db6",
       "isValido": true,
       "idEndereco": "533b"
+    },
+    {
+      "id": "2b11",
+      "assistenciaEmail": "kevin@hotmail.com",
+      "nomeFantasia": "",
+      "razaoSocial": "doideira",
+      "cnpj": "98.653.034/0001-80",
+      "assistenciaTelefone": "27 988379121",
+      "administradorId": "1bbe",
+      "isValido": true
+    },
+    {
+      "id": "be86",
+      "assistenciaEmail": "kevin@hotmail.com",
+      "nomeFantasia": "",
+      "razaoSocial": "doideira",
+      "cnpj": "08.296.307/0001-93",
+      "assistenciaTelefone": "27988379121",
+      "administradorId": "1bbe",
+      "isValido": true
     }
   ],
   "endereco": [
@@ -313,6 +347,26 @@
       "gia": "",
       "ddd": "96",
       "siafi": "0605"
+    },
+    {
+      "id": "1b3d",
+      "zipcode": "29141409",
+      "localidade": "Cariacica",
+      "bairro": "Jardim Campo Grande",
+      "logradouro": "Rua Pernambuco",
+      "uf": "ES",
+      "number": "150",
+      "complemento": ""
+    },
+    {
+      "id": "99dc",
+      "zipcode": "29141409",
+      "localidade": "Cariacica",
+      "bairro": "Jardim Campo Grande",
+      "logradouro": "Rua Pernambuco",
+      "uf": "ES",
+      "number": "150",
+      "complemento": ""
     }
   ],
   "dispositivo": [

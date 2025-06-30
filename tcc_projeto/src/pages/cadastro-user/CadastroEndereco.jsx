@@ -260,6 +260,9 @@ const CadastroEndereco = () => {
                   },
                 })}
               />
+              {errors.number && (
+                <p className={styles.error}>{errors.number.message}</p>
+              )}
             </FloatingLabel>
           </Col>
         </Row>
