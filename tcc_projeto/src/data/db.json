@@ -503,7 +503,7 @@
       "idDispositivo": "668e",
       "descProblema": "Demanda modificada",
       "observacoes": "",
-      "status": "Em atendimento",
+      "status": "Concluído",
       "assistencia": "7e02",
       "idSolicitante": "5744",
       "dataEmissao": "27/06/2025",
@@ -513,7 +513,10 @@
       "pecaTrocada": "trocar a troca",
       "valorObra": "R$ 9.230.303,82",
       "observacoesOrcamento": "Valor da mão",
-      "statusOrcamento": "Sem resposta"
+      "statusOrcamento": "Aceito",
+      "data_aceitacao_orcamento": "30/06/2025",
+      "hora_aceitacao_orcamento": "13:06:57",
+      "idAvaliacao": "949d"
     },
     {
       "id": "da42",
@@ -549,7 +552,7 @@
       "idDispositivo": "dbd4",
       "descProblema": "AAAAAAAAAAAAAAAAAAAAAAAA",
       "observacoes": "",
-      "status": "Em atendimento",
+      "status": "Concluído",
       "assistencia": "7e02",
       "idSolicitante": "5744",
       "dataEmissao": "28/06/2025",
@@ -561,14 +564,15 @@
       "observacoesOrcamento": "",
       "statusOrcamento": "Aceito",
       "data_aceitacao_orcamento": "30/06/2025",
-      "hora_aceitacao_orcamento": "03:13:31"
+      "hora_aceitacao_orcamento": "03:13:31",
+      "idAvaliacao": "111b"
     },
     {
       "id": "2f3f",
       "idDispositivo": "06a1",
       "descProblema": "Joguei na parede.",
       "observacoes": "",
-      "status": "Em atendimento",
+      "status": "Concluído",
       "assistencia": "7e02",
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
@@ -578,7 +582,10 @@
       "pecaTrocada": "sdagsdggds",
       "valorObra": "R$ 23.453.425,34",
       "observacoesOrcamento": "",
-      "statusOrcamento": "Sem resposta"
+      "statusOrcamento": "Aceito",
+      "data_aceitacao_orcamento": "30/06/2025",
+      "hora_aceitacao_orcamento": "13:27:01",
+      "idAvaliacao": "c37e"
     },
     {
       "id": "53d2",
@@ -705,11 +712,6 @@
       "idAssistencia": "7e02"
     },
     {
-      "id": "1c13",
-      "idSolicitante": "5744",
-      "idAssistencia": "2a23"
-    },
-    {
       "id": "4c8b",
       "idSolicitante": "1ece",
       "idAssistencia": "7e02"
@@ -733,6 +735,11 @@
       "id": "379e",
       "idSolicitante": "ec3c",
       "idAssistencia": "2a23"
+    },
+    {
+      "id": "0804",
+      "idSolicitante": "5744",
+      "idAssistencia": "2a23"
     }
   ],
   "avaliacao": [
@@ -747,8 +754,32 @@
     {
       "id": "1ad8",
       "analise": "2",
-      "notaAvaliacao": 3,
+      "notaAvaliacao": 4,
       "idDemanda": "a5e9",
+      "idAssistencia": "7e02",
+      "idSolicitante": "5744"
+    },
+    {
+      "id": "949d",
+      "analise": "",
+      "notaAvaliacao": 2,
+      "idDemanda": "9c8b",
+      "idAssistencia": "7e02",
+      "idSolicitante": "5744"
+    },
+    {
+      "id": "111b",
+      "analise": "",
+      "notaAvaliacao": 3,
+      "idDemanda": "c4f8",
+      "idAssistencia": "7e02",
+      "idSolicitante": "5744"
+    },
+    {
+      "id": "c37e",
+      "analise": "",
+      "notaAvaliacao": 4,
+      "idDemanda": "2f3f",
       "idAssistencia": "7e02",
       "idSolicitante": "5744"
     }

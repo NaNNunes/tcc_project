@@ -26,8 +26,22 @@
 
 /* Corpo do card */
 .cardBody {
-    height: 28rem;
-    padding: 20px;
+    padding: 0px 20px 15px 20px;
+    align-content: center;
+}
+
+.cardAssistencia {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end !important;
+    min-height: 35rem;
+    box-shadow: 0px 0px 10px 2px #00000028;
+}
+
+.divtextoCardPrincipal {
+    width: 80%;
+    align-self: center
 }
 
 /* Texto com um cortono para marca e modelo. */
@@ -35,7 +49,6 @@
     font-size: 1.2rem;
     text-align: center;
     font-weight: bold;
-    padding-left: 8px;
     color: #757575;
     border: 3px solid #757575;
     border-radius: 10px;
@@ -101,6 +114,23 @@
     background-color: #ca4853;
 }
 
+/* Div com as estrelas da avaliação. */
+.estrelasNota {
+    display: flex;
+    gap: 5px;
+}
+
+/* Footer com notas de avaliação. */
+.assistenciaFooter {
+    display: flex;
+    background: #FFFFFF;
+    border: 0;
+}
+
+.teste {
+    justify-content: flex-end !important;
+}
+
 @media screen and (max-width: 1300px) {
     .ContainerModalInfo {
         grid-template-columns: repeat(2, 1fr);
@@ -109,6 +139,10 @@
     .cardBody {
         height: 30rem;
         padding: 20px;
+    }
+
+    .cardAssistencia {
+        min-height: 40.5rem;
     }
 }
 
@@ -123,7 +157,22 @@
     }
 }
 
+@media screen and (max-width: 500px) {
+    .headerCard {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .divtextoCardPrincipal {
+        width: 100%;
+    }
+}
+
 @media screen and (max-width: 310px) {
+    .headerCard {
+        padding: 10px 10px 0px 10px;
+    }
+
     .textoInfo {
         word-break: break-word;
         overflow-wrap: break-word;
@@ -132,5 +181,9 @@
     .textoCardPrincipal {
         word-break: break-word;
         overflow-wrap: break-word;
+    }
+
+    .estrelasNota {
+        flex-direction: column;
     }
 }

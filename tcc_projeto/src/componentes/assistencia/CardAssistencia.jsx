@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 
 // Importação dos icones.
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 import styles from './CardAssistencia.module.css'
 import { useAvaliacao } from "../../hooks/useAvaliacao.js";
@@ -47,6 +48,8 @@ const CardAssistencia = (props) => {
   const [assistenciaIsFav, setAssistenciaIsFav] = useState(false);
   // state de lista de likes --- utilizado em remover match
   const [likes, setLikes] = useState();
+  // Notas das assistências.
+  const [mediaAssisstencia, setMediaAssisstencia] = useState(undefined);
 
   // busca todos os registros de likes e verifica se o match pertence ao cliente e a assistencia renderizada
   useEffect(() => {
@@ -60,6 +63,7 @@ const CardAssistencia = (props) => {
         // const avaliacoesAssistencia = await buscarAvaliacoesDaAssistencia(idAssistencia);
         const mediaAssisstencia = await mediaAvaliacaoAssistencia(idAssistencia);
         console.log(`Média assistencia ${idAssistencia}: ${mediaAssisstencia}`);
+        setMediaAssisstencia(mediaAssisstencia);
         // caso media === NaN, mostrar "Sem avaliaçoes"
 
         if(userType !== "solicitante") return;  
@@ -120,13 +124,11 @@ const CardAssistencia = (props) => {
       >
         <Container className={styles.caixaCard}>
           <Card
-            style={{
-              width: "100%", display: "flex", flexDirection: "column"
-            }}
+            className={styles.cardAssistencia}
           >
             <Card.Header className={styles.headerCard}>
               {/* nome fantasia */}
-              <div style={{width: '80%', alignSelf: 'center'}}>
+              <div className={styles.divtextoCardPrincipal}>
                 <Card.Title className={styles.textoCardPrincipal}>
                     {props.nome}
                 </Card.Title>
@@ -226,7 +228,69 @@ const CardAssistencia = (props) => {
                   </Card.Text>
                 </Row>
               </Container>
+
+              <hr className={styles.divisao}/>
+
+              <Container className={styles.teste}>
+                {isNaN(mediaAssisstencia) ? (
+                  <span className={styles.textoInfo}>
+                    Ainda não possui avaliações
+                  </span>
+                ) : (
+                  <>
+                    <div>
+                      <Container
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "repeat(1, 1fr)",
+                          margin: "0px",
+                          padding: '0'
+                        }}
+                      >
+                        {/* Nota */}
+                        <div className={styles.estrelasNota}>
+                          <span 
+                            style={{ 
+                              fontSize: '1rem', 
+                              alignSelf: 'center',
+                              color: '#757575', 
+                              fontWeight: 'bold',
+                              margin: '0px',
+                              wordBreak: 'break-word',
+                              overflowWrap: 'break-word'
+                            }}
+                          >
+                            <strong style={{color: 'black'}}>Média de avaliação: </strong>
+                              {[1, 2, 3, 4, 5].map((n) => {
+                                if (n <= mediaAssisstencia) {
+                                  return <FaStar key={n} size={26} color="#ffc107" />;
+                                } else if (n - 0.5 <= mediaAssisstencia) {
+                                  return <FaStarHalfAlt key={n} size={26} color="#ffc107" />;
+                                } else {
+                                  return <FaRegStar key={n} size={26} color="#e4e5e9" />;
+                                }
+                              })}
+                              <span 
+                                style={{ 
+                                  fontSize: '1rem', 
+                                  alignSelf: 'center',
+                                  color: '#757575', 
+                                  fontWeight: 'bold',
+                                  paddingLeft: '8px', 
+                                  margin: '0px'
+                                }}
+                              >
+                                {mediaAssisstencia.toFixed(1)} / 5
+                              </span>
+                          </span>
+                        </div>
+                      </Container>
+                    </div>
+                  </>
+                )}
+              </Container>
             </Card.Body>
+            
           </Card>
         </Container>
       </div>
