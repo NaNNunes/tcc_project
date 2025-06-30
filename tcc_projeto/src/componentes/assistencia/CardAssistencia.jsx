@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 import styles from './CardAssistencia.module.css'
+import { useAvaliacao } from "../../hooks/useAvaliacao.js";
 
 const CardAssistencia = (props) => {
   // descontrutores
@@ -25,6 +26,11 @@ const CardAssistencia = (props) => {
     removerAssistenciaDeFavoritos,
     buscaLikesSolicitante
   } = useLikes()
+
+  const {
+    buscarAvaliacoesDaAssistencia,
+    mediaAvaliacaoAssistencia
+  } = useAvaliacao();
 
   const userType = localStorage.getItem("userType");
 
@@ -50,6 +56,11 @@ const CardAssistencia = (props) => {
         // busca endereco by id
         const dadosEndereco = await buscaEnderecoById(idEndereco);
         setEndereco(dadosEndereco);
+
+        // const avaliacoesAssistencia = await buscarAvaliacoesDaAssistencia(idAssistencia);
+        const mediaAssisstencia = await mediaAvaliacaoAssistencia(idAssistencia);
+        console.log(`Média assistencia ${idAssistencia}: ${mediaAssisstencia}`);
+        // caso media === NaN, mostrar "Sem avaliaçoes"
 
         if(userType !== "solicitante") return;  
         const likesSolicitante = await buscaLikesSolicitante(idUsuario);

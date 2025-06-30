@@ -7,7 +7,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Image from "react-bootstrap/Image";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { useVerificadorDeCnpj, useComparaDados } from "../../hooks/useApi";
@@ -20,8 +20,8 @@ const CadastroAssistencia = () => {
   const navigate = useNavigate();
 
   const userType = localStorage.getItem("userType");
-  if(userType !== "Visitante" ){
-    return navigate("/inicio");
+  if(userType !== "Visitante" && userType !== null ){
+    navigate("/inicio");
   };
 
   const {

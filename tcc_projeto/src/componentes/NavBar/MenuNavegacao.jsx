@@ -31,8 +31,6 @@ import { useUser } from "../../hooks/useUser.js";
 
 const MenuNavegacao = () => {
   const { 
-    buscaDemandas,
-    buscarDemandasDoSolicitante,
     buscaDemandasSolicitadasAssistencia,
     buscarDemandasComOrcamentoGerado
    } = useDemanda();
@@ -41,8 +39,6 @@ const MenuNavegacao = () => {
     buscaAssistencias,
     buscaAssistenciasDoAdministrador
    } = useAssistencia();
-
-  const { buscaUserById } = useUser();
 
   const navigate = useNavigate();
 
@@ -621,7 +617,12 @@ const MenuNavegacao = () => {
         <Container fluid className={styles.containerNavegacao}>
           {/* Logo ConnectFix. */}
           <Navbar.Brand
-            onClick={handleLogoClick}
+            onClick={()=>{
+              handleLogoClick();
+              setTimeout(() => {
+                location.reload();
+              }, .1);
+            }}
             className={styles.navbarBrand}
             style={{ cursor: "pointer" }}
           >
@@ -629,7 +630,7 @@ const MenuNavegacao = () => {
               className={styles.imgConnect}
               src="/logos/connectfix_logo.svg"
               alt="Logo ConnectFix"
-            ></img>
+            />
           </Navbar.Brand>
 
           {/* Menu hamburguer. */}

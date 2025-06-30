@@ -36,8 +36,7 @@ export function useEndereco() {
 
   // cadastra endereco
   const cadastrarEndereco = async (data) => {
-    const userType = localStorage.getItem("userType");
-    
+    const userType = localStorage.getItem("tipoUsuario");
     const request = await fetch(`${url}/endereco`, {
       method: "POST",
       headers: {
@@ -48,11 +47,10 @@ export function useEndereco() {
 
     const response = await request.json();
     const idEndereco = response.id;
-
     // define id do endereco como chave estrangeira
     
     if(userType === "administrador"){
-      const isEnderecoAtribuidoAssistencia =  await defineIdEmAssistencia(idEndereco)
+      const isEnderecoAtribuidoAssistencia = await defineIdEmAssistencia(idEndereco);
       if(isEnderecoAtribuidoAssistencia){
         // retorna endereço fora cadastrado e user recebeu o id do endereco
         return request.ok;
@@ -60,7 +58,7 @@ export function useEndereco() {
     }
 
     if(userType === "solicitante"){
-      const isEnderecoAtribuidoSolicitante =  await defineIdEmSolicitante(idEndereco)
+      const isEnderecoAtribuidoSolicitante =  await defineIdEmSolicitante(idEndereco);
       if(isEnderecoAtribuidoSolicitante){
         // retorna endereço fora cadastrado e user recebeu o id do endereco
         return request.ok;
@@ -72,27 +70,22 @@ export function useEndereco() {
     const enderecoId = {
       "idEndereco": idEndereco,
     };
-
     const id = localStorage.getItem("assistenciaId");
-
     const request = await fetch(`${url}/assistencia/${id}`, {
       method: "PATCH",
       body: JSON.stringify(enderecoId),
     });
 
     if(request.ok){
-      console.log(request.ok);
       localStorage.removeItem("assistenciaId");
       return request.ok;
     }
   }
 
   const defineIdEmSolicitante = async (idEndereco) =>{
-
     const enderecoId = {
       "idEndereco": idEndereco,
     };
-
     const id = localStorage.getItem("userId");
 
     const request = await fetch(`${url}/solicitante/${id}`, {

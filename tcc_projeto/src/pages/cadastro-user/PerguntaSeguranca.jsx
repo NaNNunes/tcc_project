@@ -19,6 +19,12 @@ import { useForm } from "react-hook-form";
 import { useUser } from "../../hooks/useUser.js";
 
 const PerguntaSeguranca = () => {
+  
+  const userType = localStorage.getItem("userType");
+  if(userType !== "Visitante" && userType !== null ){
+    navigate("/inicio");
+  };
+
   const {
     register,
     handleSubmit,

@@ -23,6 +23,36 @@
       "nome": "adm",
       "sobrenome": "Sobrenome user",
       "isValido": false
+    },
+    {
+      "id": "ec3c",
+      "email": "henry_juan_santos@mtic.net.br",
+      "cpf": "739.315.092-14",
+      "userTelefone": "(61) 99180-6745",
+      "nome": "Henry Juan ",
+      "sobrenome": "Santos",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "2",
+      "resposta": "Blu",
+      "idEndereco": "9def"
+    },
+    {
+      "id": "1ece",
+      "email": "nathancalebassuncao@abrangenciacorretora.com.br",
+      "cpf": "054.292.320-33",
+      "userTelefone": "(96) 99245-4255",
+      "nome": "Nathan Caleb",
+      "sobrenome": "Assunção",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "1",
+      "resposta": "Blu",
+      "idEndereco": "4543"
     }
   ],
   "administrador": [
@@ -47,6 +77,20 @@
       "userTelefone": "(11) 98872-6074",
       "nome": "Manuel",
       "sobrenome": "Monteiro",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "1",
+      "resposta": "Blu"
+    },
+    {
+      "id": "6db6",
+      "email": "ester_vieira@yahoo.com.br",
+      "cpf": "046.431.177-29",
+      "userTelefone": "(95) 99333-9950",
+      "nome": "Ester",
+      "sobrenome": "Rosa Elaine Vieira",
       "senha": "Senha@123",
       "confirmarSenha": "Senha@123",
       "termos": "true",
@@ -101,11 +145,41 @@
       "administradorId": "be9d",
       "isValido": true,
       "idEndereco": "a3df"
+    },
+    {
+      "id": "7c8a",
+      "assistenciaEmail": "atendimento@renataeemanuellyentregasexpressasltda.com.br",
+      "nomeFantasia": "Renata e Emanuelly Entregas Expressas Ltda",
+      "razaoSocial": "Renata e Emanuelly Entregas Expressas Ltda",
+      "cnpj": "78.523.863/0001-30",
+      "assistenciaTelefone": "(11) 98608-9384",
+      "assistenciaTermos": "true",
+      "administradorId": "6db6",
+      "isValido": true,
+      "idEndereco": "533b"
     }
   ],
   "endereco": [
     {
       "id": "4358",
+      "zipcode": "89810-162",
+      "localidade": "Chapecó",
+      "bairro": "Cristo Rei",
+      "logradouro": "Rua João Cruz e Souza",
+      "uf": "SC",
+      "number": "831",
+      "complemento": "de 952 ao fim - lado par",
+      "cep": "89810-162",
+      "unidade": "",
+      "estado": "Santa Catarina",
+      "regiao": "Sul",
+      "ibge": "4204202",
+      "gia": "",
+      "ddd": "49",
+      "siafi": "8081"
+    },
+    {
+      "id": "a3df",
       "zipcode": "89810-162",
       "localidade": "Chapecó",
       "bairro": "Cristo Rei",
@@ -185,6 +259,60 @@
       "uf": "ES",
       "number": "122",
       "complemento": "Casa da ração"
+    },
+    {
+      "id": "533b",
+      "zipcode": "09406-420",
+      "localidade": "Ribeirão Pires",
+      "bairro": "Santana",
+      "logradouro": "Rua Niterói",
+      "uf": "SP",
+      "number": "708",
+      "complemento": "lá",
+      "cep": "09406-420",
+      "unidade": "",
+      "estado": "São Paulo",
+      "regiao": "Sudeste",
+      "ibge": "3543303",
+      "gia": "5812",
+      "ddd": "11",
+      "siafi": "6967"
+    },
+    {
+      "id": "9def",
+      "zipcode": "70767-070",
+      "localidade": "Brasília",
+      "bairro": "Asa Norte",
+      "logradouro": "Quadra SQN 314 Bloco G",
+      "uf": "DF",
+      "number": "814",
+      "complemento": "pra lá",
+      "cep": "70767-070",
+      "unidade": "",
+      "estado": "Distrito Federal",
+      "regiao": "Centro-Oeste",
+      "ibge": "5300108",
+      "gia": "",
+      "ddd": "61",
+      "siafi": "9701"
+    },
+    {
+      "id": "4543",
+      "zipcode": "68908-265",
+      "localidade": "Macapá",
+      "bairro": "Pacoval",
+      "logradouro": "Travessa Pará",
+      "uf": "AP",
+      "number": "843",
+      "complemento": "onde eu moro",
+      "cep": "68908-265",
+      "unidade": "",
+      "estado": "Amapá",
+      "regiao": "Norte",
+      "ibge": "1600303",
+      "gia": "",
+      "ddd": "96",
+      "siafi": "0605"
     }
   ],
   "dispositivo": [
@@ -407,7 +535,8 @@
       "pecaTrocada": "rebimboca da parafuseta",
       "valorObra": "2mil milhões de reais",
       "observacoesOrcamento": "sim",
-      "statusOrcamento": "Aceito"
+      "statusOrcamento": "Aceito",
+      "idAvaliacao": "b191"
     },
     {
       "id": "c4f8",
@@ -490,7 +619,8 @@
       "pecaTrocada": "AAAAAAAAAAAAAAAAAAAa",
       "valorObra": "150",
       "observacoesOrcamento": "",
-      "statusOrcamento": "Aceito"
+      "statusOrcamento": "Aceito",
+      "idAvaliacao": "1ad8"
     },
     {
       "id": "a95f",
@@ -558,9 +688,39 @@
       "id": "1c13",
       "idSolicitante": "5744",
       "idAssistencia": "2a23"
+    },
+    {
+      "id": "4c8b",
+      "idSolicitante": "1ece",
+      "idAssistencia": "7e02"
+    },
+    {
+      "id": "c93e",
+      "idSolicitante": "1ece",
+      "idAssistencia": "7b46"
+    },
+    {
+      "id": "60c9",
+      "idSolicitante": "1ece",
+      "idAssistencia": "7c8a"
     }
   ],
   "avaliacao": [
-
+    {
+      "id": "b191",
+      "analise": "-1",
+      "notaAvaliacao": 5,
+      "idDemanda": "2673",
+      "idAssistencia": "7e02",
+      "idSolicitante": "5744"
+    },
+    {
+      "id": "1ad8",
+      "analise": "2",
+      "notaAvaliacao": 3,
+      "idDemanda": "a5e9",
+      "idAssistencia": "7e02",
+      "idSolicitante": "5744"
+    }
   ]
 }

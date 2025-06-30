@@ -74,7 +74,7 @@ const CardDemanda = (props) => {
     const { buscaUserById } = useUser();
 
     const {
-        buscaAvaliacaoById,
+        buscarAvaliacaoById,
         inserirAvaliacao
     } = useAvaliacao();
 
@@ -176,7 +176,7 @@ const CardDemanda = (props) => {
         const idAvaliacao = demanda.idAvaliacao;
         setDemandaSelecionada(demanda);
         if(idAvaliacao !== undefined){
-            const avaliacao = await buscaAvaliacaoById(idAvaliacao);
+            const avaliacao = await buscarAvaliacaoById(idAvaliacao);
             setDadosAvaliacao(avaliacao);
         }
     }

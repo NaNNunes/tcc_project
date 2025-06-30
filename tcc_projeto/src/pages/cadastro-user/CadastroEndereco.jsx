@@ -27,8 +27,8 @@ const CadastroEndereco = () => {
 
   const navigate = useNavigate();
   const userType = localStorage.getItem("userType");
-  if(userType !== "Visitante" ){
-    return navigate("/inicio");
+  if(userType !== "Visitante" && userType !== null ){
+    navigate("/inicio");
   };
 
   const {
@@ -39,7 +39,7 @@ const CadastroEndereco = () => {
     formState: { errors },
   } = useForm();
 
-  const {setType, login} = useContext(AuthContext);
+  const {setType, setNome} = useContext(AuthContext);
 
   const user = localStorage.getItem("tipoUsuario");
   const { cadastrarEndereco } = useEndereco();

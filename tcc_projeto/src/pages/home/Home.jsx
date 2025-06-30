@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
-
+  localStorage.setItem("userType", "Visitante");
   const goEscolha = () => {
     navigate("/selecao-perfil");
   };

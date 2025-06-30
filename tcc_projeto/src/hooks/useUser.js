@@ -7,7 +7,7 @@ const url = import.meta.env.VITE_API_URL;
 // cadastro de user
 export function useUser() {
   // funçoes do context para salvar id e tipo de user
-  const { setId, userId, setType, userType } = useContext(AuthContext);
+  const { setId, userId, setType, userType, setNome } = useContext(AuthContext);
 
     // altera senha do user
     const alteraSenhaUser = async (senha) =>{
@@ -76,6 +76,7 @@ export function useUser() {
 
         // alternativa definir id no localstorage
         setId(id);
+        setNome(response.nome);
 
         // user invalido pois falta endereco e/ou pergunta de segurança
         const isValidacaoInserida = await inserirValidacao(false);

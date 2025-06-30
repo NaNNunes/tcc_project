@@ -15,9 +15,12 @@ import { useVerificaLogin } from "../../hooks/useVerificaLogin.js";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
+
   const navigate = useNavigate();
   const userType = localStorage.getItem("userType");
   if(userType !== "Visitante" && userType !== null) return <Navigate to="/inicio"/>;
+
+  localStorage.setItem("userType", "Visitante");
 
   const { verificaLogin } = useVerificaLogin();
   

@@ -16,8 +16,8 @@ const CadastroUser = () => {
   const navigate = useNavigate();
 
   const userType = localStorage.getItem("userType");
-  if(userType !== "Visitante" ){
-    return navigate("/inicio");
+    if(userType !== "Visitante" && userType !== null ){
+    navigate("/inicio");
   };
 
   const {
