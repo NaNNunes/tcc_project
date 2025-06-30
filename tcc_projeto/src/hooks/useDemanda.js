@@ -8,7 +8,10 @@ export function useDemanda() {
             body: JSON.stringify({"statusOrcamento":"Aceito"})
         });
 
-        return request.ok
+        const isDataAceitacaoDefinida = await defineDataAceitacaoOrcamento(idDemanda);
+        if(isDataAceitacaoDefinida){
+            return request.ok
+        }
     }
 
     // atualiza status de demanda
@@ -300,6 +303,34 @@ export function useDemanda() {
         const dataHoraEmissao ={
             "dataEmissao": dataFormatada,
             "horaEmissao": horaFormatada
+        }
+
+        const request = await fetch(`${url}/demanda/${id}`,{
+            method: "PATCH",
+            body: JSON.stringify(dataHoraEmissao)
+        });
+
+        return request.ok;
+    }
+
+    const defineDataAceitacaoOrcamento = async(id) =>{
+        const dataHoraAtual = new Date();
+
+        const dia = dataHoraAtual.getDate();
+        const mes = dataHoraAtual.getMonth() + 1; // Adicionar 1 porque Janeiro é 0
+        const ano = dataHoraAtual.getFullYear();
+        const hora = dataHoraAtual.getHours();
+        const minutos = dataHoraAtual.getMinutes();
+        const segundos = dataHoraAtual.getSeconds();
+
+        // mudar formatacao da data para MM-DD-AAAA
+        const dataFormatada = `${dia.toString().padStart(2, '0')}/${mes.toString().padStart(2, '0')}/${ano}`;
+        const horaFormatada = `${hora.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+
+        // objeto que será incrementado
+        const dataHoraEmissao ={
+            "data_aceitacao_orcamento": dataFormatada,
+            "hora_aceitacao_orcamento": horaFormatada
         }
 
         const request = await fetch(`${url}/demanda/${id}`,{

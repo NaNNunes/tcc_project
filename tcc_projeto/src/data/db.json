@@ -507,7 +507,13 @@
       "assistencia": "7e02",
       "idSolicitante": "5744",
       "dataEmissao": "27/06/2025",
-      "horaEmissao": "03:53:23"
+      "horaEmissao": "03:53:23",
+      "problema_identificado": "SIIIIIIIUM",
+      "solucao": "NAO",
+      "pecaTrocada": "trocar a troca",
+      "valorObra": "R$ 9.230.303,82",
+      "observacoesOrcamento": "Valor da mão",
+      "statusOrcamento": "Sem resposta"
     },
     {
       "id": "da42",
@@ -547,7 +553,15 @@
       "assistencia": "7e02",
       "idSolicitante": "5744",
       "dataEmissao": "28/06/2025",
-      "horaEmissao": "23:20:23"
+      "horaEmissao": "23:20:23",
+      "problema_identificado": "sadfsdafsdfasdfsdffsd",
+      "solucao": "sdffasdsdfasdfsfda",
+      "pecaTrocada": "sdafsdfadfssdf",
+      "valorObra": "R$ 3.124.233,54",
+      "observacoesOrcamento": "",
+      "statusOrcamento": "Aceito",
+      "data_aceitacao_orcamento": "30/06/2025",
+      "hora_aceitacao_orcamento": "03:13:31"
     },
     {
       "id": "2f3f",
@@ -558,7 +572,13 @@
       "assistencia": "7e02",
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
-      "horaEmissao": "00:21:32"
+      "horaEmissao": "00:21:32",
+      "problema_identificado": "asdsdafdsgafsd",
+      "solucao": "dfgggsdfagsgdgdsgd",
+      "pecaTrocada": "sdagsdggds",
+      "valorObra": "R$ 23.453.425,34",
+      "observacoesOrcamento": "",
+      "statusOrcamento": "Sem resposta"
     },
     {
       "id": "53d2",
@@ -703,6 +723,16 @@
       "id": "60c9",
       "idSolicitante": "1ece",
       "idAssistencia": "7c8a"
+    },
+    {
+      "id": "9656",
+      "idSolicitante": "ec3c",
+      "idAssistencia": "7e02"
+    },
+    {
+      "id": "379e",
+      "idSolicitante": "ec3c",
+      "idAssistencia": "2a23"
     }
   ],
   "avaliacao": [
