@@ -83,6 +83,24 @@ export function useAssistencia() {
     });
   };
 
+  // insere avaliacao de demanda
+  const inserirAvaliacao = async (data, idAssistencia, idDemanda) =>{
+    const dados = {
+        ...data,
+        "idDemanda": idDemanda,
+        "idAssistencia": idAssistencia
+    }
+
+    const request = await fetch(`${url}/avaliacao`,{
+        method: "POST",
+        body: JSON.stringify(dados)
+    });
+
+    const response = await request.json();
+
+    return response.id;
+  };
+
   const inserirValidacaoAssistencia = async (idAssistencia, isValido) => {
     const request = await fetch(`${url}/assistencia/${idAssistencia}`, {
       method: "PATCH",
@@ -98,6 +116,7 @@ export function useAssistencia() {
     buscaAssistenciasDoAdministrador,
     buscarAssistenciasFavoritasSolicitante,
     inserirAssistencia,
+    inserirAvaliacao,
     inserirValidacaoAssistencia,
   };
 }

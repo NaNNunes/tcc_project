@@ -407,9 +407,7 @@
       "pecaTrocada": "rebimboca da parafuseta",
       "valorObra": "2mil milhões de reais",
       "observacoesOrcamento": "sim",
-      "statusOrcamento": "Aceito",
-      "notaAvaliacao": 4,
-      "analise": "Muito legal como foi feita meu atendimento."
+      "statusOrcamento": "Aceito"
     },
     {
       "id": "c4f8",
@@ -561,5 +559,8 @@
       "idSolicitante": "5744",
       "idAssistencia": "2a23"
     }
+  ],
+  "avaliacao": [
+
   ]
 }

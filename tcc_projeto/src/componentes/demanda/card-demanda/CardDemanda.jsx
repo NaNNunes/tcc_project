@@ -34,6 +34,7 @@ import { useDemanda } from "../../../hooks/useDemanda.js";
 import { useAssistencia } from "../../../hooks/useAssistencia.js";
 import { useUser } from "../../../hooks/useUser.js";
 import { useEndereco } from "../../../hooks/useEndereco.js";
+import { useAvaliacao } from '../../../hooks/useAvaliacao.js';
 
 import { useParams } from 'react-router-dom';
 
@@ -54,22 +55,28 @@ const CardDemanda = (props) => {
         aceitarOrcamento,
         atualizarStatusDemanda,
         buscaDispositivoById,  
-        cancelarDemanda,      
-        defineIdAssistencia,  
-        rejeitarDemanda,
         buscaDemandaById,
+        cancelarDemanda,      
+        concluirDemanda,
+        defineIdAssistencia,  
+        inserirIdAvaliacao,
+        rejeitarDemanda,
         recusarOrcamento,
-        concluirDemanda
     } = useDemanda();
     // funcao que busca lista de assistencias
     const { 
         buscaAssistencias,
-        buscaAssistenciaById
+        buscaAssistenciaById,
      } = useAssistencia();
     // funcao que busca endereco pelo id
     const { buscaEnderecoById } = useEndereco();
     // funcao que busca solicitante pelo id
     const { buscaUserById } = useUser();
+
+    const {
+        buscaAvaliacaoById,
+        inserirAvaliacao
+    } = useAvaliacao();
 
     // declarando variaveis de acordo com props
     // infos do buscador
@@ -99,6 +106,9 @@ const CardDemanda = (props) => {
     const [endereco, setEndereco] = useState(undefined);
     // dados do solicitante
     const [solicitante, setSolicitante] = useState({});
+
+    // dados da avaliacao da demanda
+    const [dadosAvaliacao, setDadosAvaliacao] = useState({});
 
     // funcao de aceitar demanda
     const handleAceitaDemanda = async() =>{
@@ -154,6 +164,20 @@ const CardDemanda = (props) => {
         if(isDemandaRejeitada){
             alert("Orçamento de demanda rejeitado");
             location.reload();
+        }
+    }
+
+    const handleVisualizarDemanda = async() =>{
+        // mostra modal
+        setMostrarModal(true);
+        // busca demanda ao selecionar botao
+        const demanda = await buscaDemandaById(idDemanda);
+        // seta idAvaliacao
+        const idAvaliacao = demanda.idAvaliacao;
+        setDemandaSelecionada(demanda);
+        if(idAvaliacao !== undefined){
+            const avaliacao = await buscaAvaliacaoById(idAvaliacao);
+            setDadosAvaliacao(avaliacao);
         }
     }
 
@@ -245,7 +269,7 @@ const CardDemanda = (props) => {
     const botaoEditarDemanda = (
         <>
             <Button
-                href={`/criar-demanda/${props.id}`}
+                href={`/criar-demanda/${idDemanda}`}
                 className={styles.botaoModal}
             >
                 Editar
@@ -257,7 +281,7 @@ const CardDemanda = (props) => {
     const botaoCancelarDemanda = (
         <>
             <Button 
-                onClick={()=>{cancelarDemanda(props.id)}}
+                onClick={()=>{cancelarDemanda(idDemanda)}}
                 className={styles.botaoCancelar}
             >
                 Cancelar
@@ -285,7 +309,7 @@ const CardDemanda = (props) => {
     const botaoGerarOrcamento = (
         <>
             <Button 
-                href={`/orcamento/${props.id}`}
+                href={`/orcamento/${idDemanda}`}
                 className={styles.botaoModal}
                 onClick={()=>{setMostrarModal(false)}}
             >
@@ -498,10 +522,8 @@ const CardDemanda = (props) => {
                 as="input"
                 type="button"
                 value="Visualizar" 
-                onClick={async () => {
-                    setMostrarModal(true);
-                    const resultado = await buscaDemandaById(props.id);
-                    setDemandaSelecionada(resultado);
+                onClick={() => {
+                    handleVisualizarDemanda();
                 }}
                 className={styles.botaoCard}
             />
@@ -541,6 +563,14 @@ const CardDemanda = (props) => {
 
     const onSubmit = async (dados) => {
         console.log(dados);
+        const idDemanda = demandaSelecionada.id;
+        const idAvaliacao = await inserirAvaliacao(dados, idAssistencia, idDemanda, idBuscador);
+        const isDemandaComAvaliacao = await inserirIdAvaliacao(idDemanda, idAvaliacao);
+        console.log(isDemandaComAvaliacao);
+        if(isDemandaComAvaliacao){
+            alert("Simm");
+            location.reload();
+        }
     }
 
     const onError = (errors) => {
@@ -789,7 +819,8 @@ const CardDemanda = (props) => {
                         </>
                     }
 
-                    {
+                    {   
+                        // modificar verificar se existe um id de avaliacao de demanda resolvida pela assistencia
                         (!(demandaSelecionada?.notaAvaliacao === undefined)) &&
                         <>
                             <hr className={styles.divisao}/>

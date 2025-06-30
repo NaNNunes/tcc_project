@@ -326,6 +326,20 @@ export function useDemanda() {
         return request.ok
     }
 
+    const inserirIdAvaliacao = async (idDemanda, idAvaliacao) => {
+
+        const avaliacao = {
+            "idAvaliacao":idAvaliacao
+        }
+
+        const request = await fetch(`${url}/demanda/${idDemanda}`,{
+            method: "PATCH",
+            body: JSON.stringify(avaliacao)
+        });
+
+        return request.ok;
+    }
+
     const recusarOrcamento = async (idDemanda) =>{
         const status = {
             "status": "Aberto",
@@ -382,6 +396,7 @@ export function useDemanda() {
         cancelarDemanda,
         concluirDemanda,
         defineIdAssistencia,
+        inserirIdAvaliacao,
         inserirOrcamento,
         recusarOrcamento,
         rejeitarDemanda
