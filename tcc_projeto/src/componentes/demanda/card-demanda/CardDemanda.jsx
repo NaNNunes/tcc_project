@@ -380,24 +380,23 @@ const CardDemanda = (props) => {
         </>
     )
 
-    console.log(demandaSelecionada.statusOrcamento === undefined && props.status === "Em atendimento")
-
     // Botões que aparecerão no modal para o solicitante no consultar pedidos.
     const botaoMinhasDemandas = (
         <>
-            {
-                ((props.status === "Concluído" && demandaSelecionada?.notaAvaliacao != undefined) 
-                ||
-                ((props.status === "Cancelada"))
-                ||
-                (demandaSelecionada.statusOrcamento === "Recusado" || demandaSelecionada.statusOrcamento === "Aceito")
-                ||
-                (demandaSelecionada.statusOrcamento === undefined && props.status === "Em atendimento")) && 
-                botaoFecharModalDeInfosDemanda
-            }
-            {
-                (props.status === "Concluído" && demandaSelecionada.notaAvaliacao === undefined) &&
-                botaoFazerAvaliacao
+            {props.status === "Concluído" && demandaSelecionada?.notaAvaliacao === undefined ? (
+                    botaoFazerAvaliacao
+                ) 
+                : 
+                (
+                    ((props.status === "Concluído" && demandaSelecionada?.notaAvaliacao) 
+                    ||
+                    ((props.status === "Cancelada"))
+                    ||
+                    (demandaSelecionada.statusOrcamento === "Recusado" || demandaSelecionada.statusOrcamento === "Aceito")
+                    ||
+                    (demandaSelecionada.statusOrcamento === undefined && props.status === "Em atendimento")) && 
+                    botaoFecharModalDeInfo'sDemanda
+                )
             }
             {
                 (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Sem resposta") &&
@@ -548,7 +547,7 @@ const CardDemanda = (props) => {
         console.log("Erros: ", errors)
     }
 
-    console.log(demandaSelecionada)
+    // console.log(demandaSelecionada)
 
   return (
     // Div com todo o card.
@@ -569,7 +568,7 @@ const CardDemanda = (props) => {
                 >
                     {/* mude o design front enzo */}  
                     {
-                        (props.status !== "Aberto" && idAssistencia != "Público") && 
+                        (idAssistencia != "Público") && 
                             <Card.Header className={styles.textoTitle}>
                                 <span>{assistenciaResponsavel}</span>
                             </Card.Header>
