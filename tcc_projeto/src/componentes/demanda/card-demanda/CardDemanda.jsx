@@ -390,6 +390,8 @@ const CardDemanda = (props) => {
         </>
     )
 
+    console.log(demandaSelecionada);
+
     // Botões que aparecerão no modal para o administrador nas demandas aceitas.
     const botaoDemandasAceitas = (
         <>
@@ -401,13 +403,17 @@ const CardDemanda = (props) => {
                 (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Aceito") &&
                 botaoConcluirDemanda
             }
+            {
+                (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Sem resposta") &&
+                botaoFecharModalDeInfosDemanda
+            }
         </>
     )
 
     // Botões que aparecerão no modal para o solicitante no consultar pedidos.
     const botaoMinhasDemandas = (
         <>
-            {props.status === "Concluído" && demandaSelecionada?.notaAvaliacao === undefined ? (
+            {props.status === "Concluído" && dadosAvaliacao.notaAvaliacao === undefined ? (
                     botaoFazerAvaliacao
                 ) 
                 : 
@@ -568,7 +574,7 @@ const CardDemanda = (props) => {
         const isDemandaComAvaliacao = await inserirIdAvaliacao(idDemanda, idAvaliacao);
         console.log(isDemandaComAvaliacao);
         if(isDemandaComAvaliacao){
-            alert("Simm");
+            alert("Assistência avaliada com sucesso.");
             location.reload();
         }
     }
@@ -821,7 +827,7 @@ const CardDemanda = (props) => {
 
                     {   
                         // modificar verificar se existe um id de avaliacao de demanda resolvida pela assistencia
-                        (!(demandaSelecionada?.notaAvaliacao === undefined)) &&
+                        (!(dadosAvaliacao.notaAvaliacao === undefined)) &&
                         <>
                             <hr className={styles.divisao}/>
                             <div>
@@ -835,14 +841,14 @@ const CardDemanda = (props) => {
                                                 <FaStar 
                                                     key={n}
                                                     size={26}
-                                                    color={n <= demandaSelecionada.notaAvaliacao ? "#ffc107" : "#e4e5e9"}
+                                                    color={n <= dadosAvaliacao.notaAvaliacao ? "#ffc107" : "#e4e5e9"}
                                                 />
                                             ))}
                                         </div>
                                     </span>
 
                                     <span>
-                                        <strong>Análise: </strong> {demandaSelecionada.analise}
+                                        <strong>Análise: </strong> {dadosAvaliacao.analise}
                                     </span>
                                 </Container>      
                             </div>
@@ -857,6 +863,7 @@ const CardDemanda = (props) => {
             </Modal>
         </div>
 
+        {/* Modal para avaliação da assistência. */}
         <div>
             <Modal
                 show={mostrarModalAvaliacao}

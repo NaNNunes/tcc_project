@@ -383,9 +383,16 @@ const OrcamentoForm = () => {
                       isInvalid={!!errors.valorObra}
                       {...register("valorObra", {
                         required: "O valor da mão de obra é obrigatório.",
-                        pattern: {
-                          value: /^R\$ ?\d{1,3}(\.\d{3})*,\d{2}$/,
-                          message: "Digite um valor válido. Ex: R$ 99,90",
+                        validate: (value) => {
+                          const valorNumerico = parseFloat(
+                            value.replace("R$", "").replace(/\./g, "").replace(",", ".")
+                          );
+
+                          if (isNaN(valorNumerico) || valorNumerico <= 0) {
+                            return "Digite um valor válido. Ex: R$ 99,00";
+                          }
+
+                          return true;
                         },
                         onChange: (e) => {
                           let value = e.target.value;

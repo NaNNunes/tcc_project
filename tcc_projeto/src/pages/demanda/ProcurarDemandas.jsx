@@ -168,9 +168,11 @@ const ProcurarDemandas = () => {
   };
 
   return (
-    <div style={{paddingTop: '80px', paddingBottom: '80px'}}>
+    <div style={demandasParaMostrar.length > 0 ? {paddingTop: '80px', paddingBottom: '80px'} : {paddingTop: '350px', paddingBottom: '350px'}}>
       {/* <BarraPesquisa/> */}
-      <Container className={styles.caixa}>
+      <Container 
+        className={demandasParaMostrar.length > 0 ? styles.caixa : styles.semDemandas}
+      >
         {
           // verifica se há demandas
           (demandasParaMostrar.length > 0) 
