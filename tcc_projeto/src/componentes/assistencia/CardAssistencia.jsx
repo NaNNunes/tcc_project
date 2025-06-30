@@ -10,6 +10,9 @@ import { useEndereco } from "../../hooks/useEndereco.js";
 import { useLikes } from "../../hooks/useLikes.js";
 import { useEffect, useState } from "react";
 
+// Importação dos icones.
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+
 import styles from './CardAssistencia.module.css'
 
 const CardAssistencia = (props) => {
@@ -63,6 +66,8 @@ const CardAssistencia = (props) => {
     fetchData();
   }, []);
 
+  
+
   // funcao chamada pelo botao de favoritar assistencia
   const favoritar = async () => {
     // dados do match
@@ -81,25 +86,15 @@ const CardAssistencia = (props) => {
     removerAssistenciaDeFavoritos(like);
   };
 
-  const botaoDesLikeAssistencia = (
-    <Button
-      type="submit"
-      value="Desfavoritar"
-      as="input"
-      variant="warning"
-      onClick={removerMatch}
-    />
-  );
-
-  const botaoLikeAssistencia = (
-    <Button
-      type="submit"
-      value="Favoritar"
-      as="input"
-      variant="danger"
-      onClick={favoritar}
-    />
-  );
+  const handleToggleFavorito = () => {
+    if (assistenciaIsFav) {
+      // desfavoritar
+      removerMatch();
+    } else {
+      // favoritar
+      favoritar();
+    }
+  };
 
   return (
     <div 
@@ -118,12 +113,30 @@ const CardAssistencia = (props) => {
               width: "100%", display: "flex", flexDirection: "column"
             }}
           >
-            {/* nome fantasia */}
-            <div style={{width: '70%', alignSelf: 'center', paddingTop: '20px'}}>
-              <Card.Title className={styles.textoCardPrincipal}>
-                  {props.nome}
-              </Card.Title>
-            </div>
+            <Card.Header className={styles.headerCard}>
+              {/* nome fantasia */}
+              <div style={{width: '80%', alignSelf: 'center'}}>
+                <Card.Title className={styles.textoCardPrincipal}>
+                    {props.nome}
+                </Card.Title>
+              </div>
+
+              {
+                // verifica o tipo do user para mostrar ou não opção de favoritar (melhorar essa logica)
+                userType === "solicitante" && (
+                  <button
+                    onClick={handleToggleFavorito}
+                    className={styles.coracaoFavoritar}
+                  >
+                    {assistenciaIsFav ? (
+                      <FaHeart size={32} color="#e63946" />
+                    ) : (
+                      <FaRegHeart size={32} color="#e63946" />
+                    )}
+                  </button>
+                )
+              }
+            </Card.Header>
 
             <Card.Body className={styles.cardBody}>
               {/* cnpj */}
@@ -203,20 +216,6 @@ const CardAssistencia = (props) => {
                 </Row>
               </Container>
             </Card.Body>
-
-            {
-              // verifica o tipo do user para mostrar ou não opção de favoritar (melhorar essa logica)
-              userType === "solicitante" && (
-                <Card.Footer>
-                  {/* colocar icone de favoritar */}
-                  {
-                    (assistenciaIsFav) 
-                      ? botaoDesLikeAssistencia
-                      : botaoLikeAssistencia 
-                  }
-                </Card.Footer>
-              )
-            }
           </Card>
         </Container>
       </div>
