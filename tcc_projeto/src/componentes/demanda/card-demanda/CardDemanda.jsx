@@ -395,7 +395,7 @@ const CardDemanda = (props) => {
                     (demandaSelecionada.statusOrcamento === "Recusado" || demandaSelecionada.statusOrcamento === "Aceito")
                     ||
                     (demandaSelecionada.statusOrcamento === undefined && props.status === "Em atendimento")) && 
-                    botaoFecharModalDeInfo'sDemanda
+                    botaoFecharModalDeInfosDemanda
                 )
             }
             {
