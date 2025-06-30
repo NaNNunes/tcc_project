@@ -80,10 +80,6 @@ const router = createBrowserRouter([
         element: <ErrorPage />,
       },
       {
-        path: "/home",
-        element: <Home />,
-      },
-      {
         path: "/inicio",
         element: <Inicio />,
       },

@@ -12,16 +12,10 @@ import Form from 'react-bootstrap/Form';
 import styles from './CardDemanda.module.css';
 
 // Importação dos icones.
-import { MdOutlineSmartphone } from "react-icons/md";
-import { FaTabletAlt } from "react-icons/fa";
-import { FaLaptop } from "react-icons/fa6";
-import { FaDesktop } from "react-icons/fa";
-import { FaHeadphones } from "react-icons/fa6";
-import { TiArrowSortedDown } from "react-icons/ti";
-import { TiArrowSortedUp } from "react-icons/ti";   
 import { MdOutlineCalendarMonth } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 
 // Importação das imagems
 import ImgCelular from '/icons/img_card_celular.png';
@@ -33,6 +27,9 @@ import ImgOthers from '/icons/img_card_outros.png';
 
 import { useEffect, useState } from 'react';
 
+// Importação do useForm para mexer com o formulário.
+import { useForm, Controller } from "react-hook-form";
+
 import { useDemanda } from "../../../hooks/useDemanda.js";
 import { useAssistencia } from "../../../hooks/useAssistencia.js";
 import { useUser } from "../../../hooks/useUser.js";
@@ -42,6 +39,13 @@ import { useParams } from 'react-router-dom';
 
 const CardDemanda = (props) => {
 
+    const {
+        register,
+        handleSubmit,
+        control,
+        formState: {errors},
+    } = useForm();
+    
     // pega informação passada na url sobre o tipo da demanda procurada
     const {tipoDemanda} = useParams();
     // Hooks
@@ -79,6 +83,8 @@ const CardDemanda = (props) => {
     
     // Estados do modal.
     const [mostrarModal, setMostrarModal] = useState(false);
+    // Estados do modal de avaliação.
+    const [mostrarModalAvaliacao, setMostrarModalAvaliacao] = useState(false);
     // assistencia que será responsável pela demanda, definido pelo adm
     const [assistenciaSelecionada, setAssistenciaSelecionada] = useState("");
     // lista de assistencias do adm
@@ -259,6 +265,20 @@ const CardDemanda = (props) => {
         </>
     );
 
+    const botaoFazerAvaliacao = (
+        <>
+            <Button
+                className={styles.botaoModal}
+                onClick={async () => {
+                    setMostrarModal(false);
+                    setMostrarModalAvaliacao(true);
+                }}
+            >
+                Avaliar assistência
+            </Button>
+        </>
+    );
+
     // --- ADMINISTRADOR ---
 
     // botao para direcionar user a tela de orçamento.
@@ -311,6 +331,7 @@ const CardDemanda = (props) => {
         </>
     );
 
+    //Botão que aparecerão no modal para administrador nas demandas abertas
     const botaoDemandasAbertas = (
         <>
             <FloatingLabel
@@ -359,16 +380,24 @@ const CardDemanda = (props) => {
         </>
     )
 
+    console.log(demandaSelecionada.statusOrcamento === undefined && props.status === "Em atendimento")
+
     // Botões que aparecerão no modal para o solicitante no consultar pedidos.
     const botaoMinhasDemandas = (
         <>
             {
-                ((props.status === "Concluido" || props.status === "Cancelada") 
-                || 
+                ((props.status === "Concluído" && demandaSelecionada?.notaAvaliacao != undefined) 
+                ||
+                ((props.status === "Cancelada"))
+                ||
                 (demandaSelecionada.statusOrcamento === "Recusado" || demandaSelecionada.statusOrcamento === "Aceito")
                 ||
                 (demandaSelecionada.statusOrcamento === undefined && props.status === "Em atendimento")) && 
                 botaoFecharModalDeInfosDemanda
+            }
+            {
+                (props.status === "Concluído" && demandaSelecionada.notaAvaliacao === undefined) &&
+                botaoFazerAvaliacao
             }
             {
                 (props.status === "Em atendimento" && demandaSelecionada.statusOrcamento === "Sem resposta") &&
@@ -393,7 +422,7 @@ const CardDemanda = (props) => {
     const botaoHistoricoDemandas = (
         <>
             {
-                ((props.status === "Concluido" || props.status === "Cancelada") 
+                ((props.status === "Concluído" || props.status === "Cancelada") 
                 || 
                 (props.status === "Em atendimento" && (demandaSelecionada.statusOrcamento === "Sem resposta" || demandaSelecionada.statusOrcamento === 'Recusado'))) && 
                 botaoFecharModalDeInfosDemanda
@@ -478,7 +507,7 @@ const CardDemanda = (props) => {
                 className={styles.botaoCard}
             />
         </>
-    )
+    );
 
     const imgCategoria = (categoria) => {
         switch ((categoria || '').toLowerCase()) {
@@ -511,7 +540,15 @@ const CardDemanda = (props) => {
         }
     }
 
-    // console.log(demandaSelecionada)
+    const onSubmit = async (dados) => {
+        console.log(dados);
+    }
+
+    const onError = (errors) => {
+        console.log("Erros: ", errors)
+    }
+
+    console.log(demandaSelecionada)
 
   return (
     // Div com todo o card.
@@ -752,12 +789,158 @@ const CardDemanda = (props) => {
                             </div>
                         </>
                     }
+
+                    {
+                        (!(demandaSelecionada?.notaAvaliacao === undefined)) &&
+                        <>
+                            <hr className={styles.divisao}/>
+                            <div>
+                                <h3 className={styles.tituloInfoModal}>Avaliação</h3>
+                                <Container style={{display: "grid", gridTemplateColumns: "repeat(1, 1fr)", margin: '0px'}}>
+                                    {/* Nota */}
+                                    <span className={styles.textoInfoModal}>
+                                        <strong>Nota: </strong>
+                                        <div className={styles.estrelasNota}>
+                                            {[1, 2, 3, 4, 5].map((n) => (
+                                                <FaStar 
+                                                    key={n}
+                                                    size={26}
+                                                    color={n <= demandaSelecionada.notaAvaliacao ? "#ffc107" : "#e4e5e9"}
+                                                />
+                                            ))}
+                                        </div>
+                                    </span>
+
+                                    <span>
+                                        <strong>Análise: </strong> {demandaSelecionada.analise}
+                                    </span>
+                                </Container>      
+                            </div>
+                        </>
+                    }
                 </Modal.Body>
 
                 {/* Footer com o botão com a funcionalidade passada dentro do mainBotao */}
                 <Modal.Footer style={{padding: "0", border: "0", display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     {mainBotao}
                 </Modal.Footer>
+            </Modal>
+        </div>
+
+        <div>
+            <Modal
+                show={mostrarModalAvaliacao}
+                onHide={() => setMostrarModalAvaliacao(false)}
+                contentClassName={styles.modalContent} 
+                dialogClassName={styles.modalInfoAvaliacao}
+                centered
+            >
+                <Modal.Header closeButton style={{padding: "0", paddingBottom: "5px", border: "0"}}>
+                </Modal.Header>
+                
+                <Modal.Body style={{padding: "0", border: "0"}}>
+                    {/* Título */}
+                    <Modal.Title className={styles.tituloModal} style={{paddingBottom: '10px'}}>Avaliar assistência</Modal.Title>
+
+                    {/* Contaienr com todas informações e campos para avaliação. */}
+                    <Container style={{display: "grid", gridTemplateColumns: "repeat(1, 1fr)", margin: '0px'}}>
+                        {/* Frase explicando o que é a avaliação. */}
+                        <span className={styles.textSpan} style={{paddingBottom: '20px'}}>
+                            Como foi sua experiência? Avalie a assistência e ajude a melhorar ainda mais o serviço prestado.
+                        </span>
+
+                        {/* Assistência que será avaliada. */}
+                        <span className={styles.textoInfoModal}>
+                            <strong>Assistência: </strong>
+                            {assistenciaResponsavel}
+                        </span>
+
+                        {/* Formulário para enviar a nota da avaliação e a avaliação. */}
+                        <Form onSubmit={handleSubmit(onSubmit, onError)}>
+                            {/* Estrelas para avaliação. */}
+                            <div style={{paddingBottom: '30px'}}>
+                                <Controller
+                                    control={control}
+                                    name="notaAvaliacao"
+                                    rules={{ required: "Por favor, selecione uma nota de 1 a 5 estrelas." }}
+                                    // Estrelas para nota.
+                                    render={({ field }) => (
+                                        <div>
+                                            <span className={styles.textoInfoModal}>
+                                                <strong>Nota: </strong>
+                                            </span>
+                                            {/* Estrelas de 1 a 5. */}
+                                            <div className={styles.estrelasNota}>
+                                                {[1, 2, 3, 4, 5].map((estrela) => (
+                                                <button
+                                                    key={estrela}
+                                                    type="button"
+                                                    onClick={() => field.onChange(estrela)}
+                                                    style={{
+                                                        background: "none",
+                                                        border: "none",
+                                                        cursor: "pointer",
+                                                        padding: 0
+                                                    }}
+                                                >
+                                                    <FaStar
+                                                    size={26}
+                                                    color={estrela <= field.value ? "#ffc107" : "#e4e5e9"}
+                                                    />
+                                                </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                />
+                                {errors.notaAvaliacao && (
+                                    <span className='error'>{errors.notaAvaliacao.message}</span>
+                                )}
+                            </div>
+                            
+                            {/* Avaliação. */}
+                            <div style={{paddingBottom: '20px'}}>
+                                <FloatingLabel
+                                    controlId='AnaliseInput'
+                                    label='Análise'
+                                >
+                                    <Form.Control 
+                                        as='textarea'
+                                        style={{height: "80px", resize: "none"}}
+                                        {...register("analise", {
+                                            maxLength: {
+                                                value: 200,
+                                                message: "A avaliação não pode ter mais de 200 caracteres",
+                                            },
+                                            pattern: {
+                                                value: /^[a-zA-Z0-9À-ÿ\s.,!?@&#()/%-:]*$/,
+                                                message: "Use apenas letras, números e símbolos."
+                                            },
+                                            validate: (value) => {
+                                                if (/https?:\/\//i.test(value)) {
+                                                return "Não inclua links na observação.";
+                                                }
+                                                return true;
+                                            }
+                                        })}
+                                    />
+                                </FloatingLabel>
+                                {errors.analise && (
+                                    <span className='error'>{errors.analise.message}</span>
+                                )}
+                            </div>
+ 
+                            <div style={{justifySelf: 'center'}}>
+                                <Button
+                                    type='submit'
+                                    className={styles.botaoModal}
+                                >
+                                    Enviar
+                                </Button>
+                            </div>
+                        </Form>
+                    </Container>
+                </Modal.Body>
             </Modal>
         </div>
     </div>

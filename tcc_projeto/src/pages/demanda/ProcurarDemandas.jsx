@@ -111,7 +111,7 @@ const ProcurarDemandas = () => {
             resBuscaDemandasAssistenciasAdministrador.map((demanda)=>{
                 const status = (
                   demanda.status === "Cancelada" || 
-                  demanda.status === "Concluido" || 
+                  demanda.status === "Concluído" || 
                   demanda.status === "Em atendimento"
                 );
                 if(status){

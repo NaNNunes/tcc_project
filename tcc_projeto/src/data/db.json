@@ -407,7 +407,9 @@
       "pecaTrocada": "rebimboca da parafuseta",
       "valorObra": "2mil milhões de reais",
       "observacoesOrcamento": "sim",
-      "statusOrcamento": "Aceito"
+      "statusOrcamento": "Aceito",
+      "notaAvaliacao": 4,
+      "analise": "Muito legal como foi feita meu atendimento."
     },
     {
       "id": "c4f8",
@@ -470,7 +472,7 @@
       "descProblema": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
       "observacoes": "",
       "status": "Aberto",
-      "assistencia": "7e02",
+      "assistencia": "Público",
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
       "horaEmissao": "01:28:36"
@@ -480,7 +482,7 @@
       "idDispositivo": "0379",
       "descProblema": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
       "observacoes": "",
-      "status": "Em atendimento",
+      "status": "Concluído",
       "assistencia": "7e02",
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
@@ -490,7 +492,7 @@
       "pecaTrocada": "AAAAAAAAAAAAAAAAAAAa",
       "valorObra": "150",
       "observacoesOrcamento": "",
-      "statusOrcamento": "Sem resposta"
+      "statusOrcamento": "Aceito"
     },
     {
       "id": "a95f",

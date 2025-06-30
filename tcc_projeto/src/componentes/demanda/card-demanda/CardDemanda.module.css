@@ -115,6 +115,11 @@
     padding: 20px;
 }
 
+/* Modal para avaliação da assistência. */
+.modalInfoAvaliacao {
+    max-width: 400px;
+}
+
 /* Modal.Title */
 .tituloModal {
     font-size: 2rem;
@@ -183,6 +188,20 @@
     margin-left: 12px;
     width: 50%;
     align-self: flex-start;
+}
+
+/* Texto com informações */
+.textSpan {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #757575;
+}
+
+/* Div com as estrelas para avaliação. */
+.estrelasNota {
+    display: flex;
+    gap: 5px;
+    margin-top: 5px;
 }
 
 @media screen and (max-width: 1500px) {
@@ -263,6 +282,11 @@
         overflow-wrap: break-word;
     }
 
+    .textSpan {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
     .botaoModal {
         width: 5rem;
         padding: 0px;
@@ -324,6 +348,14 @@
 
     .modalContent {
         padding: 10px;
+    }
+
+    .textSpan {
+        font-size: 1rem;
+    }
+
+    .estrelasNota {
+        flex-direction: column;
     }
 
     .botaoCard {
