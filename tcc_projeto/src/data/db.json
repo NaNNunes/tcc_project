@@ -618,6 +618,30 @@
       "amperagem": "",
       "cor": "",
       "idSolicitante": "0ee7"
+    },
+    {
+      "id": "3ba2",
+      "categoria": "Desktop",
+      "marca": "AMD Processador",
+      "fabricante": "",
+      "modelo": "Ryzen 7 3800X",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "e174"
+    },
+    {
+      "id": "af25",
+      "categoria": "Desktop",
+      "marca": "Nvidia",
+      "fabricante": "",
+      "modelo": "RTX 3060",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "e174"
     }
   ],
   "demanda": [
@@ -893,6 +917,28 @@
       "idSolicitante": "0ee7",
       "dataEmissao": "01/07/2025",
       "horaEmissao": "08:47:50"
+    },
+    {
+      "id": "1ace",
+      "idDispositivo": "3ba2",
+      "descProblema": "hkhjkgl yig guhgybugybghbghbghgh",
+      "observacoes": "",
+      "status": "Em atendimento",
+      "assistencia": "7e02",
+      "idSolicitante": "e174",
+      "dataEmissao": "01/07/2025",
+      "horaEmissao": "09:03:57"
+    },
+    {
+      "id": "6386",
+      "idDispositivo": "af25",
+      "descProblema": "fsdafsdasdfafsdfsdfdsfsdasdfafsd",
+      "observacoes": "",
+      "status": "Em atendimento",
+      "assistencia": "7e02",
+      "idSolicitante": "e174",
+      "dataEmissao": "01/07/2025",
+      "horaEmissao": "09:05:13"
     }
   ],
   "assistencia_Fav_Solicitante": [

@@ -36,6 +36,8 @@ import { useDemanda} from '../../../hooks/useDemanda.js';
 import { useAssistencia} from '../../../hooks/useAssistencia.js';
 import { useVerificadorDeCpf } from '../../../hooks/useApi.js';
 import { useUser} from '../../../hooks/useUser.js';
+import { useApi } from '../../../hooks/useApi.js';
+
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { useLikes } from '../../../hooks/useLikes.js';
@@ -80,6 +82,10 @@ const CadastroDemanda = () => {
     const {
         buscarAssistenciasFavoritas
     } = useLikes();
+
+    const {
+        useVerificadorDeCpf
+    } = useApi();
 
     // state para receber lista de assistencias
     const [assistencias, setAssistencias] = useState([]);
@@ -350,15 +356,22 @@ const CadastroDemanda = () => {
     }, [categoriaSelecionada]);
 
     const onSubmit = async (dados) => {
+        // funcao para verificar se cpf do solicitante é válido
+        const cpf = dados.cpf;
+        alert(cpf);
+        const isCpfValido = await useVerificadorDeCpf(cpf);
+        alert(isCpfValido)
+        if(!isCpfValido){
+            alert("Cpf não válido");
+        }
+
+
+
         setDadosTemporarios(dados);
         // Mostrando o Modal para ser selecionada a assistência
         setMostrarModal(true);
     }
-    // TODO VERIFICAR SE SOLICITANTE PRESENCIAL JA ESTA CADASTRADO, CASO ESTEJA APENAS ATRIBUIR DISPOSITIVO AO MESMO
 
-    // funcao para verificaçao do tipo de user e 
-    // cadastro de dispositivo, demanda e pseudo user, 
-    // quando demanda criada presencialmente. 
     const handleCadastrarDemanda = async (responsavelDemanda) =>{
         // para atendimento presencial
         if(userType === "administrador"){
@@ -419,8 +432,6 @@ const CadastroDemanda = () => {
         return afterCadastroOuAtualizacaoDemanda();
     }
 
-    // utilizado para atualização de demanda e dispositivo, apenas online
-    // OBS COLOCAR VERIFICAÇÃO SE USER É SOLICITANTE PARA REALIZAR ALTERAÇÃO
     const handleAtualizarDemanda = async(idDemanda, idDispositivo, responsavelDemanda) =>{
         // funcao de atualizar dispositivo
         const isDispositivoAtualizado = await atualizarDadosDispositivo(dadosTemporarios, idDispositivo);

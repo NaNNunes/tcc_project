@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 const url = import.meta.env.VITE_API_URL;
 
 // verificador de cpf valido
-export function useVerificadorDeCpf() {
-  const verificador = (cpfStr) => {
+export function useVerificadorDeCpf(cpfStr) {
+  const verificador = () => {
     // Remove todos os não-números
     const cpf = cpfStr.replace(/\D/g, "");
 
@@ -42,8 +42,8 @@ export function useVerificadorDeCpf() {
 }
 
 // verificador de cnpj
-export function useVerificadorDeCnpj() {
-  const verificador = (cnpjStr = "00.000.000/0000-00") => {
+export function useVerificadorDeCnpj(cnpjStr = "00.000.000/0000-00") {
+  const verificador = () => {
     // filtro de validação
     if (
       cnpjStr == "00.000.000/0000-00" ||
@@ -265,6 +265,8 @@ export function useComparaDados() {
   }
 
   return {
+    useVerificadorDeCpf,
+
     verificaCpfDeSolicitantes,
     verificaCpfDeAdms,
     verificaEmailDeAdms,
