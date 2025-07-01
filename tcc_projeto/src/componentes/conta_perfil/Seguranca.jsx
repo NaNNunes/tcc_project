@@ -106,6 +106,7 @@ const Seguranca = (props) => {
                             value="Salvar"
                             type="submit"
                             size="lg"
+                            className="mb-3"
                         />
                     </Col>
                 </Row>
@@ -124,6 +125,7 @@ const Seguranca = (props) => {
                                 value="Alterar pergunta"
                                 type="submit"
                                 size="lg"
+                                className="mb-3"
                             />
                         </Col>
                     </Row>

@@ -39,25 +39,58 @@ const InicioADM = () => {
   const [demandasConcluidas, setDemandasConcluidas] = useState(0);
   const [tempoMedioResposta, setTempoMedioResposta] = useState("");
   const [maisRequisitados, setMaisRequisitados] = useState("");
-  const [mediaAvaliacao, setMediaAvaliacao] = useState("");
+  const [mediaAssisstencia, setMediaAssisstencia] = useState(undefined);
   const [cidadesTop, setCidadesTop] = useState("");
   const assistenciaId = localStorage.getItem("assistenciaId");
 
   // Total de Clientes Cadastrados
   useEffect(() => {
-    fetch("http://localhost:5001/solicitante")
-      .then((res) => res.json())
-      .then((data) => {
-        setTotalClientes(data.length);
+    async function buscarNovosClientes() {
+      try {
+        const administradorId = localStorage.getItem("userId");
 
-        const novos = data.filter((s) => {
-          const dataCadastro = new Date(s.dataCadastro);
-          const hojeMenos30 = new Date();
-          hojeMenos30.setDate(hojeMenos30.getDate() - 30);
-          return dataCadastro > hojeMenos30;
-        });
-        setNovosClientes(novos.length);
-      });
+        const [assistencias, demandas, solicitantes] = await Promise.all([
+          fetch("http://localhost:5001/assistencia").then((res) => res.json()),
+          fetch("http://localhost:5001/demanda").then((res) => res.json()),
+          fetch("http://localhost:5001/solicitante").then((res) => res.json()),
+        ]);
+
+        console.log("Solicitantes:", solicitantes);
+        console.log(
+          "Assistências do Admin:",
+          assistencias.filter((a) => a.administradorId === administradorId)
+        );
+        console.log("Demandas:", demandas);
+
+        setTotalClientes(solicitantes.length);
+
+        const assistenciasDoAdm = assistencias.filter(
+          (a) => a.administradorId === administradorId
+        );
+        const idsAssistencias = assistenciasDoAdm.map((a) => a.id);
+
+        const demandasFiltradas = demandas.filter(
+          (d) =>
+            d.status === "Em atendimento" &&
+            idsAssistencias.includes(d.assistencia)
+        );
+
+        const solicitanteIdsUnicos = [
+          ...new Set(demandasFiltradas.map((d) => d.idSolicitante)),
+        ];
+
+        console.log(
+          "Solicitantes com demandas em atendimento:",
+          solicitanteIdsUnicos
+        );
+
+        setNovosClientes(solicitanteIdsUnicos.length);
+      } catch (error) {
+        console.error("Erro ao buscar novos clientes:", error);
+      }
+    }
+
+    buscarNovosClientes();
   }, []);
 
   useEffect(() => {
@@ -92,15 +125,15 @@ const InicioADM = () => {
         const minutos = Math.floor((mediaHoras % 1) * 60);
         setTempoMedioResposta(`${horas}h ${minutos}min`);
 
-        // Média de avaliação (caso tenha)
-        const avaliacoes = data
-          .map((d) => parseFloat(d.avaliacao))
-          .filter((a) => !isNaN(a));
-        const media =
-          avaliacoes.length > 0
-            ? avaliacoes.reduce((a, b) => a + b, 0) / avaliacoes.length
-            : 0;
-        setMediaAvaliacao(media.toFixed(1));
+        // // Média de avaliação (caso tenha)
+        // const avaliacoes = data
+        //   .map((d) => parseFloat(d.avaliacao))
+        //   .filter((a) => !isNaN(a));
+        // const media =
+        //   avaliacoes.length > 0
+        //     ? avaliacoes.reduce((a, b) => a + b, 0) / avaliacoes.length
+        //     : 0;
+        // setMediaAvaliacao(media.toFixed(1));
       });
   }, []);
 
@@ -189,10 +222,10 @@ const InicioADM = () => {
           .filter((a) => !isNaN(a));
         const mediaAvaliacao =
           avaliacoes.length > 0
-            ? (
-                avaliacoes.reduce((a, b) => a + b, 0) / avaliacoes.length
-              ).toFixed(1)
-            : 0;
+            ? avaliacoes.reduce((a, b) => a + b, 0) / avaliacoes.length
+            : NaN;
+
+        setMediaAssisstencia(mediaAvaliacao);
 
         const agora = new Date();
         const tempos = minhasDemandas
@@ -221,6 +254,52 @@ const InicioADM = () => {
         });
       });
   }, [assistenciaId]);
+
+  useEffect(() => {
+    async function buscarMediaDaAssistencia() {
+      try {
+        const administradorId = localStorage.getItem("userId");
+
+        const assistencias = await fetch(
+          "http://localhost:5001/assistencia"
+        ).then((res) => res.json());
+
+        const avaliacoes = await fetch("http://localhost:5001/avaliacao").then(
+          (res) => res.json()
+        );
+
+        // Assistências vinculadas ao administrador
+        const assistenciasDoAdm = assistencias.filter(
+          (a) => a.administradorId === administradorId
+        );
+
+        let melhorMedia = NaN;
+        let maiorQtdAvaliacoes = 0;
+
+        for (const assistencia of assistenciasDoAdm) {
+          const avaliacoesDaAssistencia = avaliacoes.filter(
+            (a) => a.idAssistencia === assistencia.id && !isNaN(a.notaAvaliacao)
+          );
+
+          const notas = avaliacoesDaAssistencia.map((a) =>
+            Number(a.notaAvaliacao)
+          );
+
+          if (notas.length > maiorQtdAvaliacoes) {
+            maiorQtdAvaliacoes = notas.length;
+            melhorMedia = notas.reduce((soma, n) => soma + n, 0) / notas.length;
+          }
+        }
+
+        console.log("Melhor média encontrada:", melhorMedia);
+        setMediaAssisstencia(melhorMedia);
+      } catch (error) {
+        console.error("Erro ao buscar média da assistência:", error);
+      }
+    }
+
+    buscarMediaDaAssistencia();
+  }, []);
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center">
@@ -346,7 +425,11 @@ const InicioADM = () => {
                       size="2rem"
                     />
                     <div className={styles.info}>
-                      <div className={styles.valor}>4.6 / 5.0</div>
+                      <div className={styles.valor}>
+                        {isNaN(mediaAssisstencia)
+                          ? "Sem avaliações"
+                          : `${mediaAssisstencia.toFixed(1)} / 5.0`}
+                      </div>
                       <div className={styles.descricao}>Média de Avaliação</div>
                     </div>
                     <div className={styles.percentual}>+2%</div>
