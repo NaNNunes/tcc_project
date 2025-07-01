@@ -160,6 +160,9 @@ const CadastroDemanda = () => {
     // state que permite alteração de campos de dados de solicitante 
     const [inputClientFieldDisable, setInputClientFieldDisable] = useState(false);
 
+    // id do cliente selecionado
+    const [idClienteSelecionado, setIdClienteSelecionado] = useState();
+
     // Formato do CPF.
     const formatarCPF = (cpf) => {
         const numeros = cpf.replace(/\D/g, "").slice(0, 11);
@@ -351,6 +354,7 @@ const CadastroDemanda = () => {
         // Mostrando o Modal para ser selecionada a assistência
         setMostrarModal(true);
     }
+    // TODO VERIFICAR SE SOLICITANTE PRESENCIAL JA ESTA CADASTRADO, CASO ESTEJA APENAS ATRIBUIR DISPOSITIVO AO MESMO
 
     // funcao para verificaçao do tipo de user e 
     // cadastro de dispositivo, demanda e pseudo user, 
@@ -368,19 +372,37 @@ const CadastroDemanda = () => {
     }
 
     const cadastrarDemandaPresencial = async (responsavelDemanda) => {
-        // cadastra solicitante presencial e dispositivo
-        const idSolicitante = await cadastrarPseudoUser(dadosTemporarios, responsavelDemanda);
-        const idDispositivo = await cadastrarDispositivo(dadosTemporarios, idSolicitante);
+        
+        // caso demanda seja para um novo cliente
+        if(idClienteSelecionado === "novo"){
+            alert(idClienteSelecionado);
+            // cadastra solicitante presencial e dispositivo
+            const idSolicitante = await cadastrarPseudoUser(dadosTemporarios, responsavelDemanda);
+            const idDispositivo = await cadastrarDispositivo(dadosTemporarios, idSolicitante);
+            // verifica se todos os ids foram criados
+            const isIdsAtribuidos = (idSolicitante && idDispositivo);
+            if(!isIdsAtribuidos) return alert("Dispositivo e solicitante não criado");
+    
+            const isDemandaCadastrada = await cadastrarDemanda(dadosTemporarios, idSolicitante, idDispositivo, responsavelDemanda)
+            // verifica se demanda foi criada
+            if(!isDemandaCadastrada) return alert("Demanda não criada");
+            // direciona user para a tela de demandas
+            return afterCadastroOuAtualizacaoDemanda();
+        }
 
+        // caso demanda seja para um cliente de uma das ats
+        alert(idClienteSelecionado);
+        const idDispositivo = await cadastrarDispositivo(dadosTemporarios, idClienteSelecionado);
         // verifica se todos os ids foram criados
-        const isIdsAtribuidos = (idSolicitante && idDispositivo);
+        const isIdsAtribuidos = (idClienteSelecionado && idDispositivo);
         if(!isIdsAtribuidos) return alert("Dispositivo e solicitante não criado");
 
-        const isDemandaCadastrada = await cadastrarDemanda(dadosTemporarios, idSolicitante, idDispositivo, responsavelDemanda)
+        const isDemandaCadastrada = await cadastrarDemanda(dadosTemporarios, idClienteSelecionado, idDispositivo, responsavelDemanda)
         // verifica se demanda foi criada
         if(!isDemandaCadastrada) return alert("Demanda não criada");
         // direciona user para a tela de demandas
         return afterCadastroOuAtualizacaoDemanda();
+        
     }
 
     const cadastrarDemandaOnline = async (responsavelDemanda) =>{
@@ -545,7 +567,7 @@ const CadastroDemanda = () => {
                                 >
                                     <Form.Select
                                         onChange={(e) => {
-                                            console.log(e.target.value);
+                                            setIdClienteSelecionado(e.target.value);
                                             handleSelecionarCliente(e.target.value);
                                         }}
                                     >

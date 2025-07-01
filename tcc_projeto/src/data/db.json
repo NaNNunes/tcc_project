@@ -606,6 +606,18 @@
       "amperagem": "",
       "cor": "",
       "idSolicitante": "5744"
+    },
+    {
+      "id": "22e6",
+      "categoria": "Tablet",
+      "marca": "Samsung",
+      "fabricante": "",
+      "modelo": "Tab S10 FE+",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "0ee7"
     }
   ],
   "demanda": [
@@ -870,6 +882,17 @@
       "idSolicitante": "5744",
       "dataEmissao": "30/06/2025",
       "horaEmissao": "23:26:30"
+    },
+    {
+      "id": "b15c",
+      "idDispositivo": "22e6",
+      "descProblema": "Tem problema nessa parada",
+      "observacoes": "",
+      "status": "Em atendimento",
+      "assistencia": "2a23",
+      "idSolicitante": "0ee7",
+      "dataEmissao": "01/07/2025",
+      "horaEmissao": "08:47:50"
     }
   ],
   "assistencia_Fav_Solicitante": [
