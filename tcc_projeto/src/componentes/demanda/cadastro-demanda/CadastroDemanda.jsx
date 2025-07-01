@@ -381,7 +381,6 @@ const CadastroDemanda = () => {
 
     const cadastrarDemandaPresencial = async (responsavelDemanda) => {
     
-        alert(idClienteSelecionado);
         // caso demanda seja para um novo cliente
         if(idClienteSelecionado === "novo"){
             

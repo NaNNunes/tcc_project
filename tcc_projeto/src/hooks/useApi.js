@@ -264,9 +264,23 @@ export function useComparaDados() {
     return assistencia2Find !== undefined;
   }
 
+    // --- verificar razao social ---
+  const verificarCnpj = async (cnpj) => {
+    const reqBuscarAssistencias = await fetch(`${url}/assistencia`);
+    const assistencias = await reqBuscarAssistencias.json();
+
+    // procura razao Social na lista de assistencias
+    const assistencia2Find = assistencias
+      .find(assistencia => assistencia.cnpj === cnpj);
+
+    // true or false
+    return assistencia2Find !== undefined;
+  }
+
   return {
     useVerificadorDeCpf,
-
+    useVerificadorDeCnpj,
+    verificarCnpj,
     verificaCpfDeSolicitantes,
     verificaCpfDeAdms,
     verificaEmailDeAdms,

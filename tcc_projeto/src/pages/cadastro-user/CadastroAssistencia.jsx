@@ -36,27 +36,56 @@ const CadastroAssistencia = () => {
     verificaEmailDeAdms,
     verificaEmailDeSolicitantes,
     verificaEmailDeAssistencia,
+    verificarTelefoneAdministradores,
+    verificarTelefoneSolicitantes,
+    verificarTelefoneAssistencia,
+    verificarCnpj,
+    verificarNomeFantasia,
+    verificarRazaoSocial
   } = useComparaDados();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // verifica cnpj
     if (!verificador(data.cnpj)) {
       alert("cnpj invalido");
       return false;
     }
-
     // verifica se email ja foi cadastrado por outrem
-    const emailDeAdm = verificaEmailDeAdms(data.assistenciaEmail);
-    const emailDeSolicitante = verificaEmailDeSolicitantes(
-      data.assistenciaEmail
-    );
-    const emailDeAssistencia = verificaEmailDeAssistencia(
-      data.assistenciaEmail
-    );
+
+    const email = data.assistenciaEmail;
+    const emailDeAdm = await verificaEmailDeAdms(email);
+    const emailDeSolicitante = await verificaEmailDeSolicitantes(email);
+    const emailDeAssistencia = await verificaEmailDeAssistencia(email)
 
     if (emailDeAdm || emailDeSolicitante || emailDeAssistencia) {
-      alert("Email em uso");
-      return false;
+      return alert("Email em uso");
+    }
+
+    const telefone = data.assistenciaTelefone;
+    
+    const isTelefoneAdminstrador = await verificarTelefoneAdministradores(telefone);
+    const isTelefoneSolicitante = await verificarTelefoneSolicitantes(telefone);
+    const isTelefoneAssistencia = await verificarTelefoneAssistencia(telefone);
+
+    if (isTelefoneAdminstrador || isTelefoneSolicitante || isTelefoneAssistencia) {
+      return alert("telefone em uso");
+    }
+
+    const cnpj = data.cnpj;
+    const isCnpjUtilizado = await verificarCnpj(cnpj);
+    if (isCnpjUtilizado) {
+      return alert("cnpj em uso");
+    }
+
+    const razaoSocial = data.razaoSocial
+    const isRazaoSocial = await verificarRazaoSocial(razaoSocial);
+    if (isRazaoSocial) {
+      return alert("Razao Social em uso");
+    }
+
+    const nomeFantasia = await verificarNomeFantasia(nomeFantasia);
+    if (nomeFantasia) {
+      return alert("Nome Fantasia em uso");
     }
 
     inserirAssistencia(data);

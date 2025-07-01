@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 
 import { useAssistencia } from "../../hooks/useAssistencia.js";
 import { useDemanda } from "../../hooks/useDemanda.js";
+import { useUser } from "../../hooks/useUser.js";
 
 const OrcamentoForm = () => {
   const {
@@ -37,6 +38,11 @@ const OrcamentoForm = () => {
     buscaDispositivoDeDemandaDaAt,
     inserirOrcamento,
   } = useDemanda();
+
+  const {
+    buscaSolicitantes
+  } = useUser();
+
   const { buscaAssistenciasDoAdministrador } = useAssistencia();
   const { idDemanda } = useParams();
   const userId = localStorage.getItem("userId");
@@ -86,10 +92,14 @@ const OrcamentoForm = () => {
   };
 
   const onSubmit = async (dados) => {
-    const isOrcamentoInserido = await inserirOrcamento(
-      dados,
-      demandaSelecionada.id
-    );
+
+    const idDemanda = demandaSelecionada.id;
+    const idSolicitante = demandaSelecionada.idSolicitante
+    const solicitante = await buscaSolicitantes(idSolicitante);
+    const isCliente = (solicitante.idAssistencia);
+    alert("isCliente",isCliente);
+
+    const isOrcamentoInserido = await inserirOrcamento( dados, idDemanda, isCliente);
     if (isOrcamentoInserido) {
       alert("Orçamento inserido");
       navigate("/procurar-demandas/aceitas");

@@ -342,11 +342,11 @@ export function useDemanda() {
     }
 
     // inserir dados de orcamento na demanda
-    const inserirOrcamento = async (data, idDemanda) =>{
+    const inserirOrcamento = async (data, idDemanda, isCliente) =>{
         
         const dados = {
             ...data,
-            statusOrcamento: 'Sem resposta'
+            statusOrcamento: (isCliente) ? "Aceito" : "Sem resposta"
         }
 
         const request = await fetch(`${url}/demanda/${idDemanda}`,{
