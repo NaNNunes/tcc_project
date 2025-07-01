@@ -110,6 +110,10 @@
     max-width: 50% !important;
 }
 
+.modalInfoSolicitante {
+    max-width: 60%;
+}
+
 /* Personalização do "contentClassName", todo o conteúdo que está dentro do modal. */
 .modalContent {
     padding: 20px;
@@ -213,6 +217,10 @@
         max-width: 60% !important;
     }
 
+    .modalInfoSolicitante {
+        max-width: 70% !important;
+    }
+
 }
 
 @media screen and (max-width: 1350px) {
@@ -224,6 +232,10 @@
 @media screen and (max-width: 1120px) {
     .modalInfo {
         max-width: 75% !important;
+    }
+
+    .modalInfoSolicitante {
+        max-width: 80% !important;
     }
 }
 
@@ -251,6 +263,10 @@
 
     .modalInfo {
         max-width: 85% !important;
+    }
+
+    .modalInfoSolicitante {
+        max-width: 100% !important;
     }
 }
 
