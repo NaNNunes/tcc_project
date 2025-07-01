@@ -44,6 +44,9 @@ const CadastroUser = () => {
     verificaEmailDeAdms,
     verificaEmailDeSolicitantes,
     verificaEmailDeAssistencia,
+    verificarTelefoneSolicitantes,
+    verificarTelefoneAdministradores,
+    verificarTelefoneAssistencia
   } = useComparaDados();
 
   const senha = watch("senha");
@@ -55,25 +58,57 @@ const CadastroUser = () => {
     }
 
     // verificar se cpf ja foi cadastrado por outrem
-    const cpfDeSolicitante = verificaCpfDeSolicitantes(data.cpf);
-    const cpfDeAdm = verificaCpfDeAdms(data.cep);
+    const cpfDeSolicitante = await verificaCpfDeSolicitantes(data.cpf);
+    const cpfDeAdm = await verificaCpfDeAdms(data.cep);
+
     // caso adm ou solicitante não seja undefined
-    if (cpfDeSolicitante || cpfDeAdm) {
-      alert("CPF já utilizado ");
-      return ;
+    if(cpfDeSolicitante) {
+      return alert("CPF já utilizado ");
+    }
+    // caso adm ou solicitante não seja undefined
+    if(cpfDeAdm) {
+      return alert("CPF já utilizado ");
     }
 
     // verifica se email ja foi cadastrado por outrem
-    const emailDeAdm = verificaEmailDeAdms(data.email);
-    const emailDeSolicitante = verificaEmailDeSolicitantes(data.email);
-    const emailDeAssistencia = verificaEmailDeAssistencia(data.email);
+
+    const email = data.email
+    const emailDeAdm = await verificaEmailDeAdms(email);
+    const emailDeSolicitante = await verificaEmailDeSolicitantes(email);
+    const emailDeAssistencia = await verificaEmailDeAssistencia(email);
 
     // caso adm ou solicitante ou assistencia não seja undefined 2
-    if (emailDeAdm || emailDeSolicitante || emailDeAssistencia) {
+    if (emailDeAdm) {
+      alert("Email em uso");
+      return;
+    }
+    if (emailDeSolicitante) {
+      alert("Email em uso");
+      return;
+    }
+    if (emailDeAssistencia) {
       alert("Email em uso");
       return;
     }
 
+    const telefone = data.userTelefone;
+    const isTelefoneSolicitante = await verificarTelefoneSolicitantes(telefone);
+    const isTelefoneAdm = await verificarTelefoneAdministradores(telefone);
+    const isTelefoneAssistencia = await verificarTelefoneAssistencia(telefone);
+
+    if (isTelefoneSolicitante) {
+      alert("telefone em uso");
+      return;
+    }
+    if (isTelefoneAdm ) {
+      alert("telefone em uso");
+      return;
+    }
+    if (isTelefoneAssistencia) {
+      alert("telefone em uso");
+      return;
+    }
+    
     // cadastra user
     const isCadastrado = await cadastrarInfosUser(data, tipoUsuario);
     if(isCadastrado){

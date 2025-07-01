@@ -14,8 +14,6 @@ import { useVerificadorDeCnpj, useComparaDados } from "../../hooks/useApi";
 
 import { useAssistencia } from "../../hooks/useAssistencia.js";
 
-const { verificador } = useVerificadorDeCnpj();
-
 const CadastroAssistencia = () => {
   const navigate = useNavigate();
 

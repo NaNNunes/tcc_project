@@ -111,10 +111,8 @@ const CadastroEndereco = () => {
 
   const onSubmit = async (data) => {
     const isEnderecoCadastrado = await cadastrarEndereco(data);
-    if(!isEnderecoCadastrado || isEnderecoCadastrado == undefined){
-      alert("Erro: de errado");
-      console.log(isEnderecoCadastrado);
-      return;
+    if(!isEnderecoCadastrado){
+      return alert("Ops, erro ao cadastrar endereço, contate nosso suporte.");
     }
     const isUserValido = await inserirValidacao(true);
     if(isUserValido){

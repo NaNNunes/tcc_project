@@ -146,7 +146,7 @@ export function useComparaDados() {
   // --- verificar email ---
   // verifica se email informado pelo user esta cadastrado em solicitantes
   const verificaEmailDeSolicitantes = async (email) => {
-    const reqBuscaSolicitantes = await fetch(`${url}/administrador`);
+    const reqBuscaSolicitantes = await fetch(`${url}/solicitante`);
     const solicitantes = await reqBuscaSolicitantes.json();
 
     // procura email na lista de solicitantes
@@ -179,7 +179,7 @@ export function useComparaDados() {
 
     // procura email na lista de assistencias
     const assistencia2Find = assistencias
-      .find(assistencia=> assistencia.email === email);
+      .find(assistencia=> assistencia.assistenciaEmail === email);
 
     // true or false
     return assistencia2Find !== undefined;
