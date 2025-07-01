@@ -81,6 +81,17 @@
       "administradorId": "b595",
       "isValido": true,
       "idEndereco": "8ac9"
+    },
+    {
+      "id": "12be",
+      "assistenciaEmail": "financeiro@antonellaebenicioinformaticame.com.br",
+      "nomeFantasia": "Antonella e Benício Informática ME",
+      "razaoSocial": "Antonella e Benício Informática ME",
+      "cnpj": "96.398.357/0001-49",
+      "assistenciaTelefone": "(27) 99114-4058",
+      "administradorId": "b595",
+      "isValido": true,
+      "idEndereco": "408d"
     }
   ],
   "endereco": [
@@ -155,6 +166,16 @@
       "gia": "",
       "ddd": "27",
       "siafi": "5663"
+    },
+    {
+      "id": "408d",
+      "zipcode": "29904090",
+      "localidade": "Linhares",
+      "bairro": "Lagoa do Meio",
+      "logradouro": "Rua Potiguaras",
+      "uf": "ES",
+      "number": "880",
+      "complemento": "(27) 99114-4058"
     }
   ],
   "dispositivo": [

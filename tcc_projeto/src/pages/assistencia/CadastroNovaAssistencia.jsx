@@ -15,7 +15,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-import { useVerificadorDeCnpj } from "../../hooks/useApi.js";
+import { useComparaDados, useVerificadorDeCnpj } from "../../hooks/useApi.js";
 import { useEndereco } from "../../hooks/useEndereco.js";
 import { useAssistencia } from "../../hooks/useAssistencia.js";
 
@@ -39,6 +39,17 @@ const CadastroNovaAssistencia = () => {
   const { verificador } = useVerificadorDeCnpj();
   const { cadastrarEndereco } = useEndereco();
   const { inserirNovaAssistencia } = useAssistencia();
+  const {
+    verificaEmailDeAdms,
+    verificaEmailDeSolicitantes,
+    verificaEmailDeAssistencia,
+    verificarTelefoneAdministradores,
+    verificarTelefoneSolicitantes,
+    verificarTelefoneAssistencia,
+    verificarCnpj,
+    verificarNomeFantasia,
+    verificarRazaoSocial
+  } = useComparaDados();
 
   // Estado para o endereço
   const [endereco, setEndereco] = useState({
@@ -112,10 +123,56 @@ const CadastroNovaAssistencia = () => {
     }
   };
 
+  
+
   const onSubmit = async (data) => {
     if (!verificador(data.cnpj)) {
       alert("CNPJ inválido");
       return;
+    }
+
+    // verifica cnpj
+    if (!verificador(data.cnpj)) {
+      alert("cnpj invalido");
+      return false;
+    }
+    // verifica se email ja foi cadastrado por outrem
+
+    const email = data.assistenciaEmail;
+    const emailDeAdm = await verificaEmailDeAdms(email);
+    const emailDeSolicitante = await verificaEmailDeSolicitantes(email);
+    const emailDeAssistencia = await verificaEmailDeAssistencia(email)
+
+    if (emailDeAdm || emailDeSolicitante || emailDeAssistencia) {
+      return alert("Email em uso");
+    }
+
+    const telefone = data.assistenciaTelefone;
+    
+    const isTelefoneAdminstrador = await verificarTelefoneAdministradores(telefone);
+    const isTelefoneSolicitante = await verificarTelefoneSolicitantes(telefone);
+    const isTelefoneAssistencia = await verificarTelefoneAssistencia(telefone);
+
+    if (isTelefoneAdminstrador || isTelefoneSolicitante || isTelefoneAssistencia) {
+      return alert("telefone em uso");
+    }
+
+    const cnpj = data.cnpj;
+    const isCnpjUtilizado = await verificarCnpj(cnpj);
+    if (isCnpjUtilizado) {
+      return alert("cnpj em uso");
+    }
+
+    const razaoSocial = data.razaoSocial
+    const isRazaoSocial = await verificarRazaoSocial(razaoSocial);
+    if (isRazaoSocial) {
+      return alert("Razao Social em uso");
+    }
+
+    const nomeFantasia = data.nomeFantasia;
+    const isNomeFantasia = await verificarNomeFantasia(nomeFantasia);
+    if (isNomeFantasia) {
+      return alert("Nome Fantasia em uso");
     }
 
     // cadastra assistencia
@@ -134,7 +191,7 @@ const CadastroNovaAssistencia = () => {
       };
 
       const isEnderecoCadastrado = await cadastrarEndereco(dadosEnderecoAssitiencia);
-      alert(isEnderecoCadastrado);
+      console.log("isEnderecoCadastrado",isEnderecoCadastrado);
       if (isEnderecoCadastrado) {
         alert(`Nova assistencia, ${data.razaoSocial}, cadastrada`);
         navigate("/buscar-assistencias/administrador");
