@@ -157,7 +157,7 @@ const CardAssistencia = (props) => {
                 <Row>
                   <Col>
                     <Card.Text className={styles.textoInfo}>
-                      <span><strong style={{color: 'black'}}>CNPJ: </strong>{props.cnpj}</span> 
+                      <span><strong style={{color: '#000000', fontWeight: 'bold'}}>CNPJ: </strong>{props.cnpj}</span> 
                     </Card.Text>
                   </Col>
                 </Row>
@@ -173,7 +173,7 @@ const CardAssistencia = (props) => {
                 <Row>
                   <Col>
                     <Card.Text className={styles.textoInfo}>
-                      <span><strong style={{color: 'black'}}>Telefone: </strong>{props.telefone}</span> 
+                      <span><strong style={{color: '#000000', fontWeight: 'bold'}}>Telefone: </strong>{props.telefone}</span> 
                     </Card.Text>
                   </Col>
                 </Row>
@@ -181,7 +181,7 @@ const CardAssistencia = (props) => {
                 <Row>
                   <Col>
                     <Card.Text className={styles.textoInfo}>
-                      <span><strong style={{color: 'black'}}>E-mail: </strong>{props.email}</span> 
+                      <span><strong style={{color: '#000000', fontWeight: 'bold'}}>E-mail: </strong>{props.email}</span> 
                     </Card.Text>
                   </Col>
                 </Row>
@@ -197,34 +197,34 @@ const CardAssistencia = (props) => {
                 <Row>
                   <Container className={styles.ContainerModalInfo}>
                     <Card.Text className={styles.textoInfo}>
-                      <span><strong style={{color: 'black'}}>CEP: </strong>{endereco.zipcode}</span> 
+                      <span><strong style={{color: '#000000', fontWeight: 'bold'}}>CEP: </strong>{endereco.zipcode}</span> 
                     </Card.Text>
 
                     <Card.Text className={styles.textoInfo}>
-                      <span><strong style={{color: 'black'}}>UF: </strong>{endereco.uf}</span> 
+                      <span><strong style={{color: '#000000', fontWeight: 'bold'}}>UF: </strong>{endereco.uf}</span> 
                     </Card.Text>
                   
                     <Card.Text className={styles.textoInfo}>
-                      <span><strong style={{color: 'black'}}>N°: </strong>{endereco.number}</span> 
+                      <span><strong style={{color: '#000000', fontWeight: 'bold'}}>N°: </strong>{endereco.number}</span> 
                     </Card.Text>
                   </Container>
                 </Row>
 
                 <Row>
                   <Card.Text className={styles.textoInfo}>
-                    <span><strong style={{color: 'black'}}>Bairro: </strong>{endereco.bairro}</span>
+                    <span><strong style={{color: '#000000', fontWeight: 'bold'}}>Bairro: </strong>{endereco.bairro}</span>
                   </Card.Text>
                 </Row>
 
                 <Row>
                   <Card.Text className={styles.textoInfo}>
-                    <span><strong style={{color: 'black'}}>Logradouro: </strong>{endereco.logradouro}</span>
+                    <span><strong style={{color: '#000000', fontWeight: 'bold'}}>Logradouro: </strong>{endereco.logradouro}</span>
                   </Card.Text>
                 </Row>
                 
                 <Row>
                   <Card.Text className={styles.textoInfo}>
-                    <span><strong style={{color: 'black'}}>Cidade: </strong>{endereco.localidade}</span>
+                    <span><strong style={{color: '#000000', fontWeight: 'bold'}}>Cidade: </strong>{endereco.localidade}</span>
                   </Card.Text>
                 </Row>
               </Container>
@@ -260,7 +260,7 @@ const CardAssistencia = (props) => {
                               overflowWrap: 'break-word'
                             }}
                           >
-                            <strong style={{color: 'black'}}>Média de avaliação: </strong>
+                            <strong style={{color: '#000000', fontWeight: 'bold'}}>Média de avaliação: </strong>
                               {[1, 2, 3, 4, 5].map((n) => {
                                 if (n <= mediaAssisstencia) {
                                   return <FaStar key={n} size={26} color="#ffc107" />;
