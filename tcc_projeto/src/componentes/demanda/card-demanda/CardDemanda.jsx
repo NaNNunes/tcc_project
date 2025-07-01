@@ -90,6 +90,8 @@ const CardDemanda = (props) => {
     
     // Estados do modal.
     const [mostrarModal, setMostrarModal] = useState(false);
+    // Estados do modal do solicitante.
+    const [mostrarModalSolicitante, setMostrarModalSolicitante] = useState(false);
     // Estados do modal de avaliação.
     const [mostrarModalAvaliacao, setMostrarModalAvaliacao] = useState(false);
     // assistencia que será responsável pela demanda, definido pelo adm
@@ -264,6 +266,18 @@ const CardDemanda = (props) => {
             </Button>
         </>
     );
+
+    // botao para fechar o modal com as informações do solicitante.
+    const botaoFecharModalDeInfosSolicitante = (
+        <>
+            <Button 
+                className={styles.botaoModal}
+                onClick={()=>{setMostrarModalSolicitante(false)}}
+            >
+                Fechar
+            </Button>
+        </>
+    )
 
     // botao para editar a demanda.
     const botaoEditarDemanda = (
@@ -585,6 +599,16 @@ const CardDemanda = (props) => {
 
     // console.log(demandaSelecionada)
 
+    // Ao clicar no perfil de solicitante define o solicitante.
+    const handleVisualiarPerfil = async() => {
+        if (solicitante.idEndereco) {
+            const enderecoSelecionado = await buscaEnderecoById(solicitante.idEndereco);
+            setEndereco(enderecoSelecionado);
+        }
+
+        setMostrarModalSolicitante(true);
+    }
+
   return (
     // Div com todo o card.
     <div 
@@ -619,7 +643,7 @@ const CardDemanda = (props) => {
                                 {
                                     // Perfil do solicitante
                                     (userBuscador === "administrador") &&
-                                        <div style={{display: 'flex', flexDirection: 'column'}}>
+                                        <div onClick={handleVisualiarPerfil} style={{display: 'flex', flexDirection: 'column', cursor: 'pointer'}}>
                                             <div className={styles.circuloPerfil}>
                                                 <FaUser size={40}/>  
                                             </div>
@@ -865,6 +889,105 @@ const CardDemanda = (props) => {
                 {/* Footer com o botão com a funcionalidade passada dentro do mainBotao */}
                 <Modal.Footer style={{padding: "0", border: "0", display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     {mainBotao}
+                </Modal.Footer>
+            </Modal>
+        </div>
+
+        <div>
+            <Modal 
+                show={mostrarModalSolicitante} 
+                onHide={() => setMostrarModalSolicitante(false)} 
+                contentClassName={styles.modalContent} 
+                dialogClassName={styles.modalInfoSolicitante}
+                centered
+            >
+                {/* Só a opção de sair da página isolada em cima de tudo. */}
+                <Modal.Header closeButton style={{padding: "0", paddingBottom: "5px", border: "0"}}>
+                </Modal.Header>
+
+                {/* Corpo do modal com todas as informações */}
+                <Modal.Body style={{padding: "0", border: "0"}}>
+                    <Modal.Title className={styles.tituloModal}>Visualização de informações do solicitante</Modal.Title>
+                    <hr className={styles.divisao}/>
+                    {/* Informações do dispositivo */}
+                    <div>
+                        <h3 className={styles.tituloInfoModal}>Contato</h3>
+                        <Container style={{display: "grid", gridTemplateColumns: "repeat(1, 1fr)", margin: '0px'}}>
+                            {/* Nome completo */}
+                            <span className={styles.textoInfoModal}>
+                                <strong style={{color: '#000000', fontWeight: 'bold'}}>Nome completo: </strong>
+                                {solicitante.nome} {solicitante.sobrenome}
+                            </span>
+
+                            {/* E-mail */}
+                            <span className={styles.textoInfoModal}>
+                                <strong style={{color: '#000000', fontWeight: 'bold'}}>E-mail: </strong>
+                                {solicitante.email}
+                            </span>
+
+                            {/* Telefone */}   
+                            <span className={styles.textoInfoModal}>
+                                <strong style={{color: '#000000', fontWeight: 'bold'}}>Telefone: </strong>
+                                {solicitante.userTelefone}
+                            </span>
+                        </Container>
+                    </div>
+
+
+                    {
+                        (solicitante.idEndereco) && (
+                            <>                 
+                                <hr className={styles.divisao}/>
+
+                                {/* Colocar container para texto do modal ficar ajustado à esquerda */}
+                                {/* Informações do contexto */}
+                                <div>
+                                    <h3 className={styles.tituloInfoModal}>Endereço</h3>
+                                    <Container className={styles.ContainerModalInfo}>
+                                        <span className={styles.textoInfoModal} >
+                                            <strong style={{color: '#000000', fontWeight: 'bold'}}>CEP: </strong>
+                                            {endereco?.cep}
+                                        </span>
+
+                                        <span className={styles.textoInfoModal} >
+                                            <strong style={{color: '#000000', fontWeight: 'bold'}}>Cidade: </strong>
+                                            {endereco?.localidade}
+                                        </span>
+
+                                        <span className={styles.textoInfoModal} >
+                                            <strong style={{color: '#000000', fontWeight: 'bold'}}>Bairro: </strong>
+                                            {endereco?.bairro}
+                                        </span>
+
+                                        <span className={styles.textoInfoModal} >
+                                            <strong style={{color: '#000000', fontWeight: 'bold'}}>UF: </strong>
+                                            {endereco?.uf}
+                                        </span>
+
+                                        <span className={styles.textoInfoModal} >
+                                            <strong style={{color: '#000000', fontWeight: 'bold'}}>N°: </strong>
+                                            {endereco?.number}
+                                        </span>
+
+                                        <span className={styles.textoInfoModal} >
+                                            <strong style={{color: '#000000', fontWeight: 'bold'}}>Logradouro: </strong>
+                                            {endereco?.logradouro}
+                                        </span>
+
+                                        <span className={styles.textoInfoModal} >
+                                            <strong style={{color: '#000000', fontWeight: 'bold'}}>Complemento: </strong>
+                                            {endereco?.complemento}
+                                        </span>
+                                    </Container>
+                                </div>
+                            </>
+                        )
+                    }
+                </Modal.Body>
+
+                {/* Footer com o botão com a funcionalidade passada dentro do mainBotao */}
+                <Modal.Footer style={{padding: "0", border: "0", display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    {botaoFecharModalDeInfosSolicitante}
                 </Modal.Footer>
             </Modal>
         </div>
