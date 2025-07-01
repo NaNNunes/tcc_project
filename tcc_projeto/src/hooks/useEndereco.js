@@ -73,7 +73,6 @@ export function useEndereco() {
       "idEndereco": idEndereco,
     };
     const id = localStorage.getItem("assistenciaId");
-    alert(id);
     console.log("id Assistencia:",id);
     const request = await fetch(`${url}/assistencia/${id}`, {
       method: "PATCH",

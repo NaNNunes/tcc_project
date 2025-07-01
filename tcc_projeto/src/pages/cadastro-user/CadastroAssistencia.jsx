@@ -83,8 +83,9 @@ const CadastroAssistencia = () => {
       return alert("Razao Social em uso");
     }
 
-    const nomeFantasia = await verificarNomeFantasia(nomeFantasia);
-    if (nomeFantasia) {
+    const nomeFantasia = data.nomeFantasia;
+    const isNomeFantasia = await verificarNomeFantasia(nomeFantasia);
+    if (isNomeFantasia) {
       return alert("Nome Fantasia em uso");
     }
 

@@ -42,8 +42,8 @@ export function useVerificadorDeCpf() {
 }
 
 // verificador de cnpj
-export function useVerificadorDeCnpj(cnpjStr = "00.000.000/0000-00") {
-  const verificador = () => {
+export function useVerificadorDeCnpj() {
+  const verificador = (cnpjStr = "00.000.000/0000-00") => {
     // filtro de validação
     if (
       cnpjStr == "00.000.000/0000-00" ||

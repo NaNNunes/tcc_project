@@ -40,6 +40,20 @@
       "isValido": true,
       "pergunta": "1",
       "resposta": "Blu"
+    },
+    {
+      "id": "b595",
+      "email": "brunothomasjesus@focusnetworks.com.br",
+      "cpf": "653.862.273-94",
+      "userTelefone": "(63) 99258-1590",
+      "nome": "Bruno ",
+      "sobrenome": "Thomas Jesus",
+      "senha": "Senha@123",
+      "confirmarSenha": "Senha@123",
+      "termos": "true",
+      "isValido": true,
+      "pergunta": "1",
+      "resposta": "Blu"
     }
   ],
   "assistencia": [
@@ -65,6 +79,18 @@
       "administradorId": "1bbe",
       "isValido": true,
       "idEndereco": "347a"
+    },
+    {
+      "id": "9d65",
+      "assistenciaEmail": "pesquisa@brunaevanessatelasme.com.br",
+      "nomeFantasia": "Bruna e Vanessa Telas ME",
+      "razaoSocial": "Bruna e Vanessa Telas ME",
+      "cnpj": "78.027.843/0001-79",
+      "assistenciaTelefone": "(27) 99114-4058",
+      "assistenciaTermos": "true",
+      "administradorId": "b595",
+      "isValido": true,
+      "idEndereco": "8ac9"
     }
   ],
   "endereco": [
@@ -121,6 +147,24 @@
       "gia": "",
       "ddd": "27",
       "siafi": "5703"
+    },
+    {
+      "id": "8ac9",
+      "zipcode": "29904-090",
+      "localidade": "Linhares",
+      "bairro": "Lagoa do Meio",
+      "logradouro": "Rua Potiguaras",
+      "uf": "ES",
+      "number": "10",
+      "complemento": "sim",
+      "cep": "29904-090",
+      "unidade": "",
+      "estado": "Espírito Santo",
+      "regiao": "Sudeste",
+      "ibge": "3203205",
+      "gia": "",
+      "ddd": "27",
+      "siafi": "5663"
     }
   ],
   "dispositivo": [
@@ -175,7 +219,7 @@
       "idDispositivo": "b823",
       "descProblema": "asddsafsaddsdassdsd",
       "observacoes": "",
-      "status": "Em atendimento",
+      "status": "Concluído",
       "assistencia": "7e02",
       "idSolicitante": "49a1",
       "dataEmissao": "01/07/2025",
