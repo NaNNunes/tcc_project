@@ -77,6 +77,16 @@
       "sobrenome": "Teixeira",
       "isValido": false,
       "idAssistencia": "7e02"
+    },
+    {
+      "id": "0ee7",
+      "email": "aline_aline_nascimento@rubens.adm.br",
+      "cpf": "843.601.887-73",
+      "userTelefone": "(31) 98751-0686",
+      "nome": "Aline Aline Carolina",
+      "sobrenome": "Nascimento",
+      "isValido": false,
+      "idAssistencia": "2a23"
     }
   ],
   "administrador": [
@@ -572,6 +582,18 @@
       "amperagem": "",
       "cor": "",
       "idSolicitante": "e174"
+    },
+    {
+      "id": "6ee8",
+      "categoria": "Tablet",
+      "marca": "Xiaomi",
+      "fabricante": "",
+      "modelo": "POCO PAD",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "0ee7"
     }
   ],
   "demanda": [
@@ -791,6 +813,17 @@
       "idSolicitante": "e174",
       "dataEmissao": "30/06/2025",
       "horaEmissao": "21:38:52"
+    },
+    {
+      "id": "53b3",
+      "idDispositivo": "6ee8",
+      "descProblema": "hjklasdfklhjsdfjksdfhjksdfkhjlsdfhjksdhjkdsfhjk",
+      "observacoes": "",
+      "status": "Em atendimento",
+      "assistencia": "2a23",
+      "idSolicitante": "0ee7",
+      "dataEmissao": "01/07/2025",
+      "horaEmissao": "01:13:57"
     }
   ],
   "assistencia_Fav_Solicitante": [

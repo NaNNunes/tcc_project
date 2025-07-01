@@ -22,7 +22,7 @@ import { useAssistencia } from "../../hooks/useAssistencia.js";
 const CadastroNovaAssistencia = () => {
   const navigate = useNavigate();
   const userType = localStorage.getItem("userType");
-  if (userType !== "administrador") return navigate("/inicio");
+  if (userType !== "administrador") navigate("/inicio");
 
   const userId = localStorage.getItem("userId");
 

@@ -69,7 +69,7 @@ const CadastroDemanda = () => {
     
     const { 
         buscaAssistenciaById,
-        buscaAssistencias
+        buscaAssistenciasDoAdministrador
      } = useAssistencia();
     
     const { 
@@ -86,25 +86,23 @@ const CadastroDemanda = () => {
     // dispositivo da demanda, renderizado quando solicitante aperta em editar demanda
     const [dispositivo, setDispositivo] = useState({});
 
+    // lista de solicitantes das ats do adm
+    const [clientesPresenciais, setClientesPresenciais] = useState([]);
+
     // carrega todas as infos 
     useEffect(()=>{
         async function fetchData() {
-            
             // carrega infos de assistencias do user adm
             if(userType === "administrador"){
                 // busca todas as assistencias cadastradas
-                const resBuscaAssistencias = await buscaAssistencias();
-
-                // lista para receber assistencias vinculadas ao user, pelo match caso solicitante ou que possuam o id do adm, caso adm
-                const listaAssistencias = resBuscaAssistencias
-                    .filter(assistencia => assistencia.administradorId === userId);
-
+                const listaAssistencias = await buscaAssistenciasDoAdministrador(userId);
                 setAssistencias(listaAssistencias);
 
                 // ids de assistencias do adm
                 const idsAssistencias = listaAssistencias.map(assistencia => assistencia.id);
                 
-                const buscaSolicitantesDaAssistencia = await buscarSolicitantesAssistencia(idsAssistencias);
+                const buscarClientes = await buscarSolicitantesAssistencia(idsAssistencias);
+                setClientesPresenciais(buscarClientes);
             }
 
             // carrega assistencias favoritas do solicitante
@@ -158,6 +156,9 @@ const CadastroDemanda = () => {
     const [dadosTemporarios, setDadosTemporarios] = useState(null);
     // Assistência pre-selecionada como público.
     const [atSelecionada, setAtSelecionada] = useState("Público");
+
+    // state que permite alteração de campos de dados de solicitante 
+    const [inputClientFieldDisable, setInputClientFieldDisable] = useState(false);
 
     // Formato do CPF.
     const formatarCPF = (cpf) => {
@@ -424,6 +425,34 @@ const CadastroDemanda = () => {
         console.log("Erros: ", errors)
     }
 
+    // registrar Cliente Selecionado
+    const handleSelecionarCliente = (idCliente) => {
+        // caso tenha um user selecionado
+        if(idCliente !== "novo"){
+            const clienteSelecionado = clientesPresenciais
+                .find(cliente => cliente.id === idCliente);
+            for(const [key, value] of Object.entries(clienteSelecionado)){
+                setValue(key, value);
+            };
+            setInputClientFieldDisable(true);
+        }
+        // caso seja um novo user
+        else{
+            const novoCliente = {
+                "email": "",
+                "cpf": "",
+                "userTelefone": "",
+                "nome": "",
+                "sobrenome": "",
+            }
+
+            for(const [key, value] of Object.entries(novoCliente)){
+                setValue(key, value);
+            };
+            setInputClientFieldDisable(false);
+        }
+    }
+
     // botao para atualizar demanda, disposnível apenas para solicitante
     const botaoAtualizarDemanda = (
         <Button
@@ -511,10 +540,28 @@ const CadastroDemanda = () => {
                             <Col md={4} xs={12}
                                 className={stylesCad.campo}
                             >
-                                <FloatingLabel>
-                                    <Form.Select>
-                                        <option value="" selected>Novo solicitante</option>
-                                        
+                                <FloatingLabel
+                                    label="Selecione uma opção"
+                                >
+                                    <Form.Select
+                                        onChange={(e) => {
+                                            console.log(e.target.value);
+                                            handleSelecionarCliente(e.target.value);
+                                        }}
+                                    >
+                                        <option value="novo" selected>Novo solicitante</option>
+                                        {
+                                            clientesPresenciais.map((cliente)=>(
+                                               
+                                                <option 
+                                                    key={cliente.id}
+                                                    value={cliente.id}
+                                                >
+                                                    {cliente.nome} {cliente.sobrenome}
+                                                </option>
+                                              
+                                            ))
+                                        }
                                     </Form.Select>
                                 </FloatingLabel>
                             </Col>
@@ -529,6 +576,7 @@ const CadastroDemanda = () => {
                                     label="Nome *"
                                 >
                                     <Form.Control
+                                        disabled={inputClientFieldDisable}
                                         type="text"
                                         placeholder=""
                                         {...register("nome", {
@@ -560,6 +608,7 @@ const CadastroDemanda = () => {
                                     label="Sobrenome *"
                                 >
                                     <Form.Control
+                                        disabled={inputClientFieldDisable}
                                         type="text"
                                         placeholder=""
                                         {...register("sobrenome", {
@@ -591,29 +640,30 @@ const CadastroDemanda = () => {
                                     label="CPF *"
                                 >
                                     <Form.Control
-                                    type="text"
-                                    placeholder="000.000.000-00"
-                                    value={formatarCPF(watch("cpf") || "")}
-                                    isInvalid={!!errors.userCpf}
-                                    onChange={(e) => {
-                                        const apenasNumeros = e.target.value.replace(/\D/g, "");
-                                        if (apenasNumeros.length <= 11) {
-                                        setValue("userCpf", apenasNumeros);
-                                        }
-                                    }}
-                                    {...register("cpf", {
-                                        required: "CPF é obrigatório",
-                                        validate: (value) => {
-                                        const somenteNumeros = value.replace(/\D/g, ""); // remove tudo que não é número
-                                        if (somenteNumeros.length !== 11) {
-                                            return "Necessário 11 dígitos";
-                                        }
-                                        if (!verificador(somenteNumeros)) {
-                                            return "CPF inválido";
-                                        }
-                                        return true;
-                                        },
-                                    })}
+                                        disabled={inputClientFieldDisable}
+                                        type="text"
+                                        placeholder="000.000.000-00"
+                                        value={formatarCPF(watch("cpf") || "")}
+                                        isInvalid={!!errors.userCpf}
+                                        onChange={(e) => {
+                                            const apenasNumeros = e.target.value.replace(/\D/g, "");
+                                            if (apenasNumeros.length <= 11) {
+                                            setValue("userCpf", apenasNumeros);
+                                            }
+                                        }}
+                                        {...register("cpf", {
+                                            required: "CPF é obrigatório",
+                                            validate: (value) => {
+                                            const somenteNumeros = value.replace(/\D/g, ""); // remove tudo que não é número
+                                            if (somenteNumeros.length !== 11) {
+                                                return "Necessário 11 dígitos";
+                                            }
+                                            if (!verificador(somenteNumeros)) {
+                                                return "CPF inválido";
+                                            }
+                                            return true;
+                                            },
+                                        })}
                                     />
                                     {errors.cpf && (
                                         <span className='error'>{errors.cpf.message}</span>
@@ -630,17 +680,18 @@ const CadastroDemanda = () => {
                                     label='E-mail *'
                                 >
                                     <Form.Control
-                                    name="email"
-                                    type="email"
-                                    placeholder=""
-                                    {...register("email", {
-                                        required: "O email é obrigatório",
-                                        pattern: {
-                                        value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-                                        message: "Email inválido",
-                                        },
-                                        validate: (value) => value.includes("@") || "Email inválido",
-                                    })}
+                                        disabled={inputClientFieldDisable}
+                                        name="email"
+                                        type="email"
+                                        placeholder=""
+                                        {...register("email", {
+                                            required: "O email é obrigatório",
+                                            pattern: {
+                                            value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
+                                            message: "Email inválido",
+                                            },
+                                            validate: (value) => value.includes("@") || "Email inválido",
+                                        })}
                                     />
                                     {errors.email && (
                                         <span className='error'>{errors.email.message}</span>
@@ -655,15 +706,16 @@ const CadastroDemanda = () => {
                                     label="Telefone *"
                                 >
                                     <Form.Control
-                                    type="text"
-                                    placeholder="(00) 00000-0000"
-                                    {...register("userTelefone", {
-                                        required: "Telefone é obrigatório",
-                                        pattern: {
-                                        value: /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
-                                        message: "Telefone inválido",
-                                        },
-                                    })}
+                                        disabled={inputClientFieldDisable}
+                                        type="text"
+                                        placeholder="(00) 00000-0000"
+                                        {...register("userTelefone", {
+                                            required: "Telefone é obrigatório",
+                                            pattern: {
+                                            value: /^(\+?55\s?)?(\(?\d{2}\)?\s?)?(9?\d{4})[-.\s]?(\d{4})$/,
+                                            message: "Telefone inválido",
+                                            },
+                                        })}
                                     />
                                     {errors.userTelefone && (
                                         <span className='error'>{errors.userTelefone.message}</span>
@@ -982,7 +1034,7 @@ const CadastroDemanda = () => {
                                                         value={assistencia.id}
                                                         key={assistencia.id} 
                                                     >
-                                                        {assistencia.nomeFantasia}
+                                                        {assistencia.nomeFantasia || assistencia.razaoSocial}
                                                     </option>
                                                 ))
                                             }
@@ -999,7 +1051,7 @@ const CadastroDemanda = () => {
                                                         key={assistencia.id} 
                                                         value={assistencia.id}
                                                     >
-                                                        {assistencia.nomeFantasia}
+                                                        {assistencia.nomeFantasia || assistencia.razaoSocial}
                                                     </option>
                                                 ))
                                             }

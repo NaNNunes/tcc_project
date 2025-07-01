@@ -58,16 +58,13 @@ export function useUser() {
         const request = await fetch(`${url}/solicitante`);
         const response = await request.json();
 
-        // corrigir, pois esta buscando todos os solicitantes
-        const solicitantes = assistencias
-            .flatMap(assistencia => response
-            .filter(solicitante => 
-                solicitante.idAssistencia === assistencia.id 
-                
-            ));
+        const solicitantes = assistencias.flatMap(
+            (idAssistencia) => response.filter(
+                (solicitante) => solicitante.idAssistencia === idAssistencia
+            )
+        );
 
-        console.log(assistencias);
-        console.log("solicitantes:", solicitantes);
+        return solicitantes;
     }
 
     // buscar users
