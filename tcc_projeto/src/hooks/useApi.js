@@ -1,6 +1,4 @@
-import { useEffect, useState, useContext } from "react";
-
-import { AuthContext } from "../context/userContext";
+import { useEffect, useState } from "react";
 
 const url = import.meta.env.VITE_API_URL;
 
@@ -115,88 +113,29 @@ export function useVerificadorDeCnpj() {
 
 // compara dados de entrada de cadastro com dados cadastrados de users e pseudousers
 export function useComparaDados() {
-  const [solicitantes, setSolicitantes] = useState();
-  const [adms, setAdms] = useState();
-  const [assistencias, setAssistencias] = useState();
 
-  // -- ATENÇÃO --
-  // o código a seguir segue o paradigma POG,
-  // Programação Orientada a Gambiarra, não repita isso em casa.
-  // consulta para carregar conexao com a api -- não atribui valores aos states solicitantes e adms
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        for (let i = 0; i < 3; i++) {
-          let userType =
-            i == 0 ? "solicitante" : i == 1 ? "administrador" : "assistencia";
-
-          const request = await fetch(`${url}/${userType}`, {
-            method: "GET",
-          });
-          const response = await request.json();
-
-          if (i == 0) {
-            setSolicitantes(response);
-          } else if (i == 1) {
-            setAdms(response);
-          } else {
-            setAssistencias(response);
-          }
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-    fetchData();
-  }, []);
-
-  // 2ª consulta atribuindo valores aos states de solicitante e adms
-  const buscaCadastro = async () => {
-    for (let i = 0; i < 3; i++) {
-      // define onde consultará
-      let userType =
-        i == 0 ? "solicitante" : i == 1 ? "administrador" : "assistencia";
-
-      const request = await fetch(`${url}/${userType}`, {
-        method: "GET",
-      });
-
-      const response = await request.json();
-
-      if (i == 0) {
-        setSolicitantes(response);
-      } else if (i == 1) {
-        setAdms(response);
-      } else {
-        setAssistencias(response);
-      }
-    }
-  };
-
-  // verifica cpf
+  // --- verificar cpf ---
   // verifica se cpf informado pelo user esta cadastrado em solicitantes
-  const verificaCpfDeSolicitantes = (cpf) => {
-    // renderização
-    buscaCadastro();
+  const verificaCpfDeSolicitantes = async (cpf) => {
+
+    const reqBuscaSolicitantes = await fetch(`${url}/solicitante`);
+    const solicitantes = await reqBuscaSolicitantes.json();
 
     // procura cpf na lista de solicitantes
-    const solicitante2Find = solicitantes.find((solicitante) => {
-      // console.log(solicitante.cpf === cpf)
-      return solicitante.cpf === cpf;
-    });
+    const solicitante2Find = solicitantes
+      .find(solicitante => solicitante.cpf === cpf);
 
     // true or false
     return solicitante2Find !== undefined;
   };
 
   // verifica se cpf informado pelo user já está cadastrado em adms
-  const verificaCpfDeAdms = (cpf) => {
-    // renderização
-    buscaCadastro();
+  const verificaCpfDeAdms = async (cpf) => {
+    const reqBuscarAdministradores = await fetch(`${url}/administrador`);
+    const administradores = await reqBuscarAdministradores.json();
 
     // procura cpf na lista de adms
-    const adm2Find = adms.find((adm) => {
-      // console.log(adm.cpf === cpf)
+    const adm2Find = administradores.find((adm) => {
       return adm.cpf === cpf;
     });
 
@@ -204,15 +143,14 @@ export function useComparaDados() {
     return adm2Find !== undefined;
   };
 
-  // verifica email
+  // --- verificar email ---
   // verifica se email informado pelo user esta cadastrado em solicitantes
-  const verificaEmailDeSolicitantes = (email) => {
-    // renderização
-    buscaCadastro();
+  const verificaEmailDeSolicitantes = async (email) => {
+    const reqBuscaSolicitantes = await fetch(`${url}/administrador`);
+    const solicitantes = await reqBuscaSolicitantes.json();
 
     // procura email na lista de solicitantes
     const solicitante2Find = solicitantes.find((solicitante) => {
-      // console.log(solicitante.cpf === cpf)
       return solicitante.email === email;
     });
 
@@ -221,34 +159,110 @@ export function useComparaDados() {
   };
 
   // verifica se email informado pelo user já está cadastrado em adms
-  const verificaEmailDeAdms = (email) => {
-    // renderização
-    buscaCadastro();
+  const verificaEmailDeAdms = async (email) => {
+    const reqBuscarAdministradores = await fetch(`${url}/administrador`);
+    const administradores = await reqBuscarAdministradores.json();
 
     // procura email na lista de adms
-    const adm2Find = adms.find((adm) => {
-      // console.log(adm.cpf === cpf)
-      return adm.email === email;
-    });
+    const adm2Find = administradores
+      .find(adm => adm.email === email);
 
     // true or false
     return adm2Find !== undefined;
   };
 
   // verificar email de assistencias
-  const verificaEmailDeAssistencia = (email) => {
-    // renderização
-    buscaCadastro();
+  const verificaEmailDeAssistencia = async (email) => {
 
-    // procura email na lista de adms
-    const assistencia2Find = assistencias.find((assistencia) => {
-      // console.log(adm.cpf === cpf)
-      return assistencia.email === email;
-    });
+    const reqBuscarAssistencias = await fetch(`${url}/assistencia`);
+    const assistencias = await reqBuscarAssistencias.json();
+
+    // procura email na lista de assistencias
+    const assistencia2Find = assistencias
+      .find(assistencia=> assistencia.email === email);
 
     // true or false
     return assistencia2Find !== undefined;
   };
+
+  // --- verificar cnpj ---
+  const verificarCnpjDeAssistencias = async (cnpj) => {
+
+    const reqBuscarAssistencias = await fetch(`${url}/assistencia`);
+    const assistencias = await reqBuscarAssistencias.json();
+
+    // procura cnpj na lista de adms
+    const assistencia2Find = assistencias
+      .find(assistencia => assistencia.cnpj === cnpj);
+
+    // true or false
+    return assistencia2Find !== undefined;
+  };
+
+  // --- verificar numero de telefone ---
+  const verificarTelefoneSolicitantes = async (telefone) =>{
+    const reqBuscaSolicitantes = await fetch(`${url}/solicitante`);
+    const solicitantes = await reqBuscaSolicitantes.json();
+
+      // procura telefone na lista de solicitantes
+    const solicitante2Find = solicitantes
+      .find(solicitante =>solicitante.userTelefone === telefone);
+    
+    // true or false
+    return solicitante2Find !== undefined;
+  }
+
+  // --- verificar numero de telefone ---
+  const verificarTelefoneAdministradores = async (telefone) =>{
+    const reqBuscarAdministradores = await fetch(`${url}/administrador`);
+    const administradores = await reqBuscarAdministradores.json();
+
+      // procura cpf na lista de solicitantes
+    const administrador2Find = administradores
+      .find(administrador => administrador.userTelefone === telefone);
+
+    // true or false
+    return administrador2Find !== undefined;
+  }
+
+  // --- verificar numero de telefone ---
+  const verificarTelefoneAssistencia = async (telefone) =>{
+    const reqBuscarAssistencias = await fetch(`${url}/assistencia`);
+    const assistencias = await reqBuscarAssistencias.json();
+
+    // procura telefone na lista de assistencias
+    const assistencia2Find = assistencias
+      .find(assistencia => assistencia.userTelefone === telefone);
+
+    // true or false
+    return assistencia2Find !== undefined;
+  }
+
+  // --- verificar nome fantasia 
+  const verificarNomeFantasia = async (nomeFantasia) => {
+    const reqBuscarAssistencias = await fetch(`${url}/assistencia`);
+    const assistencias = await reqBuscarAssistencias.json();
+
+    // procura nome fantasia na lista de assistencias
+    const assistencia2Find = assistencias
+      .find(assistencia => assistencia.nomeFantasia === nomeFantasia);
+
+    // true or false
+    return assistencia2Find !== undefined;
+  }
+
+  // --- verificar razao social ---
+  const verificarRazaoSocial = async (razaoSocial) => {
+    const reqBuscarAssistencias = await fetch(`${url}/assistencia`);
+    const assistencias = await reqBuscarAssistencias.json();
+
+    // procura razao Social na lista de assistencias
+    const assistencia2Find = assistencias
+      .find(assistencia => assistencia.razaoSocial === razaoSocial);
+
+    // true or false
+    return assistencia2Find !== undefined;
+  }
 
   return {
     verificaCpfDeSolicitantes,
@@ -256,5 +270,11 @@ export function useComparaDados() {
     verificaEmailDeAdms,
     verificaEmailDeSolicitantes,
     verificaEmailDeAssistencia,
+    verificarCnpjDeAssistencias,
+    verificarTelefoneSolicitantes,
+    verificarTelefoneAdministradores,
+    verificarTelefoneAssistencia,
+    verificarNomeFantasia,
+    verificarRazaoSocial
   };
 }

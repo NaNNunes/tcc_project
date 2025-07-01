@@ -36,7 +36,9 @@ export function useEndereco() {
 
   // cadastra endereco
   const cadastrarEndereco = async (data) => {
-    const userType = localStorage.getItem("tipoUsuario");
+    const userType = localStorage.getItem("userType");
+    alert(userType);
+    
     const request = await fetch(`${url}/endereco`, {
       method: "POST",
       headers: {
@@ -51,6 +53,7 @@ export function useEndereco() {
     
     if(userType === "administrador"){
       const isEnderecoAtribuidoAssistencia = await defineIdEmAssistencia(idEndereco);
+      console.log("isEnderecoAtribuidoAssistencia:",isEnderecoAtribuidoAssistencia);
       if(isEnderecoAtribuidoAssistencia){
         // retorna endereço fora cadastrado e user recebeu o id do endereco
         return request.ok;
@@ -71,6 +74,8 @@ export function useEndereco() {
       "idEndereco": idEndereco,
     };
     const id = localStorage.getItem("assistenciaId");
+    alert(id);
+    console.log("id Assistencia:",id);
     const request = await fetch(`${url}/assistencia/${id}`, {
       method: "PATCH",
       body: JSON.stringify(enderecoId),

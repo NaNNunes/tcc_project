@@ -67,6 +67,16 @@
       "isValido": false,
       "pergunta": "2",
       "resposta": "aadasdasdasdasdas"
+    },
+    {
+      "id": "e174",
+      "email": "calebe_marcos_teixeira@carvajal.com",
+      "cpf": "698.212.988-85",
+      "userTelefone": "(27) 98796-3210",
+      "nome": "Calebe Marcos",
+      "sobrenome": "Teixeira",
+      "isValido": false,
+      "idAssistencia": "7e02"
     }
   ],
   "administrador": [
@@ -173,24 +183,15 @@
       "idEndereco": "533b"
     },
     {
-      "id": "2b11",
-      "assistenciaEmail": "kevin@hotmail.com",
+      "id": "df3b",
+      "assistenciaEmail": "rh@tiagoeauroraentregasexpressasme.com.br",
       "nomeFantasia": "",
-      "razaoSocial": "doideira",
-      "cnpj": "98.653.034/0001-80",
-      "assistenciaTelefone": "27 988379121",
+      "razaoSocial": "Tiago e Aurora Entregas Expressas ME",
+      "cnpj": "73.215.727/0001-60",
+      "assistenciaTelefone": "(13) 98112-9515",
       "administradorId": "1bbe",
-      "isValido": true
-    },
-    {
-      "id": "be86",
-      "assistenciaEmail": "kevin@hotmail.com",
-      "nomeFantasia": "",
-      "razaoSocial": "doideira",
-      "cnpj": "08.296.307/0001-93",
-      "assistenciaTelefone": "27988379121",
-      "administradorId": "1bbe",
-      "isValido": true
+      "isValido": true,
+      "idEndereco": "857a"
     }
   ],
   "endereco": [
@@ -367,6 +368,16 @@
       "uf": "ES",
       "number": "150",
       "complemento": ""
+    },
+    {
+      "id": "857a",
+      "zipcode": "11500450",
+      "localidade": "Cubatão",
+      "bairro": "Jardim Costa e Silva",
+      "logradouro": "Rua Machado de Assis",
+      "uf": "SP",
+      "number": "472",
+      "complemento": "Perto do pet Shop"
     }
   ],
   "dispositivo": [
@@ -549,6 +560,18 @@
       "amperagem": "",
       "cor": "",
       "idSolicitante": "5744"
+    },
+    {
+      "id": "6104",
+      "categoria": "Celular",
+      "marca": "Samsung",
+      "fabricante": "",
+      "modelo": "Galaxy A06",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "e174"
     }
   ],
   "demanda": [
@@ -757,6 +780,17 @@
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
       "horaEmissao": "03:18:46"
+    },
+    {
+      "id": "625b",
+      "idDispositivo": "6104",
+      "descProblema": "jfsdajkoçvsdajklçdSDFJLK",
+      "observacoes": "",
+      "status": "Em atendimento",
+      "assistencia": "7e02",
+      "idSolicitante": "e174",
+      "dataEmissao": "30/06/2025",
+      "horaEmissao": "21:38:52"
     }
   ],
   "assistencia_Fav_Solicitante": [

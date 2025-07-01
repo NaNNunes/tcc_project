@@ -53,6 +53,23 @@ export function useUser() {
         return response;
     }
 
+    // busca pseudo solicitantes vinculados a assistencia do adm
+    const buscarSolicitantesAssistencia = async(assistencias) =>{
+        const request = await fetch(`${url}/solicitante`);
+        const response = await request.json();
+
+        // corrigir, pois esta buscando todos os solicitantes
+        const solicitantes = assistencias
+            .flatMap(assistencia => response
+            .filter(solicitante => 
+                solicitante.idAssistencia === assistencia.id 
+                
+            ));
+
+        console.log(assistencias);
+        console.log("solicitantes:", solicitantes);
+    }
+
     // buscar users
     const buscaAdministradores = async () =>{
         const request = await fetch(`${url}/administrador`);
@@ -87,7 +104,7 @@ export function useUser() {
     }
 
     // cadastra solicitante presencial
-    const cadastrarPseudoUser = async (data) =>{
+    const cadastrarPseudoUser = async (data, idAssistencia) =>{
 
         // separando dados de solicitante presencial        
         const dadosPseudoUser = {
@@ -96,7 +113,8 @@ export function useUser() {
             "userTelefone": data.userTelefone,
             "nome": data.nome,
             "sobrenome": data.sobrenome,
-            "isValido": false
+            "isValido": false,
+            "idAssistencia": idAssistencia
         }
 
         const request = await fetch(`${url}/solicitante`,{
@@ -152,6 +170,7 @@ export function useUser() {
         alteraSenhaUser,
         buscaAdministradores,
         buscaSolicitantes,
+        buscarSolicitantesAssistencia,
         buscaUserById,
         cadastrarInfosUser,
         cadastrarPseudoUser,

@@ -38,7 +38,7 @@ const CadastroNovaAssistencia = () => {
 
   const { verificador } = useVerificadorDeCnpj();
   const { cadastrarEndereco } = useEndereco();
-  const { inserirAssistencia } = useAssistencia();
+  const { inserirNovaAssistencia } = useAssistencia();
 
   // Estado para o endereço
   const [endereco, setEndereco] = useState({
@@ -118,36 +118,26 @@ const CadastroNovaAssistencia = () => {
       return;
     }
 
-    const dadosAssistencia = {
-      assistenciaEmail: data.assistenciaEmail,
-      nomeFantasia: data.nomeFantasia,
-      razaoSocial: data.razaoSocial,
-      cnpj: data.cnpj,
-      assistenciaTelefone: data.assistenciaTelefone,
-      assistenciaTermos: data.assistenciaTermos,
-      administradorId: userId,
-    };
-
     // cadastra assistencia
-    const resCadastrarAssistencia = await inserirAssistencia(dadosAssistencia);
+    const resCadastrarAssistencia = await inserirNovaAssistencia(data, userId);
+    console.log("resCadastrarAssistencia:",resCadastrarAssistencia);
 
     if (resCadastrarAssistencia) {
       const dadosEnderecoAssitiencia = {
-        zipcode: data.zipcode,
-        localidade: data.localidade,
-        bairro: data.bairro,
-        logradouro: data.logradouro,
-        uf: data.uf,
-        number: data.number,
-        complemento: data.complemento,
+        "zipcode": data.zipcode,
+        "localidade": data.localidade,
+        "bairro": data.bairro,
+        "logradouro": data.logradouro,
+        "uf": data.uf,
+        "number": data.number,
+        "complemento": data.complemento,
       };
 
       const isEnderecoCadastrado = await cadastrarEndereco(dadosEnderecoAssitiencia);
-
-      if (!isEnderecoCadastrado) {
+      alert(isEnderecoCadastrado);
+      if (isEnderecoCadastrado) {
         alert(`Nova assistencia, ${data.razaoSocial}, cadastrada`);
-        // COLOCAR NAVIGATE
-        location.reload();
+        navigate("/buscar-assistencias/administrador");
       }
     }
   };

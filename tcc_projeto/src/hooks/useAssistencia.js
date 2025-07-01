@@ -72,6 +72,34 @@ export function useAssistencia() {
     }
   };
 
+  const inserirNovaAssistencia = async (data, idAdministrador) =>{
+
+    const dadosAssistencia = {
+      "assistenciaEmail": data.assistenciaEmail,
+      "nomeFantasia": data.nomeFantasia,
+      "razaoSocial": data.razaoSocial,
+      "cnpj": data.cnpj,
+      "assistenciaTelefone":data.assistenciaTelefone,
+      "administradorId": idAdministrador,
+      "isValido": true
+    }
+
+    const request = await fetch(`${url}/assistencia`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+        body: JSON.stringify(dadosAssistencia),
+    });
+    
+    const response = await request.json();
+    const id = await response.id;
+
+    localStorage.setItem("assistenciaId", id);
+
+    return request.ok
+  }
+
   // insere o adm da assistencia
   const inserirAdministrador = async (id) => {
     const administrador = {
@@ -118,5 +146,6 @@ export function useAssistencia() {
     inserirAssistencia,
     inserirAvaliacao,
     inserirValidacaoAssistencia,
+    inserirNovaAssistencia
   };
 }

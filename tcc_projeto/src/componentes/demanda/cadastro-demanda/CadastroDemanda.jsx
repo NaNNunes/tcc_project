@@ -73,7 +73,8 @@ const CadastroDemanda = () => {
      } = useAssistencia();
     
     const { 
-        cadastrarPseudoUser// funcao que cadastra solicitante presencial
+        buscarSolicitantesAssistencia,
+        cadastrarPseudoUser
     } = useUser();
 
     const {
@@ -91,19 +92,19 @@ const CadastroDemanda = () => {
             
             // carrega infos de assistencias do user adm
             if(userType === "administrador"){
-                // lista para receber assistencias vinculadas ao user, pelo match caso solicitante ou que possuam o id do adm, caso adm
-                const listaAssistencias = [];
-
                 // busca todas as assistencias cadastradas
                 const resBuscaAssistencias = await buscaAssistencias();
-                // verifica quais assistencias pertencem ao administrador
-                resBuscaAssistencias.map((assistencia)=>{
-                    if(assistencia.administradorId === userId){
-                        listaAssistencias.push(assistencia);
-                    }
-                })
+
+                // lista para receber assistencias vinculadas ao user, pelo match caso solicitante ou que possuam o id do adm, caso adm
+                const listaAssistencias = resBuscaAssistencias
+                    .filter(assistencia => assistencia.administradorId === userId);
 
                 setAssistencias(listaAssistencias);
+
+                // ids de assistencias do adm
+                const idsAssistencias = listaAssistencias.map(assistencia => assistencia.id);
+                
+                const buscaSolicitantesDaAssistencia = await buscarSolicitantesAssistencia(idsAssistencias);
             }
 
             // carrega assistencias favoritas do solicitante
@@ -367,7 +368,7 @@ const CadastroDemanda = () => {
 
     const cadastrarDemandaPresencial = async (responsavelDemanda) => {
         // cadastra solicitante presencial e dispositivo
-        const idSolicitante = await cadastrarPseudoUser(dadosTemporarios);
+        const idSolicitante = await cadastrarPseudoUser(dadosTemporarios, responsavelDemanda);
         const idDispositivo = await cadastrarDispositivo(dadosTemporarios, idSolicitante);
 
         // verifica se todos os ids foram criados
@@ -412,10 +413,10 @@ const CadastroDemanda = () => {
     // direciona user para a tela de demandas ou de historico de demandas
     const afterCadastroOuAtualizacaoDemanda = () =>{
         if((userType === "solicitante")){
-            return navigate('/procurar-demandas/minhas-demandas');
+            navigate('/procurar-demandas/minhas-demandas');
         }
         else if ((userType === "administrador")){
-            return navigate('/procurar-demandas/historico');
+            navigate('/procurar-demandas/historico');
         }
     } 
 
@@ -503,8 +504,19 @@ const CadastroDemanda = () => {
                     <Container fluid className={stylesCad.parteFormulario} style={{marginBottom: '20px'}}>
                         {/* Título do container */}
                         <Row style={{paddingBottom: '1%'}}>
-                            <Col md={12} xs={12}>
-                                <h3 className={stylesCad.titleh3}>Informações do solicitante</h3>
+                            <Col md={8} xs={12}>
+                                <h3 className={stylesCad.titleh3}>Dados do solicitante</h3>
+                            </Col>
+                                
+                            <Col md={4} xs={12}
+                                className={stylesCad.campo}
+                            >
+                                <FloatingLabel>
+                                    <Form.Select>
+                                        <option value="" selected>Novo solicitante</option>
+                                        
+                                    </Form.Select>
+                                </FloatingLabel>
                             </Col>
                         </Row>
                         
