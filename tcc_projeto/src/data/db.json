@@ -584,16 +584,28 @@
       "idSolicitante": "e174"
     },
     {
-      "id": "6ee8",
-      "categoria": "Tablet",
-      "marca": "Xiaomi",
+      "id": "119e",
+      "categoria": "Celular",
+      "marca": "LG",
       "fabricante": "",
-      "modelo": "POCO PAD",
+      "modelo": "LG K62+",
       "numSerie": "",
       "tensao": "",
       "amperagem": "",
       "cor": "",
-      "idSolicitante": "0ee7"
+      "idSolicitante": "5744"
+    },
+    {
+      "id": "178c",
+      "categoria": "Tablet",
+      "marca": "Samsung",
+      "fabricante": "",
+      "modelo": "Tab S10 FE+",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "5744"
     }
   ],
   "demanda": [
@@ -706,7 +718,15 @@
       "assistencia": "2a23",
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
-      "horaEmissao": "00:22:00"
+      "horaEmissao": "00:22:00",
+      "problema_identificado": "ghdfgdfgsdgdfs",
+      "solucao": "sdfgdfsgsdfgdf",
+      "pecaTrocada": "6546",
+      "valorObra": "R$ 456,46",
+      "observacoesOrcamento": "6546546",
+      "statusOrcamento": "Aceito",
+      "data_aceitacao_orcamento": "30/06/2025",
+      "hora_aceitacao_orcamento": "23:53:06"
     },
     {
       "id": "7233",
@@ -724,11 +744,20 @@
       "idDispositivo": "7342",
       "descProblema": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
       "observacoes": "",
-      "status": "Aberto",
-      "assistencia": "Público",
+      "status": "Concluído",
+      "assistencia": "7e02",
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
-      "horaEmissao": "01:28:36"
+      "horaEmissao": "01:28:36",
+      "problema_identificado": "dasfdsfasfadsf",
+      "solucao": "asdfadsfadsf",
+      "pecaTrocada": "afsdadsfsda",
+      "valorObra": "R$ 999,99",
+      "observacoesOrcamento": "",
+      "statusOrcamento": "Aceito",
+      "data_aceitacao_orcamento": "30/06/2025",
+      "hora_aceitacao_orcamento": "23:32:30",
+      "idAvaliacao": "1239"
     },
     {
       "id": "a5e9",
@@ -775,7 +804,7 @@
       "idDispositivo": "de26",
       "descProblema": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
       "observacoes": "",
-      "status": "Aberto",
+      "status": "Cancelada",
       "assistencia": "2a23",
       "idSolicitante": "5744",
       "dataEmissao": "29/06/2025",
@@ -812,18 +841,35 @@
       "assistencia": "7e02",
       "idSolicitante": "e174",
       "dataEmissao": "30/06/2025",
-      "horaEmissao": "21:38:52"
+      "horaEmissao": "21:38:52",
+      "problema_identificado": "dasfsdafgadgad",
+      "solucao": "afsdfsafasfads",
+      "pecaTrocada": "afsdfadsfds",
+      "valorObra": "R$ 2.659,99",
+      "observacoesOrcamento": "dsfds",
+      "statusOrcamento": "Sem resposta"
     },
     {
-      "id": "53b3",
-      "idDispositivo": "6ee8",
-      "descProblema": "hjklasdfklhjsdfjksdfhjksdfkhjlsdfhjksdhjkdsfhjk",
-      "observacoes": "",
+      "id": "a7e6",
+      "idDispositivo": "119e",
+      "descProblema": "fjdsifhdisnfdsfds",
+      "observacoes": "fdsçuhfiudhsoifds",
       "status": "Em atendimento",
-      "assistencia": "2a23",
-      "idSolicitante": "0ee7",
-      "dataEmissao": "01/07/2025",
-      "horaEmissao": "01:13:57"
+      "assistencia": "7e02",
+      "idSolicitante": "5744",
+      "dataEmissao": "30/06/2025",
+      "horaEmissao": "23:24:27"
+    },
+    {
+      "id": "32bf",
+      "idDispositivo": "178c",
+      "descProblema": "fdgdfsgdfsgdfsgdfgdf",
+      "observacoes": "dfgdfsgdfsgdsfgdsgdf",
+      "status": "Em atendimento",
+      "assistencia": "7e02",
+      "idSolicitante": "5744",
+      "dataEmissao": "30/06/2025",
+      "horaEmissao": "23:26:30"
     }
   ],
   "assistencia_Fav_Solicitante": [
@@ -863,19 +909,24 @@
       "idAssistencia": "2a23"
     },
     {
-      "id": "bcbc",
+      "id": "d135",
       "idSolicitante": "5744",
       "idAssistencia": "6c90"
     },
     {
-      "id": "7554",
-      "idSolicitante": "5744",
-      "idAssistencia": "df3b"
-    },
-    {
-      "id": "189c",
+      "id": "767f",
       "idSolicitante": "5744",
       "idAssistencia": "7b46"
+    },
+    {
+      "id": "5caa",
+      "idSolicitante": "5744",
+      "idAssistencia": "7c8a"
+    },
+    {
+      "id": "585d",
+      "idSolicitante": "5744",
+      "idAssistencia": "df3b"
     }
   ],
   "avaliacao": [
@@ -916,6 +967,14 @@
       "analise": "",
       "notaAvaliacao": 4,
       "idDemanda": "2f3f",
+      "idAssistencia": "7e02",
+      "idSolicitante": "5744"
+    },
+    {
+      "id": "1239",
+      "analise": "nota dó",
+      "notaAvaliacao": 5,
+      "idDemanda": "2ee5",
       "idAssistencia": "7e02",
       "idSolicitante": "5744"
     }

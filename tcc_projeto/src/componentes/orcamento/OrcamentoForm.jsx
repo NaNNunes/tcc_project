@@ -203,33 +203,61 @@ const OrcamentoForm = () => {
               {/* Linha com categoria, marca, fabricante e modelo. */}
               <Row>
                 {/* Categoria. */}
-                <Col>
-                  <span>
-                    <strong>Categoria: </strong>
+                <Col xl={3} lg={4} md={6} xs={12}>
+                  <span
+                    style={{
+                      wordBreak: 'break-word', 
+                      overflowWrap: 'break-word',
+                      fontWeight: 'bold',
+                      color: '#757575'
+                    }}
+                  >
+                    <strong style={{color: '#000000', fontWeight: 'bold'}}>Categoria: </strong>
                     {dispositivoDemandaSelecionada.categoria}
                   </span>
                 </Col>
 
                 {/* Marca. */}
-                <Col>
-                  <span>
-                    <strong>Marca: </strong>
+                <Col xl={3} lg={4} md={6} xs={12}>
+                  <span
+                    style={{
+                      wordBreak: 'break-word', 
+                      overflowWrap: 'break-word',
+                      fontWeight: 'bold',
+                      color: '#757575'
+                    }}
+                  >
+                    <strong style={{color: '#000000', fontWeight: 'bold'}}>Marca: </strong>
                     {dispositivoDemandaSelecionada.marca}
                   </span>
                 </Col>
 
                 {/* Fabricante. */}
-                <Col>
-                  <span>
-                    <strong>Fabricante: </strong>
+                <Col xl={3} lg={4} md={6} xs={12}>
+                  <span
+                    style={{
+                      wordBreak: 'break-word', 
+                      overflowWrap: 'break-word',
+                      fontWeight: 'bold',
+                      color: '#757575'
+                    }}
+                  >
+                    <strong style={{color: '#000000', fontWeight: 'bold'}}>Fabricante: </strong>
                     {dispositivoDemandaSelecionada.fabricante}
                   </span>
                 </Col>
 
                 {/* Modelo. */}
-                <Col>
-                  <span>
-                    <strong>Modelo: </strong>
+                <Col xl={3} lg={4} md={6} xs={12}>
+                  <span
+                    style={{
+                      wordBreak: 'break-word', 
+                      overflowWrap: 'break-word',
+                      fontWeight: 'bold',
+                      color: '#757575'
+                    }}
+                  >
+                    <strong style={{color: '#000000', fontWeight: 'bold'}}>Modelo: </strong>
                     {dispositivoDemandaSelecionada.modelo}
                   </span>
                 </Col>
@@ -238,25 +266,46 @@ const OrcamentoForm = () => {
               {/* Linha com tensão, amperagem e cor. */}
               <Row>
                 {/* Tensão. */}
-                <Col>
-                  <span>
-                    <strong>Tensão: </strong>
+                <Col xl={3} lg={4} md={6} xs={12}>
+                  <span
+                    style={{
+                      wordBreak: 'break-word', 
+                      overflowWrap: 'break-word',
+                      fontWeight: 'bold',
+                      color: '#757575'
+                    }}
+                  >
+                    <strong style={{color: '#000000', fontWeight: 'bold'}}>Tensão: </strong>
                     {dispositivoDemandaSelecionada.tensao}
                   </span>
                 </Col>
 
                 {/* Amperagem. */}
-                <Col>
-                  <span>
-                    <strong>Amperagem: </strong>
+                <Col xl={3} lg={4} md={6} xs={12}>
+                  <span
+                    style={{
+                      wordBreak: 'break-word', 
+                      overflowWrap: 'break-word',
+                      fontWeight: 'bold',
+                      color: '#757575'
+                    }}
+                  >
+                    <strong style={{color: '#000000', fontWeight: 'bold'}}>Amperagem: </strong>
                     {dispositivoDemandaSelecionada.amperagem}
                   </span>
                 </Col>
 
                 {/* Cor. */}
-                <Col>
-                  <span>
-                    <strong>Cor: </strong>
+                <Col xl={3} lg={4} md={6} xs={12}>
+                  <span
+                    style={{
+                      wordBreak: 'break-word', 
+                      overflowWrap: 'break-word',
+                      fontWeight: 'bold',
+                      color: '#757575'
+                    }}
+                  >
+                    <strong style={{color: '#000000', fontWeight: 'bold'}}>Cor: </strong>
                     {dispositivoDemandaSelecionada.cor}
                   </span>
                 </Col>
@@ -265,8 +314,15 @@ const OrcamentoForm = () => {
               {/* Linha com descrição do problema. */}
               <Row>
                 <Col>
-                  <span>
-                    <strong>Descrição do problema: </strong>
+                  <span
+                    style={{
+                      wordBreak: 'break-word', 
+                      overflowWrap: 'break-word',
+                      fontWeight: 'bold',
+                      color: '#757575'
+                    }}
+                  >
+                    <strong style={{color: '#000000', fontWeight: 'bold'}}>Descrição do problema: </strong>
                     {demandaSelecionada.descProblema}
                   </span>
                 </Col>
@@ -275,8 +331,15 @@ const OrcamentoForm = () => {
               {/* Linha observações. */}
               <Row>
                 <Col>
-                  <span>
-                    <strong>Observações: </strong>
+                  <span
+                    style={{
+                      wordBreak: 'break-word', 
+                      overflowWrap: 'break-word',
+                      fontWeight: 'bold',
+                      color: '#757575'
+                    }}
+                  >
+                    <strong style={{color: '#000000', fontWeight: 'bold'}}>Observações: </strong>
                     {demandaSelecionada.observacoes}
                   </span>
                 </Col>

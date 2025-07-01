@@ -255,6 +255,20 @@ const MenuNavegacao = () => {
           }
         >
           {/* Items que estarão dentro do navdropdown */}
+          {/* Cadastro pedido */}
+          <NavDropdown.Item
+            as={Link}
+            to="/criar-demanda/criar"
+            className={styles.dropdownItem}
+          >
+            <Image
+              className={styles.icone}
+              style={{ paddingLeft: "4px" }}
+              src="/icons/Icon_pedido.svg"
+            />
+            <span className={styles.textoDropdownItem}>Cadastro pedido</span>
+          </NavDropdown.Item>
+
           {/* Procurar demandas */}
           <NavDropdown.Item
             as={Link}
@@ -301,20 +315,6 @@ const MenuNavegacao = () => {
           >
             <Image className={styles.icone} src="/icons/history.svg" />
             <span className={styles.textoDropdownItem}>Histórico de demandas</span>
-          </NavDropdown.Item>
-
-          {/* Cadastro pedido */}
-          <NavDropdown.Item
-            as={Link}
-            to="/criar-demanda/criar"
-            className={styles.dropdownItem}
-          >
-            <Image
-              className={styles.icone}
-              style={{ paddingLeft: "4px" }}
-              src="/icons/Icon_pedido.svg"
-            />
-            <span className={styles.textoDropdownItem}>Cadastro pedido</span>
           </NavDropdown.Item>
         </NavDropdown>
       </div>
