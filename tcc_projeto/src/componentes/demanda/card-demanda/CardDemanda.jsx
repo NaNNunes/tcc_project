@@ -378,7 +378,7 @@ const CardDemanda = (props) => {
                                 key={assistencia.id}
                                 value={assistencia.id}
                             >
-                                {assistencia.nomeFantasia}
+                                {assistencia.nomeFantasia || assistencia.razaoSocial}
                             </option>
                             
                         ))
@@ -490,7 +490,7 @@ const CardDemanda = (props) => {
                                 key={assistencia.id}
                                 value={assistencia.id}
                             >
-                                {assistencia.nomeFantasia}
+                                {assistencia.nomeFantasia || assistencia.razaoSocial}
                             </option>
                             
                         ))
@@ -715,43 +715,43 @@ const CardDemanda = (props) => {
                         <Container className={styles.ContainerModalInfo}>
                             {/* Categoria */}
                             <span className={styles.textoInfoModal}>
-                                <strong>Categoria: </strong>
+                                <strong style={{color: '#000000', fontWeight: 'bold'}}>Categoria: </strong>
                                 {dispositivo.categoria}
                             </span>
 
                             {/* Marca */}
                             <span className={styles.textoInfoModal}>
-                                <strong>Marca: </strong>
+                                <strong style={{color: '#000000', fontWeight: 'bold'}}>Marca: </strong>
                                 {dispositivo.marca}
                             </span>
 
                             {/* Fabricante */}
                             <span className={styles.textoInfoModal}>
-                                <strong>Fabricante: </strong>
+                                <strong style={{color: '#000000', fontWeight: 'bold'}}>Fabricante: </strong>
                                 {dispositivo.fabricante}
                             </span>
 
                             {/* Modelo */}
                             <span className={styles.textoInfoModal}>
-                                <strong>Modelo: </strong>
+                                <strong style={{color: '#000000', fontWeight: 'bold'}}>Modelo: </strong>
                                 {dispositivo.modelo}
                             </span>
 
                             {/* Tensão */}
                             <span className={styles.textoInfoModal}>
-                                <strong>Tensão: </strong>
+                                <strong style={{color: '#000000', fontWeight: 'bold'}}>Tensão: </strong>
                                 {dispositivo.tensao}
                             </span>
 
                             {/* Amperagem */}
                             <span className={styles.textoInfoModal}>
-                                <strong>Amperagem: </strong>
+                                <strong style={{color: '#000000', fontWeight: 'bold'}}>Amperagem: </strong>
                                 {dispositivo.amperagem}
                             </span>
 
                             {/* Cor */}
                             <span className={styles.textoInfoModal}>
-                                <strong>Cor: </strong>
+                                <strong style={{color: '#000000', fontWeight: 'bold'}}>Cor: </strong>
                                 {dispositivo.cor}
                             </span>
 
@@ -766,13 +766,13 @@ const CardDemanda = (props) => {
                         <h3 className={styles.tituloInfoModal}>Contexto</h3>
                         <Container style={{display: "grid", gridTemplateColumns: "repeat(1, 1fr)", margin: '0px'}}>
                             <span className={styles.textoInfoModal}>
-                                <strong>Descrição do problema: </strong>
+                                <strong style={{color: '#000000', fontWeight: 'bold'}}>Descrição do problema: </strong>
                                 {props.descricao}
                             </span>
 
 
                             <span className={styles.textoInfoModal} >
-                                <strong>Observações: </strong>
+                                <strong style={{color: '#000000', fontWeight: 'bold'}}>Observações: </strong>
                                 {props.observacoes}
                             </span>
                         </Container>
@@ -787,37 +787,43 @@ const CardDemanda = (props) => {
                                 <Container style={{display: "grid", gridTemplateColumns: "repeat(1, 1fr)", margin: '0px'}}>
                                     {/* Problema identificado */}
                                     <span className={styles.textoInfoModal}>
-                                        <strong>Problema identificado: </strong>
+                                        <strong style={{color: '#000000', fontWeight: 'bold'}}>Problema identificado: </strong>
                                         {demandaSelecionada.problema_identificado}
                                     </span>
 
                                     {/* Possível solução */}
                                     <span className={styles.textoInfoModal}>
-                                        <strong>Possível solução: </strong>
+                                        <strong style={{color: '#000000', fontWeight: 'bold'}}>Possível solução: </strong>
                                         {demandaSelecionada.solucao}
                                     </span>
 
                                     {/* Peça a ser trocada */}
                                     <span className={styles.textoInfoModal}>
-                                        <strong>Peça a ser trocada: </strong>
+                                        <strong style={{color: '#000000', fontWeight: 'bold'}}>Peça a ser trocada: </strong>
                                         {demandaSelecionada.pecaTrocada}
                                     </span>
 
                                     {/* Observações */}
                                     <span className={styles.textoInfoModal}>
-                                        <strong>Observações: </strong>
+                                        <strong style={{color: '#000000', fontWeight: 'bold'}}>Observações: </strong>
                                         {demandaSelecionada.observacoesOrcamento}
                                     </span>
 
                                     {/* Valor da mão de obra */}
                                     <span className={styles.textoInfoModal}>
-                                        <strong>Valor da mão de obra: </strong>
+                                        <strong style={{color: '#000000', fontWeight: 'bold'}}>Valor da mão de obra: </strong>
                                         {demandaSelecionada.valorObra}
                                     </span>
                                     
                                     {/* Data de aceitação do orçamento */}
                                     <span className={styles.textoInfoModal}>
-                                        <strong>Data de aceitação do orçamento: </strong>
+                                        <strong style={{color: '#000000', fontWeight: 'bold'}}>Data de aceitação do orçamento: </strong>
+                                        {demandaSelecionada.data_aceitacao_orcamento}
+                                    </span>
+
+                                    {/* Data de aceitação do orçamento */}
+                                    <span className={styles.textoInfoModal}>
+                                        <strong style={{color: '#000000', fontWeight: 'bold'}}>Status: </strong>
                                         {demandaSelecionada.statusOrcamento}
                                     </span>
                                 </Container>      
@@ -834,7 +840,7 @@ const CardDemanda = (props) => {
                                 <h3 className={styles.tituloInfoModal}>Avaliação</h3>
                                 <Container style={{display: "grid", gridTemplateColumns: "repeat(1, 1fr)", margin: '0px'}}>
                                     {/* Nota */}
-                                    <span className={styles.textoInfoModal}>
+                                    <span className={styles.textoInfoModal} style={{color: '#000000', fontWeight: 'normal'}}>
                                         <strong>Nota: </strong>
                                         <div className={styles.estrelasNota}>
                                             {[1, 2, 3, 4, 5].map((n) => (
@@ -847,7 +853,7 @@ const CardDemanda = (props) => {
                                         </div>
                                     </span>
 
-                                    <span>
+                                    <span className={styles.textoInfoModal} style={{color: '#000000', fontWeight: 'normal'}}>
                                         <strong>Análise: </strong> {dadosAvaliacao.analise}
                                     </span>
                                 </Container>      

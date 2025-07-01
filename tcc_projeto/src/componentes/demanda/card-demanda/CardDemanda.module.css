@@ -137,6 +137,10 @@
 .textoInfoModal {
     font-size: 1.1rem;
     padding-bottom: 10px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    font-weight: bold;
+    color: #757575
 }
 
 /* hr fazendo a divisão entre topicos. */
