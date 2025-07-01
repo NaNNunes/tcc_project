@@ -77,6 +77,16 @@
       "sobrenome": "Teixeira",
       "isValido": false,
       "idAssistencia": "7e02"
+    },
+    {
+      "id": "0ee7",
+      "email": "aline_aline_nascimento@rubens.adm.br",
+      "cpf": "843.601.887-73",
+      "userTelefone": "(31) 98751-0686",
+      "nome": "Aline Aline Carolina",
+      "sobrenome": "Nascimento",
+      "isValido": false,
+      "idAssistencia": "2a23"
     }
   ],
   "administrador": [
