@@ -14,16 +14,6 @@
       "pergunta": "1",
       "resposta": "Pingo",
       "idEndereco": "4358"
-    },
-    {
-      "id": "49a1",
-      "email": "igor_galvao@tetrapark.com",
-      "cpf": "792.186.523-20",
-      "userTelefone": "(45) 99125-4444",
-      "nome": "dsafdsdsafafsadafsd",
-      "sobrenome": "dsafsdsdasdafsd",
-      "isValido": false,
-      "idAssistencia": "7e02"
     }
   ],
   "administrador": [
@@ -213,23 +203,6 @@
       "data_aceitacao_orcamento": "01/07/2025",
       "hora_aceitacao_orcamento": "19:35:28",
       "idAvaliacao": "d75c"
-    },
-    {
-      "id": "debc",
-      "idDispositivo": "b823",
-      "descProblema": "asddsafsaddsdassdsd",
-      "observacoes": "",
-      "status": "Concluído",
-      "assistencia": "7e02",
-      "idSolicitante": "49a1",
-      "dataEmissao": "01/07/2025",
-      "horaEmissao": "20:12:14",
-      "problema_identificado": "fgddf",
-      "solucao": "fdgdfgfddfg",
-      "pecaTrocada": "fdfdgdfdfg",
-      "valorObra": "R$ 1,64",
-      "observacoesOrcamento": "gfddfg",
-      "statusOrcamento": "Aceito"
     }
   ],
   "assistencia_Fav_Solicitante": [],
