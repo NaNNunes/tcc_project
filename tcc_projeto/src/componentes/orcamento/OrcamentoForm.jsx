@@ -40,7 +40,7 @@ const OrcamentoForm = () => {
   } = useDemanda();
 
   const {
-    buscaSolicitantes
+    buscaUserById
   } = useUser();
 
   const { buscaAssistenciasDoAdministrador } = useAssistencia();
@@ -95,9 +95,8 @@ const OrcamentoForm = () => {
 
     const idDemanda = demandaSelecionada.id;
     const idSolicitante = demandaSelecionada.idSolicitante
-    const solicitante = await buscaSolicitantes(idSolicitante);
-    const isCliente = (solicitante.idAssistencia);
-    alert("isCliente",isCliente);
+    const solicitante = await buscaUserById("solicitante",idSolicitante);
+    const isCliente = solicitante.idAssistencia !== undefined;
 
     const isOrcamentoInserido = await inserirOrcamento( dados, idDemanda, isCliente);
     if (isOrcamentoInserido) {
