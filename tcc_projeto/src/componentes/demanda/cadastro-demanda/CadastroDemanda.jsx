@@ -34,17 +34,14 @@ import { useForm } from "react-hook-form";
 // hooks json-server
 import { useDemanda} from '../../../hooks/useDemanda.js';
 import { useAssistencia} from '../../../hooks/useAssistencia.js';
-import { useVerificadorDeCpf } from '../../../hooks/useApi.js';
+import { useVerificadorDeCpf, useComparaDados } from '../../../hooks/useApi.js';
 import { useUser} from '../../../hooks/useUser.js';
-import { useApi } from '../../../hooks/useApi.js';
-
 
 import { useNavigate, useParams } from 'react-router-dom';
 import { useLikes } from '../../../hooks/useLikes.js';
 
 const CadastroDemanda = () => {
     const navigate = useNavigate();    
-
     const userType = localStorage.getItem("userType");
     // caso user não seja válido
     if(userType != "administrador" && userType != "solicitante") return navigate("/login");
@@ -84,8 +81,20 @@ const CadastroDemanda = () => {
     } = useLikes();
 
     const {
-        useVerificadorDeCpf
-    } = useApi();
+        verificador
+    } = useVerificadorDeCpf();
+
+    const {
+        verificaCpfDeSolicitantes,
+        verificaCpfDeAdms,
+        verificaEmailDeSolicitantes,
+        verificaEmailDeAdms,
+        verificaEmailDeAssistencia,
+        verificarTelefoneSolicitantes,
+        verificarTelefoneAdministradores,
+        verificarTelefoneAssistencia
+    } = useComparaDados();
+
 
     // state para receber lista de assistencias
     const [assistencias, setAssistencias] = useState([]);
@@ -114,7 +123,6 @@ const CadastroDemanda = () => {
             // carrega assistencias favoritas do solicitante
             if(userType === "solicitante"){
                 const idsAssistenciasFavoritas = await buscarAssistenciasFavoritas(userId);
-                console.log(idsAssistenciasFavoritas);
                 // mapeia todas os matchs e retorna nome da assistencia pelo id encontrado no match
                 // pegar assitencias apenas com que seja favoritadas pelo user, verificando o id do solicitante no match
                 const assistenciasFavoritadas = await Promise.all(
@@ -167,7 +175,7 @@ const CadastroDemanda = () => {
     const [inputClientFieldDisable, setInputClientFieldDisable] = useState(false);
 
     // id do cliente selecionado
-    const [idClienteSelecionado, setIdClienteSelecionado] = useState();
+    const [idClienteSelecionado, setIdClienteSelecionado] = useState("novo");
 
     // Formato do CPF.
     const formatarCPF = (cpf) => {
@@ -177,9 +185,6 @@ const CadastroDemanda = () => {
         .replace(/(\d{3})(\d)/, "$1.$2")
         .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
     };
-
-    // Verificar de CPF.
-    const {verificador} = useVerificadorDeCpf();
 
     // Marcas e modelos para cada categoria.
     const dadosDispositivos = {
@@ -356,16 +361,6 @@ const CadastroDemanda = () => {
     }, [categoriaSelecionada]);
 
     const onSubmit = async (dados) => {
-        // funcao para verificar se cpf do solicitante é válido
-        const cpf = dados.cpf;
-        alert(cpf);
-        const isCpfValido = await useVerificadorDeCpf(cpf);
-        alert(isCpfValido)
-        if(!isCpfValido){
-            alert("Cpf não válido");
-        }
-
-
 
         setDadosTemporarios(dados);
         // Mostrando o Modal para ser selecionada a assistência
@@ -385,10 +380,63 @@ const CadastroDemanda = () => {
     }
 
     const cadastrarDemandaPresencial = async (responsavelDemanda) => {
-        
+    
+        alert(idClienteSelecionado);
         // caso demanda seja para um novo cliente
         if(idClienteSelecionado === "novo"){
-            alert(idClienteSelecionado);
+            
+            const cpf = dadosTemporarios.cpf;
+            // verifica se cpf ta cadastrado em solicitantes
+            const isCpfSolicitante = await verificaCpfDeSolicitantes(cpf);
+            if(isCpfSolicitante){
+                return alert("Cpf já utilizado");
+            }
+
+            // verifica se cpf ta cadastrado em adm
+            const isCpfAdm = await verificaCpfDeAdms(cpf);
+            if(isCpfAdm){
+                return alert("Cpf já utilizado");
+            }
+
+
+            const email = dadosTemporarios.email;
+            // verifica se email ta cadastrado em solicitantes
+            const isEmailSolicitante = await verificaEmailDeSolicitantes(email);
+            if(isEmailSolicitante){
+                return alert("email já utilizado");
+            }
+
+            // verifica se email é de adm
+            const isEmailAdm = await verificaEmailDeAdms(email);
+            if(isEmailAdm){
+                return alert("email já utilizado");
+            }
+
+            // verifica email de asistencia
+            const isEmailAssistencia = await verificaEmailDeAssistencia(email)
+            if(isEmailAssistencia){
+                return alert("email já utilizado");
+            }
+
+            const telefone = dadosTemporarios.userTelefone;
+            // verifica email de Solicitante
+            const isTelefoneSolicitante = await verificarTelefoneSolicitantes(telefone);
+            if(isTelefoneSolicitante){
+                return alert("email já utilizado");
+            }
+
+            // verifica email de adm
+            const isTelefoneAdm = await verificarTelefoneAdministradores(telefone);
+            if(isTelefoneAdm){
+                return alert("email já utilizado");
+            }
+
+            // verifica email de asistencia
+            const isTelefoneAssistencia = await verificarTelefoneAssistencia(telefone);
+            if(isTelefoneAssistencia){
+                return alert("email já utilizado");
+            }
+
             // cadastra solicitante presencial e dispositivo
             const idSolicitante = await cadastrarPseudoUser(dadosTemporarios, responsavelDemanda);
             const idDispositivo = await cadastrarDispositivo(dadosTemporarios, idSolicitante);
@@ -404,7 +452,7 @@ const CadastroDemanda = () => {
         }
 
         // caso demanda seja para um cliente de uma das ats
-        alert(idClienteSelecionado);
+       
         const idDispositivo = await cadastrarDispositivo(dadosTemporarios, idClienteSelecionado);
         // verifica se todos os ids foram criados
         const isIdsAtribuidos = (idClienteSelecionado && idDispositivo);
@@ -414,8 +462,7 @@ const CadastroDemanda = () => {
         // verifica se demanda foi criada
         if(!isDemandaCadastrada) return alert("Demanda não criada");
         // direciona user para a tela de demandas
-        return afterCadastroOuAtualizacaoDemanda();
-        
+        return afterCadastroOuAtualizacaoDemanda(); 
     }
 
     const cadastrarDemandaOnline = async (responsavelDemanda) =>{

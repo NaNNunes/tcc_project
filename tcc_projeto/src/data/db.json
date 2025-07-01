@@ -642,6 +642,108 @@
       "amperagem": "",
       "cor": "",
       "idSolicitante": "e174"
+    },
+    {
+      "id": "caa7",
+      "categoria": "Tablet",
+      "marca": "Xiaomi",
+      "fabricante": "",
+      "modelo": "POCO PAD",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "5744"
+    },
+    {
+      "id": "98f1",
+      "categoria": "Celular",
+      "marca": "Nokia",
+      "fabricante": "",
+      "modelo": "Nokia 6300",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "5744"
+    },
+    {
+      "id": "acaf",
+      "categoria": "Celular",
+      "marca": "Nokia",
+      "fabricante": "",
+      "modelo": "Nokia 6300",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": ""
+    },
+    {
+      "id": "09b7",
+      "categoria": "Celular",
+      "marca": "Nokia",
+      "fabricante": "",
+      "modelo": "Nokia 6300",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": ""
+    },
+    {
+      "id": "6147",
+      "categoria": "Celular",
+      "marca": "Nokia",
+      "fabricante": "",
+      "modelo": "Nokia 6300",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": ""
+    },
+    {
+      "id": "2d1f",
+      "categoria": "Celular",
+      "marca": "Nokia",
+      "fabricante": "",
+      "modelo": "Nokia 6300",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": ""
+    },
+    {
+      "id": "f9d5",
+      "categoria": "Celular",
+      "marca": "Nokia",
+      "fabricante": "",
+      "modelo": "Nokia 6300",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": ""
+    },
+    {
+      "id": "ca9c",
+      "categoria": "Desktop",
+      "marca": "AMD Placa de Vídeo",
+      "fabricante": "",
+      "modelo": "RX 9060 XT",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": ""
+    },
+    {
+      "id": "41e5",
+      "categoria": "Celular",
+      "marca": "Nokia",
+      "fabricante": "",
+      "modelo": "Nokia 6300",
+      "numSerie": "",
+      "tensao": "",
+      "amperagem": "",
+      "cor": "",
+      "idSolicitante": "e174"
     }
   ],
   "demanda": [
@@ -939,6 +1041,39 @@
       "idSolicitante": "e174",
       "dataEmissao": "01/07/2025",
       "horaEmissao": "09:05:13"
+    },
+    {
+      "id": "1385",
+      "idDispositivo": "caa7",
+      "descProblema": "asdffsdafsdfsdsdfsdffsdsdf",
+      "observacoes": "",
+      "status": "Aberto",
+      "assistencia": "Público",
+      "idSolicitante": "5744",
+      "dataEmissao": "01/07/2025",
+      "horaEmissao": "18:40:44"
+    },
+    {
+      "id": "405a",
+      "idDispositivo": "98f1",
+      "descProblema": "dasfsdafsadffsdafasdafsd",
+      "observacoes": "",
+      "status": "Aberto",
+      "assistencia": "7e02",
+      "idSolicitante": "5744",
+      "dataEmissao": "01/07/2025",
+      "horaEmissao": "18:41:05"
+    },
+    {
+      "id": "4e66",
+      "idDispositivo": "41e5",
+      "descProblema": "dssdsdfsdffdssdffsadsdfsdfsadffsd",
+      "observacoes": "",
+      "status": "Em atendimento",
+      "assistencia": "7e02",
+      "idSolicitante": "e174",
+      "dataEmissao": "01/07/2025",
+      "horaEmissao": "18:56:57"
     }
   ],
   "assistencia_Fav_Solicitante": [
