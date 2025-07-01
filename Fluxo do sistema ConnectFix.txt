@@ -1,0 +1,28 @@
+Solicitante
+
+E-mail:
+jaqueline_bianca_dacunha@seal.com.br
+
+Senha:
+Senha@123
+
+
+
+
+Administrador
+
+E-mail:
+Cleberson@gmail.com
+
+Senha:
+Senha@123
+
+
+
+
+
+Cadastro de demanda:
+
+CPF: 159.080.820-74
+E-mail: Joaogomes@hotmail.com
+Telefone: (81) 3651-2489

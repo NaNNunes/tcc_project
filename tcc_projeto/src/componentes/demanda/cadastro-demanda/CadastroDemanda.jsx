@@ -421,19 +421,19 @@ const CadastroDemanda = () => {
             // verifica email de Solicitante
             const isTelefoneSolicitante = await verificarTelefoneSolicitantes(telefone);
             if(isTelefoneSolicitante){
-                return alert("email já utilizado");
+                return alert("Telefone já utilizado");
             }
 
             // verifica email de adm
             const isTelefoneAdm = await verificarTelefoneAdministradores(telefone);
             if(isTelefoneAdm){
-                return alert("email já utilizado");
+                return alert("Telefone já utilizado");
             }
 
             // verifica email de asistencia
             const isTelefoneAssistencia = await verificarTelefoneAssistencia(telefone);
             if(isTelefoneAssistencia){
-                return alert("email já utilizado");
+                return alert("Telefone já utilizado");
             }
 
             // cadastra solicitante presencial e dispositivo
