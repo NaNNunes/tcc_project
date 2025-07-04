@@ -24,8 +24,8 @@ Senha@123
 Cadastro assistência ->
 
 E-mail: pietra@hotmail.com
-Nome Fantasia: π
-Razão Social: π 
+Nome Fantasia: pi
+Razão Social: pi
 CNPJ: 53.584.685/0001-27
 Telefone: (96) 3918-2158
 
