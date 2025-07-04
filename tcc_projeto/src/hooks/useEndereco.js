@@ -36,8 +36,8 @@ export function useEndereco() {
 
   // cadastra endereco
   const cadastrarEndereco = async (data) => {
-    const userType = localStorage.getItem("tipoUsuario");
-    
+    const userType = localStorage.getItem("tipoUsuario") || localStorage.getItem("userType");
+
     const request = await fetch(`${url}/endereco`, {
       method: "POST",
       headers: {

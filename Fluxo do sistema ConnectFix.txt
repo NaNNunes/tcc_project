@@ -26,3 +26,40 @@ Cadastro de demanda:
 CPF: 159.080.820-74
 E-mail: Joaogomes@hotmail.com
 Telefone: (81) 3651-2489
+
+
+
+
+
+
+Cadastro assistência
+E-mail: pietra@hotmail.com
+Nome Fantasia: π
+Razão Social: π 
+CNPJ: 53.584.685/0001-27
+Telefone: (96) 3918-2158
+
+CEP: 29050-270
+
+
+
+
+
+Cadastro de usuário:
+
+E-mail: cristiano@hotmail.com
+CPF: 885.181.939-40
+Telefone: (27) 3750-4436
+Nome: Cristiano
+Sobrenome: Ronaldo
+Senha: Senha@123
+
+
+E-mail: gregory@hotmail.com
+Nome Fantasia: C&G
+Razão Social: C&G
+CNPJ: 22.292.229/0001-80
+Telefone: (87) 3812-7032
+
+
+CEP: 29050-625
